@@ -87,26 +87,30 @@ export const MetricCard: React.FC<MetricCardProps> = ({
 
   const currentTheme = colorConfig[accentColor];
 
+  const formattedValue = numberTarget ? `${displayCount.toLocaleString("id-ID")}${suffix}` : value;
+  const isLongValue = formattedValue.length > 5;
+
   return (
     <motion.div
       whileHover={{ y: -6, scale: 1.015 }}
       transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
-        "relative flex flex-col justify-between p-6 sm:p-7 rounded-3xl border shadow-lg backdrop-blur-md transition-all duration-300",
+        "relative flex flex-col justify-between p-6 rounded-3xl border shadow-lg backdrop-blur-md transition-all duration-300 min-h-[225px] sm:min-h-[235px]",
         currentTheme.border,
         currentTheme.bg,
         currentTheme.glow,
         className
       )}
     >
-      <div className="flex items-center justify-between">
-        <span className="text-xs font-bold text-neutral-600 tracking-wider uppercase">
+      {/* Top Header Label & Icon */}
+      <div className="flex items-center justify-between gap-3">
+        <span className="text-[11px] sm:text-xs font-bold text-neutral-600 tracking-wider uppercase">
           {label}
         </span>
         {icon && (
           <div
             className={cn(
-              "flex items-center justify-center w-11 h-11 rounded-2xl shadow-xs transition-transform duration-300 hover:rotate-6",
+              "flex items-center justify-center w-10 h-10 rounded-2xl shadow-xs transition-transform duration-300 shrink-0",
               currentTheme.iconBg
             )}
           >
@@ -115,19 +119,23 @@ export const MetricCard: React.FC<MetricCardProps> = ({
         )}
       </div>
 
-      <div className="mt-5 flex items-baseline gap-3">
+      {/* Middle Value & Badge */}
+      <div className="my-3 flex items-center justify-between gap-2 min-h-[48px]">
         <span
           className={cn(
-            "text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight",
+            "font-black tracking-tight whitespace-nowrap",
+            isLongValue
+              ? "text-2xl sm:text-[28px] lg:text-[26px] xl:text-[30px]"
+              : "text-3xl sm:text-4xl lg:text-[38px] xl:text-[42px]",
             currentTheme.number
           )}
         >
-          {numberTarget ? `${displayCount.toLocaleString("id-ID")}${suffix}` : value}
+          {formattedValue}
         </span>
         {change && (
           <span
             className={cn(
-              "inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold border",
+              "inline-flex items-center justify-center px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-bold border shrink-0 whitespace-nowrap",
               currentTheme.badge
             )}
           >
@@ -136,8 +144,9 @@ export const MetricCard: React.FC<MetricCardProps> = ({
         )}
       </div>
 
+      {/* Bottom Description */}
       {description && (
-        <p className="mt-3 text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
+        <p className="text-xs sm:text-[13px] text-neutral-600 leading-relaxed font-normal min-h-[42px] flex items-start">
           {description}
         </p>
       )}
