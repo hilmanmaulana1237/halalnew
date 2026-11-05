@@ -18,41 +18,76 @@ import { SectionHeader } from '@/components/ui/section-header';
 import { BackgroundGradient } from '@/components/ui/background-gradient';
 import { CardSpotlight } from '@/components/ui/card-spotlight';
 import { SparklesCore } from '@/components/ui/sparkles';
-import { DIRECTORS } from '../home/HomePage';
+import { getDirectors } from '../home/HomePage';
+import { useLanguage } from '@/context/LanguageContext';
 
 export const AboutPage: React.FC = () => {
+  const { language, t } = useLanguage();
+  const isEn = language === 'en';
+  const directors = getDirectors(isEn);
   const [selectedDirector, setSelectedDirector] = useState<any | null>(null);
 
-  const values = [
-    {
-      title: 'Integritas Syar’i',
-      desc: 'Menegakkan standar kepatuhan halal berlandaskan fatwa MUI dan regulasi jaminan produk halal secara mutlak dan terpercaya.',
-      icon: <ShieldCheck className="w-6 h-6 text-[#6b1282]" />,
-      accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
-      spotlight: '#6b1282',
-    },
-    {
-      title: 'Keunggulan Saintifik',
-      desc: 'Didukung laboratorium pengujian modern (qPCR, GC-FID) berstandar ISO/IEC 17025 untuk validasi molekuler bahan kritis.',
-      icon: <Sparkles className="w-6 h-6 text-[#6b1282]" />,
-      accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
-      spotlight: '#6b1282',
-    },
-    {
-      title: 'Inklusivitas UMK',
-      desc: 'Mendampingi ribuan pelaku usaha mikro dan kecil melalui program Sertifikasi Halal Gratis (SEHATI) di seluruh Jawa Barat.',
-      icon: <Users className="w-6 h-6 text-[#6b1282]" />,
-      accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
-      spotlight: '#6b1282',
-    },
-    {
-      title: 'Sinergi Kolaboratif',
-      desc: 'Menjalin kemitraan erat bersama BPJPH, Kementerian Agama RI, KAN, MUI, dinas terkait, serta perguruan tinggi global.',
-      icon: <Award className="w-6 h-6 text-[#6b1282]" />,
-      accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
-      spotlight: '#6b1282',
-    },
-  ];
+  const values = isEn
+    ? [
+        {
+          title: 'Sharia Integrity',
+          desc: 'Upholding halal compliance standards based on MUI fatwas and halal product assurance regulations unconditionally and reliably.',
+          icon: <ShieldCheck className="w-6 h-6 text-[#6b1282]" />,
+          accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
+          spotlight: '#6b1282',
+        },
+        {
+          title: 'Scientific Excellence',
+          desc: 'Supported by modern testing laboratories (qPCR, GC-FID) accredited to ISO/IEC 17025 for molecular validation of critical ingredients.',
+          icon: <Sparkles className="w-6 h-6 text-[#6b1282]" />,
+          accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
+          spotlight: '#6b1282',
+        },
+        {
+          title: 'MSE Inclusivity',
+          desc: 'Mentoring thousands of micro and small business actors through the Free Halal Certification (SEHATI) program across West Java.',
+          icon: <Users className="w-6 h-6 text-[#6b1282]" />,
+          accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
+          spotlight: '#6b1282',
+        },
+        {
+          title: 'Collaborative Synergy',
+          desc: 'Fostering close partnerships with BPJPH, Ministry of Religious Affairs, KAN, MUI, regional agencies, and global universities.',
+          icon: <Award className="w-6 h-6 text-[#6b1282]" />,
+          accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
+          spotlight: '#6b1282',
+        },
+      ]
+    : [
+        {
+          title: 'Integritas Syar’i',
+          desc: 'Menegakkan standar kepatuhan halal berlandaskan fatwa MUI dan regulasi jaminan produk halal secara mutlak dan terpercaya.',
+          icon: <ShieldCheck className="w-6 h-6 text-[#6b1282]" />,
+          accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
+          spotlight: '#6b1282',
+        },
+        {
+          title: 'Keunggulan Saintifik',
+          desc: 'Didukung laboratorium pengujian modern (qPCR, GC-FID) berstandar ISO/IEC 17025 untuk validasi molekuler bahan kritis.',
+          icon: <Sparkles className="w-6 h-6 text-[#6b1282]" />,
+          accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
+          spotlight: '#6b1282',
+        },
+        {
+          title: 'Inklusivitas UMK',
+          desc: 'Mendampingi ribuan pelaku usaha mikro dan kecil melalui program Sertifikasi Halal Gratis (SEHATI) di seluruh Jawa Barat.',
+          icon: <Users className="w-6 h-6 text-[#6b1282]" />,
+          accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
+          spotlight: '#6b1282',
+        },
+        {
+          title: 'Sinergi Kolaboratif',
+          desc: 'Menjalin kemitraan erat bersama BPJPH, Kementerian Agama RI, KAN, MUI, dinas terkait, serta perguruan tinggi global.',
+          icon: <Award className="w-6 h-6 text-[#6b1282]" />,
+          accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
+          spotlight: '#6b1282',
+        },
+      ];
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-white">
@@ -69,13 +104,15 @@ export const AboutPage: React.FC = () => {
         <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-purple-200 text-xs font-semibold uppercase tracking-wider mb-4 border border-white/20">
             <BookOpen className="w-3.5 h-3.5" />
-            Profil &amp; Sejarah Lembaga
+            {isEn ? 'Institutional Profile & History' : 'Profil & Sejarah Lembaga'}
           </div>
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
-            Tentang Halal Center UIN SGD Bandung
+            {isEn ? 'About Halal Center UIN SGD Bandung' : 'Tentang Halal Center UIN SGD Bandung'}
           </h1>
           <p className="mt-4 text-base sm:text-lg text-neutral-200 max-w-3xl mx-auto leading-relaxed font-normal">
-            Menegakkan ekosistem halal terpadu berbasis paradigma <em>"Halalsphere University"</em> melalui riset saintifik, pemeriksaan reguler, pendampingan UMK, dan laboratorium presisi tinggi.
+            {isEn
+              ? 'Advancing an integrated halal ecosystem based on the "Halalsphere University" paradigm through scientific research, regular audits, MSE mentoring, and precision laboratories.'
+              : 'Menegakkan ekosistem halal terpadu berbasis paradigma "Halalsphere University" melalui riset saintifik, pemeriksaan reguler, pendampingan UMK, dan laboratorium presisi tinggi.'}
           </p>
         </div>
       </section>
@@ -92,32 +129,45 @@ export const AboutPage: React.FC = () => {
                     alt="Sertifikat Akreditasi LPH UIN SGD"
                     className="w-full h-auto object-cover rounded-xl"
                   />
+                  <div className="mt-3 flex items-center justify-between text-xs font-bold text-neutral-600 px-1">
+                    <span className="text-emerald-700 flex items-center gap-1">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                      {isEn ? 'Official BPJPH Accredited' : 'Akreditasi Resmi BPJPH'}
+                    </span>
+                    <span className="text-[#6b1282] font-mono">No. Reg: LPH-018-ID</span>
+                  </div>
                 </div>
               </BackgroundGradient>
             </div>
 
             <div className="lg:col-span-7 space-y-6">
               <span className="text-xs font-black text-[#6b1282] uppercase tracking-wider">
-                SEJARAH &amp; KILAS BALIK
+                {isEn ? 'HISTORY & MILESTONES' : 'SEJARAH & KILAS BALIK'}
               </span>
               <h2 className="text-3xl sm:text-4xl font-black text-[#1b183a] tracking-tight">
-                Dedikasi Berkelanjutan Bagi Akselerasi Industri Halal
+                {isEn
+                  ? 'Sustainable Dedication to Halal Industry Acceleration'
+                  : 'Dedikasi Berkelanjutan Bagi Akselerasi Industri Halal'}
               </h2>
               <p className="text-neutral-600 text-base leading-relaxed">
-                Pusat Halal (Halal Center) Universitas Islam Negeri Sunan Gunung Djati Bandung didirikan sebagai wujud nyata pengabdian perguruan tinggi keagamaan Islam negeri dalam menjawab amanat Undang-Undang No. 33 Tahun 2014 tentang Jaminan Produk Halal.
+                {isEn
+                  ? 'The Halal Center of State Islamic University Sunan Gunung Djati Bandung was founded as a concrete manifestation of higher education service to fulfill the mandate of Law No. 33 of 2014 concerning Halal Product Assurance.'
+                  : 'Pusat Halal (Halal Center) Universitas Islam Negeri Sunan Gunung Djati Bandung didirikan sebagai wujud nyata pengabdian perguruan tinggi keagamaan Islam negeri dalam menjawab amanat Undang-Undang No. 33 Tahun 2014 tentang Jaminan Produk Halal.'}
               </p>
               <p className="text-neutral-600 text-base leading-relaxed">
-                Dengan mengusung paradigma <strong className="text-[#6b1282]">“Halalsphere University”</strong>, Halal Center UIN SGD tidak sekadar menjadi lembaga administratif, melainkan episentrum keilmuan halal yang memadukan riset biologi molekuler, teknologi pangan, kajian fikih kontemporer, dan penguatan ekonomi kerakyatan.
+                {isEn
+                  ? 'Embodying the "Halalsphere University" paradigm, Halal Center UIN SGD is more than an administrative entity; it is a scientific hub uniting molecular biology research, food technology, contemporary Islamic jurisprudence, and grassroots economic empowerment.'
+                  : 'Dengan mengusung paradigma “Halalsphere University”, Halal Center UIN SGD tidak sekadar menjadi lembaga administratif, melainkan episentrum keilmuan halal yang memadukan riset biologi molekuler, teknologi pangan, kajian fikih kontemporer, dan penguatan ekonomi kerakyatan.'}
               </p>
               <div className="pt-2 flex flex-wrap items-center gap-4">
                 <Link to="/layanan/kalkulator">
                   <Button variant="primary" className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold rounded-xl px-6 py-2.5 shadow-md">
-                    Hitung Estimasi Biaya Halal
+                    {t('nav_calc_fee')}
                   </Button>
                 </Link>
                 <Link to="/kontak">
-                  <Button variant="outline" className="border-neutral-300 text-neutral-700 font-bold rounded-xl px-6 py-2.5">
-                    Hubungi Sekretariat
+                  <Button variant="outline" className="border-neutral-300 text-neutral-700 font-bold rounded-xl px-6 py-2.5 hover:bg-neutral-100">
+                    {isEn ? 'Contact Secretariat' : 'Hubungi Sekretariat'}
                   </Button>
                 </Link>
               </div>
@@ -130,10 +180,10 @@ export const AboutPage: React.FC = () => {
       <section className="py-20 bg-neutral-50/80 border-y border-neutral-200/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
-            badge="ARAH STRATEGIS"
+            badge={isEn ? 'STRATEGIC DIRECTION' : 'ARAH STRATEGIS'}
             badgeColor="emerald"
-            title="Visi &amp; Misi Halal Center UIN SGD"
-            subtitle="Landasan dan tujuan mulia dalam mengabdi kepada bangsa dan umat muslim dunia."
+            title={isEn ? 'Vision & Mission of Halal Center UIN SGD' : 'Visi & Misi Halal Center UIN SGD'}
+            subtitle={isEn ? 'Noble foundation and purpose in serving the nation and global Muslim community.' : 'Landasan dan tujuan mulia dalam mengabdi kepada bangsa dan umat muslim dunia.'}
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -142,9 +192,13 @@ export const AboutPage: React.FC = () => {
                 <div className="w-12 h-12 rounded-2xl bg-purple-100 text-[#6b1282] flex items-center justify-center mb-6 shadow-xs">
                   <Target className="w-6 h-6" />
                 </div>
-                <h3 className="text-2xl font-bold text-[#1a0726] mb-4">Visi Utama</h3>
+                <h3 className="text-2xl font-bold text-[#1a0726] mb-4">
+                  {isEn ? 'Core Vision' : 'Visi Utama'}
+                </h3>
                 <p className="text-neutral-600 leading-relaxed text-base font-normal">
-                  "Menjadi Lembaga Pemeriksa Halal (LPH) dan Pusat Kajian Halal bereputasi internasional, unggul dalam sains autentikasi halal, berintegritas syar'i, dan terdepan dalam pemberdayaan UMK menuju Indonesia Pusat Halal Dunia."
+                  {isEn
+                    ? '"To become an internationally reputable Halal Inspection Agency (LPH) and Halal Study Center, leading in halal authentication science, sharia integrity, and MSE empowerment towards Indonesia as the Global Halal Hub."'
+                    : '"Menjadi Lembaga Pemeriksa Halal (LPH) dan Pusat Kajian Halal bereputasi internasional, unggul dalam sains autentikasi halal, berintegritas syar\'i, dan terdepan dalam pemberdayaan UMK menuju Indonesia Pusat Halal Dunia."'}
                 </p>
               </div>
             </Card>
@@ -154,23 +208,33 @@ export const AboutPage: React.FC = () => {
                 <div className="w-12 h-12 rounded-2xl bg-purple-100 text-[#6b1282] flex items-center justify-center mb-6 shadow-xs">
                   <CheckCircle2 className="w-6 h-6" />
                 </div>
-                <h3 className="text-2xl font-bold text-[#1a0726] mb-4">Misi Strategis</h3>
+                <h3 className="text-2xl font-bold text-[#1a0726] mb-4">
+                  {isEn ? 'Strategic Missions' : 'Misi Strategis'}
+                </h3>
                 <ul className="space-y-3 text-neutral-600 text-sm">
                   <li className="flex items-start gap-2.5">
                     <span className="w-2 h-2 rounded-full bg-[#6b1282] mt-2 shrink-0" />
-                    Menyelenggarakan pemeriksaan kehalalan produk yang profesional, akuntabel, dan tepat waktu.
+                    {isEn
+                      ? 'Conducting professional, accountable, and prompt product halal inspections.'
+                      : 'Menyelenggarakan pemeriksaan kehalalan produk yang profesional, akuntabel, dan tepat waktu.'}
                   </li>
                   <li className="flex items-start gap-2.5">
                     <span className="w-2 h-2 rounded-full bg-[#6b1282] mt-2 shrink-0" />
-                    Mengembangkan laboratorium uji kehalalan berbasis teknologi mutakhir dan standar ISO 17025.
+                    {isEn
+                      ? 'Developing state-of-the-art halal testing laboratories under ISO/IEC 17025 standards.'
+                      : 'Mengembangkan laboratorium uji kehalalan berbasis teknologi mutakhir dan standar ISO 17025.'}
                   </li>
                   <li className="flex items-start gap-2.5">
                     <span className="w-2 h-2 rounded-full bg-[#6b1282] mt-2 shrink-0" />
-                    Mendampingi serta mengedukasi pelaku usaha mikro, kecil, dan menengah secara berkesinambungan.
+                    {isEn
+                      ? 'Continuously mentoring and educating micro, small, and medium business actors.'
+                      : 'Mendampingi serta mengedukasi pelaku usaha mikro, kecil, dan menengah secara berkesinambungan.'}
                   </li>
                   <li className="flex items-start gap-2.5">
                     <span className="w-2 h-2 rounded-full bg-[#6b1282] mt-2 shrink-0" />
-                    Menerbitkan hasil riset internasional melalui Indonesian Journal of Halal Research (IJHR).
+                    {isEn
+                      ? 'Publishing international research outcomes through the Indonesian Journal of Halal Research (IJHR).'
+                      : 'Menerbitkan hasil riset internasional melalui Indonesian Journal of Halal Research (IJHR).'}
                   </li>
                 </ul>
               </div>
@@ -183,10 +247,10 @@ export const AboutPage: React.FC = () => {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
-            badge="NILAI BUDAYA"
+            badge={isEn ? 'CORE VALUES' : 'NILAI BUDAYA'}
             badgeColor="purple"
-            title="Prinsip &amp; Tata Nilai Kerja Lembaga"
-            subtitle="Menjunjung tinggi standar etika syariat dan keilmuan profesional."
+            title={isEn ? 'Working Principles & Institutional Values' : 'Prinsip & Tata Nilai Kerja Lembaga'}
+            subtitle={isEn ? 'Upholding sharia ethical standards and professional science.' : 'Menjunjung tinggi standar etika syariat dan keilmuan profesional.'}
           />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -219,15 +283,15 @@ export const AboutPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="text-xs font-black uppercase tracking-wider text-purple-400">
-              DEWAN PIMPINAN
+              {isEn ? 'EXECUTIVE BOARD' : 'DEWAN PIMPINAN'}
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-white mt-1">
-              Pimpinan &amp; Pengarah Lembaga
+              {isEn ? 'Institutional Leadership & Guidance' : 'Pimpinan & Pengarah Lembaga'}
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {DIRECTORS.map((dir) => (
+            {directors.map((dir) => (
               <div
                 key={dir.id}
                 onClick={() => setSelectedDirector(dir)}
@@ -244,7 +308,7 @@ export const AboutPage: React.FC = () => {
                   </span>
                   <h3 className="text-base font-extrabold text-white mt-1">{dir.name}</h3>
                   <span className="text-xs text-purple-300 mt-2 flex items-center gap-1 hover:text-white">
-                    Buka Profil Detail <ArrowRight className="w-3.5 h-3.5" />
+                    {isEn ? 'View Profile' : 'Buka Profil Detail'} <ArrowRight className="w-3.5 h-3.5" />
                   </span>
                 </div>
               </div>
@@ -278,7 +342,7 @@ export const AboutPage: React.FC = () => {
                   </div>
                   <div>
                     <h5 className="font-extrabold text-xs uppercase tracking-wider text-[#6b1282] mb-2">
-                      Pendidikan &amp; Kualifikasi
+                      {isEn ? 'Education & Qualifications' : 'Pendidikan & Kualifikasi'}
                     </h5>
                     <ul className="text-xs text-neutral-600 list-disc pl-4 space-y-1">
                       {selectedDirector.education.map((e: string, i: number) => (
@@ -293,7 +357,7 @@ export const AboutPage: React.FC = () => {
                     className="w-full bg-[#6b1282] hover:bg-[#581c87] text-white font-bold rounded-xl"
                     onPress={() => setSelectedDirector(null)}
                   >
-                    Tutup
+                    {isEn ? 'Close' : 'Tutup'}
                   </Button>
                 </Modal.Footer>
               </Modal.Dialog>

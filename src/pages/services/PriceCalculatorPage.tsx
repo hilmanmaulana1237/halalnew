@@ -5,8 +5,10 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { api } from '@/services/api';
 import type { CalculationResult } from '@/types';
+import { useLanguage } from '@/context/LanguageContext';
 
 export const PriceCalculatorPage: React.FC = () => {
+  const { language, t } = useLanguage();
   const [serviceType, setServiceType] = useState<string>('REGULER');
   const [businessScale, setBusinessScale] = useState<string>('MIKRO');
   const [productCount, setProductCount] = useState<number>(1);
@@ -46,6 +48,8 @@ export const PriceCalculatorPage: React.FC = () => {
       const savingsNominal = totalB - totalL;
       const savingsPercent = Math.round((savingsNominal / totalB) * 100);
 
+      const isEn = language === 'en';
+
       setResult({
         serviceType,
         businessScale,
@@ -55,28 +59,31 @@ export const PriceCalculatorPage: React.FC = () => {
         savingsPercent,
         breakdown: [
           {
-            item: 'Biaya Pendaftaran & Verifikasi Dokumen',
+            item: isEn ? 'Registration & Document Verification Fee' : 'Biaya Pendaftaran & Verifikasi Dokumen',
             bpjph: Math.round(bpjphBase * 0.3),
             lph: Math.round(lphBase * 0.3),
           },
           {
-            item: 'Audit & Pemeriksaan Lapangan oleh Auditor Halal LPH',
+            item: isEn ? 'On-Site Audit & Inspection by LPH Halal Auditors' : 'Audit & Pemeriksaan Lapangan oleh Auditor Halal LPH',
             bpjph: Math.round(bpjphBase * 0.5),
             lph: Math.round(lphBase * 0.5),
           },
           {
-            item: 'Uji Laboratorium & Analisis Kehalalan Saintifik',
+            item: isEn ? 'Laboratory Testing & Scientific Halal Analysis' : 'Uji Laboratorium & Analisis Kehalalan Saintifik',
             bpjph: Math.round(bpjphBase * 0.2),
             lph: Math.round(lphBase * 0.2),
           },
           {
-            item: `Tambahan Varian Produk (${productCount} item) & Bahan (${ingredientCount} item)`,
+            item: isEn
+              ? `Additional Product Variants (${productCount} items) & Ingredients (${ingredientCount} items)`
+              : `Tambahan Varian Produk (${productCount} item) & Bahan (${ingredientCount} item)`,
             bpjph: prodAddon + ingrAddon,
             lph: Math.round((prodAddon + ingrAddon) * 0.8),
           },
         ],
-        notes:
-          'Simulasi biaya didasarkan pada Keputusan Kepala BPJPH dan Standar Layanan LPH UIN SGD Bandung.',
+        notes: isEn
+          ? 'Simulation based on BPJPH Official Regulation and LPH UIN SGD Bandung Service Standards.'
+          : 'Simulasi biaya didasarkan pada Keputusan Kepala BPJPH dan Standar Layanan LPH UIN SGD Bandung.',
       });
     } finally {
       setLoading(false);
@@ -85,7 +92,7 @@ export const PriceCalculatorPage: React.FC = () => {
 
   useEffect(() => {
     calculate();
-  }, [serviceType, businessScale, productCount, ingredientCount]);
+  }, [serviceType, businessScale, productCount, ingredientCount, language]);
 
   const handleDownloadPDF = async () => {
     const el = document.getElementById('calc-summary-card');
@@ -96,7 +103,13 @@ export const PriceCalculatorPage: React.FC = () => {
       const pdf = new jsPDF('p', 'mm', 'a4');
       const imgWidth = 190;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      pdf.text('Estimasi Biaya Pemeriksaan Halal - LPH UIN SGD Bandung', 10, 15);
+      pdf.text(
+        language === 'en'
+          ? 'Halal Inspection Fee Estimate - LPH UIN SGD Bandung'
+          : 'Estimasi Biaya Pemeriksaan Halal - LPH UIN SGD Bandung',
+        10,
+        15
+      );
       pdf.addImage(imgData, 'PNG', 10, 25, imgWidth, imgHeight);
       pdf.save(
         `Estimasi_Tarif_Halal_${businessScale}_${new Date().toISOString().split('T')[0]}.pdf`
@@ -107,7 +120,7 @@ export const PriceCalculatorPage: React.FC = () => {
   };
 
   const formatRupiah = (val: number) => {
-    return new Intl.NumberFormat('id-ID', {
+    return new Intl.NumberFormat(language === 'en' ? 'en-US' : 'id-ID', {
       style: 'currency',
       currency: 'IDR',
       maximumFractionDigits: 0,
@@ -121,13 +134,13 @@ export const PriceCalculatorPage: React.FC = () => {
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-purple-200 text-xs font-semibold uppercase tracking-wider mb-4 border border-white/20">
             <Calculator className="w-3.5 h-3.5" />
-            Transparansi Biaya Sertifikasi Halal
+            {t('calc_badge')}
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
-            Kalkulator Tarif Halal LPH UIN SGD
+            {t('calc_title')}
           </h1>
-          <p className="mt-3 text-neutral-200 max-w-2xl mx-auto text-sm sm:text-base font-normal">
-            Simulasi transparan biaya pemeriksaan halal reguler sesuai standar tarif resmi BPJPH Kementerian Agama RI dan keunggulan efisiensi LPH UIN Sunan Gunung Djati.
+          <p className="mt-3 text-neutral-200 max-w-2xl mx-auto text-sm sm:text-base font-normal leading-relaxed">
+            {t('calc_subtitle')}
           </p>
         </div>
       </section>
@@ -140,20 +153,20 @@ export const PriceCalculatorPage: React.FC = () => {
             <Card className="bg-white rounded-3xl border border-neutral-200/80 shadow-xl p-6 sm:p-8 space-y-6">
               <div className="border-b border-neutral-100 pb-4">
                 <span className="text-xs font-black text-[#6b1282] uppercase tracking-wider">
-                  Parameter Usaha
+                  {t('calc_param_tag')}
                 </span>
                 <h3 className="text-xl font-black text-[#1b183a] mt-1">
-                  Pengaturan Skema &amp; Skala
+                  {t('calc_param_title')}
                 </h3>
                 <p className="text-xs text-neutral-500 mt-1">
-                  Sesuaikan skala usaha dan perkiraan jumlah produk/bahan baku.
+                  {t('calc_param_desc')}
                 </p>
               </div>
 
               {/* Service Type */}
               <div>
                 <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wide mb-2">
-                  Skema Layanan
+                  {t('calc_scheme_label')}
                 </label>
                 <div className="grid grid-cols-2 gap-2">
                   <Button
@@ -165,7 +178,7 @@ export const PriceCalculatorPage: React.FC = () => {
                     }
                     onPress={() => setServiceType('REGULER')}
                   >
-                    Sertifikasi Baru (Reguler)
+                    {t('calc_scheme_new')}
                   </Button>
                   <Button
                     variant={serviceType === 'PERPANJANGAN' ? 'primary' : 'outline'}
@@ -176,7 +189,7 @@ export const PriceCalculatorPage: React.FC = () => {
                     }
                     onPress={() => setServiceType('PERPANJANGAN')}
                   >
-                    Perpanjangan Sertifikat
+                    {t('calc_scheme_renewal')}
                   </Button>
                 </div>
               </div>
@@ -184,14 +197,14 @@ export const PriceCalculatorPage: React.FC = () => {
               {/* Business Scale */}
               <div>
                 <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wide mb-2">
-                  Skala Usaha
+                  {t('calc_scale_label')}
                 </label>
                 <div className="grid grid-cols-2 gap-2">
                   {[
-                    { id: 'MIKRO', label: 'Usaha Mikro (UMK)' },
-                    { id: 'KECIL', label: 'Usaha Kecil' },
-                    { id: 'MENENGAH', label: 'Usaha Menengah' },
-                    { id: 'BESAR', label: 'Industri Besar' },
+                    { id: 'MIKRO', label: t('calc_scale_micro') },
+                    { id: 'KECIL', label: t('calc_scale_small') },
+                    { id: 'MENENGAH', label: t('calc_scale_medium') },
+                    { id: 'BESAR', label: t('calc_scale_large') },
                   ].map((s) => (
                     <Button
                       key={s.id}
@@ -213,7 +226,7 @@ export const PriceCalculatorPage: React.FC = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wide mb-1.5">
-                    Jumlah Produk (Item)
+                    {t('calc_products_count')}
                   </label>
                   <Input
                     type="number"
@@ -228,7 +241,7 @@ export const PriceCalculatorPage: React.FC = () => {
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wide mb-1.5">
-                    Jumlah Bahan (Item)
+                    {t('calc_ingredients_count')}
                   </label>
                   <Input
                     type="number"
@@ -243,10 +256,10 @@ export const PriceCalculatorPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 leading-relaxed flex items-start gap-2.5">
-                <ShieldCheck className="w-5 h-5 text-[#005a36] shrink-0 mt-0.5" />
+              <div className="p-4 rounded-2xl bg-purple-50/70 border border-purple-200/80 text-xs text-purple-950 leading-relaxed flex items-start gap-2.5">
+                <ShieldCheck className="w-5 h-5 text-[#6b1282] shrink-0 mt-0.5" />
                 <span>
-                  LPH UIN SGD Bandung memberikan efisiensi biaya audit lapangan dan pengujian laboratorium berstandar akreditasi ISO 17025.
+                  {t('calc_iso_note')}
                 </span>
               </div>
             </Card>
@@ -259,19 +272,19 @@ export const PriceCalculatorPage: React.FC = () => {
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-neutral-100 gap-2">
                   <div>
                     <span className="text-xs font-black text-[#6b1282] uppercase tracking-wider">
-                      Hasil Simulasi Biaya
+                      {t('calc_summary_tag')}
                     </span>
                     <h3 className="text-xl font-black text-[#1b183a]">
-                      Estimasi Biaya Pemeriksaan Halal
+                      {t('calc_summary_title')}
                     </h3>
                   </div>
                   <Button
                     variant="outline"
-                    className="border-neutral-200 text-[#6b1282] font-bold text-xs px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 self-start sm:self-auto"
+                    className="border-neutral-200 text-[#6b1282] font-bold text-xs px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 self-start sm:self-auto hover:bg-purple-50"
                     onPress={handleDownloadPDF}
                   >
                     <Download className="w-3.5 h-3.5" />
-                    Unduh PDF
+                    {t('calc_download_pdf')}
                   </Button>
                 </div>
 
@@ -286,30 +299,30 @@ export const PriceCalculatorPage: React.FC = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="p-5 rounded-2xl bg-neutral-50 border border-neutral-200">
                         <span className="text-xs font-bold text-neutral-500 block uppercase">
-                          Standar Maksimum BPJPH
+                          {t('calc_bpjph_max')}
                         </span>
                         <span className="text-2xl sm:text-3xl font-black text-neutral-800 block mt-1 font-mono">
                           {formatRupiah(result.totalBpjph)}
                         </span>
                         <span className="text-[11px] text-neutral-400 mt-1 block">
-                          Sesuai Keputusan Tarif Resmi
+                          {t('calc_official_tariff')}
                         </span>
                       </div>
 
                       <div className="p-5 rounded-2xl bg-purple-50/70 border border-purple-200">
                         <div className="flex items-center justify-between">
                           <span className="text-xs font-bold text-[#6b1282] uppercase">
-                            Estimasi LPH UIN SGD
+                            {t('calc_uin_estimate')}
                           </span>
                           <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#6b1282] text-white">
-                            Hemat {result.savingsPercent}%
+                            {t('calc_save')} {result.savingsPercent}%
                           </span>
                         </div>
                         <span className="text-2xl sm:text-3xl font-black text-[#6b1282] block mt-1 font-mono">
                           {formatRupiah(result.totalLph)}
                         </span>
                         <span className="text-[11px] text-purple-900 mt-1 block font-semibold">
-                          Efisiensi hemat {formatRupiah(result.savingsNominal)}
+                          {t('calc_saving_efficiency')} {formatRupiah(result.savingsNominal)}
                         </span>
                       </div>
                     </div>
@@ -317,15 +330,15 @@ export const PriceCalculatorPage: React.FC = () => {
                     {/* Breakdown Table */}
                     <div>
                       <h4 className="text-xs font-bold text-neutral-700 uppercase tracking-wide mb-3">
-                        Rincian Komponen Biaya
+                        {t('calc_breakdown_title')}
                       </h4>
                       <div className="rounded-2xl border border-neutral-200 overflow-hidden text-xs">
                         <table className="w-full text-left">
                           <thead className="bg-neutral-100/80 text-neutral-700 font-bold border-b border-neutral-200">
                             <tr>
-                              <th className="py-3 px-4">Komponen Layanan</th>
-                              <th className="py-3 px-4 text-right">Maks. BPJPH</th>
-                              <th className="py-3 px-4 text-right text-[#6b1282]">LPH UIN SGD</th>
+                              <th className="py-3 px-4">{t('calc_col_component')}</th>
+                              <th className="py-3 px-4 text-right">{t('calc_col_bpjph')}</th>
+                              <th className="py-3 px-4 text-right text-[#6b1282]">{t('calc_col_lph')}</th>
                             </tr>
                           </thead>
                           <tbody className="divide-y divide-neutral-100">
@@ -349,7 +362,10 @@ export const PriceCalculatorPage: React.FC = () => {
 
                     {/* Notes & Disclaimer */}
                     <p className="text-[11px] text-neutral-400 leading-relaxed italic">
-                      * {result.notes} Biaya belum termasuk akomodasi auditor jika lokasi pabrik di luar jangkauan reguler.
+                      * {result.notes}{' '}
+                      {language === 'en'
+                        ? 'Fees exclude auditor accommodation if the facility is outside regular inspection zones.'
+                        : 'Biaya belum termasuk akomodasi auditor jika lokasi pabrik di luar jangkauan reguler.'}
                     </p>
 
                     {/* CTA Button in LPH Gradient */}
@@ -363,9 +379,9 @@ export const PriceCalculatorPage: React.FC = () => {
                         <Button
                           variant="primary"
                           fullWidth
-                          className="bg-gradient-to-r from-[#6b1282] via-[#7e22ce] to-[#005a36] hover:brightness-110 text-white font-black py-3.5 rounded-2xl shadow-xl flex items-center justify-center gap-2 text-sm"
+                          className="bg-gradient-to-r from-[#6b1282] via-[#86198f] to-[#4a0d5c] hover:brightness-110 text-white font-black py-3.5 rounded-2xl shadow-xl flex items-center justify-center gap-2 text-sm"
                         >
-                          Konsultasikan &amp; Ajukan Pemeriksaan Sekarang
+                          {t('calc_cta_button')}
                           <ArrowRight className="w-4 h-4" />
                         </Button>
                       </a>

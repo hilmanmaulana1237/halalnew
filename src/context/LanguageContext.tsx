@@ -96,6 +96,58 @@ export const translations: Translations = {
   chatbot_chip_selfdeclare: { id: '📋 Syarat Self Declare Gratis', en: '📋 Free Self-Declare Terms' },
   chatbot_chip_lab: { id: '🔬 Uji Lab DNA Babi ISO 17025', en: '🔬 Porcine DNA Lab Test' },
   chatbot_chip_sihalal: { id: '📜 Alur Pendaftaran SIHALAL', en: '📜 SIHALAL Registration Flow' },
+
+  // Calculator Page
+  calc_badge: { id: 'Transparansi Biaya Sertifikasi Halal', en: 'Halal Certification Fee Transparency' },
+  calc_title: { id: 'Kalkulator Tarif Halal LPH UIN SGD', en: 'Halal Fee Calculator LPH UIN SGD' },
+  calc_subtitle: {
+    id: 'Simulasi transparan biaya pemeriksaan halal reguler sesuai standar tarif resmi BPJPH Kementerian Agama RI dan keunggulan efisiensi LPH UIN Sunan Gunung Djati.',
+    en: 'Transparent simulation of regular halal inspection fees according to official BPJPH Ministry of Religious Affairs standards and LPH UIN Sunan Gunung Djati efficiency.'
+  },
+  calc_param_tag: { id: 'Parameter Usaha', en: 'Business Parameters' },
+  calc_param_title: { id: 'Pengaturan Skema & Skala', en: 'Scheme & Scale Settings' },
+  calc_param_desc: { id: 'Sesuaikan skala usaha dan perkiraan jumlah produk/bahan baku.', en: 'Configure business scale and estimated product/ingredient count.' },
+  calc_scheme_label: { id: 'Skema Layanan', en: 'Service Scheme' },
+  calc_scheme_new: { id: 'Sertifikasi Baru (Reguler)', en: 'New Certification (Regular)' },
+  calc_scheme_renewal: { id: 'Perpanjangan Sertifikat', en: 'Certificate Renewal' },
+  calc_scale_label: { id: 'Skala Usaha', en: 'Business Scale' },
+  calc_scale_micro: { id: 'Usaha Mikro (UMK)', en: 'Micro Enterprise (MSE)' },
+  calc_scale_small: { id: 'Usaha Kecil', en: 'Small Enterprise' },
+  calc_scale_medium: { id: 'Usaha Menengah', en: 'Medium Enterprise' },
+  calc_scale_large: { id: 'Industri Besar', en: 'Large Industry' },
+  calc_products_count: { id: 'Jumlah Produk (Item)', en: 'Product Count (Items)' },
+  calc_ingredients_count: { id: 'Jumlah Bahan (Item)', en: 'Ingredient Count (Items)' },
+  calc_iso_note: {
+    id: 'LPH UIN SGD Bandung memberikan efisiensi biaya audit lapangan dan pengujian laboratorium berstandar akreditasi ISO 17025.',
+    en: 'LPH UIN SGD Bandung delivers high efficiency for on-site audits and ISO 17025 accredited laboratory testing.'
+  },
+  calc_summary_tag: { id: 'Hasil Simulasi Biaya', en: 'Calculation Summary' },
+  calc_summary_title: { id: 'Estimasi Biaya Pemeriksaan Halal', en: 'Estimated Halal Inspection Fee' },
+  calc_download_pdf: { id: 'Unduh PDF', en: 'Download PDF' },
+  calc_bpjph_max: { id: 'Standar Maksimum BPJPH', en: 'BPJPH Maximum Standard' },
+  calc_official_tariff: { id: 'Sesuai Keputusan Tarif Resmi', en: 'According to Official Tariff Regulation' },
+  calc_uin_estimate: { id: 'Estimasi LPH UIN SGD', en: 'LPH UIN SGD Estimate' },
+  calc_save: { id: 'Hemat', en: 'Save' },
+  calc_saving_efficiency: { id: 'Efisiensi hemat', en: 'Estimated savings' },
+  calc_breakdown_title: { id: 'Rincian Komponen Biaya', en: 'Cost Breakdown by Component' },
+  calc_col_component: { id: 'Komponen Layanan', en: 'Service Component' },
+  calc_col_bpjph: { id: 'Maks. BPJPH', en: 'Max. BPJPH' },
+  calc_col_lph: { id: 'LPH UIN SGD', en: 'LPH UIN SGD' },
+  calc_cta_button: { id: 'Konsultasikan & Ajukan Pemeriksaan Sekarang', en: 'Consult & Apply for Inspection Now' },
+
+  // Footer
+  footer_desc: {
+    id: 'Pusat Halal (Halal Center) UIN Sunan Gunung Djati Bandung melalui visi "Halalsphere University" mengintegrasikan riset multidisiplin, pemeriksaan halal reguler (LPH), pendampingan UMK (LP3H), laboratorium terpadu, dan pelatihan kompetensi SDM halal.',
+    en: 'Halal Center UIN Sunan Gunung Djati Bandung through the "Halalsphere University" vision integrates multidisciplinary research, regular halal audits (LPH), MSE mentoring (LP3H), integrated laboratories, and professional halal training.'
+  },
+  footer_cta_calc: { id: 'Hitung Estimasi Tarif LPH', en: 'Calculate LPH Fee' },
+  footer_col_explore: { id: 'Jelajahi', en: 'Explore' },
+  footer_col_units: { id: 'Unit Layanan', en: 'Service Units' },
+  footer_col_contact: { id: 'Kontak Resmi', en: 'Official Contacts' },
+  footer_faq: { id: 'Pusat Bantuan (FAQ)', en: 'Help Center (FAQ)' },
+  footer_office_phone: { id: 'Telepon Kantor', en: 'Office Phone' },
+  footer_office_hours: { id: 'Jam Operasional Layanan', en: 'Service Operating Hours' },
+  footer_accreditation: { id: 'Terakreditasi BPJPH Kemenag RI', en: 'BPJPH Ministry of Religious Affairs Accredited' },
 };
 
 interface LanguageContextType {
@@ -136,3 +188,4 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 };
 
 export const useLanguage = () => useContext(LanguageContext);
+

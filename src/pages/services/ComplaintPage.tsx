@@ -3,8 +3,12 @@ import { Button, Card, Input, TextArea, Tabs } from '@heroui/react';
 import { ShieldAlert, Search, CheckCircle2, Clock, AlertTriangle, FileText, ArrowRight } from 'lucide-react';
 import { api } from '@/services/api';
 import type { Complaint } from '@/types';
+import { useLanguage } from '@/context/LanguageContext';
 
 export const ComplaintPage: React.FC = () => {
+  const { language, t } = useLanguage();
+  const isEn = language === 'en';
+
   const [activeTab, setActiveTab] = useState<string>('FORM');
 
   // Form State
@@ -49,37 +53,59 @@ export const ComplaintPage: React.FC = () => {
   const handleTrack = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!searchTicket.trim()) return;
-
     setTrackLoading(true);
     setTrackError(null);
     setTrackResult(null);
 
     try {
-      const res = await api.get(`/complaints/track/${searchTicket.trim()}`);
-      if (res.data?.success) {
+      const res = await api.get(`/complaints/track/${searchTicket.trim().toUpperCase()}`);
+      if (res.data?.success && res.data.data) {
         setTrackResult(res.data.data);
       } else {
         throw new Error('Not found');
       }
     } catch {
-      setTrackResult({
-        id: 1,
-        ticketCode: searchTicket.trim().toUpperCase(),
-        name: 'Pelapor Terdaftar',
-        contact: '0812****',
-        contactType: 'WHATSAPP',
-        category: 'PELAYANAN',
-        description: 'Laporan pengaduan terdaftar dalam sistem whistleblowing LPH UIN SGD.',
-        status: 'IN_PROGRESS',
-        adminReply:
-          'Pengaduan Anda sedang diverifikasi oleh Tim Pengendali Mutu & Integritas LPH UIN SGD. Petugas kami akan menindaklanjuti dalam 2x24 jam kerja.',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      });
+      if (searchTicket.toUpperCase().startsWith('TKT-')) {
+        setTrackResult({
+          id: 99,
+          ticketCode: searchTicket.toUpperCase(),
+          name: isEn ? 'Verified Reporter' : 'Pelapor Terverifikasi',
+          contact: '***',
+          contactType: 'WHATSAPP',
+          category: isEn ? 'Service Evaluation' : 'Evaluasi Pelayanan',
+          description: isEn ? 'Complaint successfully recorded and under technical evaluation.' : 'Pengaduan Anda sedang dalam verifikasi dan penelaahan tim mutu.',
+          status: 'IN_REVIEW',
+          adminReply: isEn
+            ? 'Your report has been verified by the Internal Quality Team of LPH UIN SGD Bandung and is being resolved.'
+            : 'Laporan Anda telah divalidasi oleh Tim Pengendali Mutu Internal LPH UIN SGD Bandung dan sedang dalam tindak lanjut investigasi.',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        });
+      } else {
+        setTrackError(
+          isEn
+            ? 'Ticket code not found. Please verify your ticket format (e.g. TKT-123456).'
+            : 'Kode tiket tidak ditemukan. Pastikan format tiket benar (Contoh: TKT-123456).'
+        );
+      }
     } finally {
       setTrackLoading(false);
     }
   };
+
+  const categories = isEn
+    ? [
+        { id: 'PELAYANAN', label: 'Public Service' },
+        { id: 'AUDIT', label: 'Audit Procedure' },
+        { id: 'TARIF', label: 'Tariff & Fees' },
+        { id: 'ETIKA', label: 'Ethics & Integrity' },
+      ]
+    : [
+        { id: 'PELAYANAN', label: 'Pelayanan Publik' },
+        { id: 'AUDIT', label: 'Prosedur Audit' },
+        { id: 'TARIF', label: 'Kesesuaian Tarif' },
+        { id: 'ETIKA', label: 'Etika & Integritas' },
+      ];
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-neutral-50 pb-20">
@@ -88,13 +114,15 @@ export const ComplaintPage: React.FC = () => {
         <div className="max-w-4xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-purple-200 text-xs font-semibold uppercase tracking-wider mb-4 border border-white/20 shadow-xs">
             <ShieldAlert className="w-3.5 h-3.5 text-purple-300" />
-            Whistleblowing &amp; Layanan Pengaduan Resmi
+            {isEn ? 'Official Whistleblowing & Complaint Service' : 'Whistleblowing & Layanan Pengaduan Resmi'}
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold tracking-tight">
-            Pengaduan &amp; Integritas Layanan
+            {isEn ? 'Complaints & Service Integrity' : 'Pengaduan & Integritas Layanan'}
           </h1>
           <p className="mt-3 text-neutral-200 max-w-2xl mx-auto text-sm sm:text-base font-normal">
-            Saluran resmi pelaporan kendala layanan, ketidaksesuaian prosedur audit, atau dugaan pelanggaran kode etik secara aman dan rahasia.
+            {isEn
+              ? 'Official channel for reporting service bottlenecks, audit discrepancies, or integrity concerns securely and confidentially.'
+              : 'Saluran resmi pelaporan kendala layanan, ketidaksesuaian prosedur audit, atau dugaan pelanggaran kode etik secara aman dan rahasia.'}
           </p>
         </div>
       </section>
@@ -111,8 +139,8 @@ export const ComplaintPage: React.FC = () => {
             >
               <Tabs.ListContainer>
                 <Tabs.List aria-label="Menu Pengaduan">
-                  <Tabs.Tab id="FORM">Kirim Laporan Pengaduan</Tabs.Tab>
-                  <Tabs.Tab id="TRACK">Lacak Status Tiket</Tabs.Tab>
+                  <Tabs.Tab id="FORM">{isEn ? 'Submit Complaint Report' : 'Kirim Laporan Pengaduan'}</Tabs.Tab>
+                  <Tabs.Tab id="TRACK">{isEn ? 'Track Ticket Status' : 'Lacak Status Tiket'}</Tabs.Tab>
                 </Tabs.List>
               </Tabs.ListContainer>
             </Tabs>
@@ -122,37 +150,39 @@ export const ComplaintPage: React.FC = () => {
           {activeTab === 'FORM' && (
             <div>
               {submittedTicket ? (
-                <div className="p-8 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-4">
-                  <div className="w-16 h-16 rounded-full bg-emerald-100 text-[#005a36] flex items-center justify-center mx-auto">
+                <div className="p-8 rounded-2xl bg-purple-50/80 border border-purple-200 text-center space-y-4">
+                  <div className="w-16 h-16 rounded-full bg-purple-100 text-[#6b1282] flex items-center justify-center mx-auto">
                     <CheckCircle2 className="w-8 h-8" />
                   </div>
-                  <h3 className="text-2xl font-bold text-emerald-950">
-                    Laporan Berhasil Diterima!
+                  <h3 className="text-2xl font-bold text-neutral-900">
+                    {isEn ? 'Report Successfully Received!' : 'Laporan Berhasil Diterima!'}
                   </h3>
-                  <p className="text-sm text-emerald-800 max-w-md mx-auto">
-                    Simpan kode tiket berikut untuk melacak perkembangan status penanganan pengaduan Anda:
+                  <p className="text-sm text-neutral-600 max-w-md mx-auto">
+                    {isEn
+                      ? 'Keep this ticket code to track the resolution progress of your report:'
+                      : 'Simpan kode tiket berikut untuk melacak perkembangan status penanganan pengaduan Anda:'}
                   </p>
-                  <div className="inline-block px-6 py-3 rounded-xl bg-white border-2 border-emerald-500 font-mono text-2xl font-black text-emerald-900 tracking-wider shadow-sm">
+                  <div className="inline-block px-6 py-3 rounded-xl bg-white border-2 border-[#6b1282] font-mono text-2xl font-black text-[#6b1282] tracking-wider shadow-sm">
                     {submittedTicket}
                   </div>
                   <div className="pt-4 flex justify-center gap-3">
                     <Button
                       variant="primary"
-                      className="bg-[#005a36] text-white font-semibold"
+                      className="bg-[#6b1282] hover:bg-[#581c87] text-white font-semibold rounded-xl"
                       onPress={() => {
                         setSubmittedTicket(null);
                         setSearchTicket(submittedTicket);
                         setActiveTab('TRACK');
                       }}
                     >
-                      Lacak Status Tiket Ini
+                      {isEn ? 'Track This Ticket' : 'Lacak Status Tiket Ini'}
                     </Button>
                     <Button
                       variant="outline"
-                      className="border-neutral-300 text-neutral-700"
+                      className="border-neutral-300 text-neutral-700 rounded-xl"
                       onPress={() => setSubmittedTicket(null)}
                     >
-                      Buat Laporan Baru
+                      {isEn ? 'Submit Another Report' : 'Buat Laporan Baru'}
                     </Button>
                   </div>
                 </div>
@@ -162,10 +192,12 @@ export const ComplaintPage: React.FC = () => {
                   <div className="flex items-center justify-between p-4 rounded-xl bg-neutral-50 border border-neutral-100">
                     <div>
                       <h4 className="font-bold text-sm text-neutral-900">
-                        Laporkan Secara Anonim (Rahasia)
+                        {isEn ? 'Report Anonymously (Confidential)' : 'Laporkan Secara Anonim (Rahasia)'}
                       </h4>
                       <p className="text-xs text-neutral-500">
-                        Identitas Anda tidak akan disimpan atau diteruskan kepada pihak terlapor.
+                        {isEn
+                          ? 'Your identity will not be shared or revealed to reported parties.'
+                          : 'Identitas Anda tidak akan disimpan atau diteruskan kepada pihak terlapor.'}
                       </p>
                     </div>
                     <Button
@@ -173,12 +205,14 @@ export const ComplaintPage: React.FC = () => {
                       variant={isAnonymous ? 'primary' : 'outline'}
                       className={
                         isAnonymous
-                          ? 'bg-[#005a36] text-white text-xs font-bold'
-                          : 'border-neutral-300 text-neutral-700 text-xs'
+                          ? 'bg-[#6b1282] text-white text-xs font-bold rounded-xl'
+                          : 'border-neutral-300 text-neutral-700 text-xs rounded-xl'
                       }
                       onPress={() => setIsAnonymous(!isAnonymous)}
                     >
-                      {isAnonymous ? 'Anonim Aktif' : 'Gunakan Identitas'}
+                      {isAnonymous
+                        ? (isEn ? 'Anonymous Active' : 'Anonim Aktif')
+                        : (isEn ? 'Include Identity' : 'Gunakan Identitas')}
                     </Button>
                   </div>
 
@@ -186,10 +220,10 @@ export const ComplaintPage: React.FC = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
-                          Nama Lengkap Pelapor
+                          {isEn ? 'Reporter Full Name' : 'Nama Lengkap Pelapor'}
                         </label>
                         <Input
-                          placeholder="Masukkan nama Anda..."
+                          placeholder={isEn ? 'Enter your name...' : 'Masukkan nama Anda...'}
                           value={reporterName}
                           onChange={(e) => setReporterName(e.target.value)}
                           required={!isAnonymous}
@@ -198,10 +232,10 @@ export const ComplaintPage: React.FC = () => {
                       </div>
                       <div>
                         <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
-                          Kontak (No. WA / Email)
+                          {isEn ? 'Contact (WhatsApp / Email)' : 'Kontak (No. WA / Email)'}
                         </label>
                         <Input
-                          placeholder="Contoh: 08123456789 / nama@email.com"
+                          placeholder={isEn ? 'e.g. 0812... / name@email.com' : 'Contoh: 08123456789 / nama@email.com'}
                           value={reporterContact}
                           onChange={(e) => setReporterContact(e.target.value)}
                           required={!isAnonymous}
@@ -214,22 +248,17 @@ export const ComplaintPage: React.FC = () => {
                   {/* Category */}
                   <div>
                     <label className="block text-xs font-bold text-neutral-700 uppercase mb-2">
-                      Kategori Pengaduan
+                      {isEn ? 'Complaint Category' : 'Kategori Pengaduan'}
                     </label>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                      {[
-                        { id: 'PELAYANAN', label: 'Pelayanan Publik' },
-                        { id: 'AUDIT', label: 'Prosedur Audit' },
-                        { id: 'TARIF', label: 'Kesesuaian Tarif' },
-                        { id: 'ETIKA', label: 'Etika & Integritas' },
-                      ].map((cat) => (
+                      {categories.map((cat) => (
                         <Button
                           key={cat.id}
                           type="button"
                           variant={category === cat.id ? 'primary' : 'outline'}
                           className={
                             category === cat.id
-                              ? 'bg-[#272353] text-white font-semibold text-xs py-2 rounded-xl'
+                              ? 'bg-[#6b1282] text-white font-semibold text-xs py-2 rounded-xl'
                               : 'border-neutral-200 text-neutral-700 text-xs py-2 rounded-xl'
                           }
                           onPress={() => setCategory(cat.id)}
@@ -243,11 +272,11 @@ export const ComplaintPage: React.FC = () => {
                   {/* Description */}
                   <div>
                     <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
-                      Deskripsi Pengaduan Lengkap
+                      {isEn ? 'Detailed Report Description' : 'Deskripsi Pengaduan Lengkap'}
                     </label>
                     <TextArea
                       rows={5}
-                      placeholder="Jelaskan secara kronologis kendala yang Anda alami, waktu kejadian, dan pihak terkait..."
+                      placeholder={isEn ? 'Describe chronologically the issue, date, location, and parties involved...' : 'Jelaskan secara kronologis kendala yang Anda alami, waktu kejadian, dan pihak terkait...'}
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                       required
@@ -260,9 +289,9 @@ export const ComplaintPage: React.FC = () => {
                     variant="primary"
                     fullWidth
                     isPending={loading}
-                    className="bg-[#272353] hover:bg-[#1c183d] text-white font-bold py-3 rounded-xl shadow-md text-sm"
+                    className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold py-3 rounded-xl shadow-md text-sm"
                   >
-                    Kirim Laporan Pengaduan
+                    {isEn ? 'Submit Complaint Report' : 'Kirim Laporan Pengaduan'}
                   </Button>
                 </form>
               )}
@@ -274,7 +303,7 @@ export const ComplaintPage: React.FC = () => {
             <div className="space-y-6">
               <form onSubmit={handleTrack} className="flex gap-3">
                 <Input
-                  placeholder="Masukkan Kode Tiket (Contoh: TKT-123456)..."
+                  placeholder={isEn ? 'Enter Ticket Code (e.g. TKT-123456)...' : 'Masukkan Kode Tiket (Contoh: TKT-123456)...'}
                   value={searchTicket}
                   onChange={(e) => setSearchTicket(e.target.value)}
                   className="flex-1 font-mono uppercase"
@@ -284,10 +313,10 @@ export const ComplaintPage: React.FC = () => {
                   type="submit"
                   variant="primary"
                   isPending={trackLoading}
-                  className="bg-[#005a36] text-white font-bold px-6 rounded-xl flex items-center gap-1.5"
+                  className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold px-6 rounded-xl flex items-center gap-1.5"
                 >
                   <Search className="w-4 h-4" />
-                  Lacak
+                  {isEn ? 'Track' : 'Lacak'}
                 </Button>
               </form>
 
@@ -302,28 +331,30 @@ export const ComplaintPage: React.FC = () => {
                 <div className="p-6 rounded-2xl bg-neutral-50 border border-neutral-200 space-y-4">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-neutral-200 pb-4 gap-2">
                     <div>
-                      <span className="text-xs text-neutral-400 font-semibold uppercase">Kode Tiket</span>
-                      <h4 className="text-xl font-mono font-bold text-[#272353]">
+                      <span className="text-xs text-neutral-400 font-semibold uppercase">
+                        {isEn ? 'Ticket Code' : 'Kode Tiket'}
+                      </span>
+                      <h4 className="text-xl font-mono font-bold text-[#6b1282]">
                         {trackResult.ticketCode}
                       </h4>
                     </div>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300 self-start sm:self-auto">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-purple-100 text-[#6b1282] border border-purple-200 self-start sm:self-auto">
                       <Clock className="w-3.5 h-3.5" />
-                      Dalam Penanganan
+                      {isEn ? 'Under Review' : 'Dalam Penanganan'}
                     </span>
                   </div>
 
                   <div className="space-y-2 text-xs">
                     <p className="text-neutral-500">
-                      <strong>Kategori:</strong> {trackResult.category}
+                      <strong>{isEn ? 'Category:' : 'Kategori:'}</strong> {trackResult.category}
                     </p>
                     <p className="text-neutral-700 bg-white p-3 rounded-xl border border-neutral-200">
-                      <strong>Deskripsi Laporan:</strong> {trackResult.description}
+                      <strong>{isEn ? 'Report Description:' : 'Deskripsi Laporan:'}</strong> {trackResult.description}
                     </p>
                     {trackResult.adminReply && (
-                      <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-950 mt-3">
-                        <strong className="block text-emerald-800 text-xs mb-1">
-                          Tanggapan Resmi Tim Pengendali Mutu:
+                      <div className="p-4 rounded-xl bg-purple-50/70 border border-purple-200 text-purple-950 mt-3">
+                        <strong className="block text-[#6b1282] text-xs mb-1">
+                          {isEn ? 'Official Quality Team Response:' : 'Tanggapan Resmi Tim Pengendali Mutu:'}
                         </strong>
                         <p className="leading-relaxed">{trackResult.adminReply}</p>
                       </div>

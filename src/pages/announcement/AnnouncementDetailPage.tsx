@@ -3,9 +3,12 @@ import { useParams, Link } from 'react-router-dom';
 import { Button, Card, Skeleton } from '@heroui/react';
 import { Calendar, FileText, Download, ArrowLeft, Pin } from 'lucide-react';
 import { api, formatDate } from '@/services/api';
+import { useLanguage } from '@/context/LanguageContext';
 import type { AnnouncementItem } from '@/types';
 
 export const AnnouncementDetailPage: React.FC = () => {
+  const { language } = useLanguage();
+  const isEn = language === 'en';
   const { slug } = useParams<{ slug: string }>();
   const [item, setItem] = useState<AnnouncementItem | null>(null);
   const [loading, setLoading] = useState(false);
@@ -63,10 +66,10 @@ Diharapkan seluruh pemangku kepentingan industri halal, asosiasi pelaku usaha, d
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <Link
           to="/pengumuman"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-500 hover:text-[#005a36] transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-500 hover:text-[#6b1282] transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          Kembali ke Daftar Pengumuman
+          {isEn ? 'Back to Announcements' : 'Kembali ke Daftar Pengumuman'}
         </Link>
 
         <Card className="bg-white rounded-3xl border border-neutral-200/80 shadow-md p-6 sm:p-10 space-y-6">
@@ -78,21 +81,21 @@ Diharapkan seluruh pemangku kepentingan industri halal, asosiasi pelaku usaha, d
                 </span>
               )}
               <span className="text-xs text-neutral-400 flex items-center gap-1">
-                <Calendar className="w-3.5 h-3.5 text-[#005a36]" />
+                <Calendar className="w-3.5 h-3.5 text-[#6b1282]" />
                 {formatDate(item.createdAt)}
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#272353] tracking-tight leading-snug">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1a0726] tracking-tight leading-snug">
               {item.title}
             </h1>
           </div>
 
           {/* Attached Document Box */}
           {item.fileName && (
-            <div className="p-4 rounded-2xl bg-neutral-50 border border-neutral-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="p-4 rounded-2xl bg-purple-50/40 border border-purple-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-100 text-[#005a36] flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-purple-100 text-[#6b1282] flex items-center justify-center shrink-0">
                   <FileText className="w-5 h-5" />
                 </div>
                 <div>
@@ -100,7 +103,7 @@ Diharapkan seluruh pemangku kepentingan industri halal, asosiasi pelaku usaha, d
                     {item.fileName}
                   </h5>
                   <span className="text-[11px] text-neutral-400">
-                    Dokumen Resmi Terlampir {item.fileSize && `• ${item.fileSize}`}
+                    {isEn ? 'Official Attached Document' : 'Dokumen Resmi Terlampir'} {item.fileSize && `• ${item.fileSize}`}
                   </span>
                 </div>
               </div>
@@ -112,10 +115,10 @@ Diharapkan seluruh pemangku kepentingan industri halal, asosiasi pelaku usaha, d
               >
                 <Button
                   variant="primary"
-                  className="bg-[#005a36] text-white text-xs font-semibold px-4 py-2 rounded-xl flex items-center gap-1.5"
+                  className="bg-[#6b1282] hover:bg-[#581c87] text-white text-xs font-semibold px-4 py-2 rounded-xl flex items-center gap-1.5 shadow-xs"
                 >
                   <Download className="w-3.5 h-3.5" />
-                  Unduh Dokumen
+                  {isEn ? 'Download Document' : 'Unduh Dokumen'}
                 </Button>
               </a>
             </div>

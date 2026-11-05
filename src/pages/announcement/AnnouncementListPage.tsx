@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button, Card, Input, Skeleton } from '@heroui/react';
 import { Bell, Calendar, FileText, Download, Pin, ArrowRight } from 'lucide-react';
 import { api, formatDate } from '@/services/api';
+import { useLanguage } from '@/context/LanguageContext';
 import type { AnnouncementItem } from '@/types';
 
 const INITIAL_ANNOUNCEMENTS: AnnouncementItem[] = [
@@ -51,6 +52,8 @@ const INITIAL_ANNOUNCEMENTS: AnnouncementItem[] = [
 ];
 
 export const AnnouncementListPage: React.FC = () => {
+  const { language } = useLanguage();
+  const isEn = language === 'en';
   const [announcements, setAnnouncements] =
     useState<AnnouncementItem[]>(INITIAL_ANNOUNCEMENTS);
   const [loading, setLoading] = useState(false);
@@ -88,13 +91,15 @@ export const AnnouncementListPage: React.FC = () => {
         <div className="max-w-4xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-purple-200 text-xs font-semibold uppercase tracking-wider mb-4 border border-white/20 shadow-xs">
             <Bell className="w-3.5 h-3.5 text-purple-300" />
-            Pengumuman &amp; Surat Edaran Resmi
+            {isEn ? 'Official Announcements & Circulars' : 'Pengumuman & Surat Edaran Resmi'}
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold tracking-tight">
-            Pengumuman Resmi LPH UIN SGD
+            {isEn ? 'Official Announcements LPH UIN SGD' : 'Pengumuman Resmi LPH UIN SGD'}
           </h1>
           <p className="mt-3 text-neutral-200 max-w-2xl mx-auto text-sm sm:text-base font-normal">
-            Informasi edaran resmi, jadwal audit lapangan, keputusan penetapan tarif, dan dokumen pedoman teknis.
+            {isEn
+              ? 'Official circulars, field audit schedules, fee decree determinations, and technical guidelines.'
+              : 'Informasi edaran resmi, jadwal audit lapangan, keputusan penetapan tarif, dan dokumen pedoman teknis.'}
           </p>
         </div>
       </section>
@@ -104,7 +109,7 @@ export const AnnouncementListPage: React.FC = () => {
         {/* Search */}
         <Card className="bg-white rounded-2xl border border-neutral-200/80 shadow-md p-4 sm:p-6">
           <Input
-            placeholder="Cari pengumuman atau surat edaran..."
+            placeholder={isEn ? "Search announcements or circulars..." : "Cari pengumuman atau surat edaran..."}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full"
@@ -139,7 +144,7 @@ export const AnnouncementListPage: React.FC = () => {
                       </span>
                     </div>
 
-                    <h3 className="text-lg font-bold text-neutral-900 hover:text-[#005a36] transition-colors leading-snug">
+                    <h3 className="text-lg font-bold text-neutral-900 hover:text-[#6b1282] transition-colors leading-snug">
                       <Link to={`/pengumuman/${item.slug || item.id}`}>{item.title}</Link>
                     </h3>
 
@@ -149,7 +154,7 @@ export const AnnouncementListPage: React.FC = () => {
 
                     {item.fileName && (
                       <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-neutral-50 border border-neutral-200 text-xs text-neutral-600 font-mono">
-                        <FileText className="w-3.5 h-3.5 text-[#005a36]" />
+                        <FileText className="w-3.5 h-3.5 text-[#6b1282]" />
                         <span>{item.fileName}</span>
                         {item.fileSize && (
                           <span className="text-neutral-400">({item.fileSize})</span>
@@ -162,9 +167,9 @@ export const AnnouncementListPage: React.FC = () => {
                     <Link to={`/pengumuman/${item.slug || item.id}`}>
                       <Button
                         variant="outline"
-                        className="border-neutral-200 text-[#005a36] hover:bg-emerald-50 text-xs font-semibold px-4 py-2 rounded-xl flex items-center gap-1.5"
+                        className="border-purple-200 text-[#6b1282] hover:bg-purple-50 text-xs font-semibold px-4 py-2 rounded-xl flex items-center gap-1.5"
                       >
-                        Buka Surat Edaran <ArrowRight className="w-3.5 h-3.5" />
+                        {isEn ? 'Read Notice' : 'Buka Surat Edaran'} <ArrowRight className="w-3.5 h-3.5" />
                       </Button>
                     </Link>
                   </div>

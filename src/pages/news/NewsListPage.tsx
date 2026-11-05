@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { Button, Card, Input, Skeleton } from '@heroui/react';
 import { Newspaper, Calendar, MapPin, ArrowRight, Search } from 'lucide-react';
 import { api, formatDate } from '@/services/api';
+import { useLanguage } from '@/context/LanguageContext';
 import type { NewsItem } from '@/types';
 
 const INITIAL_NEWS: NewsItem[] = [
@@ -73,6 +74,8 @@ const INITIAL_NEWS: NewsItem[] = [
 ];
 
 export const NewsListPage: React.FC = () => {
+  const { language } = useLanguage();
+  const isEn = language === 'en';
   const [searchParams, setSearchParams] = useSearchParams();
   const [news, setNews] = useState<NewsItem[]>(INITIAL_NEWS);
   const [loading, setLoading] = useState(false);
@@ -112,6 +115,25 @@ export const NewsListPage: React.FC = () => {
     setSearchParams(nextParams);
   };
 
+  const getCategoryLabel = (cat: string) => {
+    if (!isEn) {
+      if (cat === 'ALL') return 'Semua Kategori';
+      return cat;
+    }
+    switch (cat) {
+      case 'ALL':
+        return 'All Categories';
+      case 'KEGIATAN':
+        return 'ACTIVITIES';
+      case 'ACARA':
+        return 'EVENTS';
+      case 'AGENDA':
+        return 'AGENDA';
+      default:
+        return cat;
+    }
+  };
+
   return (
     <div className="flex flex-col w-full min-h-screen bg-neutral-50 pb-20">
       {/* Banner */}
@@ -119,13 +141,15 @@ export const NewsListPage: React.FC = () => {
         <div className="max-w-4xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-purple-200 text-xs font-semibold uppercase tracking-wider mb-4 border border-white/20 shadow-xs">
             <Newspaper className="w-3.5 h-3.5" />
-            Warta, Riset &amp; Kegiatan
+            {isEn ? 'News, Research & Events' : 'Warta, Riset & Kegiatan'}
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold tracking-tight">
-            Berita Halal Center UIN SGD
+            {isEn ? 'Halal Center UIN SGD News' : 'Berita Halal Center UIN SGD'}
           </h1>
           <p className="mt-3 text-neutral-200 max-w-2xl mx-auto text-sm sm:text-base font-normal">
-            Informasi terkini mengenai agenda pelatihan, capaian riset laboratorium, dan regulasi jaminan produk halal nasional.
+            {isEn
+              ? 'Latest information regarding training schedules, laboratory research breakthroughs, and national halal product regulations.'
+              : 'Informasi terkini mengenai agenda pelatihan, capaian riset laboratorium, dan regulasi jaminan produk halal nasional.'}
           </p>
         </div>
       </section>
@@ -142,19 +166,19 @@ export const NewsListPage: React.FC = () => {
                 variant={category === cat ? 'primary' : 'outline'}
                 className={
                   category === cat
-                    ? 'bg-[#6b1282] text-white font-bold text-xs py-1.5 px-3 rounded-lg'
+                    ? 'bg-[#6b1282] text-white font-bold text-xs py-1.5 px-3 rounded-lg shadow-xs'
                     : 'border-neutral-200 text-neutral-700 text-xs py-1.5 px-3 rounded-lg hover:bg-neutral-50'
                 }
                 onPress={() => handleCategoryChange(cat)}
               >
-                {cat === 'ALL' ? 'Semua Kategori' : cat}
+                {getCategoryLabel(cat)}
               </Button>
             ))}
           </div>
 
           <div className="w-full sm:w-72">
             <Input
-              placeholder="Cari judul berita..."
+              placeholder={isEn ? "Search news title..." : "Cari judul berita..."}
               value={query}
               onChange={(e) => {
                 const nextParams = new URLSearchParams(searchParams);
@@ -191,7 +215,7 @@ export const NewsListPage: React.FC = () => {
                       alt={item.title}
                       className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                     />
-                    <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md text-[10px] font-bold bg-[#272353] text-white shadow-md">
+                    <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md text-[10px] font-bold bg-[#6b1282] text-white shadow-md">
                       {item.category}
                     </span>
                   </div>
@@ -204,7 +228,7 @@ export const NewsListPage: React.FC = () => {
                       <span>{item.author}</span>
                     </div>
 
-                    <h3 className="font-bold text-lg text-neutral-900 leading-snug line-clamp-2 hover:text-[#005a36] transition-colors">
+                    <h3 className="font-bold text-lg text-neutral-900 leading-snug line-clamp-2 hover:text-[#6b1282] transition-colors">
                       <Link to={`/berita/${item.slug || item.id}`}>{item.title}</Link>
                     </h3>
 
@@ -217,9 +241,9 @@ export const NewsListPage: React.FC = () => {
                 <div className="p-6 pt-0 border-t border-neutral-100 mt-2">
                   <Link
                     to={`/berita/${item.slug || item.id}`}
-                    className="text-xs font-bold text-[#005a36] hover:underline flex items-center gap-1 pt-3"
+                    className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1 pt-3"
                   >
-                    Baca Selengkapnya <ArrowRight className="w-3.5 h-3.5" />
+                    {isEn ? 'Read More' : 'Baca Selengkapnya'} <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
               </Card>

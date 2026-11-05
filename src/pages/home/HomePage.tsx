@@ -45,124 +45,168 @@ interface Director {
   experience: string[];
 }
 
-export const DIRECTORS: Director[] = [
+export const getDirectors = (isEn: boolean): Director[] => [
   {
     id: 1,
     name: 'Prof. Dr. H. Rosihon Anwar, M.Ag.',
-    position: 'Rektor UIN SGD Bandung / Dewan Pembina Halal Center',
+    position: isEn
+      ? 'Rector of UIN SGD Bandung / Halal Center Advisory Board'
+      : 'Rektor UIN SGD Bandung / Dewan Pembina Halal Center',
     image: '/assets/images/uin_sgd/director_rosihon.webp',
-    quote:
-      'UIN Sunan Gunung Djati Bandung mendedikasikan seluruh potensi akademik, riset sains halal, dan laboratorium untuk mengakselerasi ekosistem industri halal global yang kredibel dan maslahat.',
-    education: [
-      "Guru Besar Ilmu Al-Qur'an dan Tafsir UIN Sunan Gunung Djati Bandung",
-      'Doktor (S3) Studi Islam / Tafsir Hadis Pascasarjana UIN SGD Bandung',
-      'Magister Agama (S2) Pemikiran Islam UIN SGD Bandung',
-      'Sarjana Agama (S1) Fakultas Ushuluddin UIN SGD Bandung',
-    ],
-    experience: [
-      'Rektor UIN Sunan Gunung Djati Bandung (2023 - Sekarang)',
-      'Inisiator & Pengarah Utama Paradigma "Halalsphere University"',
-      'Dewan Pembina LPH dan LP3H Halal Center UIN Sunan Gunung Djati',
-      'Wakil Rektor Bidang Akademik UIN Sunan Gunung Djati Bandung (2019 - 2023)',
-    ],
+    quote: isEn
+      ? 'UIN Sunan Gunung Djati Bandung dedicates its entire academic potential, halal science research, and accredited laboratories to accelerate a credible and high-integrity global halal industry ecosystem.'
+      : 'UIN Sunan Gunung Djati Bandung mendedikasikan seluruh potensi akademik, riset sains halal, dan laboratorium untuk mengakselerasi ekosistem industri halal global yang kredibel dan maslahat.',
+    education: isEn
+      ? [
+          'Professor of Quranic Exegesis & Tafsir, UIN Sunan Gunung Djati Bandung',
+          'Doctor (Ph.D) in Islamic Studies / Tafsir Hadith Postgraduate School UIN SGD Bandung',
+          'Master of Arts (M.Ag) in Islamic Thought, UIN SGD Bandung',
+          'Bachelor of Theology & Islamic Studies (S.Ag), Faculty of Ushuluddin UIN SGD Bandung',
+        ]
+      : [
+          "Guru Besar Ilmu Al-Qur'an dan Tafsir UIN Sunan Gunung Djati Bandung",
+          'Doktor (S3) Studi Islam / Tafsir Hadis Pascasarjana UIN SGD Bandung',
+          'Magister Agama (S2) Pemikiran Islam UIN SGD Bandung',
+          'Sarjana Agama (S1) Fakultas Ushuluddin UIN SGD Bandung',
+        ],
+    experience: isEn
+      ? [
+          'Rector of UIN Sunan Gunung Djati Bandung (2023 - Present)',
+          'Main Pioneer & Institutional Architect of the "Halalsphere University" Paradigm',
+          'Advisory Board Member of LPH and LP3H Halal Center UIN Sunan Gunung Djati',
+          'Vice Rector for Academic Affairs, UIN Sunan Gunung Djati Bandung (2019 - 2023)',
+        ]
+      : [
+          'Rektor UIN Sunan Gunung Djati Bandung (2023 - Sekarang)',
+          'Inisiator & Pengarah Utama Paradigma "Halalsphere University"',
+          'Dewan Pembina LPH dan LP3H Halal Center UIN Sunan Gunung Djati',
+          'Wakil Rektor Bidang Akademik UIN Sunan Gunung Djati Bandung (2019 - 2023)',
+        ],
   },
   {
     id: 2,
     name: 'Dr. Tri Cahyanto, M.Si.',
-    position: 'Kepala Halal Center UIN SGD',
+    position: isEn
+      ? 'Head of Halal Center UIN SGD'
+      : 'Kepala Halal Center UIN SGD',
     image: '/assets/images/uin_sgd/director_tri.webp',
-    quote:
-      "LPH dan LP3H Halal Center UIN SGD berkomitmen memberikan pelayanan prima, cepat, akuntabel, dan berbasis integritas syar'i serta pengujian laboratorium yang presisi demi melindungi hak konsumen muslim.",
-    education: [
-      'Doktor (S3) Ilmu Biologi & Sains Hayati Terapan',
-      'Magister Sains (S2) Biologi Konservasi & Autentikasi Produk',
-      'Pelatihan & Sertifikasi Lead Auditor Halal Berlisensi BPJPH & MUI',
-      'Sertifikasi Kompetensi Asesor Pengawas Jaminan Produk Halal',
-    ],
-    experience: [
-      'Kepala Pusat Kajian Halal (Halal Center) UIN SGD Bandung',
-      'Pimpinan Teknis Operasional LPH UIN Sunan Gunung Djati Bandung',
-      'Koordinator Nasional Lembaga Pendamping PPH (LP3H) UIN SGD',
-      'Dosen & Peneliti Laboratorium Pengujian Autentikasi Kehalalan Hayati',
-    ],
+    quote: isEn
+      ? "LPH and LP3H Halal Center UIN SGD are committed to delivering swift, transparent, and accountable inspection grounded in Sharia compliance and ISO/IEC 17025 laboratory precision."
+      : "LPH dan LP3H Halal Center UIN SGD berkomitmen memberikan pelayanan prima, cepat, akuntabel, dan berbasis integritas syar'i serta pengujian laboratorium yang presisi demi melindungi hak konsumen muslim.",
+    education: isEn
+      ? [
+          'Doctor (Ph.D) in Biological Sciences & Applied Life Sciences',
+          'Master of Science (M.Si) in Conservation Biology & Molecular Authentication',
+          'Certified Lead Halal Auditor Licensed by BPJPH Ministry of Religious Affairs & MUI',
+          'Certified Competency Assessor for Halal Product Assurance (JPH)',
+        ]
+      : [
+          'Doktor (S3) Ilmu Biologi & Sains Hayati Terapan',
+          'Magister Sains (S2) Biologi Konservasi & Autentikasi Produk',
+          'Pelatihan & Sertifikasi Lead Auditor Halal Berlisensi BPJPH & MUI',
+          'Sertifikasi Kompetensi Asesor Pengawas Jaminan Produk Halal',
+        ],
+    experience: isEn
+      ? [
+          'Head of Halal Center, UIN Sunan Gunung Djati Bandung',
+          'Operational & Technical Lead of LPH UIN Sunan Gunung Djati Bandung',
+          'National Coordinator of Halal Process Mentoring Body (LP3H) UIN SGD',
+          'Senior Lecturer & Researcher in Halal Molecular Bio-Testing',
+        ]
+      : [
+          'Kepala Pusat Kajian Halal (Halal Center) UIN SGD Bandung',
+          'Pimpinan Teknis Operasional LPH UIN Sunan Gunung Djati Bandung',
+          'Koordinator Nasional Lembaga Pendamping PPH (LP3H) UIN SGD',
+          'Dosen & Peneliti Laboratorium Pengujian Autentikasi Kehalalan Hayati',
+        ],
   },
 ];
 
-const UIN_SERVICES = [
+export const DIRECTORS: Director[] = getDirectors(false);
+
+export const getUinServices = (isEn: boolean) => [
   {
-    title: 'Sertifikasi Halal Self Declare',
-    description:
-      'Fasilitasi pendampingan proses produk halal secara gratis dan terakreditasi khusus untuk pelaku usaha mikro & kecil (UMK).',
+    title: isEn ? 'Self-Declare Halal Certification' : 'Sertifikasi Halal Self Declare',
+    description: isEn
+      ? 'Free, accredited halal product process mentoring tailored for micro and small enterprises (MSEs).'
+      : 'Fasilitasi pendampingan proses produk halal secara gratis dan terakreditasi khusus untuk pelaku usaha mikro & kecil (UMK).',
     url: 'https://halal.uinsgd.ac.id/sertifikasi-halal-self-declare/',
     icon: <Users className="w-6 h-6 text-[#6b1282]" />,
-    badge: 'Program UMK',
+    badge: isEn ? 'MSE Program' : 'Program UMK',
     accentColor: 'purple' as const,
     colSpan: 'md:col-span-1',
   },
   {
-    title: 'Sertifikasi Halal Reguler',
-    description:
-      'Pemeriksaan dan audit saintifik komprehensif bagi industri menengah dan besar oleh auditor halal bersertifikasi nasional BPJPH & MUI.',
+    title: isEn ? 'Regular Halal Certification' : 'Sertifikasi Halal Reguler',
+    description: isEn
+      ? 'Comprehensive scientific inspection and audit for medium and large industries by certified BPJPH & MUI auditors.'
+      : 'Pemeriksaan dan audit saintifik komprehensif bagi industri menengah dan besar oleh auditor halal bersertifikasi nasional BPJPH & MUI.',
     url: 'https://lph.uinsgd.ac.id/',
     icon: <ShieldCheck className="w-6 h-6 text-[#6b1282]" />,
-    badge: 'LPH Terakreditasi',
+    badge: isEn ? 'Accredited LPH' : 'LPH Terakreditasi',
     accentColor: 'purple' as const,
     colSpan: 'md:col-span-2',
   },
   {
-    title: 'Konsultasi Sertifikasi & Regulasi',
-    description:
-      'Layanan konsultasi tatap muka maupun daring mengenai kelayakan bahan baku, sistem jaminan halal, dan regulasi BPJPH.',
+    title: isEn ? 'Certification & Regulatory Advisory' : 'Konsultasi Sertifikasi & Regulasi',
+    description: isEn
+      ? 'In-person and virtual consultation regarding ingredient eligibility, Halal Assurance Systems, and BPJPH guidelines.'
+      : 'Layanan konsultasi tatap muka maupun daring mengenai kelayakan bahan baku, sistem jaminan halal, dan regulasi BPJPH.',
     url: 'https://wa.me/6282118201232',
     icon: <Phone className="w-6 h-6 text-[#6b1282]" />,
-    badge: 'Layanan Cepat',
+    badge: isEn ? 'Fast Response' : 'Layanan Cepat',
     accentColor: 'purple' as const,
     colSpan: 'md:col-span-1',
   },
   {
-    title: 'Publikasi Artikel & Riset Halal',
-    description:
-      'Penerbitan jurnal ilmiah berkala Indonesian Journal of Halal Research (IJHR) terakreditasi SINTA bidang kehalalan hayati.',
+    title: isEn ? 'Halal Research & Publications' : 'Publikasi Artikel & Riset Halal',
+    description: isEn
+      ? 'Scientific publications in the SINTA-accredited Indonesian Journal of Halal Research (IJHR) in halal bio-science.'
+      : 'Penerbitan jurnal ilmiah berkala Indonesian Journal of Halal Research (IJHR) terakreditasi SINTA bidang kehalalan hayati.',
     url: 'https://journal.uinsgd.ac.id/index.php/ijhar',
     icon: <BookOpen className="w-6 h-6 text-[#6b1282]" />,
-    badge: 'Riset SINTA',
+    badge: isEn ? 'SINTA Research' : 'Riset SINTA',
     accentColor: 'purple' as const,
     colSpan: 'md:col-span-1',
   },
   {
-    title: 'Lembaga Pendamping PPH (LP3H)',
-    description:
-      'Mencetak dan mengoordinasikan ribuan pendamping PPH terverifikasi untuk mengawal kehalalan produk di seluruh pelosok Jawa Barat.',
+    title: isEn ? 'Halal Mentoring Body (LP3H)' : 'Lembaga Pendamping PPH (LP3H)',
+    description: isEn
+      ? 'Training and coordinating thousands of verified PPH assistants safeguarding product integrity across West Java.'
+      : 'Mencetak dan mengoordinasikan ribuan pendamping PPH terverifikasi untuk mengawal kehalalan produk di seluruh pelosok Jawa Barat.',
     url: 'https://halal.uinsgd.ac.id/lembaga-pendamping-proses-produk-halal-lp3h',
     icon: <Award className="w-6 h-6 text-[#6b1282]" />,
-    badge: 'Ribuan Kader',
+    badge: isEn ? 'Thousands of Cadres' : 'Ribuan Kader',
     accentColor: 'purple' as const,
     colSpan: 'md:col-span-1',
   },
   {
-    title: 'Lembaga Pelatihan JPH',
-    description:
-      'Program sertifikasi kompetensi resmi untuk Penyelia Halal, Auditor Halal, dan tim manajemen mutu perusahaan.',
+    title: isEn ? 'Halal Training Center (JPH)' : 'Lembaga Pelatihan JPH',
+    description: isEn
+      ? 'Official competency certification programs for Halal Supervisors, Halal Auditors, and enterprise QA management.'
+      : 'Program sertifikasi kompetensi resmi untuk Penyelia Halal, Auditor Halal, dan tim manajemen mutu perusahaan.',
     url: 'https://halal.uinsgd.ac.id/lembaga-pelatihan-jaminan-produk-halal-jph/',
     icon: <GraduationCap className="w-6 h-6 text-[#6b1282]" />,
-    badge: 'Pelatihan Resmi',
+    badge: isEn ? 'Certified Training' : 'Pelatihan Resmi',
     accentColor: 'purple' as const,
     colSpan: 'md:col-span-1',
   },
   {
-    title: 'Akademi Juru Sembelih Halal (JULEHA)',
-    description:
-      'Pendidikan dan standarisasi teknik penyembelihan syar’i bagi juru sembelih RPH ruminansia dan unggas bersertifikat BNSP.',
+    title: isEn ? 'Halal Slaughterer Academy (JULEHA)' : 'Akademi Juru Sembelih Halal (JULEHA)',
+    description: isEn
+      ? 'Education and standardization of Sharia-compliant slaughtering methods for ruminant and poultry slaughterers.'
+      : 'Pendidikan dan standarisasi teknik penyembelihan syar’i bagi juru sembelih RPH ruminansia dan unggas bersertifikat BNSP.',
     url: 'https://halal.uinsgd.ac.id/akademi-juru-sembelih-halal-juleha/',
     icon: <Utensils className="w-6 h-6 text-[#6b1282]" />,
-    badge: 'Standar Syar’i',
+    badge: isEn ? 'Sharia Compliant' : 'Standar Syar’i',
     accentColor: 'purple' as const,
     colSpan: 'md:col-span-1',
   },
   {
-    title: 'Laboratorium Pengujian Halal Terpadu',
-    description:
-      'Uji saintifik presisi tinggi: Deteksi DNA Babi qPCR, Uji Cemaran Etanol (GC-FID), serta analisa gelatin dan profil asam lemak.',
+    title: isEn ? 'Integrated Halal Testing Laboratory' : 'Laboratorium Pengujian Halal Terpadu',
+    description: isEn
+      ? 'High-precision scientific testing: Porcine DNA qPCR detection, ethanol residuals (GC-FID), and gelatin analysis.'
+      : 'Uji saintifik presisi tinggi: Deteksi DNA Babi qPCR, Uji Cemaran Etanol (GC-FID), serta analisa gelatin dan profil asam lemak.',
     url: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/',
     icon: <FlaskConical className="w-6 h-6 text-[#6b1282]" />,
     badge: 'ISO/IEC 17025',
@@ -182,6 +226,9 @@ const PARTNER_ITEMS = [
 
 export const HomePage: React.FC = () => {
   const { language, t } = useLanguage();
+  const isEn = language === 'en';
+  const directors = getDirectors(isEn);
+  const uinServices = getUinServices(isEn);
   const [activeTab, setActiveTab] = useState<string>('artikel');
   const [selectedDirector, setSelectedDirector] = useState<Director | null>(null);
 
@@ -376,7 +423,7 @@ export const HomePage: React.FC = () => {
                   <div className="mt-4 flex items-center justify-between text-xs font-semibold px-2">
                     <span className="flex items-center gap-1.5 text-emerald-700 font-bold">
                       <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                      Akreditasi Resmi BPJPH
+                      {isEn ? 'Official BPJPH Accreditation' : 'Akreditasi Resmi BPJPH'}
                     </span>
                     <span className="text-purple-700 font-mono font-bold">No. Reg: LPH-018-ID</span>
                   </div>
@@ -388,18 +435,20 @@ export const HomePage: React.FC = () => {
             <div className="lg:col-span-7 space-y-6">
               <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-bold bg-purple-100 text-[#6b1282] border border-purple-200 uppercase tracking-wider">
                 <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                Tentang Kami
+                {isEn ? 'About Us' : 'Tentang Kami'}
               </div>
 
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a0726] tracking-tight leading-snug">
-                Pusat Halal UIN SGD Melalui Konsep{' '}
+                {isEn ? 'Halal Center UIN SGD Through the ' : 'Pusat Halal UIN SGD Melalui Konsep '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6b1282] to-[#86198f]">
                   “Halalsphere University”
                 </span>
               </h2>
 
               <p className="text-base sm:text-lg text-neutral-600 leading-relaxed font-normal">
-                Pusat Halal (Halal Center) UIN Sunan Gunung Djati Bandung berkomitmen untuk menjadi lembaga terdepan dalam pengembangan ekosistem halal nasional dan global. Sebagai Lembaga Pemeriksa Halal (LPH) dan Lembaga Pendamping Proses Produk Halal (LP3H) terakreditasi BPJPH Kementerian Agama RI, kami senantiasa menjaga standar mutu pemeriksaan, pengujian laboratorium saintifik presisi, dan pendampingan prima bagi seluruh pelaku usaha.
+                {isEn
+                  ? 'Halal Center UIN Sunan Gunung Djati Bandung is committed to becoming a leading institution in developing national and global halal ecosystems. As a certified Halal Inspection Agency (LPH) and Halal Process Mentoring Body (LP3H) accredited by BPJPH Ministry of Religious Affairs, we uphold strict audit standards, precision scientific laboratory testing, and premium mentoring for all business enterprises.'
+                  : 'Pusat Halal (Halal Center) UIN Sunan Gunung Djati Bandung berkomitmen untuk menjadi lembaga terdepan dalam pengembangan ekosistem halal nasional dan global. Sebagai Lembaga Pemeriksa Halal (LPH) dan Lembaga Pendamping Proses Produk Halal (LP3H) terakreditasi BPJPH Kementerian Agama RI, kami senantiasa menjaga standar mutu pemeriksaan, pengujian laboratorium saintifik presisi, dan pendampingan prima bagi seluruh pelaku usaha.'}
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
@@ -408,9 +457,13 @@ export const HomePage: React.FC = () => {
                     <ShieldCheck className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-neutral-900 text-sm">Integritas Syar’i</h4>
+                    <h4 className="font-bold text-neutral-900 text-sm">
+                      {isEn ? 'Sharia Integrity' : 'Integritas Syar’i'}
+                    </h4>
                     <p className="text-xs text-neutral-600 mt-1">
-                      Kepatuhan mutlak terhadap fatwa MUI dan regulasi jaminan produk halal.
+                      {isEn
+                        ? 'Absolute compliance with MUI fatwas and halal product assurance regulations.'
+                        : 'Kepatuhan mutlak terhadap fatwa MUI dan regulasi jaminan produk halal.'}
                     </p>
                   </div>
                 </div>
@@ -420,9 +473,13 @@ export const HomePage: React.FC = () => {
                     <Microscope className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-neutral-900 text-sm">Saintifik &amp; Presisi</h4>
+                    <h4 className="font-bold text-neutral-900 text-sm">
+                      {isEn ? 'Scientific & Precision' : 'Saintifik & Presisi'}
+                    </h4>
                     <p className="text-xs text-neutral-600 mt-1">
-                      Laboratorium pengujian DNA babi dan cemaran alkohol terakreditasi ISO 17025.
+                      {isEn
+                        ? 'ISO 17025 accredited laboratory testing for porcine DNA and ethanol contamination.'
+                        : 'Laboratorium pengujian DNA babi dan cemaran alkohol terakreditasi ISO 17025.'}
                     </p>
                   </div>
                 </div>
@@ -434,7 +491,7 @@ export const HomePage: React.FC = () => {
                     variant="primary"
                     className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold px-7 py-3 rounded-xl text-sm shadow-md shadow-purple-950/15"
                   >
-                    Lihat Profil Lengkap
+                    {isEn ? 'View Full Profile' : 'Lihat Profil Lengkap'}
                   </Button>
                 </Link>
                 <Link to="/layanan/kalkulator">
@@ -442,7 +499,7 @@ export const HomePage: React.FC = () => {
                     variant="outline"
                     className="border-neutral-300 text-neutral-700 hover:bg-neutral-50 font-semibold px-7 py-3 rounded-xl text-sm"
                   >
-                    Mulai Sertifikasi Halal
+                    {isEn ? 'Start Halal Certification' : 'Mulai Sertifikasi Halal'}
                   </Button>
                 </Link>
               </div>
@@ -455,10 +512,12 @@ export const HomePage: React.FC = () => {
       <section className="py-20 lg:py-24 bg-white" id="layanan">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
-            badge="LAYANAN UTAMA"
+            badge={isEn ? 'CORE SERVICES' : 'LAYANAN UTAMA'}
             badgeColor="purple"
-            title="Kemudahan dalam Setiap Langkah Sertifikasi Halal"
-            subtitle="Pemeriksaan komprehensif dari hulu ke hilir untuk memastikan produk Anda memenuhi syarat syariah dan regulasi pemerintah."
+            title={isEn ? 'Excellence in Every Step of Halal Certification' : 'Kemudahan dalam Setiap Langkah Sertifikasi Halal'}
+            subtitle={isEn
+              ? 'Comprehensive end-to-end inspection ensuring your products meet both Islamic sharia requirements and government regulations.'
+              : 'Pemeriksaan komprehensif dari hulu ke hilir untuk memastikan produk Anda memenuhi syarat syariah dan regulasi pemerintah.'}
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -483,21 +542,23 @@ export const HomePage: React.FC = () => {
                 </div>
                 <div className="p-7 pb-2">
                   <h3 className="text-xl sm:text-2xl font-bold text-[#1a0726]">
-                    Pemeriksaan Kehalalan Produk (LPH &amp; LP3H)
+                    {isEn ? 'Product Halal Inspection (LPH & LP3H)' : 'Pemeriksaan Kehalalan Produk (LPH & LP3H)'}
                   </h3>
                   <p className="text-neutral-600 text-sm leading-relaxed mt-3">
-                    Layanan utama LPH UIN SGD mencakup pemeriksaan menyeluruh terhadap proses produksi, bahan baku, dan Sistem Jaminan Produk Halal (SJPH) baik untuk jalur reguler industri maupun pendampingan Self Declare UMK melalui LP3H.
+                    {isEn
+                      ? 'Core services of LPH UIN SGD encompassing thorough evaluations of production processes, raw materials, and Halal Assurance Systems (SJPH) for both regular industrial audits and MSE Self-Declare programs.'
+                      : 'Layanan utama LPH UIN SGD mencakup pemeriksaan menyeluruh terhadap proses produksi, bahan baku, dan Sistem Jaminan Produk Halal (SJPH) baik untuk jalur reguler industri maupun pendampingan Self Declare UMK melalui LP3H.'}
                   </p>
                 </div>
               </div>
               <div className="p-7 pt-4 flex items-center justify-between border-t border-neutral-100 mt-4">
                 <Link to="/layanan/kalkulator">
                   <Button variant="primary" className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-md">
-                    Hitung Estimasi Biaya
+                    {isEn ? 'Calculate Estimated Cost' : 'Hitung Estimasi Biaya'}
                   </Button>
                 </Link>
                 <Link to="/tentang" className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
-                  Lihat Detail <ArrowRight className="w-3.5 h-3.5" />
+                  {isEn ? 'View Details' : 'Lihat Detail'} <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
             </motion.div>
@@ -517,27 +578,29 @@ export const HomePage: React.FC = () => {
                   />
                   <div className="absolute top-4 left-4">
                     <span className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-[#6b1282] text-white shadow-md">
-                      Laboratorium Terpadu
+                      {isEn ? 'Integrated Laboratory' : 'Laboratorium Terpadu'}
                     </span>
                   </div>
                 </div>
                 <div className="p-7 pb-2">
                   <h3 className="text-xl sm:text-2xl font-bold text-[#1a0726]">
-                    Uji Laboratorium &amp; Pelatihan Halal
+                    {isEn ? 'Laboratory Testing & Halal Training' : 'Uji Laboratorium & Pelatihan Halal'}
                   </h3>
                   <p className="text-neutral-600 text-sm leading-relaxed mt-3">
-                    Layanan pengujian Laboratorium Terpadu bagi produsen untuk mematuhi regulasi halal (deteksi DNA babi qPCR, alkohol, gelatin) serta pelatihan kompetensi Juru Sembelih Halal (JULEHA) dan Penyelia Halal terakreditasi.
+                    {isEn
+                      ? 'Integrated Laboratory services for manufacturers to verify halal compliance (qPCR porcine DNA detection, alcohol, gelatin) and competency training for certified Halal Slaughterers (JULEHA) and Supervisors.'
+                      : 'Layanan pengujian Laboratorium Terpadu bagi produsen untuk mematuhi regulasi halal (deteksi DNA babi qPCR, alkohol, gelatin) serta pelatihan kompetensi Juru Sembelih Halal (JULEHA) dan Penyelia Halal terakreditasi.'}
                   </p>
                 </div>
               </div>
               <div className="p-7 pt-4 flex items-center justify-between border-t border-neutral-100 mt-4">
                 <Link to="/kontak">
                   <Button variant="primary" className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-md">
-                    Reservasi Pengujian Lab
+                    {isEn ? 'Book Lab Testing' : 'Reservasi Pengujian Lab'}
                   </Button>
                 </Link>
                 <Link to="/tentang" className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
-                  Lihat Detail <ArrowRight className="w-3.5 h-3.5" />
+                  {isEn ? 'View Details' : 'Lihat Detail'} <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
             </motion.div>
@@ -549,14 +612,16 @@ export const HomePage: React.FC = () => {
       <section className="py-24 bg-[#faf7fd] bg-[radial-gradient(#e9d5ff_1px,transparent_1px)] [background-size:24px_24px] border-y border-purple-100/70" id="layanan-terpadu">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
-            badge="LAYANAN HALAL TERPADU"
+            badge={isEn ? "INTEGRATED HALAL SERVICES" : "LAYANAN HALAL TERPADU"}
             badgeColor="purple"
-            title="8 Layanan Unggulan Halal Center UIN SGD"
-            subtitle="Ekosistem komprehensif mulai dari sertifikasi gratis UMK hingga pengujian molekuler hayati tingkat lanjut."
+            title={isEn ? "8 Flagship Services of Halal Center UIN SGD" : "8 Layanan Unggulan Halal Center UIN SGD"}
+            subtitle={isEn
+              ? "A comprehensive ecosystem spanning free MSE certification to advanced molecular bio-testing."
+              : "Ekosistem komprehensif mulai dari sertifikasi gratis UMK hingga pengujian molekuler hayati tingkat lanjut."}
           />
 
           <BentoGrid className="max-w-7xl">
-            {UIN_SERVICES.map((srv, idx) => (
+            {uinServices.map((srv, idx) => (
               <BentoGridItem
                 key={idx}
                 className={srv.colSpan}
@@ -581,10 +646,12 @@ export const HomePage: React.FC = () => {
       <section className="py-24 bg-white" id="alur-sertifikasi">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
-            badge="ALUR PROSEDUR RESMI"
+            badge={isEn ? "OFFICIAL PROCEDURAL FLOW" : "ALUR PROSEDUR RESMI"}
             badgeColor="amber"
-            title="Alur 4 Langkah Mudah Sertifikasi Halal di LPH UIN SGD"
-            subtitle="Panduan transparan, cepat, dan akuntabel dari pengajuan SIHALAL, verifikasi berkas, audit lapangan & laboratorium, hingga terbit sertifikat halal resmi BPJPH."
+            title={isEn ? "4 Easy Steps to Halal Certification at LPH UIN SGD" : "Alur 4 Langkah Mudah Sertifikasi Halal di LPH UIN SGD"}
+            subtitle={isEn
+              ? "Transparent, swift, and accountable guidance from SIHALAL registration, document audit, and laboratory testing to official BPJPH certificate issuance."
+              : "Panduan transparan, cepat, dan akuntabel dari pengajuan SIHALAL, verifikasi berkas, audit lapangan & laboratorium, hingga terbit sertifikat halal resmi BPJPH."}
           />
 
           <TimelineSteps />
@@ -595,10 +662,12 @@ export const HomePage: React.FC = () => {
       <section className="py-20 lg:py-28 bg-[#f8f9fc] border-y border-neutral-200/70" id="pimpinan">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
-            badge="DEWAN PIMPINAN & PEMBINA"
+            badge={isEn ? "EXECUTIVE BOARD & PATRON" : "DEWAN PIMPINAN & PEMBINA"}
             badgeColor="purple"
-            title="Kepemimpinan Berintegritas Syar’i & Keunggulan Riset Halal"
-            subtitle="Sinergi visi strategis universitas dan keahlian riset sains hayati untuk mengawal mutu pemeriksaan halal, akuntabilitas laboratorium ISO 17025, dan kemaslahatan industri bagi umat."
+            title={isEn ? "Leadership with Sharia Integrity & Halal Research Excellence" : "Kepemimpinan Berintegritas Syar’i & Keunggulan Riset Halal"}
+            subtitle={isEn
+              ? "Synergy between university strategic vision and bio-science research expertise to safeguard halal audit quality, ISO 17025 laboratory accountability, and public welfare."
+              : "Sinergi visi strategis universitas dan keahlian riset sains hayati untuk mengawal mutu pemeriksaan halal, akuntabilitas laboratorium ISO 17025, dan kemaslahatan industri bagi umat."}
           />
 
           <div className="mt-12 space-y-10 sm:space-y-14">
@@ -616,21 +685,23 @@ export const HomePage: React.FC = () => {
                   <div>
                     <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-bold bg-purple-100/90 text-[#6b1282] border border-purple-200/80 uppercase tracking-wider mb-4 shadow-xs">
                       <ShieldCheck className="w-3.5 h-3.5" />
-                      Pimpinan Teknis LPH &amp; Kepala Pusat Kajian Halal
+                      {isEn ? 'LPH Technical Lead & Head of Halal Center' : 'Pimpinan Teknis LPH & Kepala Pusat Kajian Halal'}
                     </div>
 
                     <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1a0726] tracking-tight">
                       Dr. Tri Cahyanto, M.Si.
                     </h3>
                     <p className="text-xs sm:text-sm font-semibold text-neutral-500 mt-1">
-                      Pakar Sains Hayati &amp; Lead Auditor Halal Berlisensi BPJPH Kemenag RI
+                      {isEn
+                        ? 'Life Science Expert & Licensed Lead Auditor BPJPH Kemenag RI'
+                        : 'Pakar Sains Hayati & Lead Auditor Halal Berlisensi BPJPH Kemenag RI'}
                     </p>
 
                     {/* Executive Quote Box */}
                     <div className="mt-6 p-6 rounded-2xl bg-white/95 border border-purple-100 shadow-sm relative">
                       <span className="text-4xl text-[#6b1282]/30 font-serif absolute top-3 left-4 select-none leading-none">“</span>
                       <p className="text-sm sm:text-base text-neutral-700 italic leading-relaxed pl-6 relative z-10 font-normal">
-                        "{DIRECTORS[1].quote}"
+                        "{directors[1].quote}"
                       </p>
                     </div>
                   </div>
@@ -640,16 +711,16 @@ export const HomePage: React.FC = () => {
                     <Button
                       variant="primary"
                       className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold text-xs px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2"
-                      onPress={() => setSelectedDirector(DIRECTORS[1])}
+                      onPress={() => setSelectedDirector(directors[1])}
                     >
-                      <span>Buka Profil &amp; Kredensial Pimpinan</span>
+                      <span>{isEn ? 'View Profile & Credentials' : 'Buka Profil & Kredensial Pimpinan'}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Button>
                     <Link
                       to="/layanan/kalkulator"
                       className="text-xs font-bold text-neutral-700 hover:text-[#6b1282] transition-colors inline-flex items-center gap-1.5"
                     >
-                      <span>Konsultasi Alur Sertifikasi</span>
+                      <span>{isEn ? 'Certification Flow Consultation' : 'Konsultasi Alur Sertifikasi'}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
@@ -660,16 +731,16 @@ export const HomePage: React.FC = () => {
                   <div className="relative w-full max-w-sm flex flex-col items-center">
                     <div className="absolute inset-x-8 bottom-0 h-64 bg-gradient-to-t from-purple-200/40 via-purple-100/20 to-transparent rounded-full blur-2xl pointer-events-none" />
                     <img
-                      src={DIRECTORS[1].image}
-                      alt={DIRECTORS[1].name}
+                      src={directors[1].image}
+                      alt={directors[1].name}
                       className="relative z-10 w-auto max-h-[380px] sm:max-h-[420px] object-contain drop-shadow-xl"
                     />
                     <div className="relative z-20 -mt-6 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl border border-purple-100 shadow-md text-center max-w-xs w-full">
                       <h4 className="text-sm font-bold text-[#1a0726]">
-                        {DIRECTORS[1].name}
+                        {directors[1].name}
                       </h4>
                       <p className="text-[11px] font-semibold text-[#6b1282] mt-0.5">
-                        Kepala Halal Center UIN Sunan Gunung Djati
+                        {isEn ? 'Head of Halal Center UIN Sunan Gunung Djati' : 'Kepala Halal Center UIN Sunan Gunung Djati'}
                       </p>
                     </div>
                   </div>
@@ -691,16 +762,16 @@ export const HomePage: React.FC = () => {
                   <div className="relative w-full max-w-sm flex flex-col items-center">
                     <div className="absolute inset-x-8 bottom-0 h-64 bg-gradient-to-t from-purple-200/40 via-purple-100/20 to-transparent rounded-full blur-2xl pointer-events-none" />
                     <img
-                      src={DIRECTORS[0].image}
-                      alt={DIRECTORS[0].name}
+                      src={directors[0].image}
+                      alt={directors[0].name}
                       className="relative z-10 w-auto max-h-[380px] sm:max-h-[420px] object-contain drop-shadow-xl"
                     />
                     <div className="relative z-20 -mt-6 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl border border-purple-100 shadow-md text-center max-w-xs w-full">
                       <h4 className="text-sm font-bold text-[#1a0726]">
-                        {DIRECTORS[0].name}
+                        {directors[0].name}
                       </h4>
                       <p className="text-[11px] font-semibold text-[#6b1282] mt-0.5">
-                        Rektor UIN SGD &amp; Dewan Pembina Halal Center
+                        {isEn ? 'Rector of UIN SGD & Halal Center Patron' : 'Rektor UIN SGD & Dewan Pembina Halal Center'}
                       </p>
                     </div>
                   </div>
@@ -711,21 +782,23 @@ export const HomePage: React.FC = () => {
                   <div>
                     <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-bold bg-purple-100/90 text-[#6b1282] border border-purple-200/80 uppercase tracking-wider mb-4 shadow-xs">
                       <Sparkles className="w-3.5 h-3.5" />
-                      Rektor UIN SGD &amp; Dewan Pembina Halal Center
+                      {isEn ? 'Rector of UIN SGD & Halal Center Patron' : 'Rektor UIN SGD & Dewan Pembina Halal Center'}
                     </div>
 
                     <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1a0726] tracking-tight">
                       Prof. Dr. H. Rosihon Anwar, M.Ag.
                     </h3>
                     <p className="text-xs sm:text-sm font-semibold text-neutral-500 mt-1">
-                      Guru Besar Ilmu Al-Qur'an &amp; Tafsir • Inisiator Paradigma "Halalsphere University"
+                      {isEn
+                        ? 'Professor of Quranic Exegesis & Tafsir • Pioneer of "Halalsphere University"'
+                        : "Guru Besar Ilmu Al-Qur'an & Tafsir • Inisiator Paradigma \"Halalsphere University\""}
                     </p>
 
                     {/* Institutional Quote Box */}
                     <div className="mt-6 p-6 rounded-2xl bg-white/95 border border-purple-100 shadow-sm relative">
                       <span className="text-4xl text-[#6b1282]/30 font-serif absolute top-3 left-4 select-none leading-none">“</span>
                       <p className="text-sm sm:text-base text-neutral-700 italic leading-relaxed pl-6 relative z-10 font-normal">
-                        "{DIRECTORS[0].quote}"
+                        "{directors[0].quote}"
                       </p>
                     </div>
                   </div>
@@ -735,16 +808,16 @@ export const HomePage: React.FC = () => {
                     <Button
                       variant="primary"
                       className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold text-xs px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2"
-                      onPress={() => setSelectedDirector(DIRECTORS[0])}
+                      onPress={() => setSelectedDirector(directors[0])}
                     >
-                      <span>Buka Profil &amp; Rekam Jejak Rektor</span>
+                      <span>{isEn ? "View Rector's Track Record & Profile" : 'Buka Profil & Rekam Jejak Rektor'}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Button>
                     <Link
                       to="/tentang"
                       className="text-xs font-bold text-neutral-700 hover:text-[#6b1282] transition-colors inline-flex items-center gap-1.5"
                     >
-                      <span>Pelajari Profil Lembaga &amp; Visi Kampus</span>
+                      <span>{isEn ? 'Explore Institutional Profile & Vision' : 'Pelajari Profil Lembaga & Visi Kampus'}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
@@ -784,7 +857,7 @@ export const HomePage: React.FC = () => {
                   <div>
                     <h4 className="text-sm font-bold text-neutral-900 uppercase tracking-wider mb-3 flex items-center gap-2 text-[#6b1282]">
                       <GraduationCap className="w-4 h-4" />
-                      Edukasi &amp; Kualifikasi Akademik
+                      {isEn ? 'Education & Academic Qualifications' : 'Edukasi & Kualifikasi Akademik'}
                     </h4>
                     <ul className="space-y-2 text-xs sm:text-sm text-neutral-600 pl-4 list-disc">
                       {selectedDirector.education.map((edu: string, idx: number) => (
@@ -796,7 +869,7 @@ export const HomePage: React.FC = () => {
                   <div>
                     <h4 className="text-sm font-bold text-neutral-900 uppercase tracking-wider mb-3 flex items-center gap-2 text-[#6b1282]">
                       <Award className="w-4 h-4" />
-                      Pengalaman &amp; Fokus Strategis
+                      {isEn ? 'Experience & Strategic Focus' : 'Pengalaman & Fokus Strategis'}
                     </h4>
                     <ul className="space-y-2 text-xs sm:text-sm text-neutral-600 pl-4 list-disc">
                       {selectedDirector.experience.map((exp: string, idx: number) => (
@@ -812,7 +885,7 @@ export const HomePage: React.FC = () => {
                     className="w-full bg-[#6b1282] hover:bg-[#581c87] text-white font-bold rounded-xl py-2.5"
                     onPress={() => setSelectedDirector(null)}
                   >
-                    Tutup Profil
+                    {isEn ? 'Close Profile' : 'Tutup Profil'}
                   </Button>
                 </Modal.Footer>
               </Modal.Dialog>
@@ -827,14 +900,14 @@ export const HomePage: React.FC = () => {
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
             <div>
               <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold bg-purple-100 text-[#6b1282] border border-purple-200 uppercase tracking-wider mb-2">
-                ARTIKEL &amp; REGULASI
+                {isEn ? 'ARTICLES & REGULATION' : 'ARTIKEL & REGULASI'}
               </span>
               <h2 className="text-3xl sm:text-4xl font-black text-[#1b183a] tracking-tight">
-                Seputar Halal Center UIN Sunan Gunung Djati
+                {isEn ? 'Halal Center UIN Sunan Gunung Djati Updates' : 'Seputar Halal Center UIN Sunan Gunung Djati'}
               </h2>
             </div>
             <Link to="/berita" className="text-sm font-bold text-[#6b1282] hover:underline flex items-center gap-1">
-              Lihat Selengkapnya <ArrowRight className="w-4 h-4" />
+              {isEn ? 'View All News' : 'Lihat Selengkapnya'} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
@@ -846,12 +919,12 @@ export const HomePage: React.FC = () => {
               className="w-full overflow-x-auto"
             >
               <Tabs.ListContainer>
-                <Tabs.List aria-label="Kategori Artikel">
-                  <Tabs.Tab id="artikel">Artikel &amp; Regulasi Utama</Tabs.Tab>
-                  <Tabs.Tab id="uin_berita">Berita Halal Center</Tabs.Tab>
-                  <Tabs.Tab id="jurnal">Jurnal &amp; Riset (IJHR)</Tabs.Tab>
-                  <Tabs.Tab id="umk">Ruang UMK &amp; SEHATI</Tabs.Tab>
-                  <Tabs.Tab id="fatwa">Fatwa &amp; Regulasi BPJPH</Tabs.Tab>
+                <Tabs.List aria-label={isEn ? "Article Categories" : "Kategori Artikel"}>
+                  <Tabs.Tab id="artikel">{isEn ? 'Key Articles & Regulations' : 'Artikel & Regulasi Utama'}</Tabs.Tab>
+                  <Tabs.Tab id="uin_berita">{isEn ? 'Halal Center News' : 'Berita Halal Center'}</Tabs.Tab>
+                  <Tabs.Tab id="jurnal">{isEn ? 'Journal & Research (IJHR)' : 'Jurnal & Riset (IJHR)'}</Tabs.Tab>
+                  <Tabs.Tab id="umk">{isEn ? 'MSE Zone & SEHATI' : 'Ruang UMK & SEHATI'}</Tabs.Tab>
+                  <Tabs.Tab id="fatwa">{isEn ? 'Fatwa & BPJPH Regulations' : 'Fatwa & Regulasi BPJPH'}</Tabs.Tab>
                 </Tabs.List>
               </Tabs.ListContainer>
             </Tabs>
@@ -863,26 +936,38 @@ export const HomePage: React.FC = () => {
               {[
                 {
                   img: '/assets/images/news_thumb_1.jpg',
-                  cat: 'KOSMETIK & KESEHATAN',
+                  cat: isEn ? 'COSMETICS & HEALTH' : 'KOSMETIK & KESEHATAN',
                   catColor: 'text-[#6b1282]',
-                  title: 'Bahaya Hidrokuinon dalam Kosmetik dan Titik Kritis Kehalalan',
-                  desc: 'Hidrokuinon adalah senyawa kimia yang umum digunakan dalam produk pencerah kulit dan memiliki regulasi ketat dalam aspek keamanan dan kehalalan.',
+                  title: isEn
+                    ? 'The Dangers of Hydroquinone in Cosmetics and Halal Critical Points'
+                    : 'Bahaya Hidrokuinon dalam Kosmetik dan Titik Kritis Kehalalan',
+                  desc: isEn
+                    ? 'Hydroquinone is a common active compound in skin brightening products subject to stringent health safety and halal compliance.'
+                    : 'Hidrokuinon adalah senyawa kimia yang umum digunakan dalam produk pencerah kulit dan memiliki regulasi ketat dalam aspek keamanan dan kehalalan.',
                   link: '/artikel/1',
                 },
                 {
                   img: '/assets/images/news_thumb_2.jpg',
-                  cat: 'KEMASAN & LOGISTIK',
+                  cat: isEn ? 'PACKAGING & LOGISTICS' : 'KEMASAN & LOGISTIK',
                   catColor: 'text-[#0284c7]',
-                  title: 'Kenali Pentingnya Pengujian Migrasi pada Kemasan Pangan',
-                  desc: 'Pengujian migrasi pada kemasan pangan menjamin zat berbahaya tidak berpindah ke bahan konsumsi sesuai standar keamanan pangan dan syariat halal.',
+                  title: isEn
+                    ? 'Understanding the Vital Role of Migration Testing on Food Packaging'
+                    : 'Kenali Pentingnya Pengujian Migrasi pada Kemasan Pangan',
+                  desc: isEn
+                    ? 'Migration testing verifies that hazardous substances do not transfer to food materials according to food safety and halal standards.'
+                    : 'Pengujian migrasi pada kemasan pangan menjamin zat berbahaya tidak berpindah ke bahan konsumsi sesuai standar keamanan pangan dan syariat halal.',
                   link: '/artikel/2',
                 },
                 {
                   img: '/assets/images/news_thumb_3.jpg',
-                  cat: 'REGULASI KESEHATAN',
-                  catColor: 'text-[#005a36]',
-                  title: 'Kulik Regulasi! Permenkes No.2 Tahun 2023 & Keselarasan SJPH',
-                  desc: 'Kupas tuntas standar baku mutu kesehatan lingkungan dan persyaratan pengolahan higienis yang sejalan dengan Sistem Jaminan Produk Halal (SJPH).',
+                  cat: isEn ? 'HEALTH REGULATION' : 'REGULASI KESEHATAN',
+                  catColor: 'text-[#6b1282]',
+                  title: isEn
+                    ? 'Regulatory Insight! Health Ministry Decree No. 2/2023 & Halal Alignment'
+                    : 'Kulik Regulasi! Permenkes No.2 Tahun 2023 & Keselarasan SJPH',
+                  desc: isEn
+                    ? 'Comprehensive overview of environmental health quality standards and hygienic processing aligned with the Halal Assurance System (SJPH).'
+                    : 'Kupas tuntas standar baku mutu kesehatan lingkungan dan persyaratan pengolahan higienis yang sejalan dengan Sistem Jaminan Produk Halal (SJPH).',
                   link: '/artikel/3',
                 },
               ].map((article, i) => (
@@ -904,7 +989,7 @@ export const HomePage: React.FC = () => {
                       {article.desc}
                     </p>
                     <Link to={article.link} className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
-                      Baca Sekarang <ArrowRight className="w-3.5 h-3.5" />
+                      {isEn ? 'Read Now' : 'Baca Sekarang'} <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
                 </motion.div>
@@ -919,22 +1004,34 @@ export const HomePage: React.FC = () => {
                 {
                   img: '/assets/images/uin_sgd/uin_14.webp',
                   cat: 'LP3H UIN SGD',
-                  title: 'UIN SGD Bandung Gelar Pelatihan Pendamping PPH dan Rakornas',
-                  desc: 'LP3H Halal Center UIN SGD konsisten mencetak ribuan pendamping PPH berkompeten untuk mengakselerasi sertifikasi halal UMK se-Indonesia.',
+                  title: isEn
+                    ? 'UIN SGD Bandung Conducts PPH Assistant National Training'
+                    : 'UIN SGD Bandung Gelar Pelatihan Pendamping PPH dan Rakornas',
+                  desc: isEn
+                    ? 'LP3H Halal Center UIN SGD consistently certifies thousands of competent PPH assistants across Indonesia.'
+                    : 'LP3H Halal Center UIN SGD konsisten mencetak ribuan pendamping PPH berkompeten untuk mengakselerasi sertifikasi halal UMK se-Indonesia.',
                   link: '/artikel/1',
                 },
                 {
                   img: '/assets/images/uin_sgd/uin_15.webp',
                   cat: 'PROGRAM SEHATI',
-                  title: 'Fasilitasi Lebih dari 1.000 Sertifikat Halal Gratis UMK Jawa Barat',
-                  desc: 'Program kolaborasi Halal Center UIN SGD bersama BPJPH Kemenag RI dalam mendampingi pelaku usaha mikro kecil meraih sertifikat halal resmi.',
+                  title: isEn
+                    ? 'Facilitating 1,000+ Free Halal Certificates for West Java MSEs'
+                    : 'Fasilitasi Lebih dari 1.000 Sertifikat Halal Gratis UMK Jawa Barat',
+                  desc: isEn
+                    ? 'Collaborative program between Halal Center UIN SGD and BPJPH Ministry of Religious Affairs assisting micro businesses.'
+                    : 'Program kolaborasi Halal Center UIN SGD bersama BPJPH Kemenag RI dalam mendampingi pelaku usaha mikro kecil meraih sertifikat halal resmi.',
                   link: '/artikel/2',
                 },
                 {
                   img: '/assets/images/uin_sgd/uin_16.webp',
-                  cat: 'PANDUAN LEGALITAS',
-                  title: 'Panduan Lengkap Pengajuan NIB OSS & Syarat Self Declare',
-                  desc: 'Langkah mudah pembuatan NIB berbasis risiko dan pengisian data bahan baku di portal SiHalal dengan pendampingan LP3H UIN SGD.',
+                  cat: isEn ? 'LEGALITY GUIDE' : 'PANDUAN LEGALITAS',
+                  title: isEn
+                    ? 'Complete Guide to OSS NIB Registration & Self-Declare Criteria'
+                    : 'Panduan Lengkap Pengajuan NIB OSS & Syarat Self Declare',
+                  desc: isEn
+                    ? 'Step-by-step guidance on risk-based NIB issuance and SiHalal raw material input assisted by LP3H UIN SGD.'
+                    : 'Langkah mudah pembuatan NIB berbasis risiko dan pengisian data bahan baku di portal SiHalal dengan pendampingan LP3H UIN SGD.',
                   link: '/artikel/3',
                 },
               ].map((article, i) => (
@@ -956,7 +1053,7 @@ export const HomePage: React.FC = () => {
                       {article.desc}
                     </p>
                     <Link to={article.link} className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
-                      Baca Sekarang <ArrowRight className="w-3.5 h-3.5" />
+                      {isEn ? 'Read Now' : 'Baca Sekarang'} <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
                 </motion.div>
@@ -971,22 +1068,34 @@ export const HomePage: React.FC = () => {
                 {
                   img: '/assets/images/Screenshot-2026-09-11-at-15-16-41-Jurnal-Halal-180.pdf-1.png',
                   cat: 'IJHR SINTA',
-                  title: 'Indonesian Journal of Halal Research (IJHR) Vol. 6 No. 2',
-                  desc: 'Publikasi jurnal ilmiah berkala terakreditasi SINTA yang membahas inovasi riset autentikasi halal hayati dan kebijakan halal global.',
+                  title: isEn
+                    ? 'Indonesian Journal of Halal Research (IJHR) Vol. 6 No. 2'
+                    : 'Indonesian Journal of Halal Research (IJHR) Vol. 6 No. 2',
+                  desc: isEn
+                    ? 'SINTA-accredited scientific periodical discussing innovations in bio-molecular halal authentication and global policy.'
+                    : 'Publikasi jurnal ilmiah berkala terakreditasi SINTA yang membahas inovasi riset autentikasi halal hayati dan kebijakan halal global.',
                   url: 'https://journal.uinsgd.ac.id/index.php/ijhr',
                 },
                 {
                   img: '/assets/images/Screenshot-2026-07-17-at-07-01-06-Jurnal-Halal-179.pdf.png',
-                  cat: 'RISET DNA',
-                  title: 'Autentikasi Halal Daging Olahan dengan Metode Real-Time PCR',
-                  desc: 'Riset laboratorium pengujian DNA babi secara kuantitatif untuk melindungi rantai pasok daging olahan industri pangan nasional.',
+                  cat: isEn ? 'DNA RESEARCH' : 'RISET DNA',
+                  title: isEn
+                    ? 'Halal Authentication of Processed Meat via Real-Time PCR'
+                    : 'Autentikasi Halal Daging Olahan dengan Metode Real-Time PCR',
+                  desc: isEn
+                    ? 'Quantitative laboratory research detecting porcine DNA to safeguard national meat supply chain integrity.'
+                    : 'Riset laboratorium pengujian DNA babi secara kuantitatif untuk melindungi rantai pasok daging olahan industri pangan nasional.',
                   url: 'https://journal.uinsgd.ac.id/index.php/ijhr',
                 },
                 {
                   img: '/assets/images/uji-laboratorium.jpg',
-                  cat: 'METODOLOGI UJI',
-                  title: 'Pengujian Cemaran Alkohol & Deteksi Titik Kritis Bahan',
-                  desc: 'Metodologi uji gas chromatography (GC-FID) untuk penetapan ambang batas etanol pada perisa, pelarut, dan produk fermentasi.',
+                  cat: isEn ? 'TEST METHODOLOGY' : 'METODOLOGI UJI',
+                  title: isEn
+                    ? 'Alcohol Residual Testing & Critical Point Detection in Ingredients'
+                    : 'Pengujian Cemaran Alkohol & Deteksi Titik Kritis Bahan',
+                  desc: isEn
+                    ? 'Gas chromatography (GC-FID) test methodology determining ethanol limits in flavorings, solvents, and fermented goods.'
+                    : 'Metodologi uji gas chromatography (GC-FID) untuk penetapan ambang batas etanol pada perisa, pelarut, dan produk fermentasi.',
                   url: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/',
                 },
               ].map((article, i) => (
@@ -1013,7 +1122,7 @@ export const HomePage: React.FC = () => {
                       rel="noopener noreferrer"
                       className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1"
                     >
-                      Buka Tautan Riset <ExternalLink className="w-3.5 h-3.5" />
+                      {isEn ? 'Open Research Paper' : 'Buka Tautan Riset'} <ExternalLink className="w-3.5 h-3.5" />
                     </a>
                   </div>
                 </motion.div>
@@ -1027,21 +1136,33 @@ export const HomePage: React.FC = () => {
               {[
                 {
                   img: '/assets/images/uin_sgd/uin_16.webp',
-                  cat: 'KLINIK UMK',
-                  title: 'Klinik Konsultasi Gratis Pembuatan NIB & Akun SiHalal',
-                  desc: 'Layanan konsultasi tatap muka langsung di Kampus 1 UIN Sunan Gunung Djati Bandung membantu UMK melengkapi dokumen halal.',
+                  cat: isEn ? 'MSE CLINIC' : 'KLINIK UMK',
+                  title: isEn
+                    ? 'Free Consultation Clinic for OSS NIB & SiHalal Setup'
+                    : 'Klinik Konsultasi Gratis Pembuatan NIB & Akun SiHalal',
+                  desc: isEn
+                    ? 'In-person consultation service at Campus 1 UIN Sunan Gunung Djati Bandung assisting MSEs with halal document completeness.'
+                    : 'Layanan konsultasi tatap muka langsung di Kampus 1 UIN Sunan Gunung Djati Bandung membantu UMK melengkapi dokumen halal.',
                 },
                 {
                   img: '/assets/images/uin_sgd/uin_14.webp',
-                  cat: 'FASILITASI SEHATI',
-                  title: 'Pendampingan Halal Gratis (SEHATI) untuk Pelaku Usaha Mikro',
-                  desc: 'Fasilitasi kuota sertifikasi gratis dari pemerintah melalui verifikasi lapangan oleh Pendamping PPH UIN Sunan Gunung Djati.',
+                  cat: isEn ? 'SEHATI FACILITATION' : 'FASILITASI SEHATI',
+                  title: isEn
+                    ? 'Free Halal Mentoring (SEHATI) for Micro Enterprises'
+                    : 'Pendampingan Halal Gratis (SEHATI) untuk Pelaku Usaha Mikro',
+                  desc: isEn
+                    ? 'Government free certification quotas verified on-site by certified PPH Assistants from UIN Sunan Gunung Djati.'
+                    : 'Fasilitasi kuota sertifikasi gratis dari pemerintah melalui verifikasi lapangan oleh Pendamping PPH UIN Sunan Gunung Djati.',
                 },
                 {
                   img: '/assets/images/uin_sgd/uin_15.webp',
-                  cat: 'JULEHA UMK',
-                  title: 'Program Pelatihan Juru Sembelih Halal bagi Komunitas UMK',
-                  desc: 'Peningkatan kompetensi juru sembelih unggas dan ruminansia kecil guna memastikan rantai pasok daging halal dari hulu ke hilir.',
+                  cat: isEn ? 'MSE JULEHA' : 'JULEHA UMK',
+                  title: isEn
+                    ? 'Halal Slaughterer Competency Training for MSE Communities'
+                    : 'Program Pelatihan Juru Sembelih Halal bagi Komunitas UMK',
+                  desc: isEn
+                    ? 'Elevating poultry and small ruminant slaughtering competence to ensure end-to-end halal meat supply chain compliance.'
+                    : 'Peningkatan kompetensi juru sembelih unggas dan ruminansia kecil guna memastikan rantai pasok daging halal dari hulu ke hilir.',
                 },
               ].map((article, i) => (
                 <motion.div
@@ -1062,7 +1183,7 @@ export const HomePage: React.FC = () => {
                       {article.desc}
                     </p>
                     <Link to="/layanan" className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
-                      Pelajari Program <ArrowRight className="w-3.5 h-3.5" />
+                      {isEn ? 'Explore Program' : 'Pelajari Program'} <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
                 </motion.div>
@@ -1076,21 +1197,33 @@ export const HomePage: React.FC = () => {
               {[
                 {
                   img: '/assets/images/img_015.jpg',
-                  cat: 'KEPUTUSAN MENAG',
-                  title: 'KMA No. 748 Tahun 2021 tentang Produk Wajib Bersertifikat',
-                  desc: 'Daftar klasifikasi jenis produk makanan, minuman, obat, kosmetik, dan barang gunaan yang wajib memiliki sertifikasi halal.',
+                  cat: isEn ? 'MINISTRY DECREE' : 'KEPUTUSAN MENAG',
+                  title: isEn
+                    ? 'Religious Affairs Decree No. 748/2021 on Mandatory Certified Products'
+                    : 'KMA No. 748 Tahun 2021 tentang Produk Wajib Bersertifikat',
+                  desc: isEn
+                    ? 'Classification list of food, beverage, medicine, cosmetics, and consumer items subject to mandatory halal certification.'
+                    : 'Daftar klasifikasi jenis produk makanan, minuman, obat, kosmetik, dan barang gunaan yang wajib memiliki sertifikasi halal.',
                 },
                 {
                   img: '/assets/images/img_014.jpg',
-                  cat: 'FATWA MUI',
-                  title: 'Fatwa Standar Kehalalan Produk Rekayasa Genetika (GMO)',
-                  desc: 'Pedoman penetapan kehalalan bahan hasil fermentasi mikroba rekombinan dan bahan bioteknologi pangan modern.',
+                  cat: isEn ? 'MUI FATWA' : 'FATWA MUI',
+                  title: isEn
+                    ? 'Fatwa Standard on Halal Compliance for GMO and Recombinant Products'
+                    : 'Fatwa Standar Kehalalan Produk Rekayasa Genetika (GMO)',
+                  desc: isEn
+                    ? 'Islamic legal guidelines determining the halal status of recombinant microbial fermentation and modern biotechnology ingredients.'
+                    : 'Pedoman penetapan kehalalan bahan hasil fermentasi mikroba rekombinan dan bahan bioteknologi pangan modern.',
                 },
                 {
                   img: '/assets/images/img_013.jpg',
-                  cat: 'REGULASI NASIONAL',
-                  title: 'Kewajiban Sertifikasi Halal Bertahap bagi Pelaku Usaha',
-                  desc: 'Pemberlakuan penahapan kewajiban bersertifikat halal sesuai regulasi UU No. 33 Tahun 2014 dan Perpu No. 2 Tahun 2022.',
+                  cat: isEn ? 'NATIONAL REGULATION' : 'REGULASI NASIONAL',
+                  title: isEn
+                    ? 'Phased Mandatory Halal Certification for Business Operators'
+                    : 'Kewajiban Sertifikasi Halal Bertahap bagi Pelaku Usaha',
+                  desc: isEn
+                    ? 'Implementation schedule for mandatory halal certification in accordance with Law No. 33/2014 and Govt. Regulation in Lieu of Law No. 2/2022.'
+                    : 'Pemberlakuan penahapan kewajiban bersertifikat halal sesuai regulasi UU No. 33 Tahun 2014 dan Perpu No. 2 Tahun 2022.',
                 },
               ].map((article, i) => (
                 <motion.div
@@ -1111,7 +1244,7 @@ export const HomePage: React.FC = () => {
                       {article.desc}
                     </p>
                     <Link to="/artikel/3" className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
-                      Baca Sekarang <ArrowRight className="w-3.5 h-3.5" />
+                      {isEn ? 'Read Now' : 'Baca Sekarang'} <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
                 </motion.div>
@@ -1125,7 +1258,9 @@ export const HomePage: React.FC = () => {
       <section className="py-16 bg-[#faf8fc] border-t border-purple-100/70">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-6">
           <p className="text-xs font-bold uppercase tracking-widest text-[#6b1282]">
-            Jaringan Afiliasi, Pembina &amp; Lembaga Akreditasi Resmi
+            {isEn
+              ? 'Affiliate Networks, Advisory Council & Official Accreditation Bodies'
+              : 'Jaringan Afiliasi, Pembina & Lembaga Akreditasi Resmi'}
           </p>
         </div>
         <InfiniteMovingCards items={PARTNER_ITEMS} direction="left" speed="normal" />
@@ -1135,10 +1270,12 @@ export const HomePage: React.FC = () => {
       <section className="py-24 bg-gradient-to-b from-white via-[#fdfbfe] to-[#f7f2fb]" id="lokasi">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
-            badge="JARINGAN LAYANAN & LABORATORIUM"
+            badge={isEn ? "SERVICE & LAB NETWORK" : "JARINGAN LAYANAN & LABORATORIUM"}
             badgeColor="purple"
-            title="Lokasi Kantor & Sentra Layanan Halal UIN SGD"
-            subtitle="Kunjungi kantor layanan kami di Kampus 1, Gedung Laboratorium Terpadu Kampus 2, serta sentra kemitraan Priangan Timur & Ciayumajakuning."
+            title={isEn ? "Office & Halal Service Centers of UIN SGD" : "Lokasi Kantor & Sentra Layanan Halal UIN SGD"}
+            subtitle={isEn
+              ? "Visit our service office at Campus 1, Integrated Laboratory Building Campus 2, and partnership centers in Eastern Priangan & Ciayumajakuning."
+              : "Kunjungi kantor layanan kami di Kampus 1, Gedung Laboratorium Terpadu Kampus 2, serta sentra kemitraan Priangan Timur & Ciayumajakuning."}
           />
 
           <div className="relative rounded-3xl p-[1.5px] bg-gradient-to-r from-[#4a0d5c] via-[#86198f] to-[#4a0d5c] shadow-2xl shadow-purple-950/10">
@@ -1154,7 +1291,7 @@ export const HomePage: React.FC = () => {
                 className="border-neutral-300 text-[#6b1282] hover:bg-purple-50 font-bold px-7 py-3 rounded-2xl text-sm inline-flex items-center gap-2 shadow-xs"
               >
                 <MapPin className="w-4 h-4 text-[#6b1282]" />
-                Lihat Selengkapnya &amp; Konsultasi Lokasi
+                {isEn ? 'View Location Details & Consultation' : 'Lihat Selengkapnya & Konsultasi Lokasi'}
               </Button>
             </Link>
           </div>

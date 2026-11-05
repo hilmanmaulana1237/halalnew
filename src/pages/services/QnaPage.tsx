@@ -3,8 +3,9 @@ import { Button, Card, Input, Accordion } from '@heroui/react';
 import { HelpCircle, Search, Sparkles, MessageCircle, ArrowRight, ChevronDown } from 'lucide-react';
 import { api } from '@/services/api';
 import type { KnowledgeBaseItem } from '@/types';
+import { useLanguage } from '@/context/LanguageContext';
 
-const INITIAL_FAQS: KnowledgeBaseItem[] = [
+const INITIAL_FAQS_ID: KnowledgeBaseItem[] = [
   {
     id: 1,
     question: 'Apa perbedaan skema sertifikasi Halal Self Declare dan Jalur Reguler?',
@@ -57,9 +58,65 @@ const INITIAL_FAQS: KnowledgeBaseItem[] = [
   },
 ];
 
+const INITIAL_FAQS_EN: KnowledgeBaseItem[] = [
+  {
+    id: 1,
+    question: 'What is the difference between Halal Self-Declare and the Regular Certification scheme?',
+    answer:
+      'Self-Declare is a free halal certification (BPJPH SEHATI program) tailored for Micro and Small Enterprises (MSEs) with low-risk products guided by LP3H. The Regular Scheme applies to small, medium, and large corporations or products containing critical ingredients that require on-site audit and laboratory validation by a licensed Halal Inspection Agency (LPH).',
+    tags: 'PROCEDURE',
+    isActive: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: 2,
+    question: 'What is the turnaround time for halal inspection at LPH UIN SGD Bandung?',
+    answer:
+      'Field inspections and laboratory evaluations at LPH UIN SGD are completed within 10 to 15 working days once the application documents have been verified on the official BPJPH SIHALAL system.',
+    tags: 'PROCEDURE',
+    isActive: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: 3,
+    question: 'What mandatory documents are required prior to applying for a halal audit?',
+    answer:
+      'Key documents include: 1. Business Identification Number (NIB), 2. Halal Product Assurance Manual (SJPH), 3. Ingredient list and supporting halal certificates, 4. Product matrix and production flow diagram, 5. Decree appointing certified internal Halal Supervisors.',
+    tags: 'REQUIREMENTS',
+    isActive: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: 4,
+    question: 'How are regular halal inspection fees determined at LPH UIN SGD?',
+    answer:
+      'Fees follow the official BPJPH Ministry of Religious Affairs regulation based on company scale (Micro, Small, Medium, Large), product variety, and laboratory testing scope. You can use our Halal Fee Calculator for transparent estimates.',
+    tags: 'FEES',
+    isActive: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: 5,
+    question: 'Does the UIN SGD laboratory offer porcine DNA and alcohol testing for public enterprises?',
+    answer:
+      'Yes, our Integrated Halal Testing Laboratory at Campus 2 provides Porcine DNA qPCR detection, GC-MS ethanol analysis, and gelatin profiling for both LPH audit clients and independent corporate testing requests.',
+    tags: 'LABORATORY',
+    isActive: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+];
+
 export const QnaPage: React.FC = () => {
-  const [faqs, setFaqs] = useState<KnowledgeBaseItem[]>(INITIAL_FAQS);
-  const [activeCategory, setActiveCategory] = useState<string>('SEMUA');
+  const { language, t } = useLanguage();
+  const isEn = language === 'en';
+
+  const [faqs, setFaqs] = useState<KnowledgeBaseItem[]>(isEn ? INITIAL_FAQS_EN : INITIAL_FAQS_ID);
+  const [activeCategory, setActiveCategory] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
 
   // AI QnA state
@@ -68,18 +125,9 @@ export const QnaPage: React.FC = () => {
   const [aiLoading, setAiLoading] = useState(false);
 
   useEffect(() => {
-    const fetchFaqs = async () => {
-      try {
-        const res = await api.get('/chat/admin/kb');
-        if (res.data?.success && res.data.data.length > 0) {
-          setFaqs(res.data.data.filter((f: KnowledgeBaseItem) => f.isActive));
-        }
-      } catch {
-        // Fallback to initial
-      }
-    };
-    fetchFaqs();
-  }, []);
+    setFaqs(isEn ? INITIAL_FAQS_EN : INITIAL_FAQS_ID);
+    setActiveCategory('ALL');
+  }, [language, isEn]);
 
   const handleAskAI = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -99,16 +147,34 @@ export const QnaPage: React.FC = () => {
       }
     } catch {
       setAiAnswer(
-        'Berdasarkan regulasi jaminan produk halal BPJPH dan pedoman LPH UIN SGD Bandung, setiap pelaku usaha wajib memastikan bahan baku memiliki sertifikat halal yang valid atau masuk dalam daftar positive list. Silakan hubungi tim auditor kami via WhatsApp untuk konsultasi teknis lebih detail.'
+        isEn
+          ? 'Under BPJPH regulations and LPH UIN SGD Bandung guidelines, every business must ensure raw materials possess valid halal certificates or belong to the positive list. Please contact our auditor team via WhatsApp for personalized technical support.'
+          : 'Berdasarkan regulasi jaminan produk halal BPJPH dan pedoman LPH UIN SGD Bandung, setiap pelaku usaha wajib memastikan bahan baku memiliki sertifikat halal yang valid atau masuk dalam daftar positive list. Silakan hubungi tim auditor kami via WhatsApp untuk konsultasi teknis lebih detail.'
       );
     } finally {
       setAiLoading(false);
     }
   };
 
+  const categories = isEn
+    ? [
+        { id: 'ALL', label: 'All' },
+        { id: 'PROCEDURE', label: 'Procedure' },
+        { id: 'REQUIREMENTS', label: 'Requirements' },
+        { id: 'FEES', label: 'Tariff & Fees' },
+        { id: 'LABORATORY', label: 'Laboratory' },
+      ]
+    : [
+        { id: 'ALL', label: 'Semua' },
+        { id: 'PROSEDUR', label: 'Prosedur' },
+        { id: 'SYARAT', label: 'Syarat' },
+        { id: 'TARIF', label: 'Tarif' },
+        { id: 'LABORATORIUM', label: 'Laboratorium' },
+      ];
+
   const filteredFaqs = faqs.filter((item) => {
     const matchCat =
-      activeCategory === 'SEMUA' ||
+      activeCategory === 'ALL' ||
       item.tags?.toUpperCase().includes(activeCategory);
     const matchQuery =
       item.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -123,13 +189,15 @@ export const QnaPage: React.FC = () => {
         <div className="max-w-4xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-purple-200 text-xs font-semibold uppercase tracking-wider mb-4 border border-white/20 shadow-xs">
             <HelpCircle className="w-3.5 h-3.5 text-purple-300" />
-            Pusat Bantuan &amp; Konsultasi Cepat
+            {isEn ? 'Help Center & Quick Consultation' : 'Pusat Bantuan & Konsultasi Cepat'}
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold tracking-tight">
-            FAQ &amp; Halal QnA Center
+            {isEn ? 'FAQ & Halal Q&A Center' : 'FAQ & Halal QnA Center'}
           </h1>
           <p className="mt-3 text-neutral-200 max-w-2xl mx-auto text-sm sm:text-base font-normal">
-            Temukan jawaban komprehensif seputar proses sertifikasi halal reguler, Self Declare, uji laboratorium, dan regulasi resmi BPJPH.
+            {isEn
+              ? 'Find comprehensive answers regarding regular halal certification, Self-Declare, laboratory testing, and official BPJPH regulations.'
+              : 'Temukan jawaban komprehensif seputar proses sertifikasi halal reguler, Self Declare, uji laboratorium, dan regulasi resmi BPJPH.'}
           </p>
         </div>
       </section>
@@ -140,14 +208,22 @@ export const QnaPage: React.FC = () => {
         <Card className="bg-white rounded-3xl border border-neutral-200/80 shadow-xl p-6 sm:p-8 space-y-4">
           <div className="flex items-center gap-2.5 text-[#1a0726]">
             <Sparkles className="w-5 h-5 text-purple-600" />
-            <h3 className="text-lg font-bold">Tanya Asisten AI Halal Center</h3>
+            <h3 className="text-lg font-bold">
+              {isEn ? 'Ask Halal Center AI Assistant' : 'Tanya Asisten AI Halal Center'}
+            </h3>
           </div>
           <p className="text-xs text-neutral-500 leading-relaxed">
-            Ajukan pertanyaan spesifik tentang bahan, dokumen SIHALAL, atau alur sertifikasi halal.
+            {isEn
+              ? 'Ask specific questions about raw materials, SIHALAL documents, or audit procedures.'
+              : 'Ajukan pertanyaan spesifik tentang bahan, dokumen SIHALAL, atau alur sertifikasi halal.'}
           </p>
           <form onSubmit={handleAskAI} className="flex gap-2">
             <Input
-              placeholder="Contoh: Apakah emulsifier E471 butuh sertifikat halal?..."
+              placeholder={
+                isEn
+                  ? 'e.g. Does emulsifier E471 require a halal certificate?...'
+                  : 'Contoh: Apakah emulsifier E471 butuh sertifikat halal?...'
+              }
               value={aiQuestion}
               onChange={(e) => setAiQuestion(e.target.value)}
               className="flex-1"
@@ -159,15 +235,15 @@ export const QnaPage: React.FC = () => {
               isPending={aiLoading}
               className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold px-6 rounded-xl text-xs sm:text-sm"
             >
-              Tanya AI
+              {isEn ? 'Ask AI' : 'Tanya AI'}
             </Button>
           </form>
 
           {aiAnswer && (
-            <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-xs sm:text-sm text-emerald-950 space-y-2 mt-4 animate-in fade-in duration-300">
-              <span className="font-bold text-emerald-800 flex items-center gap-1.5">
-                <Sparkles className="w-4 h-4 text-amber-500" />
-                Jawaban Asisten Halal:
+            <div className="p-4 rounded-2xl bg-purple-50/70 border border-purple-200 text-xs sm:text-sm text-purple-950 space-y-2 mt-4 animate-in fade-in duration-300">
+              <span className="font-bold text-[#6b1282] flex items-center gap-1.5">
+                <Sparkles className="w-4 h-4 text-purple-600" />
+                {isEn ? 'Halal Assistant Answer:' : 'Jawaban Asisten Halal:'}
               </span>
               <p className="leading-relaxed">{aiAnswer}</p>
             </div>
@@ -178,19 +254,19 @@ export const QnaPage: React.FC = () => {
         <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
           {/* Category Chips */}
           <div className="flex flex-wrap gap-2">
-            {['SEMUA', 'PROSEDUR', 'SYARAT', 'TARIF', 'LABORATORIUM'].map((cat) => (
+            {categories.map((cat) => (
               <Button
-                key={cat}
+                key={cat.id}
                 size="sm"
-                variant={activeCategory === cat ? 'primary' : 'outline'}
+                variant={activeCategory === cat.id ? 'primary' : 'outline'}
                 className={
-                  activeCategory === cat
-                    ? 'bg-[#005a36] text-white font-bold text-xs py-1 px-3 rounded-lg'
+                  activeCategory === cat.id
+                    ? 'bg-[#6b1282] text-white font-bold text-xs py-1 px-3 rounded-lg'
                     : 'border-neutral-200 text-neutral-700 text-xs py-1 px-3 rounded-lg hover:bg-white'
                 }
-                onPress={() => setActiveCategory(cat)}
+                onPress={() => setActiveCategory(cat.id)}
               >
-                {cat}
+                {cat.label}
               </Button>
             ))}
           </div>
@@ -198,7 +274,7 @@ export const QnaPage: React.FC = () => {
           {/* Search Input */}
           <div className="w-full sm:w-64">
             <Input
-              placeholder="Cari kata kunci..."
+              placeholder={isEn ? 'Search keywords...' : 'Cari kata kunci...'}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full"
@@ -212,7 +288,7 @@ export const QnaPage: React.FC = () => {
             {filteredFaqs.map((faq) => (
               <Accordion.Item key={faq.id} className="py-3">
                 <Accordion.Heading>
-                  <Accordion.Trigger className="text-left font-bold text-neutral-900 text-sm sm:text-base hover:text-[#005a36] transition-colors py-2 flex items-center justify-between w-full">
+                  <Accordion.Trigger className="text-left font-bold text-neutral-900 text-sm sm:text-base hover:text-[#6b1282] transition-colors py-2 flex items-center justify-between w-full">
                     <span>{faq.question}</span>
                     <Accordion.Indicator>
                       <ChevronDown className="w-4 h-4 text-neutral-400" />

@@ -3,9 +3,12 @@ import { useParams, Link } from 'react-router-dom';
 import { Button, Card, Skeleton } from '@heroui/react';
 import { Calendar, MapPin, ArrowLeft, Share2 } from 'lucide-react';
 import { api, formatDate } from '@/services/api';
+import { useLanguage } from '@/context/LanguageContext';
 import type { NewsItem } from '@/types';
 
 export const NewsDetailPage: React.FC = () => {
+  const { language } = useLanguage();
+  const isEn = language === 'en';
   const { slug } = useParams<{ slug: string }>();
   const [news, setNews] = useState<NewsItem | null>(null);
   const [loading, setLoading] = useState(false);
@@ -69,28 +72,28 @@ Kepala Halal Center UIN SGD, Dr. Tri Cahyanto, M.Si., menambahkan bahwa pelatiha
         {/* Back Link */}
         <Link
           to="/berita"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-500 hover:text-[#005a36] transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-500 hover:text-[#6b1282] transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          Kembali ke Daftar Berita
+          {isEn ? 'Back to News List' : 'Kembali ke Daftar Berita'}
         </Link>
 
         {/* Article Card */}
         <Card className="bg-white rounded-3xl border border-neutral-200/80 shadow-md p-6 sm:p-10 space-y-6">
           <div>
-            <span className="inline-block px-3 py-1 rounded-md text-xs font-bold bg-[#005a36] text-white mb-3">
+            <span className="inline-block px-3 py-1 rounded-md text-xs font-bold bg-[#6b1282] text-white mb-3">
               {news.category}
             </span>
-            <h1 className="text-2xl sm:text-4xl font-extrabold text-[#272353] tracking-tight leading-snug">
+            <h1 className="text-2xl sm:text-4xl font-extrabold text-[#1a0726] tracking-tight leading-snug">
               {news.title}
             </h1>
             <div className="flex flex-wrap items-center gap-4 text-xs text-neutral-400 mt-4 pb-4 border-b border-neutral-100">
               <span className="flex items-center gap-1.5 text-neutral-600 font-medium">
-                <Calendar className="w-3.5 h-3.5 text-[#005a36]" />
+                <Calendar className="w-3.5 h-3.5 text-[#6b1282]" />
                 {formatDate(news.createdAt)}
               </span>
               <span>•</span>
-              <span>Penulis: {news.author}</span>
+              <span>{isEn ? 'Author:' : 'Penulis:'} {news.author}</span>
             </div>
           </div>
 
@@ -105,20 +108,20 @@ Kepala Halal Center UIN SGD, Dr. Tri Cahyanto, M.Si., menambahkan bahwa pelatiha
 
           {/* Event Metadata (if any) */}
           {(news.eventDate || news.eventLocation) && (
-            <div className="p-4 rounded-xl bg-neutral-50 border border-neutral-200 text-xs text-neutral-600 space-y-1">
+            <div className="p-4 rounded-xl bg-purple-50/50 border border-purple-100 text-xs text-neutral-600 space-y-1">
               {news.eventDate && (
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-[#005a36]" />
+                  <Calendar className="w-4 h-4 text-[#6b1282]" />
                   <span>
-                    <strong>Tanggal Acara:</strong> {formatDate(news.eventDate)}
+                    <strong>{isEn ? 'Event Date:' : 'Tanggal Acara:'}</strong> {formatDate(news.eventDate)}
                   </span>
                 </div>
               )}
               {news.eventLocation && (
                 <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-[#005a36]" />
+                  <MapPin className="w-4 h-4 text-[#6b1282]" />
                   <span>
-                    <strong>Lokasi:</strong> {news.eventLocation}
+                    <strong>{isEn ? 'Location:' : 'Lokasi:'}</strong> {news.eventLocation}
                   </span>
                 </div>
               )}
