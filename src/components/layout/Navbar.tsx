@@ -1,16 +1,16 @@
 import React, { useState, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button, Drawer, Label } from '@heroui/react';
-import { 
-  Menu, 
-  ChevronDown, 
-  Calculator, 
-  ShieldAlert, 
-  Smile, 
-  BookOpen, 
-  HelpCircle, 
-  Newspaper, 
-  Bell, 
+import {
+  Menu,
+  ChevronDown,
+  Calculator,
+  ShieldAlert,
+  Smile,
+  BookOpen,
+  HelpCircle,
+  Newspaper,
+  Bell,
   Phone,
   Sparkles,
   ShieldCheck,
@@ -19,14 +19,16 @@ import {
   GraduationCap,
   Award
 } from 'lucide-react';
-import { 
-  MegaMenuItem, 
-  MenuCardItem, 
-  FeaturedPreviewCard, 
-  MenuFooter 
+import {
+  MegaMenuItem,
+  MenuCardItem,
+  FeaturedPreviewCard,
+  MenuFooter
 } from '@/components/ui/navbar-mega-menu';
+import { useLanguage } from '@/context/LanguageContext';
 
 export const Navbar: React.FC = () => {
+  const { language, setLanguage, t } = useLanguage();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const timeoutRef = useRef<any>(null);
@@ -74,18 +76,17 @@ export const Navbar: React.FC = () => {
             <nav className="hidden lg:flex items-center gap-1">
               <Link
                 to="/"
-                className={`px-3.5 py-2 rounded-xl text-sm font-semibold transition-all ${
-                  isActive('/')
+                className={`px-3.5 py-2 rounded-xl text-sm font-semibold transition-all ${isActive('/')
                     ? 'text-[#6b1282] bg-purple-50/90 shadow-xs'
                     : 'text-neutral-700 hover:text-[#6b1282] hover:bg-purple-50/40'
-                }`}
+                  }`}
               >
-                Beranda
+                {t('nav_home')}
               </Link>
 
               {/* Mega Menu 1: Tentang Kami */}
               <MegaMenuItem
-                title="Tentang Kami"
+                title={language === 'en' ? 'About Us' : 'Tentang Kami'}
                 isActive={activeDropdown === 'tentang'}
                 onMouseEnter={() => handleMouseEnter('tentang')}
                 onMouseLeave={handleMouseLeave}
@@ -165,7 +166,7 @@ export const Navbar: React.FC = () => {
 
               {/* Mega Menu 2: Layanan LPH */}
               <MegaMenuItem
-                title="Layanan LPH"
+                title={language === 'en' ? 'Halal Services' : 'Layanan LPH'}
                 isActive={activeDropdown === 'layanan'}
                 onMouseEnter={() => handleMouseEnter('layanan')}
                 onMouseLeave={handleMouseLeave}
@@ -247,7 +248,7 @@ export const Navbar: React.FC = () => {
 
               {/* Mega Menu 3: News & Update */}
               <MegaMenuItem
-                title="News & Update"
+                title={language === 'en' ? 'News & Media' : 'News & Update'}
                 isActive={activeDropdown === 'news'}
                 onMouseEnter={() => handleMouseEnter('news')}
                 onMouseLeave={handleMouseLeave}
@@ -327,13 +328,12 @@ export const Navbar: React.FC = () => {
 
               <Link
                 to="/kontak"
-                className={`px-3.5 py-2 rounded-xl text-sm font-semibold transition-all ${
-                  isActive('/kontak')
+                className={`px-3.5 py-2 rounded-xl text-sm font-semibold transition-all ${isActive('/kontak')
                     ? 'text-[#6b1282] bg-purple-50/90 shadow-xs'
                     : 'text-neutral-700 hover:text-[#6b1282] hover:bg-purple-50/40'
-                }`}
+                  }`}
               >
-                Kontak
+                {t('nav_contact')}
               </Link>
             </nav>
 
@@ -345,13 +345,33 @@ export const Navbar: React.FC = () => {
                   className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold px-5 py-2.5 rounded-full text-xs sm:text-sm shadow-md transition-all flex items-center gap-1.5"
                 >
                   <Sparkles className="w-3.5 h-3.5 text-purple-200" />
-                  Hitung Tarif Halal
+                  {t('nav_calc_fee')}
                 </Button>
               </Link>
-              <div className="flex items-center gap-1.5 text-xs font-bold text-neutral-500 border-l border-neutral-200 pl-3">
-                <span className="text-[#6b1282] font-black cursor-pointer">ID</span>
-                <span>|</span>
-                <span className="hover:text-neutral-900 cursor-pointer">EN</span>
+              <div className="flex items-center gap-1 text-xs font-bold text-neutral-500 border-l border-neutral-200 pl-3">
+                <button
+                  type="button"
+                  onClick={() => setLanguage('id')}
+                  className={`px-2 py-1 rounded-lg transition-all duration-200 ${
+                    language === 'id'
+                      ? 'bg-purple-100 text-[#6b1282] font-black shadow-2xs'
+                      : 'text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100'
+                  }`}
+                >
+                  ID
+                </button>
+                <span className="text-neutral-300">|</span>
+                <button
+                  type="button"
+                  onClick={() => setLanguage('en')}
+                  className={`px-2 py-1 rounded-lg transition-all duration-200 ${
+                    language === 'en'
+                      ? 'bg-purple-100 text-[#6b1282] font-black shadow-2xs'
+                      : 'text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100'
+                  }`}
+                >
+                  EN
+                </button>
               </div>
             </div>
 
@@ -384,17 +404,48 @@ export const Navbar: React.FC = () => {
             </Drawer.Header>
 
             <Drawer.Body className="py-6 space-y-4">
+              {/* Language Switcher in Mobile Drawer */}
+              <div className="flex items-center justify-between p-2.5 bg-purple-50/70 rounded-2xl border border-purple-100">
+                <span className="text-xs font-bold text-neutral-700">
+                  {language === 'en' ? 'Select Language:' : 'Pilih Bahasa:'}
+                </span>
+                <div className="flex items-center gap-1">
+                  <button
+                    type="button"
+                    onClick={() => setLanguage('id')}
+                    className={`px-3 py-1 text-xs font-bold rounded-xl transition-all ${
+                      language === 'id'
+                        ? 'bg-[#6b1282] text-white shadow-xs'
+                        : 'text-neutral-600 hover:bg-white'
+                    }`}
+                  >
+                    ID
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setLanguage('en')}
+                    className={`px-3 py-1 text-xs font-bold rounded-xl transition-all ${
+                      language === 'en'
+                        ? 'bg-[#6b1282] text-white shadow-xs'
+                        : 'text-neutral-600 hover:bg-white'
+                    }`}
+                  >
+                    EN
+                  </button>
+                </div>
+              </div>
+
               <div className="flex flex-col space-y-1.5">
                 <Link
                   to="/"
                   onClick={() => setMobileOpen(false)}
                   className="px-4 py-2.5 rounded-xl text-base font-bold text-neutral-800 hover:bg-neutral-100"
                 >
-                  Beranda
+                  {t('nav_home')}
                 </Link>
 
                 <div className="pt-2 pb-1 px-4 text-xs font-bold text-[#6b1282] uppercase tracking-wider">
-                  Tentang Kami
+                  {language === 'en' ? 'About Us' : 'Tentang Kami'}
                 </div>
                 <Link
                   to="/tentang"
@@ -402,7 +453,7 @@ export const Navbar: React.FC = () => {
                   className="flex items-center gap-2.5 px-4 py-2 text-sm font-semibold text-neutral-700 hover:bg-purple-50 rounded-xl"
                 >
                   <BookOpen className="w-4 h-4 text-[#6b1282]" />
-                  Profil &amp; Sejarah LPH
+                  {language === 'en' ? 'LPH Profile & History' : 'Profil & Sejarah LPH'}
                 </Link>
                 <Link
                   to="/layanan/qna"
@@ -410,11 +461,11 @@ export const Navbar: React.FC = () => {
                   className="flex items-center gap-2.5 px-4 py-2 text-sm font-semibold text-neutral-700 hover:bg-emerald-50 rounded-xl"
                 >
                   <HelpCircle className="w-4 h-4 text-[#005a36]" />
-                  FAQ &amp; Halal QnA
+                  {language === 'en' ? 'FAQ & Halal Q&A' : 'FAQ & Halal QnA'}
                 </Link>
 
                 <div className="pt-3 pb-1 px-4 text-xs font-bold text-[#005a36] uppercase tracking-wider">
-                  Layanan Halal
+                  {language === 'en' ? 'Halal Services' : 'Layanan Halal'}
                 </div>
                 <Link
                   to="/layanan/kalkulator"
@@ -422,7 +473,7 @@ export const Navbar: React.FC = () => {
                   className="flex items-center gap-2.5 px-4 py-2 text-sm font-semibold text-neutral-700 hover:bg-neutral-50 rounded-xl"
                 >
                   <Calculator className="w-4 h-4 text-[#6b1282]" />
-                  Kalkulator Tarif
+                  {language === 'en' ? 'Fee Calculator' : 'Kalkulator Tarif'}
                 </Link>
                 <Link
                   to="/layanan/pengaduan"
@@ -430,7 +481,7 @@ export const Navbar: React.FC = () => {
                   className="flex items-center gap-2.5 px-4 py-2 text-sm font-semibold text-neutral-700 hover:bg-neutral-50 rounded-xl"
                 >
                   <ShieldAlert className="w-4 h-4 text-rose-600" />
-                  Pengaduan &amp; Whistleblowing
+                  {language === 'en' ? 'Complaints & Whistleblowing' : 'Pengaduan & Whistleblowing'}
                 </Link>
                 <Link
                   to="/layanan/kepuasan"
@@ -438,11 +489,11 @@ export const Navbar: React.FC = () => {
                   className="flex items-center gap-2.5 px-4 py-2 text-sm font-semibold text-neutral-700 hover:bg-neutral-50 rounded-xl"
                 >
                   <Smile className="w-4 h-4 text-amber-600" />
-                  Survei Kepuasan Pelanggan
+                  {language === 'en' ? 'Satisfaction Survey' : 'Survei Kepuasan Pelanggan'}
                 </Link>
 
                 <div className="pt-3 pb-1 px-4 text-xs font-bold text-[#0284c7] uppercase tracking-wider">
-                  Informasi &amp; Kontak
+                  {language === 'en' ? 'Information & Contact' : 'Informasi & Kontak'}
                 </div>
                 <Link
                   to="/berita"
@@ -450,7 +501,7 @@ export const Navbar: React.FC = () => {
                   className="flex items-center gap-2.5 px-4 py-2 text-sm font-semibold text-neutral-700 hover:bg-neutral-50 rounded-xl"
                 >
                   <Newspaper className="w-4 h-4 text-[#0284c7]" />
-                  Berita &amp; Kegiatan
+                  {language === 'en' ? 'News & Activities' : 'Berita & Kegiatan'}
                 </Link>
                 <Link
                   to="/pengumuman"
@@ -458,7 +509,7 @@ export const Navbar: React.FC = () => {
                   className="flex items-center gap-2.5 px-4 py-2 text-sm font-semibold text-neutral-700 hover:bg-neutral-50 rounded-xl"
                 >
                   <Bell className="w-4 h-4 text-amber-500" />
-                  Pengumuman Resmi
+                  {language === 'en' ? 'Official Announcements' : 'Pengumuman Resmi'}
                 </Link>
                 <Link
                   to="/kontak"
@@ -466,7 +517,7 @@ export const Navbar: React.FC = () => {
                   className="flex items-center gap-2.5 px-4 py-2 text-sm font-semibold text-neutral-700 hover:bg-neutral-50 rounded-xl"
                 >
                   <Phone className="w-4 h-4 text-[#005a36]" />
-                  Hubungi Kami
+                  {t('nav_contact')}
                 </Link>
               </div>
 
@@ -475,9 +526,9 @@ export const Navbar: React.FC = () => {
                   <Button
                     variant="primary"
                     fullWidth
-                    className="bg-gradient-to-r from-[#6b1282] to-[#005a36] text-white font-bold rounded-xl py-3"
+                    className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold rounded-xl py-3 shadow-md"
                   >
-                    Hitung Tarif Halal
+                    {t('nav_calc_fee')}
                   </Button>
                 </Link>
               </div>

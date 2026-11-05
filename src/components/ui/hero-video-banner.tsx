@@ -6,19 +6,29 @@ import { motion } from 'motion/react';
 import { MovingBorderButton } from '@/components/ui/moving-border';
 import { FlipWords } from '@/components/ui/flip-words';
 import { SparklesCore } from '@/components/ui/sparkles';
+import { useLanguage } from '@/context/LanguageContext';
 
 export const HeroVideoBanner: React.FC = () => {
+  const { language, t } = useLanguage();
   const [productName, setProductName] = useState('');
   const [producerName, setProducerName] = useState('');
   const [certNo, setCertNo] = useState('');
 
-  const words = [
-    'Halal Assurance',
-    'Integritas Syar’i',
-    'Riset Sains Presisi',
-    'Akreditasi Mutlak',
-    'Kemitraan Terpercaya',
-  ];
+  const words = language === 'en'
+    ? [
+        'Halal Assurance',
+        'Sharia Integrity',
+        'Precision Science',
+        'Global Standards',
+        'Trusted Partnership',
+      ]
+    : [
+        'Halal Assurance',
+        'Integritas Syar’i',
+        'Riset Sains Presisi',
+        'Akreditasi Mutlak',
+        'Kemitraan Terpercaya',
+      ];
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -80,9 +90,9 @@ export const HeroVideoBanner: React.FC = () => {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-300 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-200"></span>
           </span>
-          <span className="text-white tracking-wide">Lembaga Pemeriksa Halal</span>
+          <span className="text-white tracking-wide">{t('hero_badge_lph')}</span>
           <span className="text-purple-300 font-extrabold">•</span>
-          <span className="text-purple-200">UIN Sunan Gunung Djati Bandung</span>
+          <span className="text-purple-200">{t('hero_badge_univ')}</span>
         </motion.div>
 
         {/* Main Heading with Modern Classic Serif Typography & FlipWords */}
@@ -107,7 +117,7 @@ export const HeroVideoBanner: React.FC = () => {
           transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           className="mt-6 text-base sm:text-lg lg:text-xl text-neutral-200 max-w-3xl leading-relaxed font-normal drop-shadow-md"
         >
-          Lembaga Pemeriksa Halal (LPH) UIN Sunan Gunung Djati Bandung berupaya mempertahankan posisinya sebagai lembaga pemeriksa halal terkemuka serta menjadi mitra utama industri halal nasional dan internasional.
+          {t('hero_subtitle')}
         </motion.p>
 
         {/* Action Buttons featuring Moving Border in Royal Purple */}
@@ -124,7 +134,7 @@ export const HeroVideoBanner: React.FC = () => {
             >
               <span className="flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-purple-200" />
-                Hitung Tarif Halal
+                {t('hero_cta_calc')}
                 <ArrowRight className="w-4 h-4" />
               </span>
             </MovingBorderButton>
@@ -134,7 +144,7 @@ export const HeroVideoBanner: React.FC = () => {
               variant="outline"
               className="h-12 bg-white/10 hover:bg-white/20 text-white border border-white/30 backdrop-blur-md font-semibold text-sm px-6 rounded-2xl transition-all shadow-xl hover:scale-105"
             >
-              Pelajari Profil LPH
+              {t('hero_cta_profile')}
             </Button>
           </Link>
         </motion.div>
@@ -156,18 +166,18 @@ export const HeroVideoBanner: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="text-base sm:text-lg font-bold text-[#1a0726]">
-                    Cari Produk Halal Melalui Pemeriksaan LPH UIN SGD
+                    {t('search_title')}
                   </h3>
                   <span className="text-xs font-medium text-neutral-500">
-                    Terhubung langsung dengan Pangkalan Data Resmi BPJPH &amp; MUI
+                    {t('search_subtitle')}
                   </span>
                 </div>
               </div>
 
               {/* Quick tags in Purple & White */}
               <div className="flex items-center gap-1.5 flex-wrap">
-                <span className="text-xs font-semibold text-neutral-400">Pencarian Populer:</span>
-                {['Kopi', 'Roti', 'Kosmetik', 'Daging'].map((tag) => (
+                <span className="text-xs font-semibold text-neutral-400">{t('search_popular')}</span>
+                {(language === 'en' ? ['Coffee', 'Bread', 'Cosmetics', 'Meat'] : ['Kopi', 'Roti', 'Kosmetik', 'Daging']).map((tag) => (
                   <button
                     key={tag}
                     type="button"
@@ -183,10 +193,10 @@ export const HeroVideoBanner: React.FC = () => {
             <form onSubmit={handleSearch} className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
               <div>
                 <label className="block text-xs font-semibold text-neutral-700 uppercase mb-1.5">
-                  Nama Produk
+                  {t('search_label_product')}
                 </label>
                 <Input
-                  placeholder="Contoh: Kopi, Roti, Kosmetik..."
+                  placeholder={t('search_placeholder_product')}
                   value={productName}
                   onChange={(e) => setProductName(e.target.value)}
                   variant="secondary"
@@ -196,10 +206,10 @@ export const HeroVideoBanner: React.FC = () => {
 
               <div>
                 <label className="block text-xs font-semibold text-neutral-700 uppercase mb-1.5">
-                  Nama Produsen / Perusahaan
+                  {t('search_label_producer')}
                 </label>
                 <Input
-                  placeholder="Contoh: PT Sumber Pangan..."
+                  placeholder={t('search_placeholder_producer')}
                   value={producerName}
                   onChange={(e) => setProducerName(e.target.value)}
                   variant="secondary"
@@ -209,10 +219,10 @@ export const HeroVideoBanner: React.FC = () => {
 
               <div>
                 <label className="block text-xs font-semibold text-neutral-700 uppercase mb-1.5">
-                  No. Sertifikat / Ketetapan
+                  {t('search_label_cert')}
                 </label>
                 <Input
-                  placeholder="ID32... / No. Sertifikat"
+                  placeholder={t('search_placeholder_cert')}
                   value={certNo}
                   onChange={(e) => setCertNo(e.target.value)}
                   variant="secondary"
@@ -228,7 +238,7 @@ export const HeroVideoBanner: React.FC = () => {
                   className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold h-10 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 hover:scale-[1.01]"
                 >
                   <Search className="w-4 h-4 text-purple-200" />
-                  Cari Produk Halal
+                  {t('search_button')}
                 </Button>
               </div>
             </form>

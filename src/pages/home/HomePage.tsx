@@ -33,6 +33,7 @@ import { BackgroundGradient } from '@/components/ui/background-gradient';
 import { MovingBorderButton } from '@/components/ui/moving-border';
 import { TimelineSteps } from '@/components/ui/timeline-steps';
 import { CardSpotlight } from '@/components/ui/card-spotlight';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface Director {
   id: number;
@@ -180,6 +181,7 @@ const PARTNER_ITEMS = [
 ];
 
 export const HomePage: React.FC = () => {
+  const { language, t } = useLanguage();
   const [activeTab, setActiveTab] = useState<string>('artikel');
   const [selectedDirector, setSelectedDirector] = useState<Director | null>(null);
 
@@ -312,46 +314,46 @@ export const HomePage: React.FC = () => {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             <MetricCard
-              label="PENGALAMAN & DEDIKASI"
+              label={t('metric_exp_label')}
               value="8+"
               numberTarget={8}
               suffix="+"
-              change="Sejak 2016"
+              change={t('metric_exp_change')}
               isPositive={true}
               accentColor="purple"
-              description="Dedikasi riset sains halal & sertifikasi resmi berkelanjutan bagi kemaslahatan umat."
+              description={t('metric_exp_desc')}
               icon={<Award className="w-5 h-5" />}
             />
             <MetricCard
-              label="SERTIFIKAT HALAL TERBIT"
+              label={t('metric_certs_label')}
               value="1.000+"
               numberTarget={1000}
               suffix="+"
               change="+28% YoY"
               isPositive={true}
               accentColor="purple"
-              description="Diterbitkan resmi bagi pelaku usaha mikro, kecil, hingga korporasi multinasional."
+              description={t('metric_certs_desc')}
               icon={<FileCheck className="w-5 h-5" />}
             />
             <MetricCard
-              label="AUDITOR & PENDAMPING"
+              label={t('metric_auditors_label')}
               value="100+"
               numberTarget={100}
               suffix="+"
-              change="Tersertifikasi"
+              change={t('metric_auditors_change')}
               isPositive={true}
               accentColor="purple"
-              description="Auditor halal, penyelia, dan pendamping PPH berlisensi BPJPH & MUI di seluruh Indonesia."
+              description={t('metric_auditors_desc')}
               icon={<Users className="w-5 h-5" />}
             />
             <MetricCard
-              label="STANDAR LABORATORIUM"
+              label={t('metric_lab_label')}
               value="ISO 17025"
               suffix=""
-              change="Akreditasi KAN"
+              change={t('metric_lab_change')}
               isPositive={true}
               accentColor="purple"
-              description="Pengujian saintifik presisi tinggi: Deteksi qPCR DNA Babi, GC-FID Etanol, & Gelatin."
+              description={t('metric_lab_desc')}
               icon={<FlaskConical className="w-5 h-5" />}
             />
           </div>
@@ -1158,25 +1160,6 @@ export const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
-
-      {/* Floating WhatsApp CTA with Glowing Pulse */}
-      <div className="fixed bottom-6 right-6 z-50">
-        <motion.a
-          whileHover={{ scale: 1.08 }}
-          whileTap={{ scale: 0.95 }}
-          href="https://wa.me/6282118201232"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Hubungi WhatsApp Halal Center"
-          className="relative flex items-center gap-3 bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white font-black px-5 py-3.5 rounded-full shadow-2xl hover:shadow-emerald-500/40 transition-all group"
-        >
-          <span className="absolute -inset-1 rounded-full bg-emerald-400 opacity-30 blur-md group-hover:opacity-60 animate-pulse pointer-events-none" />
-          <MessageCircle className="w-6 h-6 fill-white relative z-10" />
-          <span className="hidden sm:inline text-sm font-extrabold pr-1 relative z-10">
-            Chat Konsultasi WA
-          </span>
-        </motion.a>
-      </div>
     </div>
   );
 };

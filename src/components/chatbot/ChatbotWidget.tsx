@@ -1,31 +1,160 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button, Card, Input } from '@heroui/react';
-import { MessageSquare, X, Send, Bot, User, Headphones, Sparkles } from 'lucide-react';
+import { 
+  Bot, 
+  X, 
+  Send, 
+  Sparkles, 
+  RotateCcw, 
+  ArrowUpRight, 
+  MessageCircle, 
+  CheckCircle2, 
+  HelpCircle,
+  Clock,
+  ShieldCheck,
+  ChevronDown
+} from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 import { api } from '@/services/api';
 
 interface Message {
   id: string;
-  sender: 'BOT' | 'USER' | 'ADMIN';
+  sender: 'BOT' | 'USER';
   text: string;
   time: string;
-  canContactAdmin?: boolean;
+  isFallback?: boolean;
   waUrl?: string;
+  waText?: string;
+  suggestedAction?: {
+    label: string;
+    href?: string;
+    to?: string;
+  };
 }
 
+interface SmartAnswer {
+  keywords: string[];
+  answerId: string;
+  answerEn: string;
+  isFallback?: boolean;
+  suggestedAction?: {
+    labelId: string;
+    labelEn: string;
+    href?: string;
+    to?: string;
+  };
+}
+
+const KNOWLEDGE_BASE: SmartAnswer[] = [
+  {
+    keywords: ['biaya', 'tarif', 'harga', 'bayar', 'kalkulator', 'cost', 'fee', 'price', 'rate'],
+    answerId: `💰 **Rincian Tarif & Biaya Sertifikasi Halal:**\n\n1. **Program Self Declare (SEHATI UMK):** **GRATIS (Rp 0)** bagi Usaha Mikro & Kecil yang memenuhi kriteria BPJPH.\n2. **Jalur Reguler LPH UIN SGD:** Mengacu pada Keputusan Menteri Agama (KMA) No. 784/2021 & Keputusan Kepala BPJPH. Biaya tergantung skala usaha (Mikro, Kecil, Menengah, Besar) dan kompleksitas fasilitas produksi.\n\nAnda dapat mensimulasikan estimasi biaya secara akurat di fitur Kalkulator Tarif kami.`,
+    answerEn: `💰 **Halal Certification Fees & Rates:**\n\n1. **Self-Declare (SEHATI MSEs):** **FREE (Rp 0)** for eligible Micro and Small Enterprises funded by the government.\n2. **Regular Audit by LPH UIN SGD:** Governed by Ministry of Religious Affairs (KMA) No. 784/2021. Cost depends on company scale (Micro, Small, Medium, Large) and production complexity.\n\nYou can simulate your estimated cost using our Halal Fee Calculator.`,
+    suggestedAction: {
+      labelId: 'Buka Kalkulator Tarif Halal',
+      labelEn: 'Open Halal Fee Calculator',
+      to: '/layanan/kalkulator'
+    }
+  },
+  {
+    keywords: ['self declare', 'sehati', 'gratis', 'umk', 'mikro', 'free', 'self-declare'],
+    answerId: `📋 **Persyaratan Sertifikasi Halal Gratis (Self Declare SEHATI):**\n\n• Memiliki Nomor Induk Berusaha (NIB) berbasis risiko.\n• Omzet penjualan maksimal Rp 500 juta/tahun.\n• Produk tidak berisiko tinggi (tidak mengandung unsur sembelihan hewani tanpa sertifikat halal resmi).\n• Bahan baku sudah memiliki sertifikat halal atau termasuk daftar bahan aman (Positive List BPJPH).\n• Memiliki proses produksi yang sederhana dan higienis.\n• Bersedia didampingi oleh Pendamping PPH Halal Center UIN Sunan Gunung Djati Bandung.`,
+    answerEn: `📋 **Free Halal Certification Requirements (SEHATI Self-Declare):**\n\n• Valid Business Identification Number (NIB).\n• Annual sales turnover below IDR 500 million/year.\n• Low-risk products (no non-certified slaughter or critical animal extracts).\n• Raw ingredients already halal-certified or listed on the official BPJPH positive list.\n• Simple and hygienic production line.\n• Mentored by certified Halal Center UIN SGD PPH supervisors.`,
+    suggestedAction: {
+      labelId: 'Konsultasi PPH via WhatsApp',
+      labelEn: 'Consult Supervisor via WhatsApp',
+      href: 'https://wa.me/6282118201232?text=Halo%20Admin%2C%20saya%20ingin%20konsultasi%20syarat%20Self%20Declare%20SEHATI'
+    }
+  },
+  {
+    keywords: ['lab', 'laboratorium', 'dna', 'babi', 'porcine', 'alkohol', 'etanol', 'gelatin', 'iso 17025', 'uji', 'test'],
+    answerId: `🔬 **Layanan Pengujian Laboratorium Hayati ISO/IEC 17025:**\n\nLaboratorium Hayati Terpadu Kampus 2 UIN Sunan Gunung Djati Bandung melayani pengujian saintifik akurasi tinggi:\n\n• **Deteksi qPCR DNA Babi (Porcine):** Deteksi spesifik gen sitokrom b babi pada daging olahan, bumbu, & kosmetik.\n• **Analisis Residual Etanol / Alkohol:** Menggunakan instrumen Gas Chromatography (GC-FID) presisi tinggi.\n• **Identifikasi Gelatin & Asam Lemak:** Uji asal bahan baku hewani.\n\nSeluruh proses uji tervalidasi standar internasional dan diakui KAN & BPJPH.`,
+    answerEn: `🔬 **ISO/IEC 17025 Accredited Laboratory Testing:**\n\nIntegrated Life Sciences Laboratory at Campus 2 UIN Sunan Gunung Djati Bandung provides high-precision testing:\n\n• **Porcine DNA qPCR Detection:** Specific detection of pig cytochrome b genes in processed food, seasonings & cosmetics.\n• **Residual Ethanol / Alcohol Analysis:** High-accuracy GC-FID instrumentation.\n• **Gelatin & Fatty Acid Profiling:** Identification of animal origin derivatives.\n\nAll tests are validated under international ISO/IEC 17025 standards accredited by KAN.`,
+    suggestedAction: {
+      labelId: 'Pelajari Laboratorium Halal',
+      labelEn: 'Explore Halal Laboratory',
+      href: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/'
+    }
+  },
+  {
+    keywords: ['alur', 'daftar', 'sihalal', 'ptsp', 'cara', 'prosedur', 'register', 'flow', 'steps', 'syarat'],
+    answerId: `📜 **6 Langkah Mudah Mendaftar Sertifikasi Halal di LPH UIN SGD:**\n\n1. Kunjungi portal resmi BPJPH di **ptsp.halal.go.id**.\n2. Login dengan akun NIB OSS Anda.\n3. Pilih jalur pengajuan: **Reguler** atau **Self Declare**.\n4. Pada pilihan Lembaga Pemeriksa Halal, pilih **LPH UIN Sunan Gunung Djati Bandung** (Kode: **LPH-018-ID**).\n5. Unggah dokumen bahan, manual SJPH, dan alur proses produksi.\n6. Tim auditor kami akan melakukan verifikasi dokumen dan audit lapangan/laboratorium.`,
+    answerEn: `📜 **6 Easy Steps to Register Halal Certification with LPH UIN SGD:**\n\n1. Visit the official BPJPH portal at **ptsp.halal.go.id**.\n2. Log in using your OSS NIB credentials.\n3. Select your application pathway: **Regular** or **Self Declare**.\n4. Under Halal Inspection Agency (LPH), select **LPH UIN Sunan Gunung Djati Bandung** (Code: **LPH-018-ID**).\n5. Upload your ingredient list, Halal Assurance manual (SJPH), and production matrix.\n6. Our certified auditors will conduct document verification and field/lab audit.`,
+    suggestedAction: {
+      labelId: 'Kunjungi Portal SIHALAL BPJPH',
+      labelEn: 'Visit BPJPH SIHALAL Portal',
+      href: 'https://ptsp.halal.go.id/'
+    }
+  },
+  {
+    keywords: ['pelatihan', 'auditor', 'penyelia', 'training', 'kursus', 'bnsp', 'skkni', 'juleha', 'kompetensi'],
+    answerId: `🎓 **Pelatihan & Sertifikasi Kompetensi Halal:**\n\nHalal Center UIN SGD menyelenggarakan bimbingan teknis dan uji kompetensi berkala:\n\n• **Pelatihan Auditor Halal:** Berlisensi BPJPH & BNSP.\n• **Pelatihan Penyelia Halal (Internal Halal Officer):** Berbasis SKKNI untuk perusahaan & industri.\n• **Bimtek Juru Sembelih Halal (JULEHA):** Standarisasi kehalalan RPH dan unggas.\n\nSertifikat pelatihan diakui secara nasional untuk syarat akreditasi perusahaan.`,
+    answerEn: `🎓 **Halal Competency Training & Certification:**\n\nHalal Center UIN SGD holds regular professional workshops and competency assessments:\n\n• **Halal Auditor Training:** Licensed by BPJPH & BNSP.\n• **Halal Supervisor Training:** SKKNI-based curriculum for internal company halal officers.\n• **Halal Slaughterer (JULEHA) Training:** Sharia-compliant slaughterhouse standardization.\n\nTraining certificates are recognized nationwide for corporate compliance.`,
+    suggestedAction: {
+      labelId: 'Jadwal Pelatihan via WhatsApp',
+      labelEn: 'Training Schedule via WhatsApp',
+      href: 'https://wa.me/6282118201232?text=Halo%20Admin%2C%20saya%20ingin%20informasi%20jadwal%20Pelatihan%20Auditor%20dan%20Penyelia%20Halal'
+    }
+  },
+  {
+    keywords: ['lokasi', 'alamat', 'kantor', 'gedung', 'kampus', 'dimana', 'location', 'address', 'office'],
+    answerId: `📍 **Alamat & Kantor Halal Center UIN SGD:**\n\n• **Kampus 1:** Gedung Lecture Hall / Halal Center, Jl. A.H. Nasution No. 105, Cipadung, Kec. Cibiru, Kota Bandung, Jawa Barat 40614.\n• **Kampus 2 (Laboratorium Terpadu ISO 17025):** Jl. Cimencrang, Kec. Gedebage, Kota Bandung (dekat Masjid Raya Al-Jabbar).\n\nJam Operasional Layanan:\nSenin – Jumat: 08.00 – 16.00 WIB.`,
+    answerEn: `📍 **Office Locations of Halal Center UIN SGD:**\n\n• **Campus 1:** Halal Center Building, Jl. A.H. Nasution No. 105, Cibiru, Bandung, West Java 40614.\n• **Campus 2 (Integrated ISO 17025 Lab):** Jl. Cimencrang, Gedebage, Bandung (near Al-Jabbar Grand Mosque).\n\nOffice Hours:\nMonday – Friday: 08:00 AM – 04:00 PM WIB.`,
+    suggestedAction: {
+      labelId: 'Buka Google Maps',
+      labelEn: 'Open Google Maps',
+      href: 'https://maps.app.goo.gl/9ZpZJz762a4oFq2N8'
+    }
+  },
+  {
+    keywords: ['kontak', 'hubungi', 'wa', 'whatsapp', 'admin', 'telepon', 'phone', 'contact', 'call', 'cs', 'customer service', 'bicara'],
+    answerId: `📞 **Kontak Layanan Resmi Halal Center UIN SGD:**\n\nAnda dapat berkonsultasi langsung dengan petugas pelayanan dan verifikator kami melalui saluran berikut:\n\n• **WhatsApp Layanan:** +62 821-1820-1232\n• **Email Resmi:** halalcenter@uinsgd.ac.id / lph@uinsgd.ac.id\n• **Website:** halal.uinsgd.ac.id\n\nKlik tombol di bawah untuk langsung terhubung ke WhatsApp Admin kami.`,
+    answerEn: `📞 **Official Support Contacts:**\n\nYou can consult directly with our verification officers and support team through:\n\n• **WhatsApp Support:** +62 821-1820-1232\n• **Email:** halalcenter@uinsgd.ac.id / lph@uinsgd.ac.id\n• **Website:** halal.uinsgd.ac.id\n\nClick the button below to connect with our official WhatsApp Admin immediately.`,
+    isFallback: true,
+    suggestedAction: {
+      labelId: 'Chat WhatsApp Sekarang',
+      labelEn: 'Chat WhatsApp Now',
+      href: 'https://wa.me/6282118201232?text=Halo%20Admin%20Halal%20Center%20UIN%20SGD%2C%20saya%20ingin%20berkonsultasi'
+    }
+  }
+];
+
 export const ChatbotWidget: React.FC = () => {
+  const { language, t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const initialWelcomeText = language === 'en'
+    ? 'Hello! I am the Halal Center UIN SGD AI Assistant. Ask me anything regarding halal certification, fees, document requirements, or laboratory tests. If I cannot answer your question, I will connect you directly to our official WhatsApp support!'
+    : 'Halo! Saya Asisten AI Halal Center UIN Sunan Gunung Djati Bandung. Silakan tanyakan seputar pendaftaran sertifikasi halal, syarat dokumen, uji lab, atau tarif. Jika butuh bimbingan lebih lanjut, kami akan menghubungkan Anda langsung ke WhatsApp resmi!';
+
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'welcome',
       sender: 'BOT',
-      text: 'Halo! Selamat datang di layanan informasi LPH UIN Sunan Gunung Djati Bandung. Ada yang bisa kami bantu seputar pendaftaran, persyaratan dokumen, atau tarif sertifikasi halal?',
+      text: initialWelcomeText,
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  // Update initial welcome message if language changed and only welcome exists
+  useEffect(() => {
+    setMessages((prev) => {
+      if (prev.length === 1 && prev[0].id === 'welcome') {
+        return [
+          {
+            id: 'welcome',
+            sender: 'BOT',
+            text: initialWelcomeText,
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          },
+        ];
+      }
+      return prev;
+    });
+  }, [language, initialWelcomeText]);
 
   useEffect(() => {
     if (isOpen) {
@@ -33,11 +162,24 @@ export const ChatbotWidget: React.FC = () => {
     }
   }, [messages, isOpen]);
 
-  const handleSend = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!input.trim() || loading) return;
+  // Smart natural language matching function
+  const findSmartResponse = (query: string): SmartAnswer | null => {
+    const q = query.toLowerCase();
+    for (const item of KNOWLEDGE_BASE) {
+      for (const kw of item.keywords) {
+        if (q.includes(kw)) {
+          return item;
+        }
+      }
+    }
+    return null;
+  };
 
-    const userText = input.trim();
+  const handleSend = async (e?: React.FormEvent, customQuery?: string) => {
+    if (e) e.preventDefault();
+    const userText = (customQuery || input).trim();
+    if (!userText || loading) return;
+
     setInput('');
     const userMsg: Message = {
       id: 'user_' + Date.now(),
@@ -49,13 +191,43 @@ export const ChatbotWidget: React.FC = () => {
     setMessages((prev) => [...prev, userMsg]);
     setLoading(true);
 
+    // Give a short realistic typing delay (Aceternity style smooth micro-interaction)
+    await new Promise((res) => setTimeout(res, 600));
+
+    // 1. Try local smart knowledge base first for instant accuracy
+    const match = findSmartResponse(userText);
+
+    if (match) {
+      const answerText = language === 'en' ? match.answerEn : match.answerId;
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: 'bot_' + Date.now(),
+          sender: 'BOT',
+          text: answerText,
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          isFallback: match.isFallback,
+          waUrl: 'https://wa.me/6282118201232?text=' + encodeURIComponent(`Halo Admin Halal Center UIN SGD, saya bertanya mengenai: "${userText}"`),
+          waText: language === 'en' ? 'Consult Officer via WhatsApp' : 'Lanjutkan Chat via WhatsApp',
+          suggestedAction: match.suggestedAction ? {
+            label: language === 'en' ? match.suggestedAction.labelEn : match.suggestedAction.labelId,
+            href: match.suggestedAction.href,
+            to: match.suggestedAction.to
+          } : undefined
+        },
+      ]);
+      setLoading(false);
+      return;
+    }
+
+    // 2. Try backend API if query wasn't locally matched
     try {
       const res = await api.post('/chat/message', {
         message: userText,
         history: messages.slice(-4),
       });
 
-      if (res.data?.success) {
+      if (res.data?.success && res.data.data?.answer) {
         setMessages((prev) => [
           ...prev,
           {
@@ -63,24 +235,31 @@ export const ChatbotWidget: React.FC = () => {
             sender: 'BOT',
             text: res.data.data.answer,
             time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-            canContactAdmin: res.data.data.canContactAdmin,
-            waUrl: res.data.data.waUrl,
+            isFallback: res.data.data.canContactAdmin,
+            waUrl: res.data.data.waUrl || 'https://wa.me/6282118201232?text=' + encodeURIComponent(`Halo Admin Halal Center UIN SGD, saya bertanya mengenai: "${userText}"`),
+            waText: language === 'en' ? 'Consult Officer via WhatsApp' : 'Lanjutkan Chat via WhatsApp',
           },
         ]);
-      } else {
-        throw new Error('Fallback');
+        setLoading(false);
+        return;
       }
+      throw new Error('Fallback needed');
     } catch {
+      // 3. Fallback: The exact requested flow ("kalo misalkan ga ke jawab baru diarahin untuk chat whatsapp")
+      const fallbackMsg = language === 'en'
+        ? `I could not find a specific automated answer for your query: "${userText}".\n\nHalal certification regulations often involve specific technical nuances. Please chat directly with our official Halal Center UIN Sunan Gunung Djati Bandung verifiers via WhatsApp for personalized guidance.`
+        : `Maaf, saya belum menemukan jawaban otomatis yang tepat untuk pertanyaan Anda: "${userText}".\n\nKetentuan regulasi halal memiliki detail teknis spesifik. Silakan konsultasikan langsung dengan Tim Auditor & Verifikator resmi Halal Center UIN Sunan Gunung Djati Bandung via WhatsApp:`;
+
       setMessages((prev) => [
         ...prev,
         {
           id: 'bot_' + Date.now(),
           sender: 'BOT',
-          text:
-            'Terima kasih atas pertanyaan Anda. Untuk informasi teknis sertifikasi halal reguler atau Self Declare lebih detail, Anda dapat menghubungi tim verifikator kami via WhatsApp resmi.',
+          text: fallbackMsg,
           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          canContactAdmin: true,
-          waUrl: 'https://wa.me/6282118201232',
+          isFallback: true,
+          waUrl: 'https://wa.me/6282118201232?text=' + encodeURIComponent(`Halo Admin Halal Center UIN SGD, saya ingin berkonsultasi mengenai: "${userText}"`),
+          waText: language === 'en' ? 'Connect via WhatsApp (+62 821-1820-1232)' : 'Hubungi WhatsApp Resmi (+62 821-1820-1232)',
         },
       ]);
     } finally {
@@ -88,119 +267,275 @@ export const ChatbotWidget: React.FC = () => {
     }
   };
 
+  const resetChat = () => {
+    setMessages([
+      {
+        id: 'welcome',
+        sender: 'BOT',
+        text: initialWelcomeText,
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      },
+    ]);
+  };
+
+  const quickPromptChips = [
+    { label: t('chatbot_chip_fee'), query: language === 'en' ? 'Halal certification fee and cost' : 'Berapa biaya tarif sertifikasi halal?' },
+    { label: t('chatbot_chip_selfdeclare'), query: language === 'en' ? 'Free Self Declare requirements' : 'Syarat sertifikasi halal gratis Self Declare SEHATI' },
+    { label: t('chatbot_chip_lab'), query: language === 'en' ? 'Porcine DNA and alcohol lab test ISO 17025' : 'Uji laboratorium DNA babi dan alkohol ISO 17025' },
+    { label: t('chatbot_chip_sihalal'), query: language === 'en' ? 'How to register on SIHALAL BPJPH' : 'Alur dan cara daftar di SIHALAL BPJPH' },
+  ];
+
   return (
     <>
-      {/* Floating Chat Trigger Button (Fixed left-bottom) */}
-      <div className="fixed bottom-6 left-6 z-50">
+      {/* Floating Trigger Button (Bottom-Right ONLY) */}
+      <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+        {/* Subtle Interactive Prompt Pill when collapsed */}
+        {!isOpen && (
+          <div 
+            onClick={() => setIsOpen(true)}
+            className="hidden md:flex items-center gap-2 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-full shadow-xl shadow-purple-950/10 border border-purple-200/80 cursor-pointer hover:border-[#6b1282] hover:scale-105 transition-all duration-300 group"
+          >
+            <span className="flex h-2.5 w-2.5 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#6b1282]"></span>
+            </span>
+            <span className="text-xs font-bold text-[#1a0726] group-hover:text-[#6b1282] transition-colors">
+              {language === 'en' ? 'Ask Halal AI' : 'Tanya AI Halal'}
+            </span>
+            <Sparkles className="w-3.5 h-3.5 text-purple-600" />
+          </div>
+        )}
+
         <Button
           variant="primary"
-          aria-label="Tanya AI Halal"
-          className="w-14 h-14 rounded-full bg-gradient-to-r from-[#6b1282] to-[#581c87] hover:from-[#581c87] hover:to-[#4a0d5c] text-white shadow-2xl flex items-center justify-center transition-transform hover:scale-110 border-2 border-emerald-400"
+          aria-label={isOpen ? 'Tutup Chatbot' : 'Buka Asisten AI Halal'}
+          className={`w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 ${
+            isOpen
+              ? 'bg-neutral-800 hover:bg-neutral-900 text-white rotate-90 scale-95'
+              : 'bg-gradient-to-r from-[#6b1282] via-[#86198f] to-[#4a0d5c] hover:brightness-110 text-white ring-4 ring-purple-200/60 shadow-purple-950/30 hover:scale-110'
+          }`}
           onPress={() => setIsOpen(!isOpen)}
         >
-          {isOpen ? <X className="w-6 h-6" /> : <Bot className="w-7 h-7 text-emerald-300" />}
+          {isOpen ? (
+            <X className="w-6 h-6 text-white" />
+          ) : (
+            <div className="relative">
+              <Bot className="w-7 h-7 text-white" />
+              <span className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full border-2 border-[#6b1282]" />
+            </div>
+          )}
         </Button>
       </div>
 
-      {/* Floating Chat Panel */}
+      {/* Floating Chat Panel (Dominantly White, Royal Purple Accents) */}
       {isOpen && (
-        <div className="fixed bottom-24 left-6 z-50 w-[360px] sm:w-[400px] max-w-[calc(100vw-3rem)]">
-          <Card className="rounded-3xl border border-neutral-200/90 bg-white shadow-2xl overflow-hidden flex flex-col h-[520px]">
-            {/* Top Jewel Bar */}
-            <div className="h-1 w-full bg-gradient-to-r from-[#6b1282] via-[#0284c7] via-[#10b981] to-[#f59e0b]" />
+        <div className="fixed bottom-24 right-4 sm:right-6 z-50 w-[380px] sm:w-[420px] max-w-[calc(100vw-2rem)] animate-in fade-in slide-in-from-bottom-5 duration-300">
+          <Card className="rounded-[28px] border border-purple-200/90 bg-white shadow-2xl shadow-purple-950/25 overflow-hidden flex flex-col h-[580px] max-h-[82vh] ring-1 ring-purple-100">
+            {/* Top Royal Purple Gradient Strip */}
+            <div className="h-1.5 w-full bg-gradient-to-r from-[#4a0d5c] via-[#86198f] to-[#6b1282]" />
 
-            {/* Header */}
-            <div className="bg-gradient-to-r from-[#6b1282] to-[#4a0d5c] text-white px-5 py-4 flex items-center justify-between">
+            {/* Header: Pure White with Royal Purple Branding */}
+            <div className="bg-white px-5 py-3.5 border-b border-purple-100/90 flex items-center justify-between shadow-xs">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#005a36] flex items-center justify-center text-white shadow-sm border border-emerald-300/40">
-                  <Bot className="w-5 h-5 text-emerald-300" />
+                <div className="relative w-10 h-10 rounded-2xl bg-gradient-to-br from-[#6b1282] to-[#4a0d5c] flex items-center justify-center text-white shadow-md shadow-purple-900/20">
+                  <Bot className="w-5 h-5 text-white" />
+                  <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white" />
                 </div>
                 <div>
-                  <h4 className="font-black text-sm text-white">Asisten Cerdas LPH</h4>
-                  <div className="flex items-center gap-1.5 text-[11px] text-emerald-300">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span>Aktif 24/7 (AI SIHALAL)</span>
+                  <div className="flex items-center gap-1.5">
+                    <h4 className="font-extrabold text-sm text-[#1a0726]">
+                      {t('chatbot_title')}
+                    </h4>
+                    <span className="text-[10px] font-bold px-1.5 py-0.5 bg-purple-100 text-[#6b1282] rounded-md">
+                      AI 24/7
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1.5 text-[11px] text-neutral-500 font-medium">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    <span>{t('chatbot_subtitle')}</span>
                   </div>
                 </div>
               </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-white/80 hover:text-white p-1 min-w-0"
-                onPress={() => setIsOpen(false)}
-              >
-                <X className="w-5 h-5" />
-              </Button>
+
+              <div className="flex items-center gap-1">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  aria-label="Reset Chat"
+                  className="text-neutral-400 hover:text-[#6b1282] hover:bg-purple-50 p-1.5 rounded-xl min-w-0"
+                  onPress={resetChat}
+                >
+                  <RotateCcw className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  aria-label="Tutup"
+                  className="text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 p-1.5 rounded-xl min-w-0"
+                  onPress={() => setIsOpen(false)}
+                >
+                  <ChevronDown className="w-5 h-5" />
+                </Button>
+              </div>
             </div>
 
-            {/* Messages Body */}
-            <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-neutral-50/70 text-xs">
+            {/* Messages Body (Dominantly White Canvas with Subtle Lavender Touch) */}
+            <div className="flex-1 p-4 overflow-y-auto space-y-3.5 bg-[#faf8fc]/80 text-xs">
               {messages.map((m) => {
                 const isUser = m.sender === 'USER';
                 return (
                   <div
                     key={m.id}
-                    className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} max-w-[85%] ${
+                    className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} max-w-[88%] ${
                       isUser ? 'ml-auto' : 'mr-auto'
                     }`}
                   >
+                    {/* Message Bubble */}
                     <div
-                      className={`px-4 py-2.5 rounded-2xl ${
+                      className={`px-4 py-3 rounded-2xl whitespace-pre-line text-xs sm:text-[13px] leading-relaxed ${
                         isUser
-                          ? 'bg-[#005a36] text-white rounded-br-xs'
-                          : 'bg-white text-neutral-800 border border-neutral-200 rounded-bl-xs shadow-xs'
-                      } leading-relaxed`}
+                          ? 'bg-[#6b1282] text-white rounded-tr-xs shadow-md shadow-purple-950/10'
+                          : 'bg-white text-neutral-800 border border-purple-100 rounded-tl-xs shadow-xs'
+                      }`}
                     >
                       {m.text}
                     </div>
-                    <span className="text-[10px] text-neutral-400 mt-1 px-1">
+
+                    <span className="text-[10px] text-neutral-400 mt-1 px-1 flex items-center gap-1">
+                      <Clock className="w-2.5 h-2.5" />
                       {m.time}
                     </span>
 
-                    {m.canContactAdmin && (
-                      <div className="mt-2">
+                    {/* Secondary Suggested Action Link (e.g. Open Calculator or SIHALAL) */}
+                    {m.suggestedAction && (
+                      <div className="mt-2 w-full">
+                        {m.suggestedAction.to ? (
+                          <a
+                            href={m.suggestedAction.to}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-50 hover:bg-purple-100 text-[#6b1282] font-bold text-xs border border-purple-200/80 transition-colors shadow-xs"
+                          >
+                            <span>{m.suggestedAction.label}</span>
+                            <ArrowUpRight className="w-3.5 h-3.5" />
+                          </a>
+                        ) : (
+                          <a
+                            href={m.suggestedAction.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-50 hover:bg-purple-100 text-[#6b1282] font-bold text-xs border border-purple-200/80 transition-colors shadow-xs"
+                          >
+                            <span>{m.suggestedAction.label}</span>
+                            <ArrowUpRight className="w-3.5 h-3.5" />
+                          </a>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Prominent WhatsApp Escalation Card (When AI can't answer or user needs human officer) */}
+                    {m.isFallback && (
+                      <div className="mt-2.5 w-full rounded-2xl p-3 bg-gradient-to-br from-emerald-50 to-white border border-emerald-200/90 shadow-sm">
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className="w-7 h-7 rounded-lg bg-[#25D366] text-white flex items-center justify-center shadow-xs">
+                            <MessageCircle className="w-4 h-4 fill-white" />
+                          </div>
+                          <div>
+                            <div className="font-bold text-xs text-[#065f46]">
+                              {language === 'en' ? 'Official WhatsApp Desk' : 'Layanan WhatsApp Resmi'}
+                            </div>
+                            <div className="text-[10px] text-neutral-500 font-medium">
+                              +62 821-1820-1232 (Admin LPH)
+                            </div>
+                          </div>
+                        </div>
                         <a
                           href={m.waUrl || 'https://wa.me/6282118201232'}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#25D366] text-white font-bold text-[11px] shadow-sm hover:bg-[#1ebd5b]"
+                          className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-[#25D366] hover:bg-[#1ebd5b] text-white font-bold text-xs shadow-md shadow-emerald-600/20 transition-all hover:scale-[1.02]"
                         >
-                          <Headphones className="w-3.5 h-3.5" />
-                          Hubungi Petugas via WA
+                          <MessageCircle className="w-3.5 h-3.5 fill-white" />
+                          <span>{m.waText || t('chatbot_wa_button')}</span>
+                          <ArrowUpRight className="w-3 h-3" />
                         </a>
                       </div>
                     )}
                   </div>
                 );
               })}
+
+              {/* Typing indicator */}
               {loading && (
-                <div className="flex items-center gap-2 text-xs text-neutral-400 bg-white p-3 rounded-2xl border border-neutral-100 shadow-xs max-w-[70%]">
-                  <Sparkles className="w-4 h-4 text-amber-500 animate-spin" />
-                  <span>Asisten sedang mengetik...</span>
+                <div className="flex items-center gap-2.5 text-xs text-neutral-600 bg-white p-3 rounded-2xl border border-purple-100 shadow-xs max-w-[75%]">
+                  <div className="flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-[#6b1282] animate-bounce" style={{ animationDelay: '0ms' }} />
+                    <span className="w-2 h-2 rounded-full bg-[#86198f] animate-bounce" style={{ animationDelay: '150ms' }} />
+                    <span className="w-2 h-2 rounded-full bg-[#a21caf] animate-bounce" style={{ animationDelay: '300ms' }} />
+                  </div>
+                  <span className="font-medium text-neutral-500">
+                    {language === 'en' ? 'AI is analyzing regulations...' : 'AI sedang menganalisis regulasi...'}
+                  </span>
                 </div>
               )}
+
+              {/* Initial Quick Prompt Chips (Shown only when chat is fresh) */}
+              {messages.length === 1 && !loading && (
+                <div className="pt-2">
+                  <p className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider mb-2">
+                    {language === 'en' ? 'Quick Inquiries:' : 'Pertanyaan Cepat:'}
+                  </p>
+                  <div className="flex flex-col gap-1.5">
+                    {quickPromptChips.map((chip, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => handleSend(undefined, chip.query)}
+                        className="text-left px-3 py-2 rounded-xl bg-white hover:bg-purple-50 text-neutral-700 hover:text-[#6b1282] border border-purple-100/90 text-xs font-medium transition-all shadow-2xs hover:border-purple-300 flex items-center justify-between group"
+                      >
+                        <span>{chip.label}</span>
+                        <ArrowUpRight className="w-3.5 h-3.5 text-neutral-300 group-hover:text-[#6b1282] transition-colors" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input Form */}
-            <div className="p-3 bg-white border-t border-neutral-100">
-              <form onSubmit={handleSend} className="flex gap-2">
+            {/* Input Form (Crisp White with Royal Purple Button) */}
+            <div className="p-3 bg-white border-t border-purple-100">
+              <form onSubmit={(e) => handleSend(e)} className="flex gap-2 items-center">
                 <Input
-                  placeholder="Ketik pertanyaan halal..."
+                  placeholder={t('chatbot_input_placeholder')}
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  className="flex-1 text-xs"
+                  variant="secondary"
+                  className="flex-1 text-xs sm:text-[13px] bg-[#faf8fc] rounded-xl border-purple-200/80"
                 />
                 <Button
                   type="submit"
                   variant="primary"
                   size="sm"
                   isPending={loading}
-                  className="bg-[#6b1282] hover:bg-[#581c87] text-white px-4 rounded-xl"
+                  aria-label="Kirim Pesan"
+                  className="bg-[#6b1282] hover:bg-[#581c87] text-white px-4 h-10 rounded-xl shadow-md transition-all shrink-0"
                 >
                   <Send className="w-4 h-4" />
                 </Button>
               </form>
+
+              {/* Bottom Subtle Disclaimer */}
+              <div className="mt-2 flex items-center justify-between text-[10px] text-neutral-400 px-1">
+                <span className="truncate">{t('chatbot_disclaimer')}</span>
+                <a
+                  href="https://wa.me/6282118201232"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#6b1282] hover:underline font-bold shrink-0 ml-2"
+                >
+                  WhatsApp ↗
+                </a>
+              </div>
             </div>
           </Card>
         </div>
