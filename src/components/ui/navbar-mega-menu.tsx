@@ -61,7 +61,7 @@ export const MegaMenuItem: React.FC<MegaMenuItemProps> = ({
 
             {/* Main Aceternity Mega Menu Container */}
             <div className="relative rounded-3xl p-[1.5px] bg-gradient-to-b from-purple-500/30 via-purple-900/20 to-purple-950/40 shadow-2xl shadow-purple-950/60 backdrop-blur-2xl">
-              <div className="rounded-[22px] bg-[#160620]/95 backdrop-blur-2xl border border-white/10 p-6 sm:p-7 text-white overflow-hidden shadow-inner">
+              <div className="rounded-[22px] bg-[#160620]/95 backdrop-blur-2xl border border-white/10 p-5 sm:p-6 text-white overflow-hidden shadow-inner">
                 {children}
               </div>
             </div>
@@ -93,22 +93,22 @@ export const MenuCardItem: React.FC<MenuCardItemProps> = ({
   onClick,
 }) => {
   const content = (
-    <div className="group flex items-start gap-3.5 p-3 -m-1.5 rounded-2xl hover:bg-white/10 border border-transparent hover:border-purple-500/20 transition-all duration-200">
-      <div className="w-10 h-10 rounded-xl bg-purple-950/80 border border-purple-500/30 text-purple-300 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 group-hover:bg-purple-900 group-hover:text-purple-200 group-hover:border-purple-400 transition-all">
+    <div className="group flex items-start gap-3 p-2.5 rounded-xl hover:bg-white/[0.08] border border-transparent hover:border-purple-500/20 transition-all duration-200 cursor-pointer">
+      <div className="w-9 h-9 rounded-lg bg-purple-950/90 border border-purple-500/30 text-purple-300 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 group-hover:bg-purple-900 group-hover:text-purple-200 group-hover:border-purple-400 transition-all">
         {icon}
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-bold text-white group-hover:text-purple-200 transition-colors">
+          <span className="text-[13px] font-bold text-white group-hover:text-purple-200 transition-colors leading-tight">
             {title}
           </span>
           {badge && (
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-400/30">
+            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-purple-500/25 text-purple-300 border border-purple-400/30 shrink-0">
               {badge}
             </span>
           )}
         </div>
-        <p className="text-xs text-neutral-400 group-hover:text-neutral-300 leading-relaxed mt-0.5 line-clamp-2">
+        <p className="text-[11px] sm:text-xs text-neutral-400 group-hover:text-neutral-300 leading-snug mt-1 line-clamp-2">
           {description}
         </p>
       </div>
@@ -224,9 +224,9 @@ export const FeaturedPreviewCard: React.FC<FeaturedPreviewCardProps> = ({
   onClick,
 }) => {
   const cardContent = (
-    <div className="group flex flex-col justify-between h-full rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-purple-400/40 p-3.5 transition-all duration-300 shadow-md">
+    <div className="group flex flex-col justify-between h-full rounded-2xl bg-white/[0.04] hover:bg-white/[0.07] border border-white/10 hover:border-purple-400/40 p-3 transition-all duration-300 shadow-md">
       {/* Photo Preview Container */}
-      <div className="relative h-32 sm:h-36 w-full rounded-xl overflow-hidden bg-black/40 border border-white/10">
+      <div className="relative h-32 w-full rounded-xl overflow-hidden bg-black/40 border border-white/10 shrink-0">
         <img
           src={image}
           alt={title}
@@ -235,7 +235,7 @@ export const FeaturedPreviewCard: React.FC<FeaturedPreviewCardProps> = ({
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
         {badge && (
           <div className="absolute top-2.5 right-2.5">
-            <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-purple-600/90 text-white shadow-md border border-purple-300/40 backdrop-blur-md">
+            <span className="text-[9px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-purple-600/90 text-white shadow-md border border-purple-300/40 backdrop-blur-md">
               {badge}
             </span>
           </div>
@@ -243,17 +243,17 @@ export const FeaturedPreviewCard: React.FC<FeaturedPreviewCardProps> = ({
       </div>
 
       {/* Title & Description */}
-      <div className="mt-3 flex-1 flex flex-col justify-between">
+      <div className="mt-2.5 flex-1 flex flex-col justify-between">
         <div>
-          <h4 className="text-sm font-bold text-white group-hover:text-purple-200 transition-colors line-clamp-1">
+          <h4 className="text-[13px] font-bold text-white group-hover:text-purple-200 transition-colors line-clamp-1">
             {title}
           </h4>
-          <p className="text-xs text-neutral-400 mt-1 line-clamp-2 leading-relaxed">
+          <p className="text-[11px] text-neutral-400 mt-1 line-clamp-2 leading-relaxed">
             {description}
           </p>
         </div>
 
-        <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-xs font-bold text-purple-300 group-hover:text-white transition-colors">
+        <div className="mt-2.5 pt-2 border-t border-white/10 flex items-center justify-between text-[11px] font-bold text-purple-300 group-hover:text-white transition-colors">
           <span>{actionText}</span>
           <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
         </div>
@@ -306,11 +306,11 @@ export const MenuFooter: React.FC<MenuFooterProps> = ({
   onClick,
 }) => {
   return (
-    <div className="pt-4 mt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-3 text-xs">
-      <span className="font-bold text-neutral-400 tracking-wider uppercase text-[11px]">
+    <div className="pt-3.5 mt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-3 text-[11px]">
+      <span className="font-bold text-neutral-400 tracking-wider uppercase text-[10px]">
         {label}
       </span>
-      <div className="flex items-center gap-3.5 flex-wrap">
+      <div className="flex items-center gap-3 flex-wrap">
         {links.map((link, idx) => {
           const item = (
             <span className="inline-flex items-center gap-1.5 text-neutral-300 hover:text-white font-medium transition-colors">
@@ -327,6 +327,7 @@ export const MenuFooter: React.FC<MenuFooterProps> = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={onClick}
+                className="hover:underline"
               >
                 {item}
               </a>
@@ -335,7 +336,7 @@ export const MenuFooter: React.FC<MenuFooterProps> = ({
 
           if (link.to) {
             return (
-              <Link key={idx} to={link.to} onClick={onClick}>
+              <Link key={idx} to={link.to} onClick={onClick} className="hover:underline">
                 {item}
               </Link>
             );
@@ -347,3 +348,4 @@ export const MenuFooter: React.FC<MenuFooterProps> = ({
     </div>
   );
 };
+

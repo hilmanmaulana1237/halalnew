@@ -91,51 +91,61 @@ export const Navbar: React.FC = () => {
                 onMouseLeave={handleMouseLeave}
                 onClick={() => toggleDropdown('tentang')}
               >
-                <div className="w-[740px] max-w-[90vw]">
-                  <div className="grid grid-cols-12 gap-6">
-                    {/* Left Column (7 cols): Rich Categorized Cards */}
-                    <div className="col-span-7 space-y-1.5">
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300/80 mb-2 block">
-                        Profil &amp; Kelembagaan
-                      </span>
-                      <MenuCardItem
-                        icon={<BookOpen className="w-5 h-5" />}
-                        title="Profil &amp; Sejarah LPH"
-                        description="Sejarah pendirian, landasan fatwa syar'i MUI, dan visi kelembagaan Halalsphere University."
-                        to="/tentang"
-                        onClick={() => setActiveDropdown(null)}
-                      />
-                      <MenuCardItem
-                        icon={<ShieldCheck className="w-5 h-5" />}
-                        title="Akreditasi &amp; Legalitas Resmi"
-                        description="Regulasi resmi BPJPH No. LPH-018-ID dan pengakuan Komite Akreditasi Nasional (KAN)."
-                        to="/tentang"
-                        badge="LPH-018-ID"
-                        onClick={() => setActiveDropdown(null)}
-                      />
-                      <MenuCardItem
-                        icon={<HelpCircle className="w-5 h-5" />}
-                        title="FAQ &amp; Halal QnA"
-                        description="Kumpulan jawaban resmi seputar persyaratan, alur audit, dan dokumen SIHALAL."
-                        to="/layanan/qna"
-                        onClick={() => setActiveDropdown(null)}
-                      />
+                <div className="w-[760px] max-w-[92vw]">
+                  <div className="grid grid-cols-12 gap-5 items-stretch">
+                    {/* Left Column (7 cols): 3 Rich Categorized Cards */}
+                    <div className="col-span-7 flex flex-col justify-between">
+                      <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/10">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300/80">
+                          Profil &amp; Kelembagaan
+                        </span>
+                        <span className="text-[10px] text-neutral-400 font-medium">3 Layanan</span>
+                      </div>
+                      <div className="space-y-1.5 flex-1 flex flex-col justify-between">
+                        <MenuCardItem
+                          icon={<BookOpen className="w-4 h-4" />}
+                          title="Profil &amp; Sejarah LPH"
+                          description="Sejarah pendirian, landasan fatwa syar'i MUI, dan visi Halalsphere University."
+                          to="/tentang"
+                          onClick={() => setActiveDropdown(null)}
+                        />
+                        <MenuCardItem
+                          icon={<ShieldCheck className="w-4 h-4" />}
+                          title="Akreditasi &amp; Legalitas Resmi"
+                          description="Regulasi resmi BPJPH No. LPH-018-ID dan pengakuan KAN ISO/IEC 17025."
+                          to="/tentang"
+                          badge="LPH-018-ID"
+                          onClick={() => setActiveDropdown(null)}
+                        />
+                        <MenuCardItem
+                          icon={<HelpCircle className="w-4 h-4" />}
+                          title="FAQ &amp; Halal QnA"
+                          description="Kumpulan jawaban resmi seputar persyaratan, alur audit, dan dokumen SIHALAL."
+                          to="/layanan/qna"
+                          onClick={() => setActiveDropdown(null)}
+                        />
+                      </div>
                     </div>
 
                     {/* Right Column (5 cols): Featured Visual Preview Card with Photo */}
-                    <div className="col-span-5 flex flex-col">
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300/80 mb-2 block">
-                        Sorotan Kelembagaan
-                      </span>
-                      <FeaturedPreviewCard
-                        image="/assets/images/certificate.png"
-                        title="Sertifikat Akreditasi LPH"
-                        badge="Resmi BPJPH"
-                        description="Lembaga Pemeriksa Halal rujukan nasional di bawah naungan UIN Sunan Gunung Djati Bandung berstandar ISO 17025."
-                        to="/tentang"
-                        actionText="Pelajari Profil Lembaga"
-                        onClick={() => setActiveDropdown(null)}
-                      />
+                    <div className="col-span-5 flex flex-col justify-between">
+                      <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/10">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300/80">
+                          Sorotan Resmi
+                        </span>
+                        <span className="text-[10px] text-purple-400 font-medium">ISO 17025</span>
+                      </div>
+                      <div className="flex-1">
+                        <FeaturedPreviewCard
+                          image="/assets/images/certificate.png"
+                          title="Sertifikat Akreditasi LPH"
+                          badge="Resmi BPJPH"
+                          description="Lembaga Pemeriksa Halal rujukan nasional di bawah naungan UIN Sunan Gunung Djati Bandung."
+                          to="/tentang"
+                          actionText="Pelajari Profil Lembaga"
+                          onClick={() => setActiveDropdown(null)}
+                        />
+                      </div>
                     </div>
                   </div>
 
@@ -161,65 +171,63 @@ export const Navbar: React.FC = () => {
                 onMouseLeave={handleMouseLeave}
                 onClick={() => toggleDropdown('layanan')}
               >
-                <div className="w-[840px] max-w-[92vw]">
-                  <div className="grid grid-cols-12 gap-6">
-                    {/* Left Column (7 cols): Categorized Service Links */}
-                    <div className="col-span-7">
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300/80 mb-2 block">
-                        Layanan Pemeriksaan &amp; Sains Halal
-                      </span>
-                      <div className="grid grid-cols-2 gap-2.5">
-                        <div className="space-y-1.5">
-                          <MenuCardItem
-                            icon={<Calculator className="w-5 h-5" />}
-                            title="Kalkulator Tarif"
-                            description="Simulasi estimasi tarif audit halal reguler sesuai regulasi KMA 784."
-                            to="/layanan/kalkulator"
-                            badge="Populer"
-                            onClick={() => setActiveDropdown(null)}
-                          />
-                          <MenuCardItem
-                            icon={<Users className="w-5 h-5" />}
-                            title="Self Declare (SEHATI)"
-                            description="Pendampingan sertifikasi halal gratis pelaku usaha mikro & kecil."
-                            href="https://halal.uinsgd.ac.id/sertifikasi-halal-self-declare/"
-                            onClick={() => setActiveDropdown(null)}
-                          />
-                        </div>
-                        <div className="space-y-1.5">
-                          <MenuCardItem
-                            icon={<FlaskConical className="w-5 h-5" />}
-                            title="Laboratorium Terpadu"
-                            description="Uji qPCR DNA babi, cemaran etanol GC-FID, dan profil asam lemak."
-                            href="https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/"
-                            badge="ISO 17025"
-                            onClick={() => setActiveDropdown(null)}
-                          />
-                          <MenuCardItem
-                            icon={<ShieldAlert className="w-5 h-5" />}
-                            title="Whistleblowing"
-                            description="Saluran pengaduan masyarakat & pengawasan integritas bebas pungli."
-                            to="/layanan/pengaduan"
-                            onClick={() => setActiveDropdown(null)}
-                          />
-                        </div>
+                <div className="w-[760px] max-w-[92vw]">
+                  <div className="grid grid-cols-12 gap-5 items-stretch">
+                    {/* Left Column (7 cols): 3 Rich Categorized Cards */}
+                    <div className="col-span-7 flex flex-col justify-between">
+                      <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/10">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300/80">
+                          Layanan Pemeriksaan &amp; Lab
+                        </span>
+                        <span className="text-[10px] text-neutral-400 font-medium">3 Program</span>
+                      </div>
+                      <div className="space-y-1.5 flex-1 flex flex-col justify-between">
+                        <MenuCardItem
+                          icon={<Calculator className="w-4 h-4" />}
+                          title="Kalkulator Tarif Halal"
+                          description="Simulasi estimasi tarif audit halal reguler sesuai regulasi resmi KMA 784."
+                          to="/layanan/kalkulator"
+                          badge="Populer"
+                          onClick={() => setActiveDropdown(null)}
+                        />
+                        <MenuCardItem
+                          icon={<Users className="w-4 h-4" />}
+                          title="Self Declare (SEHATI UMK)"
+                          description="Pendampingan sertifikasi halal gratis pelaku usaha mikro dan kecil."
+                          href="https://halal.uinsgd.ac.id/sertifikasi-halal-self-declare/"
+                          badge="Gratis"
+                          onClick={() => setActiveDropdown(null)}
+                        />
+                        <MenuCardItem
+                          icon={<FlaskConical className="w-4 h-4" />}
+                          title="Laboratorium Uji Hayati"
+                          description="Uji qPCR DNA babi, cemaran alkohol GC-FID, dan profil asam lemak gelatin."
+                          href="https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/"
+                          badge="ISO 17025"
+                          onClick={() => setActiveDropdown(null)}
+                        />
                       </div>
                     </div>
 
                     {/* Right Column (5 cols): Featured Visual Preview Card with Photo */}
-                    <div className="col-span-5 flex flex-col">
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300/80 mb-2 block">
-                        Layanan Unggulan
-                      </span>
-                      <FeaturedPreviewCard
-                        image="/assets/images/uji-laboratorium.jpg"
-                        title="Uji Laboratorium & Pelatihan"
-                        badge="Terakreditasi"
-                        description="Pengujian saintifik presisi tinggi dan standarisasi pelatihan kompetensi Juru Sembelih Halal (JULEHA)."
-                        to="/layanan/kalkulator"
-                        actionText="Hitung Simulasi Tarif"
-                        onClick={() => setActiveDropdown(null)}
-                      />
+                    <div className="col-span-5 flex flex-col justify-between">
+                      <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/10">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300/80">
+                          Layanan Unggulan
+                        </span>
+                        <span className="text-[10px] text-purple-400 font-medium">Saintifik</span>
+                      </div>
+                      <div className="flex-1">
+                        <FeaturedPreviewCard
+                          image="/assets/images/uji-laboratorium.jpg"
+                          title="Uji Lab qPCR DNA Babi"
+                          badge="Terakreditasi"
+                          description="Pengujian saintifik presisi tinggi dan standarisasi kompetensi Juru Sembelih Halal (JULEHA)."
+                          to="/layanan/kalkulator"
+                          actionText="Hitung Simulasi Tarif"
+                          onClick={() => setActiveDropdown(null)}
+                        />
+                      </div>
                     </div>
                   </div>
 
@@ -227,9 +235,10 @@ export const Navbar: React.FC = () => {
                   <MenuFooter
                     label="Kanal Publik & Bantuan"
                     links={[
-                      { label: "Survei Kepuasan Pelanggan (IKM)", to: "/layanan/kepuasan" },
+                      { label: "Pengaduan Whistleblowing", to: "/layanan/pengaduan" },
+                      { label: "Survei Kepuasan (IKM)", to: "/layanan/kepuasan" },
                       { label: "Portal SIHALAL BPJPH", href: "https://ptsp.halal.go.id/" },
-                      { label: "WhatsApp Layanan Cepat", href: "https://wa.me/6282118201232" },
+                      { label: "WhatsApp Layanan", href: "https://wa.me/6282118201232" },
                     ]}
                     onClick={() => setActiveDropdown(null)}
                   />
@@ -244,51 +253,62 @@ export const Navbar: React.FC = () => {
                 onMouseLeave={handleMouseLeave}
                 onClick={() => toggleDropdown('news')}
               >
-                <div className="w-[740px] max-w-[90vw]">
-                  <div className="grid grid-cols-12 gap-6">
-                    {/* Left Column (7 cols): Categorized Items */}
-                    <div className="col-span-7 space-y-1.5">
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300/80 mb-2 block">
-                        Publikasi &amp; Informasi
-                      </span>
-                      <MenuCardItem
-                        icon={<Newspaper className="w-5 h-5" />}
-                        title="Berita &amp; Kegiatan LPH"
-                        description="Liputan audit lapangan, seminar ilmiah, workshop, dan siaran pers resmi."
-                        to="/berita"
-                        badge="Terbaru"
-                        onClick={() => setActiveDropdown(null)}
-                      />
-                      <MenuCardItem
-                        icon={<Bell className="w-5 h-5" />}
-                        title="Pengumuman Resmi"
-                        description="Surat edaran BPJPH, jadwal sidang fatwa, dan informasi penting pelaku usaha."
-                        to="/pengumuman"
-                        onClick={() => setActiveDropdown(null)}
-                      />
-                      <MenuCardItem
-                        icon={<BookOpen className="w-5 h-5" />}
-                        title="Jurnal Riset Halal (IJHR)"
-                        description="Indonesian Journal of Halal Research terakreditasi SINTA nasional."
-                        href="https://journal.uinsgd.ac.id/index.php/ijhar"
-                        onClick={() => setActiveDropdown(null)}
-                      />
+                <div className="w-[760px] max-w-[92vw]">
+                  <div className="grid grid-cols-12 gap-5 items-stretch">
+                    {/* Left Column (7 cols): 3 Rich Categorized Cards */}
+                    <div className="col-span-7 flex flex-col justify-between">
+                      <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/10">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300/80">
+                          Publikasi &amp; Informasi
+                        </span>
+                        <span className="text-[10px] text-neutral-400 font-medium">3 Kanal</span>
+                      </div>
+                      <div className="space-y-1.5 flex-1 flex flex-col justify-between">
+                        <MenuCardItem
+                          icon={<Newspaper className="w-4 h-4" />}
+                          title="Berita &amp; Kegiatan LPH"
+                          description="Liputan audit lapangan, seminar ilmiah, workshop, dan siaran pers resmi."
+                          to="/berita"
+                          badge="Terbaru"
+                          onClick={() => setActiveDropdown(null)}
+                        />
+                        <MenuCardItem
+                          icon={<Bell className="w-4 h-4" />}
+                          title="Pengumuman Resmi"
+                          description="Surat edaran BPJPH, jadwal sidang fatwa, dan informasi penting pelaku usaha."
+                          to="/pengumuman"
+                          onClick={() => setActiveDropdown(null)}
+                        />
+                        <MenuCardItem
+                          icon={<BookOpen className="w-4 h-4" />}
+                          title="Jurnal Riset Halal (IJHR)"
+                          description="Indonesian Journal of Halal Research terakreditasi SINTA nasional."
+                          href="https://journal.uinsgd.ac.id/index.php/ijhar"
+                          badge="SINTA"
+                          onClick={() => setActiveDropdown(null)}
+                        />
+                      </div>
                     </div>
 
                     {/* Right Column (5 cols): Featured Visual Preview Card with Photo */}
-                    <div className="col-span-5 flex flex-col">
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300/80 mb-2 block">
-                        Agenda Strategis
-                      </span>
-                      <FeaturedPreviewCard
-                        image="/assets/images/uin_sgd/uin_07.webp"
-                        title="Konferensi Halal Internasional"
-                        badge="Global Event"
-                        description="Penguatan ekosistem industri halal dunia melalui kolaborasi saintifik dan kepatuhan syariah terpadu."
-                        to="/berita"
-                        actionText="Baca Kabar Selengkapnya"
-                        onClick={() => setActiveDropdown(null)}
-                      />
+                    <div className="col-span-5 flex flex-col justify-between">
+                      <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/10">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300/80">
+                          Agenda Strategis
+                        </span>
+                        <span className="text-[10px] text-purple-400 font-medium">Global</span>
+                      </div>
+                      <div className="flex-1">
+                        <FeaturedPreviewCard
+                          image="/assets/images/uin_sgd/uin_07.webp"
+                          title="Konferensi Halal Dunia"
+                          badge="Internasional"
+                          description="Penguatan ekosistem industri halal dunia melalui kolaborasi saintifik dan kepatuhan syariah."
+                          to="/berita"
+                          actionText="Baca Kabar Selengkapnya"
+                          onClick={() => setActiveDropdown(null)}
+                        />
+                      </div>
                     </div>
                   </div>
 
@@ -296,7 +316,7 @@ export const Navbar: React.FC = () => {
                   <MenuFooter
                     label="Dokumen & Riset"
                     links={[
-                      { label: "Unduh Pedoman SJPH 2024", to: "/berita" },
+                      { label: "Unduh Pedoman SJPH", to: "/berita" },
                       { label: "Arsip Publikasi SINTA", href: "https://journal.uinsgd.ac.id/index.php/ijhar" },
                       { label: "Galeri Foto Kegiatan", to: "/berita" },
                     ]}
