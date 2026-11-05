@@ -302,8 +302,8 @@ export const HomePage: React.FC = () => {
       {/* 1. HERO BANNER WITH VIDEO & SEARCH CARD (Aceternity UI Rebuild) */}
       <HeroVideoBanner />
 
-      {/* 2. STATS SECTION (Untitled UI Metric Cards Row - spaced cleanly below Search Card) */}
-      <section className="relative z-30 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 mt-6 sm:mt-10 mb-8">
+      {/* 2. STATS SECTION (Untitled UI Metric Cards Row - Floating over Hero Banner) */}
+      <section className="relative z-30 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 -mt-6 sm:-mt-8 mb-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           <MetricCard
             label="Pengalaman & Dedikasi"
@@ -615,50 +615,11 @@ export const HomePage: React.FC = () => {
                     </p>
 
                     {/* Executive Quote Box */}
-                    <div className="mt-6 p-5 rounded-2xl bg-white/95 border border-purple-100 shadow-sm relative">
-                      <span className="text-4xl text-[#6b1282]/30 font-serif absolute top-2 left-3 select-none leading-none">“</span>
-                      <p className="text-xs sm:text-sm text-neutral-700 italic leading-relaxed pl-6 relative z-10">
+                    <div className="mt-6 p-6 rounded-2xl bg-white/95 border border-purple-100 shadow-sm relative">
+                      <span className="text-4xl text-[#6b1282]/30 font-serif absolute top-3 left-4 select-none leading-none">“</span>
+                      <p className="text-sm sm:text-base text-neutral-700 italic leading-relaxed pl-6 relative z-10 font-normal">
                         "{DIRECTORS[1].quote}"
                       </p>
-                    </div>
-
-                    {/* 4 Authority Highlights */}
-                    <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <div className="flex items-center gap-2.5 p-3 rounded-xl bg-white/90 border border-neutral-200/70 shadow-2xs">
-                        <div className="w-8 h-8 rounded-lg bg-purple-100 text-[#6b1282] flex items-center justify-center shrink-0">
-                          <ShieldCheck className="w-4 h-4" />
-                        </div>
-                        <span className="text-xs font-bold text-neutral-800">
-                          Otoritas Teknis Pemeriksaan LPH
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-2.5 p-3 rounded-xl bg-white/90 border border-neutral-200/70 shadow-2xs">
-                        <div className="w-8 h-8 rounded-lg bg-purple-100 text-[#6b1282] flex items-center justify-center shrink-0">
-                          <Microscope className="w-4 h-4" />
-                        </div>
-                        <span className="text-xs font-bold text-neutral-800">
-                          Validasi qPCR DNA Babi ISO 17025
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-2.5 p-3 rounded-xl bg-white/90 border border-neutral-200/70 shadow-2xs">
-                        <div className="w-8 h-8 rounded-lg bg-purple-100 text-[#6b1282] flex items-center justify-center shrink-0">
-                          <Award className="w-4 h-4" />
-                        </div>
-                        <span className="text-xs font-bold text-neutral-800">
-                          Lead Auditor Halal &amp; Asesor JPH
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-2.5 p-3 rounded-xl bg-white/90 border border-neutral-200/70 shadow-2xs">
-                        <div className="w-8 h-8 rounded-lg bg-purple-100 text-[#6b1282] flex items-center justify-center shrink-0">
-                          <Users className="w-4 h-4" />
-                        </div>
-                        <span className="text-xs font-bold text-neutral-800">
-                          Koordinator Dampingan UMK SEHATI
-                        </span>
-                      </div>
                     </div>
                   </div>
 
@@ -749,50 +710,11 @@ export const HomePage: React.FC = () => {
                     </p>
 
                     {/* Institutional Quote Box */}
-                    <div className="mt-6 p-5 rounded-2xl bg-white/95 border border-purple-100 shadow-sm relative">
-                      <span className="text-4xl text-[#6b1282]/30 font-serif absolute top-2 left-3 select-none leading-none">“</span>
-                      <p className="text-xs sm:text-sm text-neutral-700 italic leading-relaxed pl-6 relative z-10">
+                    <div className="mt-6 p-6 rounded-2xl bg-white/95 border border-purple-100 shadow-sm relative">
+                      <span className="text-4xl text-[#6b1282]/30 font-serif absolute top-3 left-4 select-none leading-none">“</span>
+                      <p className="text-sm sm:text-base text-neutral-700 italic leading-relaxed pl-6 relative z-10 font-normal">
                         "{DIRECTORS[0].quote}"
                       </p>
-                    </div>
-
-                    {/* 4 Strategic Authority Highlights */}
-                    <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <div className="flex items-center gap-2.5 p-3 rounded-xl bg-white/90 border border-neutral-200/70 shadow-2xs">
-                        <div className="w-8 h-8 rounded-lg bg-purple-100 text-[#6b1282] flex items-center justify-center shrink-0">
-                          <Sparkles className="w-4 h-4" />
-                        </div>
-                        <span className="text-xs font-bold text-neutral-800">
-                          Inisiator Halalsphere University
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-2.5 p-3 rounded-xl bg-white/90 border border-neutral-200/70 shadow-2xs">
-                        <div className="w-8 h-8 rounded-lg bg-purple-100 text-[#6b1282] flex items-center justify-center shrink-0">
-                          <CheckCircle2 className="w-4 h-4" />
-                        </div>
-                        <span className="text-xs font-bold text-neutral-800">
-                          Sinergi Kemenag RI, BPJPH &amp; MUI
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-2.5 p-3 rounded-xl bg-white/90 border border-neutral-200/70 shadow-2xs">
-                        <div className="w-8 h-8 rounded-lg bg-purple-100 text-[#6b1282] flex items-center justify-center shrink-0">
-                          <FlaskConical className="w-4 h-4" />
-                        </div>
-                        <span className="text-xs font-bold text-neutral-800">
-                          Modernisasi Lab Kampus 1 &amp; 2
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-2.5 p-3 rounded-xl bg-white/90 border border-neutral-200/70 shadow-2xs">
-                        <div className="w-8 h-8 rounded-lg bg-purple-100 text-[#6b1282] flex items-center justify-center shrink-0">
-                          <Award className="w-4 h-4" />
-                        </div>
-                        <span className="text-xs font-bold text-neutral-800">
-                          Penguatan Ekosistem Halal Global
-                        </span>
-                      </div>
                     </div>
                   </div>
 
