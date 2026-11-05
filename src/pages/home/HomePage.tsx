@@ -302,11 +302,12 @@ export const HomePage: React.FC = () => {
       {/* 1. HERO BANNER WITH VIDEO & SEARCH CARD (Aceternity UI Rebuild) */}
       <HeroVideoBanner />
 
-      {/* 2. STATS SECTION (Untitled UI Metric Cards Row - Seamless Ungu Hitam Background) */}
-      <section className="relative z-20 w-full bg-[#1a0726] pt-0 pb-16 sm:pb-20 -mt-px border-b border-purple-900/40">
-        {/* Subtle ambient light glow continuing the royal purple atmosphere */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(107,18,130,0.35),_transparent_70%)] pointer-events-none" />
-        <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-[#12041b] to-transparent pointer-events-none" />
+      {/* 2. STATS SECTION (Untitled UI Metric Cards Row - 1/3 Dark Purple Overlap, 2/3 Light) */}
+      <section className="relative z-30 w-full pb-10 sm:pb-14">
+        {/* Top 1/3 dark purple-black background connecting seamlessly to Hero */}
+        <div className="absolute top-0 inset-x-0 h-1/3 sm:h-[35%] bg-[#1a0726] -mt-px pointer-events-none">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(107,18,130,0.3),_transparent_75%)]" />
+        </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
