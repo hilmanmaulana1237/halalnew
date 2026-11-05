@@ -913,74 +913,50 @@ export const HomePage: React.FC = () => {
             </Link>
           </div>
 
-          {/* Category Tabs using HeroUI Tabs with Framer Motion Highlight Pill */}
-          <div className="mb-10">
+          {/* Category Tabs using HeroUI Tabs */}
+          <div className="mb-8">
             <Tabs
               selectedKey={activeTab}
               onSelectionChange={(key) => setActiveTab(key as string)}
-              className="w-full"
+              className="w-full overflow-x-auto"
             >
-              <Tabs.ListContainer className="p-1.5 rounded-2xl bg-neutral-100/90 border border-neutral-200/80 shadow-xs backdrop-blur-md inline-block max-w-full overflow-x-auto">
-                <Tabs.List
-                  aria-label={isEn ? "Article Categories" : "Kategori Artikel"}
-                  className="flex flex-nowrap sm:flex-wrap items-center gap-1.5 bg-transparent border-none p-0"
-                >
-                  {[
-                    {
-                      id: 'artikel',
-                      label: isEn ? 'Key Articles & Regulations' : 'Artikel & Regulasi Utama',
-                      icon: <BookOpen className="w-3.5 h-3.5" />,
-                    },
-                    {
-                      id: 'uin_berita',
-                      label: isEn ? 'Halal Center News' : 'Berita Halal Center',
-                      icon: <Newspaper className="w-3.5 h-3.5" />,
-                    },
-                    {
-                      id: 'jurnal',
-                      label: isEn ? 'Journal & Research (IJHR)' : 'Jurnal & Riset (IJHR)',
-                      icon: <FlaskConical className="w-3.5 h-3.5" />,
-                    },
-                    {
-                      id: 'umk',
-                      label: isEn ? 'MSE Zone & SEHATI' : 'Ruang UMK & SEHATI',
-                      icon: <Users className="w-3.5 h-3.5" />,
-                    },
-                    {
-                      id: 'fatwa',
-                      label: isEn ? 'Fatwa & BPJPH Regulations' : 'Fatwa & Regulasi BPJPH',
-                      icon: <ShieldCheck className="w-3.5 h-3.5" />,
-                    },
-                  ].map((tab) => {
-                    const isActive = activeTab === tab.id;
-                    return (
-                      <Tabs.Tab
-                        key={tab.id}
-                        id={tab.id}
-                        className={`relative z-10 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-colors duration-200 outline-none select-none flex items-center gap-2 cursor-pointer shrink-0 border-none bg-transparent ${
-                          isActive
-                            ? 'text-white'
-                            : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-200/50'
-                        }`}
-                      >
-                        {isActive && (
-                          <motion.div
-                            layoutId="activeArticleTabBadge"
-                            className="absolute inset-0 bg-gradient-to-r from-[#6b1282] via-[#7e1499] to-[#6b1282] rounded-xl shadow-md shadow-purple-950/25 -z-10"
-                            transition={{
-                              type: 'spring',
-                              stiffness: 450,
-                              damping: 32,
-                            }}
-                          />
-                        )}
-                        <span className="relative z-10 flex items-center gap-2">
-                          {tab.icon}
-                          {tab.label}
-                        </span>
-                      </Tabs.Tab>
-                    );
-                  })}
+              <Tabs.ListContainer>
+                <Tabs.List aria-label={isEn ? "Article Categories" : "Kategori Artikel"}>
+                  <Tabs.Tab
+                    id="artikel"
+                    className="data-[selected=true]:text-white font-semibold transition-colors"
+                  >
+                    {isEn ? 'Key Articles & Regulations' : 'Artikel & Regulasi Utama'}
+                    <Tabs.Indicator className="bg-[#6b1282] rounded-3xl shadow-xs" />
+                  </Tabs.Tab>
+                  <Tabs.Tab
+                    id="uin_berita"
+                    className="data-[selected=true]:text-white font-semibold transition-colors"
+                  >
+                    {isEn ? 'Halal Center News' : 'Berita Halal Center'}
+                    <Tabs.Indicator className="bg-[#6b1282] rounded-3xl shadow-xs" />
+                  </Tabs.Tab>
+                  <Tabs.Tab
+                    id="jurnal"
+                    className="data-[selected=true]:text-white font-semibold transition-colors"
+                  >
+                    {isEn ? 'Journal & Research (IJHR)' : 'Jurnal & Riset (IJHR)'}
+                    <Tabs.Indicator className="bg-[#6b1282] rounded-3xl shadow-xs" />
+                  </Tabs.Tab>
+                  <Tabs.Tab
+                    id="umk"
+                    className="data-[selected=true]:text-white font-semibold transition-colors"
+                  >
+                    {isEn ? 'MSE Zone & SEHATI' : 'Ruang UMK & SEHATI'}
+                    <Tabs.Indicator className="bg-[#6b1282] rounded-3xl shadow-xs" />
+                  </Tabs.Tab>
+                  <Tabs.Tab
+                    id="fatwa"
+                    className="data-[selected=true]:text-white font-semibold transition-colors"
+                  >
+                    {isEn ? 'Fatwa & BPJPH Regulations' : 'Fatwa & Regulasi BPJPH'}
+                    <Tabs.Indicator className="bg-[#6b1282] rounded-3xl shadow-xs" />
+                  </Tabs.Tab>
                 </Tabs.List>
               </Tabs.ListContainer>
             </Tabs>
@@ -989,10 +965,10 @@ export const HomePage: React.FC = () => {
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
-              initial={{ opacity: 0, y: 16, filter: 'blur(4px)' }}
-              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              exit={{ opacity: 0, y: -12, filter: 'blur(4px)' }}
-              transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.25, ease: 'easeInOut' }}
             >
               {/* Tab 1: Artikel */}
               {activeTab === 'artikel' && (
