@@ -22,7 +22,6 @@ import {
 import {
   MegaMenuItem,
   MenuCardItem,
-  MenuCategoryGrid,
   FeaturedPreviewCard,
   MenuFooter,
   BlueprintBadge
@@ -167,7 +166,7 @@ export const Navbar: React.FC = () => {
                 </div>
               </MegaMenuItem>
 
-              {/* Mega Menu 2: Layanan LPH (Screenshot 2 "Blocks by section" 3-column style) */}
+              {/* Mega Menu 2: Layanan LPH */}
               <MegaMenuItem
                 title={language === 'en' ? 'Halal Services' : 'Layanan LPH'}
                 isActive={activeDropdown === 'layanan'}
@@ -175,47 +174,73 @@ export const Navbar: React.FC = () => {
                 onMouseLeave={handleMouseLeave}
                 onClick={() => toggleDropdown('layanan')}
               >
-                <div className="w-[860px] max-w-[95vw]">
+                <div className="w-[840px] max-w-[95vw]">
                   <div className="grid grid-cols-12 gap-3.5 items-stretch">
-                    {/* Left Sub-card (7 cols): Screenshot 2 3-Column Category Grid */}
+                    {/* Left Sub-card (7 cols): Main Services Rich Cards */}
                     <div className="col-span-7 rounded-2xl bg-white/[0.03] border border-white/[0.08] p-4 sm:p-5 flex flex-col justify-between hover:border-white/[0.12] transition-colors">
-                      <MenuCategoryGrid
-                        title={language === 'en' ? 'SERVICES BY CATEGORY' : 'SEMUA LAYANAN BERDASARKAN KATEGORI'}
-                        items={[
-                          { label: language === 'en' ? 'Tariff Calculator' : 'Kalkulator Tarif', to: '/layanan/kalkulator' },
-                          { label: 'Self Declare', href: 'https://halal.uinsgd.ac.id/sertifikasi-halal-self-declare/' },
-                          { label: language === 'en' ? 'Regular Audit' : 'Audit Reguler', to: '/layanan/kalkulator' },
-                          { label: language === 'en' ? 'Facility Audit' : 'Audit Fasilitas', to: '/layanan/qna' },
-                          { label: language === 'en' ? 'Slaughterhouse' : 'Audit RPH & RPU', to: '/layanan/qna' },
-                          { label: language === 'en' ? 'Bio Laboratory' : 'Lab Hayati', href: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/' },
-                          { label: language === 'en' ? 'Porcine DNA Test' : 'Uji DNA Babi', href: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/' },
-                          { label: language === 'en' ? 'Ethanol Test' : 'Uji Etanol', href: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/' },
-                          { label: language === 'en' ? 'Gelatin Test' : 'Uji Gelatin', href: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/' },
-                          { label: language === 'en' ? 'Juleha Training' : 'Pelatihan Juleha', to: '/layanan/qna' },
-                          { label: language === 'en' ? 'Whistleblowing' : 'Pengaduan', to: '/layanan/pengaduan' },
-                          { label: language === 'en' ? 'Satisfaction Index' : 'Survei IKM', to: '/layanan/kepuasan' },
-                          { label: language === 'en' ? 'Halal QnA' : 'Halal QnA', to: '/layanan/qna' },
-                          { label: 'Portal SIHALAL', href: 'https://ptsp.halal.go.id/' },
-                          { label: language === 'en' ? 'SJPH Consultation' : 'Konsultasi SJPH', to: '/kontak' },
-                        ]}
-                        actionText={language === 'en' ? 'Explore All in Tariff Calculator ->' : 'Lihat Semua di Kalkulator Tarif'}
-                        actionTo="/layanan/kalkulator"
-                        onClick={() => setActiveDropdown(null)}
-                      />
+                      <div className="text-[11px] font-bold uppercase tracking-wider text-neutral-400 mb-3">
+                        {language === 'en' ? 'MAIN HALAL SERVICES' : 'LAYANAN UTAMA LPH'}
+                      </div>
+                      <div className="space-y-1 flex-1 flex flex-col justify-between">
+                        <MenuCardItem
+                          icon={<Calculator className="w-4 h-4" />}
+                          title={language === 'en' ? 'Tariff Calculator' : 'Kalkulator Tarif Halal'}
+                          description={language === 'en'
+                            ? 'Simulate estimated regular halal audit fees in accordance with official KMA 784.'
+                            : 'Simulasi perhitungan estimasi tarif audit halal reguler sesuai regulasi resmi KMA 784.'}
+                          to="/layanan/kalkulator"
+                          badge={language === 'en' ? 'Popular' : 'Populer'}
+                          badgeVariant="purple"
+                          onClick={() => setActiveDropdown(null)}
+                        />
+                        <MenuCardItem
+                          icon={<Smile className="w-4 h-4" />}
+                          title={language === 'en' ? 'Public Satisfaction Survey (IKM)' : 'Survei Kepuasan (IKM)'}
+                          description={language === 'en'
+                            ? 'Community satisfaction questionnaire for public transparency and audit quality evaluation.'
+                            : 'Kuesioner evaluasi mutu pelayanan publik dan indeks kepuasan pelaku usaha.'}
+                          to="/layanan/kepuasan"
+                          badge={language === 'en' ? 'Survey' : 'IKM Resmi'}
+                          badgeVariant="emerald"
+                          onClick={() => setActiveDropdown(null)}
+                        />
+                        <MenuCardItem
+                          icon={<Users className="w-4 h-4" />}
+                          title="Self Declare (SEHATI UMK)"
+                          description={language === 'en'
+                            ? 'Free halal certification facilitation for micro and small enterprises by BPJPH.'
+                            : 'Pendampingan sertifikasi halal gratis pelaku usaha mikro dan kecil binaan BPJPH.'}
+                          href="https://halal.uinsgd.ac.id/sertifikasi-halal-self-declare/"
+                          badge={language === 'en' ? 'Free Rp 0' : 'Gratis Rp 0'}
+                          badgeVariant="sky"
+                          onClick={() => setActiveDropdown(null)}
+                        />
+                        <MenuCardItem
+                          icon={<FlaskConical className="w-4 h-4" />}
+                          title={language === 'en' ? 'Integrated Bio Lab' : 'Laboratorium Hayati Terpadu'}
+                          description={language === 'en'
+                            ? 'High-precision qPCR porcine DNA and GC-FID ethanol testing with ISO 17025 standards.'
+                            : 'Uji saintifik qPCR DNA porcine, uji alkohol GC-FID, dan analisis gelatin terakreditasi KAN.'}
+                          href="https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/"
+                          badge="ISO 17025"
+                          badgeVariant="purple"
+                          onClick={() => setActiveDropdown(null)}
+                        />
+                      </div>
                     </div>
 
-                    {/* Right Sub-card (5 cols): Screenshot 2 Featured Visual Card with Photo */}
+                    {/* Right Sub-card (5 cols): Pengaduan & Whistleblowing (Replacing old Laboratorium card) */}
                     <div className="col-span-5 rounded-2xl bg-white/[0.03] border border-white/[0.08] p-3.5 sm:p-4 flex flex-col justify-between hover:border-white/[0.12] transition-colors">
                       <FeaturedPreviewCard
-                        image="/assets/images/uji-laboratorium.jpg"
-                        title={language === 'en' ? 'Certified Halal Laboratory' : 'Laboratorium Halal Terpadu'}
-                        badge="ISO 17025"
+                        image="/assets/images/value-integritas.jpg"
+                        title={language === 'en' ? 'Whistleblowing & Complaints' : 'Pengaduan & Whistleblowing'}
+                        badge={language === 'en' ? 'Main Feature' : 'Fitur Utama'}
                         badgeVariant="sky"
                         description={language === 'en'
-                          ? 'High-precision qPCR DNA & GC-FID ethanol testing with international KAN ISO/IEC 17025 accreditation.'
-                          : 'Pengujian saintifik presisi tinggi untuk qPCR DNA porcine dan alkohol GC-FID standar akreditasi KAN ISO 17025.'}
-                        to="/layanan/kalkulator"
-                        actionText={language === 'en' ? 'Simulate Audit & Fees' : 'Simulasi Biaya & Jadwal Audit'}
+                          ? 'Official confidential channel to report violations, auditor ethics, or sharia compliance issues.'
+                          : 'Kanal resmi pengaduan pelanggaran proses sertifikasi halal, kode etik auditor, dan integritas kepatuhan syariah.'}
+                        to="/layanan/pengaduan"
+                        actionText={language === 'en' ? 'Submit Whistleblower Report' : 'Kirim Laporan Pengaduan'}
                         onClick={() => setActiveDropdown(null)}
                       />
                     </div>
