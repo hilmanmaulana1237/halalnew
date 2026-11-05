@@ -848,14 +848,14 @@ export const HomePage: React.FC = () => {
           </div>
 
           {/* Category Tabs using HeroUI Tabs */}
-          <div className="mb-8">
+          <div className="mb-8 overflow-x-auto max-w-full pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
             <Tabs
               selectedKey={activeTab}
               onSelectionChange={(key) => setActiveTab(key as string)}
-              className="w-full overflow-x-auto"
+              className="w-full min-w-max sm:min-w-0"
             >
               <Tabs.ListContainer>
-                <Tabs.List aria-label={isEn ? "Article Categories" : "Kategori Artikel"}>
+                <Tabs.List aria-label={isEn ? "Article Categories" : "Kategori Artikel"} className="flex-nowrap whitespace-nowrap">
                   <Tabs.Tab
                     id="artikel"
                     className="data-[selected=true]:text-white font-semibold transition-colors"
@@ -1278,7 +1278,7 @@ export const HomePage: React.FC = () => {
                 title="Peta Kantor LPH UIN SGD"
                 width="100%"
                 height="460"
-                className="w-full h-[460px] rounded-2xl border-0 shadow-inner"
+                className="w-full h-[340px] sm:h-[460px] rounded-2xl border-0 shadow-inner"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 src={`https://maps.google.com/maps?q=${branchLocations[selectedBranch].query}&t=&z=16&ie=UTF8&iwloc=&output=embed`}

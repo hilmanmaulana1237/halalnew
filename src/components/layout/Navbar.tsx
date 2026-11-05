@@ -1,8 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Button, Drawer, Label } from '@heroui/react';
+import { Button } from '@heroui/react';
 import {
   Menu,
+  X,
+  Home,
   ChevronDown,
   Calculator,
   ShieldAlert,
@@ -17,7 +19,8 @@ import {
   Users,
   FlaskConical,
   GraduationCap,
-  Award
+  Award,
+  MapPin
 } from 'lucide-react';
 import {
   MegaMenuItem,
@@ -34,6 +37,13 @@ export const Navbar: React.FC = () => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const timeoutRef = useRef<any>(null);
   const location = useLocation();
+
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileOpen]);
 
   const handleMouseEnter = (name: string) => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -388,165 +398,246 @@ export const Navbar: React.FC = () => {
               </div>
             </div>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Button (Android Native Style from HMI) */}
             <div className="flex items-center gap-2 lg:hidden">
-              <Button
-                variant="ghost"
-                aria-label="Buka Menu"
-                className="p-2"
-                onPress={() => setMobileOpen(true)}
+              <button
+                type="button"
+                className="grid h-10 w-10 place-items-center rounded-xl border border-purple-200/80 bg-purple-50/80 text-[#6b1282] hover:bg-purple-100 transition active:scale-95 cursor-pointer"
+                onClick={() => setMobileOpen((value) => !value)}
+                aria-expanded={mobileOpen}
+                aria-label={mobileOpen ? "Tutup menu" : "Buka menu"}
               >
-                <Menu className="w-6 h-6 text-[#6b1282]" />
-              </Button>
+                {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </button>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Mobile Drawer using HeroUI Drawer */}
-      <Drawer.Backdrop isOpen={mobileOpen} onOpenChange={setMobileOpen}>
-        <Drawer.Content placement="right" className="w-[320px] max-w-full bg-white">
-          <Drawer.Dialog>
-            <Drawer.CloseTrigger />
-            <Drawer.Header className="border-b border-neutral-100 pb-4">
-              <img
-                src="/assets/images/uin_sgd/logo_lph_official_purple.webp"
-                alt="Halal Center UIN SGD"
-                className="h-10 w-auto rounded-md shadow-xs"
-              />
-            </Drawer.Header>
+      {/* Mobile Backdrop Overlay (HMI Android style) */}
+      <div
+        className={`fixed inset-0 z-[60] bg-purple-950/50 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${
+          mobileOpen ? "visible opacity-100 pointer-events-auto" : "invisible opacity-0 pointer-events-none"
+        }`}
+        onClick={() => setMobileOpen(false)}
+        aria-hidden={!mobileOpen}
+      />
 
-            <Drawer.Body className="py-6 space-y-4">
-              {/* Language Switcher in Mobile Drawer */}
-              <div className="flex items-center justify-between p-2.5 bg-purple-50/70 rounded-2xl border border-purple-100">
-                <span className="text-xs font-bold text-neutral-700">
-                  {language === 'en' ? 'Select Language:' : 'Pilih Bahasa:'}
-                </span>
-                <div className="flex items-center gap-1">
-                  <button
-                    type="button"
-                    onClick={() => setLanguage('id')}
-                    className={`px-3 py-1 text-xs font-bold rounded-xl transition-all ${language === 'id'
-                      ? 'bg-[#6b1282] text-white shadow-xs'
-                      : 'text-neutral-600 hover:bg-white'
-                      }`}
-                  >
-                    ID
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setLanguage('en')}
-                    className={`px-3 py-1 text-xs font-bold rounded-xl transition-all ${language === 'en'
-                      ? 'bg-[#6b1282] text-white shadow-xs'
-                      : 'text-neutral-600 hover:bg-white'
-                      }`}
-                  >
-                    EN
-                  </button>
-                </div>
-              </div>
+      {/* Mobile Aside Drawer Container (HMI Android style with rounded-l-[2.5rem]) */}
+      <aside
+        className={`fixed right-0 top-0 z-[80] h-dvh w-[86%] max-w-[360px] overflow-y-auto rounded-l-[2.5rem] bg-gradient-to-b from-white via-[#faf5ff] to-[#f5e8ff] px-5 pb-10 pt-6 shadow-[-20px_0_60px_rgba(107,18,130,0.22)] transition-transform duration-300 ease-out lg:hidden ${
+          mobileOpen ? "pointer-events-auto translate-x-0" : "pointer-events-none translate-x-full"
+        }`}
+        aria-hidden={!mobileOpen}
+      >
+        {/* Top Header: Brand Logo & Elevated Circular Close Button */}
+        <div className="flex items-center justify-between mb-5 pb-3 border-b border-purple-100">
+          <img
+            src="/assets/images/uin_sgd/logo_lph_official_purple.webp"
+            alt="LPH UIN SGD"
+            className="h-10 w-auto object-contain rounded-lg shadow-2xs"
+          />
+          <button
+            type="button"
+            onClick={() => setMobileOpen(false)}
+            className="grid h-10 w-10 place-items-center rounded-full bg-[#6b1282] text-white shadow-[0_8px_20px_rgba(107,18,130,0.3)] hover:scale-105 active:scale-95 transition-all cursor-pointer"
+            aria-label="Tutup menu"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
 
-              <div className="flex flex-col space-y-1.5">
-                <Link
-                  to="/"
-                  onClick={() => setMobileOpen(false)}
-                  className="px-4 py-2.5 rounded-xl text-base font-bold text-neutral-800 hover:bg-neutral-100"
-                >
-                  {t('nav_home')}
-                </Link>
+        {/* Language Selector Pill */}
+        <div className="mb-4 flex items-center justify-between p-2 rounded-2xl bg-purple-100/70 border border-purple-200/60">
+          <span className="text-xs font-bold text-neutral-700 pl-2">
+            {language === 'en' ? 'Language' : 'Pilihan Bahasa'}
+          </span>
+          <div className="flex items-center gap-1">
+            <button
+              type="button"
+              onClick={() => setLanguage('id')}
+              className={`px-3 py-1 rounded-xl text-xs font-extrabold transition cursor-pointer ${
+                language === 'id' ? 'bg-[#6b1282] text-white shadow-xs' : 'text-neutral-600 hover:text-neutral-900'
+              }`}
+            >
+              ID
+            </button>
+            <span className="text-purple-300">|</span>
+            <button
+              type="button"
+              onClick={() => setLanguage('en')}
+              className={`px-3 py-1 rounded-xl text-xs font-extrabold transition cursor-pointer ${
+                language === 'en' ? 'bg-[#6b1282] text-white shadow-xs' : 'text-neutral-600 hover:text-neutral-900'
+              }`}
+            >
+              EN
+            </button>
+          </div>
+        </div>
 
-                <div className="pt-2 pb-1 px-4 text-xs font-bold text-[#6b1282] uppercase tracking-wider">
-                  {language === 'en' ? 'About Us' : 'Tentang Kami'}
-                </div>
-                <Link
-                  to="/tentang"
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-2.5 px-4 py-2 text-sm font-semibold text-neutral-700 hover:bg-purple-50 rounded-xl"
-                >
-                  <BookOpen className="w-4 h-4 text-[#6b1282]" />
-                  {language === 'en' ? 'LPH Profile & History' : 'Profil & Sejarah LPH'}
-                </Link>
-                <Link
-                  to="/layanan/qna"
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-2.5 px-4 py-2 text-sm font-semibold text-neutral-700 hover:bg-emerald-50 rounded-xl"
-                >
-                  <HelpCircle className="w-4 h-4 text-[#005a36]" />
-                  {language === 'en' ? 'FAQ & Halal Q&A' : 'FAQ & Halal QnA'}
-                </Link>
+        {/* Navigation Items (HMI Style Mobile Group & Mobile Link) */}
+        <MobileLink to="/" icon={Home} label={t('nav_home')} onClick={() => setMobileOpen(false)} />
 
-                <div className="pt-3 pb-1 px-4 text-xs font-bold text-[#005a36] uppercase tracking-wider">
-                  {language === 'en' ? 'Halal Services' : 'Layanan Halal'}
-                </div>
-                <Link
-                  to="/layanan/kalkulator"
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-2.5 px-4 py-2 text-sm font-semibold text-neutral-700 hover:bg-neutral-50 rounded-xl"
-                >
-                  <Calculator className="w-4 h-4 text-[#6b1282]" />
-                  {language === 'en' ? 'Fee Calculator' : 'Kalkulator Tarif'}
-                </Link>
-                <Link
-                  to="/layanan/pengaduan"
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-2.5 px-4 py-2 text-sm font-semibold text-neutral-700 hover:bg-neutral-50 rounded-xl"
-                >
-                  <ShieldAlert className="w-4 h-4 text-rose-600" />
-                  {language === 'en' ? 'Complaints & Whistleblowing' : 'Pengaduan & Whistleblowing'}
-                </Link>
-                <Link
-                  to="/layanan/kepuasan"
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-2.5 px-4 py-2 text-sm font-semibold text-neutral-700 hover:bg-neutral-50 rounded-xl"
-                >
-                  <Smile className="w-4 h-4 text-amber-600" />
-                  {language === 'en' ? 'Satisfaction Survey' : 'Survei Kepuasan Pelanggan'}
-                </Link>
+        <MobileGroup
+          label={language === 'en' ? 'About Us' : 'Tentang Kami'}
+          links={[
+            { label: language === 'en' ? 'Profile & History' : 'Profil & Sejarah LPH', to: '/tentang', icon: BookOpen },
+            { label: language === 'en' ? 'Accreditation & Legality' : 'Akreditasi & Legalitas Resmi', to: '/tentang', icon: ShieldCheck },
+            { label: language === 'en' ? 'FAQ & Halal QnA' : 'FAQ & Halal QnA', to: '/layanan/qna', icon: HelpCircle },
+          ]}
+          onNavigate={() => setMobileOpen(false)}
+        />
 
-                <div className="pt-3 pb-1 px-4 text-xs font-bold text-[#0284c7] uppercase tracking-wider">
-                  {language === 'en' ? 'Information & Contact' : 'Informasi & Kontak'}
-                </div>
-                <Link
-                  to="/berita"
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-2.5 px-4 py-2 text-sm font-semibold text-neutral-700 hover:bg-neutral-50 rounded-xl"
-                >
-                  <Newspaper className="w-4 h-4 text-[#0284c7]" />
-                  {language === 'en' ? 'News & Activities' : 'Berita & Kegiatan'}
-                </Link>
-                <Link
-                  to="/pengumuman"
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-2.5 px-4 py-2 text-sm font-semibold text-neutral-700 hover:bg-neutral-50 rounded-xl"
-                >
-                  <Bell className="w-4 h-4 text-amber-500" />
-                  {language === 'en' ? 'Official Announcements' : 'Pengumuman Resmi'}
-                </Link>
-                <Link
-                  to="/kontak"
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-2.5 px-4 py-2 text-sm font-semibold text-neutral-700 hover:bg-neutral-50 rounded-xl"
-                >
-                  <Phone className="w-4 h-4 text-[#005a36]" />
-                  {t('nav_contact')}
-                </Link>
-              </div>
+        <MobileGroup
+          label={language === 'en' ? 'Halal Services' : 'Layanan LPH'}
+          links={[
+            { label: language === 'en' ? 'Tariff Calculator' : 'Kalkulator Tarif Halal', to: '/layanan/kalkulator', icon: Calculator },
+            { label: language === 'en' ? 'Whistleblowing & Complaints' : 'Pengaduan & Whistleblowing', to: '/layanan/pengaduan', icon: ShieldAlert },
+            { label: language === 'en' ? 'Satisfaction Survey (IKM)' : 'Survei Kepuasan (IKM)', to: '/layanan/kepuasan', icon: Smile },
+            { label: 'Self Declare (SEHATI UMK)', href: 'https://halal.uinsgd.ac.id/sertifikasi-halal-self-declare/', icon: Users },
+            { label: language === 'en' ? 'Integrated Bio Lab' : 'Laboratorium Hayati Terpadu', href: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/', icon: FlaskConical },
+          ]}
+          onNavigate={() => setMobileOpen(false)}
+        />
 
-              <div className="pt-4 mt-4 border-t border-neutral-100">
-                <Link to="/layanan/kalkulator" onClick={() => setMobileOpen(false)}>
-                  <Button
-                    variant="primary"
-                    fullWidth
-                    className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold rounded-xl py-3 shadow-md"
-                  >
-                    {t('nav_calc_fee')}
-                  </Button>
-                </Link>
-              </div>
-            </Drawer.Body>
-          </Drawer.Dialog>
-        </Drawer.Content>
-      </Drawer.Backdrop>
+        <MobileGroup
+          label={language === 'en' ? 'News & Media' : 'News & Update'}
+          links={[
+            { label: language === 'en' ? 'News & Activities' : 'Berita & Kegiatan LPH', to: '/berita', icon: Newspaper },
+            { label: language === 'en' ? 'Official Announcements' : 'Pengumuman Resmi BPJPH', to: '/pengumuman', icon: Bell },
+            { label: language === 'en' ? 'Research Journal (IJHR)' : 'Jurnal Riset Halal (IJHR)', href: 'https://journal.uinsgd.ac.id/index.php/ijhar', icon: GraduationCap },
+          ]}
+          onNavigate={() => setMobileOpen(false)}
+        />
+
+        <MobileLink to="/kontak" icon={Phone} label={t('nav_contact')} onClick={() => setMobileOpen(false)} />
+
+        {/* Accent CTA Button like HMI */}
+        <MobileLink
+          to="/layanan/kalkulator"
+          icon={Calculator}
+          label={t('nav_calc_fee')}
+          onClick={() => setMobileOpen(false)}
+          accent
+        />
+
+        {/* Direct WhatsApp Consultation Button */}
+        <a
+          href="https://wa.me/6282118201232"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => setMobileOpen(false)}
+          className="mt-3 flex items-center justify-center gap-2 rounded-2xl border border-purple-200/90 bg-white/95 px-4 py-3 text-xs font-bold text-[#6b1282] shadow-xs hover:bg-purple-50 transition"
+        >
+          <Phone className="h-4 w-4 text-emerald-600" />
+          <span>WhatsApp Layanan & Konsultasi</span>
+        </a>
+      </aside>
     </>
   );
 };
+
+/* HMI Android Style Mobile Sub-components */
+type IconType = React.ComponentType<{ className?: string }>;
+
+function MobileLink({
+  to,
+  href,
+  label,
+  icon: Icon,
+  onClick,
+  accent,
+}: {
+  to?: string;
+  href?: string;
+  label: string;
+  icon: IconType;
+  onClick: () => void;
+  accent?: boolean;
+}) {
+  const isExternal = !!href;
+  const content = (
+    <span className="inline-flex items-center gap-3">
+      <Icon className="h-4 w-4 shrink-0" />
+      <span>{label}</span>
+    </span>
+  );
+
+  const className = `mb-2 flex items-center justify-between rounded-2xl px-4 py-3.5 text-sm font-extrabold transition shadow-xs cursor-pointer ${
+    accent
+      ? "bg-gradient-to-r from-[#6b1282] to-[#86198f] text-white shadow-purple-950/20 hover:brightness-110"
+      : "bg-purple-50/70 text-[#1a0726] hover:bg-purple-100/70 border border-purple-100/60"
+  }`;
+
+  if (href) {
+    return (
+      <a
+        href={href}
+        onClick={onClick}
+        target={isExternal ? "_blank" : undefined}
+        rel={isExternal ? "noopener noreferrer" : undefined}
+        className={className}
+      >
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <Link to={to || "/"} onClick={onClick} className={className}>
+      {content}
+    </Link>
+  );
+}
+
+function MobileGroup({
+  label,
+  links,
+  onNavigate,
+}: {
+  label: string;
+  links: Array<{ label: string; href?: string; to?: string; icon: IconType }>;
+  onNavigate: () => void;
+}) {
+  return (
+    <details className="group mb-2">
+      <summary className="flex cursor-pointer list-none items-center justify-between rounded-2xl bg-purple-50/70 px-4 py-3.5 text-sm font-black text-[#1a0726] border border-purple-100/60 transition hover:bg-purple-100/70">
+        <span>{label}</span>
+        <ChevronDown className="h-4 w-4 text-[#6b1282] transition-transform duration-200 group-open:rotate-180" />
+      </summary>
+      <div className="ml-4 mt-2 grid gap-1.5 border-l-2 border-[#6b1282] pl-3">
+        {links.map((item, idx) => {
+          const isExternal = !!item.href;
+          const content = (
+            <>
+              <item.icon className="h-4 w-4 text-[#6b1282] shrink-0" />
+              <span className="truncate">{item.label}</span>
+            </>
+          );
+          const itemClass = "flex items-center gap-3 rounded-xl border border-purple-100/80 bg-white px-4 py-2.5 text-xs font-bold text-neutral-700 hover:text-[#6b1282] hover:bg-purple-50 transition shadow-2xs cursor-pointer";
+
+          if (item.href) {
+            return (
+              <a
+                key={idx}
+                href={item.href}
+                onClick={onNavigate}
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener noreferrer" : undefined}
+                className={itemClass}
+              >
+                {content}
+              </a>
+            );
+          }
+
+          return (
+            <Link key={idx} to={item.to || "/"} onClick={onNavigate} className={itemClass}>
+              {content}
+            </Link>
+          );
+        })}
+      </div>
+    </details>
+  );
+}
