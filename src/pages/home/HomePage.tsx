@@ -60,30 +60,30 @@ export const getDirectors = (isEn: boolean): Director[] => [
       : 'UIN Sunan Gunung Djati Bandung mendedikasikan seluruh potensi akademik, riset sains halal, dan laboratorium untuk mengakselerasi ekosistem industri halal global yang kredibel dan maslahat.',
     education: isEn
       ? [
-          'Professor of Quranic Exegesis & Tafsir, UIN Sunan Gunung Djati Bandung',
-          'Doctor (Ph.D) in Islamic Studies / Tafsir Hadith Postgraduate School UIN SGD Bandung',
-          'Master of Arts (M.Ag) in Islamic Thought, UIN SGD Bandung',
-          'Bachelor of Theology & Islamic Studies (S.Ag), Faculty of Ushuluddin UIN SGD Bandung',
-        ]
+        'Professor of Quranic Exegesis & Tafsir, UIN Sunan Gunung Djati Bandung',
+        'Doctor (Ph.D) in Islamic Studies / Tafsir Hadith Postgraduate School UIN SGD Bandung',
+        'Master of Arts (M.Ag) in Islamic Thought, UIN SGD Bandung',
+        'Bachelor of Theology & Islamic Studies (S.Ag), Faculty of Ushuluddin UIN SGD Bandung',
+      ]
       : [
-          "Guru Besar Ilmu Al-Qur'an dan Tafsir UIN Sunan Gunung Djati Bandung",
-          'Doktor (S3) Studi Islam / Tafsir Hadis Pascasarjana UIN SGD Bandung',
-          'Magister Agama (S2) Pemikiran Islam UIN SGD Bandung',
-          'Sarjana Agama (S1) Fakultas Ushuluddin UIN SGD Bandung',
-        ],
+        "Guru Besar Ilmu Al-Qur'an dan Tafsir UIN Sunan Gunung Djati Bandung",
+        'Doktor (S3) Studi Islam / Tafsir Hadis Pascasarjana UIN SGD Bandung',
+        'Magister Agama (S2) Pemikiran Islam UIN SGD Bandung',
+        'Sarjana Agama (S1) Fakultas Ushuluddin UIN SGD Bandung',
+      ],
     experience: isEn
       ? [
-          'Rector of UIN Sunan Gunung Djati Bandung (2023 - Present)',
-          'Main Pioneer & Institutional Architect of the "Halalsphere University" Paradigm',
-          'Advisory Board Member of LPH and LP3H Halal Center UIN Sunan Gunung Djati',
-          'Vice Rector for Academic Affairs, UIN Sunan Gunung Djati Bandung (2019 - 2023)',
-        ]
+        'Rector of UIN Sunan Gunung Djati Bandung (2023 - Present)',
+        'Main Pioneer & Institutional Architect of the "Halalsphere University" Paradigm',
+        'Advisory Board Member of LPH and LP3H Halal Center UIN Sunan Gunung Djati',
+        'Vice Rector for Academic Affairs, UIN Sunan Gunung Djati Bandung (2019 - 2023)',
+      ]
       : [
-          'Rektor UIN Sunan Gunung Djati Bandung (2023 - Sekarang)',
-          'Inisiator & Pengarah Utama Paradigma "Halalsphere University"',
-          'Dewan Pembina LPH dan LP3H Halal Center UIN Sunan Gunung Djati',
-          'Wakil Rektor Bidang Akademik UIN Sunan Gunung Djati Bandung (2019 - 2023)',
-        ],
+        'Rektor UIN Sunan Gunung Djati Bandung (2023 - Sekarang)',
+        'Inisiator & Pengarah Utama Paradigma "Halalsphere University"',
+        'Dewan Pembina LPH dan LP3H Halal Center UIN Sunan Gunung Djati',
+        'Wakil Rektor Bidang Akademik UIN Sunan Gunung Djati Bandung (2019 - 2023)',
+      ],
   },
   {
     id: 2,
@@ -97,30 +97,30 @@ export const getDirectors = (isEn: boolean): Director[] => [
       : "LPH dan LP3H Halal Center UIN SGD berkomitmen memberikan pelayanan prima, cepat, akuntabel, dan berbasis integritas syar'i serta pengujian laboratorium yang presisi demi melindungi hak konsumen muslim.",
     education: isEn
       ? [
-          'Doctor (Ph.D) in Biological Sciences & Applied Life Sciences',
-          'Master of Science (M.Si) in Conservation Biology & Molecular Authentication',
-          'Certified Lead Halal Auditor Licensed by BPJPH Ministry of Religious Affairs & MUI',
-          'Certified Competency Assessor for Halal Product Assurance (JPH)',
-        ]
+        'Doctor (Ph.D) in Biological Sciences & Applied Life Sciences',
+        'Master of Science (M.Si) in Conservation Biology & Molecular Authentication',
+        'Certified Lead Halal Auditor Licensed by BPJPH Ministry of Religious Affairs & MUI',
+        'Certified Competency Assessor for Halal Product Assurance (JPH)',
+      ]
       : [
-          'Doktor (S3) Ilmu Biologi & Sains Hayati Terapan',
-          'Magister Sains (S2) Biologi Konservasi & Autentikasi Produk',
-          'Pelatihan & Sertifikasi Lead Auditor Halal Berlisensi BPJPH & MUI',
-          'Sertifikasi Kompetensi Asesor Pengawas Jaminan Produk Halal',
-        ],
+        'Doktor (S3) Ilmu Biologi & Sains Hayati Terapan',
+        'Magister Sains (S2) Biologi Konservasi & Autentikasi Produk',
+        'Pelatihan & Sertifikasi Lead Auditor Halal Berlisensi BPJPH & MUI',
+        'Sertifikasi Kompetensi Asesor Pengawas Jaminan Produk Halal',
+      ],
     experience: isEn
       ? [
-          'Head of Halal Center, UIN Sunan Gunung Djati Bandung',
-          'Operational & Technical Lead of LPH UIN Sunan Gunung Djati Bandung',
-          'National Coordinator of Halal Process Mentoring Body (LP3H) UIN SGD',
-          'Senior Lecturer & Researcher in Halal Molecular Bio-Testing',
-        ]
+        'Head of Halal Center, UIN Sunan Gunung Djati Bandung',
+        'Operational & Technical Lead of LPH UIN Sunan Gunung Djati Bandung',
+        'National Coordinator of Halal Process Mentoring Body (LP3H) UIN SGD',
+        'Senior Lecturer & Researcher in Halal Molecular Bio-Testing',
+      ]
       : [
-          'Kepala Pusat Kajian Halal (Halal Center) UIN SGD Bandung',
-          'Pimpinan Teknis Operasional LPH UIN Sunan Gunung Djati Bandung',
-          'Koordinator Nasional Lembaga Pendamping PPH (LP3H) UIN SGD',
-          'Dosen & Peneliti Laboratorium Pengujian Autentikasi Kehalalan Hayati',
-        ],
+        'Kepala Pusat Kajian Halal (Halal Center) UIN SGD Bandung',
+        'Pimpinan Teknis Operasional LPH UIN Sunan Gunung Djati Bandung',
+        'Koordinator Nasional Lembaga Pendamping PPH (LP3H) UIN SGD',
+        'Dosen & Peneliti Laboratorium Pengujian Autentikasi Kehalalan Hayati',
+      ],
   },
 ];
 
@@ -848,386 +848,386 @@ export const HomePage: React.FC = () => {
           </div>
 
           {/* Category Tabs using HeroUI Tabs */}
-          <div className="mb-8 overflow-x-auto max-w-full pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
-            <Tabs
-              selectedKey={activeTab}
-              onSelectionChange={(key) => setActiveTab(key as string)}
-              className="w-full min-w-max sm:min-w-0"
-            >
-              <Tabs.ListContainer>
-                <Tabs.List aria-label={isEn ? "Article Categories" : "Kategori Artikel"} className="flex-nowrap whitespace-nowrap">
-                  <Tabs.Tab
-                    id="artikel"
-                    className="data-[selected=true]:text-white font-semibold transition-colors"
-                  >
-                    {isEn ? 'Key Articles & Regulations' : 'Artikel & Regulasi Utama'}
-                    <Tabs.Indicator className="bg-[#6b1282] rounded-3xl shadow-xs" />
-                  </Tabs.Tab>
-                  <Tabs.Tab
-                    id="uin_berita"
-                    className="data-[selected=true]:text-white font-semibold transition-colors"
-                  >
-                    {isEn ? 'Halal Center News' : 'Berita Halal Center'}
-                    <Tabs.Indicator className="bg-[#6b1282] rounded-3xl shadow-xs" />
-                  </Tabs.Tab>
-                  <Tabs.Tab
-                    id="jurnal"
-                    className="data-[selected=true]:text-white font-semibold transition-colors"
-                  >
-                    {isEn ? 'Journal & Research (IJHR)' : 'Jurnal & Riset (IJHR)'}
-                    <Tabs.Indicator className="bg-[#6b1282] rounded-3xl shadow-xs" />
-                  </Tabs.Tab>
-                  <Tabs.Tab
-                    id="umk"
-                    className="data-[selected=true]:text-white font-semibold transition-colors"
-                  >
-                    {isEn ? 'MSE Zone & SEHATI' : 'Ruang UMK & SEHATI'}
-                    <Tabs.Indicator className="bg-[#6b1282] rounded-3xl shadow-xs" />
-                  </Tabs.Tab>
-                  <Tabs.Tab
-                    id="fatwa"
-                    className="data-[selected=true]:text-white font-semibold transition-colors"
-                  >
-                    {isEn ? 'Fatwa & BPJPH Regulations' : 'Fatwa & Regulasi BPJPH'}
-                    <Tabs.Indicator className="bg-[#6b1282] rounded-3xl shadow-xs" />
-                  </Tabs.Tab>
-                </Tabs.List>
-              </Tabs.ListContainer>
-            </Tabs>
+            <div className="mb-8 overflow-x-auto max-w-full pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
+              <Tabs
+                selectedKey={activeTab}
+                onSelectionChange={(key) => setActiveTab(key as string)}
+                className="w-full min-w-max sm:min-w-0"
+              >
+                <Tabs.ListContainer>
+                    <Tabs.List aria-label={isEn ? "Article Categories" : "Kategori Artikel"} className="flex-nowrap whitespace-nowrap">
+                      <Tabs.Tab
+                        id="artikel"
+                        className="data-[selected=true]:text-white font-semibold transition-colors"
+                      >
+                        {isEn ? 'Key Articles & Regulations' : 'Artikel & Regulasi Utama'}
+                        <Tabs.Indicator className="bg-[#6b1282] rounded-3xl shadow-xs" />
+                      </Tabs.Tab>
+                      <Tabs.Tab
+                        id="uin_berita"
+                        className="data-[selected=true]:text-white font-semibold transition-colors"
+                      >
+                        {isEn ? 'Halal Center News' : 'Berita Halal Center'}
+                        <Tabs.Indicator className="bg-[#6b1282] rounded-3xl shadow-xs" />
+                      </Tabs.Tab>
+                      <Tabs.Tab
+                        id="jurnal"
+                        className="data-[selected=true]:text-white font-semibold transition-colors"
+                      >
+                        {isEn ? 'Journal & Research (IJHR)' : 'Jurnal & Riset (IJHR)'}
+                        <Tabs.Indicator className="bg-[#6b1282] rounded-3xl shadow-xs" />
+                      </Tabs.Tab>
+                      <Tabs.Tab
+                        id="umk"
+                        className="data-[selected=true]:text-white font-semibold transition-colors"
+                      >
+                        {isEn ? 'MSE Zone & SEHATI' : 'Ruang UMK & SEHATI'}
+                        <Tabs.Indicator className="bg-[#6b1282] rounded-3xl shadow-xs" />
+                      </Tabs.Tab>
+                      <Tabs.Tab
+                        id="fatwa"
+                        className="data-[selected=true]:text-white font-semibold transition-colors"
+                      >
+                        {isEn ? 'Fatwa & BPJPH Regulations' : 'Fatwa & Regulasi BPJPH'}
+                        <Tabs.Indicator className="bg-[#6b1282] rounded-3xl shadow-xs" />
+                      </Tabs.Tab>
+                    </Tabs.List>
+                </Tabs.ListContainer>
+              </Tabs>
+            </div>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.25, ease: 'easeInOut' }}
+              >
+                {/* Tab 1: Artikel */}
+                {activeTab === 'artikel' && (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {[
+                      {
+                        img: '/assets/images/news_thumb_1.jpg',
+                        cat: isEn ? 'COSMETICS & HEALTH' : 'KOSMETIK & KESEHATAN',
+                        catColor: 'text-[#6b1282]',
+                        title: isEn
+                          ? 'The Dangers of Hydroquinone in Cosmetics and Halal Critical Points'
+                          : 'Bahaya Hidrokuinon dalam Kosmetik dan Titik Kritis Kehalalan',
+                        desc: isEn
+                          ? 'Hydroquinone is a common active compound in skin brightening products subject to stringent health safety and halal compliance.'
+                          : 'Hidrokuinon adalah senyawa kimia yang umum digunakan dalam produk pencerah kulit dan memiliki regulasi ketat dalam aspek keamanan dan kehalalan.',
+                        link: '/artikel/1',
+                      },
+                      {
+                        img: '/assets/images/news_thumb_2.jpg',
+                        cat: isEn ? 'PACKAGING & LOGISTICS' : 'KEMASAN & LOGISTIK',
+                        catColor: 'text-[#0284c7]',
+                        title: isEn
+                          ? 'Understanding the Vital Role of Migration Testing on Food Packaging'
+                          : 'Kenali Pentingnya Pengujian Migrasi pada Kemasan Pangan',
+                        desc: isEn
+                          ? 'Migration testing verifies that hazardous substances do not transfer to food materials according to food safety and halal standards.'
+                          : 'Pengujian migrasi pada kemasan pangan menjamin zat berbahaya tidak berpindah ke bahan konsumsi sesuai standar keamanan pangan dan syariat halal.',
+                        link: '/artikel/2',
+                      },
+                      {
+                        img: '/assets/images/news_thumb_3.jpg',
+                        cat: isEn ? 'HEALTH REGULATION' : 'REGULASI KESEHATAN',
+                        catColor: 'text-[#6b1282]',
+                        title: isEn
+                          ? 'Regulatory Insight! Health Ministry Decree No. 2/2023 & Halal Alignment'
+                          : 'Kulik Regulasi! Permenkes No.2 Tahun 2023 & Keselarasan SJPH',
+                        desc: isEn
+                          ? 'Comprehensive overview of environmental health quality standards and hygienic processing aligned with the Halal Assurance System (SJPH).'
+                          : 'Kupas tuntas standar baku mutu kesehatan lingkungan dan persyaratan pengolahan higienis yang sejalan dengan Sistem Jaminan Produk Halal (SJPH).',
+                        link: '/artikel/3',
+                      },
+                    ].map((article, i) => (
+                      <motion.div
+                        key={i}
+                        whileHover={{ y: -6 }}
+                        transition={{ duration: 0.25 }}
+                        className="rounded-3xl border border-neutral-200/80 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all flex flex-col justify-between"
+                      >
+                        <img src={article.img} alt={article.title} className="w-full h-48 object-cover" />
+                        <div className="p-6">
+                          <span className={`text-[11px] font-black uppercase tracking-wider ${article.catColor}`}>
+                            {article.cat}
+                          </span>
+                          <h3 className="font-extrabold text-lg text-neutral-900 mt-2 mb-2 line-clamp-2">
+                            {article.title}
+                          </h3>
+                          <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed mb-4">
+                            {article.desc}
+                          </p>
+                          <Link to={article.link} className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
+                            {isEn ? 'Read Now' : 'Baca Sekarang'} <ArrowRight className="w-3.5 h-3.5" />
+                          </Link>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Tab 2: Berita */}
+                {activeTab === 'uin_berita' && (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {[
+                      {
+                        img: '/assets/images/uin_sgd/uin_14.webp',
+                        cat: 'LP3H UIN SGD',
+                        title: isEn
+                          ? 'UIN SGD Bandung Conducts PPH Assistant National Training'
+                          : 'UIN SGD Bandung Gelar Pelatihan Pendamping PPH dan Rakornas',
+                        desc: isEn
+                          ? 'LP3H Halal Center UIN SGD consistently certifies thousands of competent PPH assistants across Indonesia.'
+                          : 'LP3H Halal Center UIN SGD konsisten mencetak ribuan pendamping PPH berkompeten untuk mengakselerasi sertifikasi halal UMK se-Indonesia.',
+                        link: '/artikel/1',
+                      },
+                      {
+                        img: '/assets/images/uin_sgd/uin_15.webp',
+                        cat: 'PROGRAM SEHATI',
+                        title: isEn
+                          ? 'Facilitating 1,000+ Free Halal Certificates for West Java MSEs'
+                          : 'Fasilitasi Lebih dari 1.000 Sertifikat Halal Gratis UMK Jawa Barat',
+                        desc: isEn
+                          ? 'Collaborative program between Halal Center UIN SGD and BPJPH Ministry of Religious Affairs assisting micro businesses.'
+                          : 'Program kolaborasi Halal Center UIN SGD bersama BPJPH Kemenag RI dalam mendampingi pelaku usaha mikro kecil meraih sertifikat halal resmi.',
+                        link: '/artikel/2',
+                      },
+                      {
+                        img: '/assets/images/uin_sgd/uin_16.webp',
+                        cat: isEn ? 'LEGALITY GUIDE' : 'PANDUAN LEGALITAS',
+                        title: isEn
+                          ? 'Complete Guide to OSS NIB Registration & Self-Declare Criteria'
+                          : 'Panduan Lengkap Pengajuan NIB OSS & Syarat Self Declare',
+                        desc: isEn
+                          ? 'Step-by-step guidance on risk-based NIB issuance and SiHalal raw material input assisted by LP3H UIN SGD.'
+                          : 'Langkah mudah pembuatan NIB berbasis risiko dan pengisian data bahan baku di portal SiHalal dengan pendampingan LP3H UIN SGD.',
+                        link: '/artikel/3',
+                      },
+                    ].map((article, i) => (
+                      <motion.div
+                        key={i}
+                        whileHover={{ y: -6 }}
+                        transition={{ duration: 0.25 }}
+                        className="rounded-3xl border border-neutral-200/80 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all"
+                      >
+                        <img src={article.img} alt={article.title} className="w-full h-48 object-cover" />
+                        <div className="p-6">
+                          <span className="text-[11px] font-black text-[#6b1282] uppercase tracking-wider">
+                            {article.cat}
+                          </span>
+                          <h3 className="font-extrabold text-lg text-neutral-900 mt-2 mb-2 line-clamp-2">
+                            {article.title}
+                          </h3>
+                          <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed mb-4">
+                            {article.desc}
+                          </p>
+                          <Link to={article.link} className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
+                            {isEn ? 'Read Now' : 'Baca Sekarang'} <ArrowRight className="w-3.5 h-3.5" />
+                          </Link>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Tab 3: Jurnal */}
+                {activeTab === 'jurnal' && (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {[
+                      {
+                        img: '/assets/images/Screenshot-2026-09-11-at-15-16-41-Jurnal-Halal-180.pdf-1.png',
+                        cat: 'IJHR SINTA',
+                        title: isEn
+                          ? 'Indonesian Journal of Halal Research (IJHR) Vol. 6 No. 2'
+                          : 'Indonesian Journal of Halal Research (IJHR) Vol. 6 No. 2',
+                        desc: isEn
+                          ? 'SINTA-accredited scientific periodical discussing innovations in bio-molecular halal authentication and global policy.'
+                          : 'Publikasi jurnal ilmiah berkala terakreditasi SINTA yang membahas inovasi riset autentikasi halal hayati dan kebijakan halal global.',
+                        url: 'https://journal.uinsgd.ac.id/index.php/ijhr',
+                      },
+                      {
+                        img: '/assets/images/Screenshot-2026-07-17-at-07-01-06-Jurnal-Halal-179.pdf.png',
+                        cat: isEn ? 'DNA RESEARCH' : 'RISET DNA',
+                        title: isEn
+                          ? 'Halal Authentication of Processed Meat via Real-Time PCR'
+                          : 'Autentikasi Halal Daging Olahan dengan Metode Real-Time PCR',
+                        desc: isEn
+                          ? 'Quantitative laboratory research detecting porcine DNA to safeguard national meat supply chain integrity.'
+                          : 'Riset laboratorium pengujian DNA babi secara kuantitatif untuk melindungi rantai pasok daging olahan industri pangan nasional.',
+                        url: 'https://journal.uinsgd.ac.id/index.php/ijhr',
+                      },
+                      {
+                        img: '/assets/images/uji-laboratorium.jpg',
+                        cat: isEn ? 'TEST METHODOLOGY' : 'METODOLOGI UJI',
+                        title: isEn
+                          ? 'Alcohol Residual Testing & Critical Point Detection in Ingredients'
+                          : 'Pengujian Cemaran Alkohol & Deteksi Titik Kritis Bahan',
+                        desc: isEn
+                          ? 'Gas chromatography (GC-FID) test methodology determining ethanol limits in flavorings, solvents, and fermented goods.'
+                          : 'Metodologi uji gas chromatography (GC-FID) untuk penetapan ambang batas etanol pada perisa, pelarut, dan produk fermentasi.',
+                        url: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/',
+                      },
+                    ].map((article, i) => (
+                      <motion.div
+                        key={i}
+                        whileHover={{ y: -6 }}
+                        transition={{ duration: 0.25 }}
+                        className="rounded-3xl border border-neutral-200/80 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all"
+                      >
+                        <img src={article.img} alt={article.title} className="w-full h-48 object-cover" />
+                        <div className="p-6">
+                          <span className="text-[11px] font-bold text-[#6b1282] uppercase tracking-wider">
+                            {article.cat}
+                          </span>
+                          <h3 className="font-bold text-lg text-neutral-900 mt-2 mb-2 line-clamp-2">
+                            {article.title}
+                          </h3>
+                          <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed mb-4 font-normal">
+                            {article.desc}
+                          </p>
+                          <a
+                            href={article.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1"
+                          >
+                            {isEn ? 'Open Research Paper' : 'Buka Tautan Riset'} <ExternalLink className="w-3.5 h-3.5" />
+                          </a>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Tab 4: Ruang UMK */}
+                {activeTab === 'umk' && (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {[
+                      {
+                        img: '/assets/images/uin_sgd/uin_16.webp',
+                        cat: isEn ? 'MSE CLINIC' : 'KLINIK UMK',
+                        title: isEn
+                          ? 'Free Consultation Clinic for OSS NIB & SiHalal Setup'
+                          : 'Klinik Konsultasi Gratis Pembuatan NIB & Akun SiHalal',
+                        desc: isEn
+                          ? 'In-person consultation service at Campus 1 UIN Sunan Gunung Djati Bandung assisting MSEs with halal document completeness.'
+                          : 'Layanan konsultasi tatap muka langsung di Kampus 1 UIN Sunan Gunung Djati Bandung membantu UMK melengkapi dokumen halal.',
+                      },
+                      {
+                        img: '/assets/images/uin_sgd/uin_14.webp',
+                        cat: isEn ? 'SEHATI FACILITATION' : 'FASILITASI SEHATI',
+                        title: isEn
+                          ? 'Free Halal Mentoring (SEHATI) for Micro Enterprises'
+                          : 'Pendampingan Halal Gratis (SEHATI) untuk Pelaku Usaha Mikro',
+                        desc: isEn
+                          ? 'Government free certification quotas verified on-site by certified PPH Assistants from UIN Sunan Gunung Djati.'
+                          : 'Fasilitasi kuota sertifikasi gratis dari pemerintah melalui verifikasi lapangan oleh Pendamping PPH UIN Sunan Gunung Djati.',
+                      },
+                      {
+                        img: '/assets/images/uin_sgd/uin_15.webp',
+                        cat: isEn ? 'MSE JULEHA' : 'JULEHA UMK',
+                        title: isEn
+                          ? 'Halal Slaughterer Competency Training for MSE Communities'
+                          : 'Program Pelatihan Juru Sembelih Halal bagi Komunitas UMK',
+                        desc: isEn
+                          ? 'Elevating poultry and small ruminant slaughtering competence to ensure end-to-end halal meat supply chain compliance.'
+                          : 'Peningkatan kompetensi juru sembelih unggas dan ruminansia kecil guna memastikan rantai pasok daging halal dari hulu ke hilir.',
+                      },
+                    ].map((article, i) => (
+                      <motion.div
+                        key={i}
+                        whileHover={{ y: -6 }}
+                        transition={{ duration: 0.25 }}
+                        className="rounded-3xl border border-neutral-200/80 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all"
+                      >
+                        <img src={article.img} alt={article.title} className="w-full h-48 object-cover" />
+                        <div className="p-6">
+                          <span className="text-[11px] font-bold text-[#6b1282] uppercase tracking-wider">
+                            {article.cat}
+                          </span>
+                          <h3 className="font-bold text-lg text-neutral-900 mt-2 mb-2 line-clamp-2">
+                            {article.title}
+                          </h3>
+                          <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed mb-4 font-normal">
+                            {article.desc}
+                          </p>
+                          <Link to="/layanan" className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
+                            {isEn ? 'Explore Program' : 'Pelajari Program'} <ArrowRight className="w-3.5 h-3.5" />
+                          </Link>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Tab 5: Fatwa & Regulasi */}
+                {activeTab === 'fatwa' && (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {[
+                      {
+                        img: '/assets/images/img_015.jpg',
+                        cat: isEn ? 'MINISTRY DECREE' : 'KEPUTUSAN MENAG',
+                        title: isEn
+                          ? 'Religious Affairs Decree No. 748/2021 on Mandatory Certified Products'
+                          : 'KMA No. 748 Tahun 2021 tentang Produk Wajib Bersertifikat',
+                        desc: isEn
+                          ? 'Classification list of food, beverage, medicine, cosmetics, and consumer items subject to mandatory halal certification.'
+                          : 'Daftar klasifikasi jenis produk makanan, minuman, obat, kosmetik, dan barang gunaan yang wajib memiliki sertifikasi halal.',
+                      },
+                      {
+                        img: '/assets/images/img_014.jpg',
+                        cat: isEn ? 'MUI FATWA' : 'FATWA MUI',
+                        title: isEn
+                          ? 'Fatwa Standard on Halal Compliance for GMO and Recombinant Products'
+                          : 'Fatwa Standar Kehalalan Produk Rekayasa Genetika (GMO)',
+                        desc: isEn
+                          ? 'Islamic legal guidelines determining the halal status of recombinant microbial fermentation and modern biotechnology ingredients.'
+                          : 'Pedoman penetapan kehalalan bahan hasil fermentasi mikroba rekombinan dan bahan bioteknologi pangan modern.',
+                      },
+                      {
+                        img: '/assets/images/img_013.jpg',
+                        cat: isEn ? 'NATIONAL REGULATION' : 'REGULASI NASIONAL',
+                        title: isEn
+                          ? 'Phased Mandatory Halal Certification for Business Operators'
+                          : 'Kewajiban Sertifikasi Halal Bertahap bagi Pelaku Usaha',
+                        desc: isEn
+                          ? 'Implementation schedule for mandatory halal certification in accordance with Law No. 33/2014 and Govt. Regulation in Lieu of Law No. 2/2022.'
+                          : 'Pemberlakuan penahapan kewajiban bersertifikat halal sesuai regulasi UU No. 33 Tahun 2014 dan Perpu No. 2 Tahun 2022.',
+                      },
+                    ].map((article, i) => (
+                      <motion.div
+                        key={i}
+                        whileHover={{ y: -6 }}
+                        transition={{ duration: 0.25 }}
+                        className="rounded-3xl border border-neutral-200/80 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all"
+                      >
+                        <img src={article.img} alt={article.title} className="w-full h-48 object-cover" />
+                        <div className="p-6">
+                          <span className="text-[11px] font-bold text-[#6b1282] uppercase tracking-wider">
+                            {article.cat}
+                          </span>
+                          <h3 className="font-bold text-lg text-neutral-900 mt-2 mb-2 line-clamp-2">
+                            {article.title}
+                          </h3>
+                          <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed mb-4 font-normal">
+                            {article.desc}
+                          </p>
+                          <Link to="/artikel/3" className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
+                            {isEn ? 'Read Now' : 'Baca Sekarang'} <ArrowRight className="w-3.5 h-3.5" />
+                          </Link>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                )}
+              </motion.div>
+            </AnimatePresence>
           </div>
-
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.25, ease: 'easeInOut' }}
-            >
-              {/* Tab 1: Artikel */}
-              {activeTab === 'artikel' && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                {
-                  img: '/assets/images/news_thumb_1.jpg',
-                  cat: isEn ? 'COSMETICS & HEALTH' : 'KOSMETIK & KESEHATAN',
-                  catColor: 'text-[#6b1282]',
-                  title: isEn
-                    ? 'The Dangers of Hydroquinone in Cosmetics and Halal Critical Points'
-                    : 'Bahaya Hidrokuinon dalam Kosmetik dan Titik Kritis Kehalalan',
-                  desc: isEn
-                    ? 'Hydroquinone is a common active compound in skin brightening products subject to stringent health safety and halal compliance.'
-                    : 'Hidrokuinon adalah senyawa kimia yang umum digunakan dalam produk pencerah kulit dan memiliki regulasi ketat dalam aspek keamanan dan kehalalan.',
-                  link: '/artikel/1',
-                },
-                {
-                  img: '/assets/images/news_thumb_2.jpg',
-                  cat: isEn ? 'PACKAGING & LOGISTICS' : 'KEMASAN & LOGISTIK',
-                  catColor: 'text-[#0284c7]',
-                  title: isEn
-                    ? 'Understanding the Vital Role of Migration Testing on Food Packaging'
-                    : 'Kenali Pentingnya Pengujian Migrasi pada Kemasan Pangan',
-                  desc: isEn
-                    ? 'Migration testing verifies that hazardous substances do not transfer to food materials according to food safety and halal standards.'
-                    : 'Pengujian migrasi pada kemasan pangan menjamin zat berbahaya tidak berpindah ke bahan konsumsi sesuai standar keamanan pangan dan syariat halal.',
-                  link: '/artikel/2',
-                },
-                {
-                  img: '/assets/images/news_thumb_3.jpg',
-                  cat: isEn ? 'HEALTH REGULATION' : 'REGULASI KESEHATAN',
-                  catColor: 'text-[#6b1282]',
-                  title: isEn
-                    ? 'Regulatory Insight! Health Ministry Decree No. 2/2023 & Halal Alignment'
-                    : 'Kulik Regulasi! Permenkes No.2 Tahun 2023 & Keselarasan SJPH',
-                  desc: isEn
-                    ? 'Comprehensive overview of environmental health quality standards and hygienic processing aligned with the Halal Assurance System (SJPH).'
-                    : 'Kupas tuntas standar baku mutu kesehatan lingkungan dan persyaratan pengolahan higienis yang sejalan dengan Sistem Jaminan Produk Halal (SJPH).',
-                  link: '/artikel/3',
-                },
-              ].map((article, i) => (
-                <motion.div
-                  key={i}
-                  whileHover={{ y: -6 }}
-                  transition={{ duration: 0.25 }}
-                  className="rounded-3xl border border-neutral-200/80 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all flex flex-col justify-between"
-                >
-                  <img src={article.img} alt={article.title} className="w-full h-48 object-cover" />
-                  <div className="p-6">
-                    <span className={`text-[11px] font-black uppercase tracking-wider ${article.catColor}`}>
-                      {article.cat}
-                    </span>
-                    <h3 className="font-extrabold text-lg text-neutral-900 mt-2 mb-2 line-clamp-2">
-                      {article.title}
-                    </h3>
-                    <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed mb-4">
-                      {article.desc}
-                    </p>
-                    <Link to={article.link} className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
-                      {isEn ? 'Read Now' : 'Baca Sekarang'} <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          )}
-
-          {/* Tab 2: Berita */}
-          {activeTab === 'uin_berita' && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                {
-                  img: '/assets/images/uin_sgd/uin_14.webp',
-                  cat: 'LP3H UIN SGD',
-                  title: isEn
-                    ? 'UIN SGD Bandung Conducts PPH Assistant National Training'
-                    : 'UIN SGD Bandung Gelar Pelatihan Pendamping PPH dan Rakornas',
-                  desc: isEn
-                    ? 'LP3H Halal Center UIN SGD consistently certifies thousands of competent PPH assistants across Indonesia.'
-                    : 'LP3H Halal Center UIN SGD konsisten mencetak ribuan pendamping PPH berkompeten untuk mengakselerasi sertifikasi halal UMK se-Indonesia.',
-                  link: '/artikel/1',
-                },
-                {
-                  img: '/assets/images/uin_sgd/uin_15.webp',
-                  cat: 'PROGRAM SEHATI',
-                  title: isEn
-                    ? 'Facilitating 1,000+ Free Halal Certificates for West Java MSEs'
-                    : 'Fasilitasi Lebih dari 1.000 Sertifikat Halal Gratis UMK Jawa Barat',
-                  desc: isEn
-                    ? 'Collaborative program between Halal Center UIN SGD and BPJPH Ministry of Religious Affairs assisting micro businesses.'
-                    : 'Program kolaborasi Halal Center UIN SGD bersama BPJPH Kemenag RI dalam mendampingi pelaku usaha mikro kecil meraih sertifikat halal resmi.',
-                  link: '/artikel/2',
-                },
-                {
-                  img: '/assets/images/uin_sgd/uin_16.webp',
-                  cat: isEn ? 'LEGALITY GUIDE' : 'PANDUAN LEGALITAS',
-                  title: isEn
-                    ? 'Complete Guide to OSS NIB Registration & Self-Declare Criteria'
-                    : 'Panduan Lengkap Pengajuan NIB OSS & Syarat Self Declare',
-                  desc: isEn
-                    ? 'Step-by-step guidance on risk-based NIB issuance and SiHalal raw material input assisted by LP3H UIN SGD.'
-                    : 'Langkah mudah pembuatan NIB berbasis risiko dan pengisian data bahan baku di portal SiHalal dengan pendampingan LP3H UIN SGD.',
-                  link: '/artikel/3',
-                },
-              ].map((article, i) => (
-                <motion.div
-                  key={i}
-                  whileHover={{ y: -6 }}
-                  transition={{ duration: 0.25 }}
-                  className="rounded-3xl border border-neutral-200/80 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all"
-                >
-                  <img src={article.img} alt={article.title} className="w-full h-48 object-cover" />
-                  <div className="p-6">
-                    <span className="text-[11px] font-black text-[#6b1282] uppercase tracking-wider">
-                      {article.cat}
-                    </span>
-                    <h3 className="font-extrabold text-lg text-neutral-900 mt-2 mb-2 line-clamp-2">
-                      {article.title}
-                    </h3>
-                    <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed mb-4">
-                      {article.desc}
-                    </p>
-                    <Link to={article.link} className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
-                      {isEn ? 'Read Now' : 'Baca Sekarang'} <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          )}
-
-          {/* Tab 3: Jurnal */}
-          {activeTab === 'jurnal' && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                {
-                  img: '/assets/images/Screenshot-2026-09-11-at-15-16-41-Jurnal-Halal-180.pdf-1.png',
-                  cat: 'IJHR SINTA',
-                  title: isEn
-                    ? 'Indonesian Journal of Halal Research (IJHR) Vol. 6 No. 2'
-                    : 'Indonesian Journal of Halal Research (IJHR) Vol. 6 No. 2',
-                  desc: isEn
-                    ? 'SINTA-accredited scientific periodical discussing innovations in bio-molecular halal authentication and global policy.'
-                    : 'Publikasi jurnal ilmiah berkala terakreditasi SINTA yang membahas inovasi riset autentikasi halal hayati dan kebijakan halal global.',
-                  url: 'https://journal.uinsgd.ac.id/index.php/ijhr',
-                },
-                {
-                  img: '/assets/images/Screenshot-2026-07-17-at-07-01-06-Jurnal-Halal-179.pdf.png',
-                  cat: isEn ? 'DNA RESEARCH' : 'RISET DNA',
-                  title: isEn
-                    ? 'Halal Authentication of Processed Meat via Real-Time PCR'
-                    : 'Autentikasi Halal Daging Olahan dengan Metode Real-Time PCR',
-                  desc: isEn
-                    ? 'Quantitative laboratory research detecting porcine DNA to safeguard national meat supply chain integrity.'
-                    : 'Riset laboratorium pengujian DNA babi secara kuantitatif untuk melindungi rantai pasok daging olahan industri pangan nasional.',
-                  url: 'https://journal.uinsgd.ac.id/index.php/ijhr',
-                },
-                {
-                  img: '/assets/images/uji-laboratorium.jpg',
-                  cat: isEn ? 'TEST METHODOLOGY' : 'METODOLOGI UJI',
-                  title: isEn
-                    ? 'Alcohol Residual Testing & Critical Point Detection in Ingredients'
-                    : 'Pengujian Cemaran Alkohol & Deteksi Titik Kritis Bahan',
-                  desc: isEn
-                    ? 'Gas chromatography (GC-FID) test methodology determining ethanol limits in flavorings, solvents, and fermented goods.'
-                    : 'Metodologi uji gas chromatography (GC-FID) untuk penetapan ambang batas etanol pada perisa, pelarut, dan produk fermentasi.',
-                  url: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/',
-                },
-              ].map((article, i) => (
-                <motion.div
-                  key={i}
-                  whileHover={{ y: -6 }}
-                  transition={{ duration: 0.25 }}
-                  className="rounded-3xl border border-neutral-200/80 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all"
-                >
-                  <img src={article.img} alt={article.title} className="w-full h-48 object-cover" />
-                  <div className="p-6">
-                    <span className="text-[11px] font-bold text-[#6b1282] uppercase tracking-wider">
-                      {article.cat}
-                    </span>
-                    <h3 className="font-bold text-lg text-neutral-900 mt-2 mb-2 line-clamp-2">
-                      {article.title}
-                    </h3>
-                    <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed mb-4 font-normal">
-                      {article.desc}
-                    </p>
-                    <a
-                      href={article.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1"
-                    >
-                      {isEn ? 'Open Research Paper' : 'Buka Tautan Riset'} <ExternalLink className="w-3.5 h-3.5" />
-                    </a>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          )}
-
-          {/* Tab 4: Ruang UMK */}
-          {activeTab === 'umk' && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                {
-                  img: '/assets/images/uin_sgd/uin_16.webp',
-                  cat: isEn ? 'MSE CLINIC' : 'KLINIK UMK',
-                  title: isEn
-                    ? 'Free Consultation Clinic for OSS NIB & SiHalal Setup'
-                    : 'Klinik Konsultasi Gratis Pembuatan NIB & Akun SiHalal',
-                  desc: isEn
-                    ? 'In-person consultation service at Campus 1 UIN Sunan Gunung Djati Bandung assisting MSEs with halal document completeness.'
-                    : 'Layanan konsultasi tatap muka langsung di Kampus 1 UIN Sunan Gunung Djati Bandung membantu UMK melengkapi dokumen halal.',
-                },
-                {
-                  img: '/assets/images/uin_sgd/uin_14.webp',
-                  cat: isEn ? 'SEHATI FACILITATION' : 'FASILITASI SEHATI',
-                  title: isEn
-                    ? 'Free Halal Mentoring (SEHATI) for Micro Enterprises'
-                    : 'Pendampingan Halal Gratis (SEHATI) untuk Pelaku Usaha Mikro',
-                  desc: isEn
-                    ? 'Government free certification quotas verified on-site by certified PPH Assistants from UIN Sunan Gunung Djati.'
-                    : 'Fasilitasi kuota sertifikasi gratis dari pemerintah melalui verifikasi lapangan oleh Pendamping PPH UIN Sunan Gunung Djati.',
-                },
-                {
-                  img: '/assets/images/uin_sgd/uin_15.webp',
-                  cat: isEn ? 'MSE JULEHA' : 'JULEHA UMK',
-                  title: isEn
-                    ? 'Halal Slaughterer Competency Training for MSE Communities'
-                    : 'Program Pelatihan Juru Sembelih Halal bagi Komunitas UMK',
-                  desc: isEn
-                    ? 'Elevating poultry and small ruminant slaughtering competence to ensure end-to-end halal meat supply chain compliance.'
-                    : 'Peningkatan kompetensi juru sembelih unggas dan ruminansia kecil guna memastikan rantai pasok daging halal dari hulu ke hilir.',
-                },
-              ].map((article, i) => (
-                <motion.div
-                  key={i}
-                  whileHover={{ y: -6 }}
-                  transition={{ duration: 0.25 }}
-                  className="rounded-3xl border border-neutral-200/80 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all"
-                >
-                  <img src={article.img} alt={article.title} className="w-full h-48 object-cover" />
-                  <div className="p-6">
-                    <span className="text-[11px] font-bold text-[#6b1282] uppercase tracking-wider">
-                      {article.cat}
-                    </span>
-                    <h3 className="font-bold text-lg text-neutral-900 mt-2 mb-2 line-clamp-2">
-                      {article.title}
-                    </h3>
-                    <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed mb-4 font-normal">
-                      {article.desc}
-                    </p>
-                    <Link to="/layanan" className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
-                      {isEn ? 'Explore Program' : 'Pelajari Program'} <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          )}
-
-          {/* Tab 5: Fatwa & Regulasi */}
-          {activeTab === 'fatwa' && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                {
-                  img: '/assets/images/img_015.jpg',
-                  cat: isEn ? 'MINISTRY DECREE' : 'KEPUTUSAN MENAG',
-                  title: isEn
-                    ? 'Religious Affairs Decree No. 748/2021 on Mandatory Certified Products'
-                    : 'KMA No. 748 Tahun 2021 tentang Produk Wajib Bersertifikat',
-                  desc: isEn
-                    ? 'Classification list of food, beverage, medicine, cosmetics, and consumer items subject to mandatory halal certification.'
-                    : 'Daftar klasifikasi jenis produk makanan, minuman, obat, kosmetik, dan barang gunaan yang wajib memiliki sertifikasi halal.',
-                },
-                {
-                  img: '/assets/images/img_014.jpg',
-                  cat: isEn ? 'MUI FATWA' : 'FATWA MUI',
-                  title: isEn
-                    ? 'Fatwa Standard on Halal Compliance for GMO and Recombinant Products'
-                    : 'Fatwa Standar Kehalalan Produk Rekayasa Genetika (GMO)',
-                  desc: isEn
-                    ? 'Islamic legal guidelines determining the halal status of recombinant microbial fermentation and modern biotechnology ingredients.'
-                    : 'Pedoman penetapan kehalalan bahan hasil fermentasi mikroba rekombinan dan bahan bioteknologi pangan modern.',
-                },
-                {
-                  img: '/assets/images/img_013.jpg',
-                  cat: isEn ? 'NATIONAL REGULATION' : 'REGULASI NASIONAL',
-                  title: isEn
-                    ? 'Phased Mandatory Halal Certification for Business Operators'
-                    : 'Kewajiban Sertifikasi Halal Bertahap bagi Pelaku Usaha',
-                  desc: isEn
-                    ? 'Implementation schedule for mandatory halal certification in accordance with Law No. 33/2014 and Govt. Regulation in Lieu of Law No. 2/2022.'
-                    : 'Pemberlakuan penahapan kewajiban bersertifikat halal sesuai regulasi UU No. 33 Tahun 2014 dan Perpu No. 2 Tahun 2022.',
-                },
-              ].map((article, i) => (
-                <motion.div
-                  key={i}
-                  whileHover={{ y: -6 }}
-                  transition={{ duration: 0.25 }}
-                  className="rounded-3xl border border-neutral-200/80 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all"
-                >
-                  <img src={article.img} alt={article.title} className="w-full h-48 object-cover" />
-                  <div className="p-6">
-                    <span className="text-[11px] font-bold text-[#6b1282] uppercase tracking-wider">
-                      {article.cat}
-                    </span>
-                    <h3 className="font-bold text-lg text-neutral-900 mt-2 mb-2 line-clamp-2">
-                      {article.title}
-                    </h3>
-                    <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed mb-4 font-normal">
-                      {article.desc}
-                    </p>
-                    <Link to="/artikel/3" className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
-                      {isEn ? 'Read Now' : 'Baca Sekarang'} <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          )}
-            </motion.div>
-          </AnimatePresence>
-        </div>
       </section>
 
       {/* 8. MITRA & AKREDITASI MARQUEE (Classy Soft Pearl Ivory) */}
@@ -1261,11 +1261,10 @@ export const HomePage: React.FC = () => {
                 key={branch.id}
                 type="button"
                 onClick={() => setSelectedBranch(idx)}
-                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${
-                  selectedBranch === idx
+                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${selectedBranch === idx
                     ? 'bg-[#6b1282] text-white shadow-sm ring-2 ring-[#6b1282]/30'
                     : 'bg-white text-neutral-600 hover:text-[#6b1282] border border-neutral-200 hover:border-purple-200 shadow-2xs'
-                }`}
+                  }`}
               >
                 {branch.shortName}
               </button>

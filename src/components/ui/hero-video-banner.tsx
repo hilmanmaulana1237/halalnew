@@ -16,19 +16,19 @@ export const HeroVideoBanner: React.FC = () => {
 
   const words = language === 'en'
     ? [
-        'Halal Assurance',
-        'Sharia Integrity',
-        'Precision Science',
-        'Global Standards',
-        'Trusted Partnership',
-      ]
+      'Halal Assurance',
+      'Sharia Integrity',
+      'Precision Science',
+      'Global Standards',
+      'Trusted Partnership',
+    ]
     : [
-        'Halal Assurance',
-        'Integritas Syar’i',
-        'Riset Sains Presisi',
-        'Akreditasi Mutlak',
-        'Kemitraan Terpercaya',
-      ];
+      'Halal Assurance',
+      'Integritas Syar’i',
+      'Riset Sains Presisi',
+      'Akreditasi Mutlak',
+      'Kemitraan Terpercaya',
+    ];
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -91,8 +91,6 @@ export const HeroVideoBanner: React.FC = () => {
             <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-200"></span>
           </span>
           <span className="text-white tracking-wide">{t('hero_badge_lph')}</span>
-          <span className="text-purple-300 font-extrabold">•</span>
-          <span className="text-purple-200">{t('hero_badge_univ')}</span>
         </motion.div>
 
         {/* Main Heading with Modern Classic Serif Typography & FlipWords */}
