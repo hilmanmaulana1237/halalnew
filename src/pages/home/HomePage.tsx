@@ -234,7 +234,6 @@ export const HomePage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>('artikel');
   const [selectedDirector, setSelectedDirector] = useState<Director | null>(null);
   const [selectedBranch, setSelectedBranch] = useState(0);
-  const [mapViewMode, setMapViewMode] = useState<'google' | 'osm'>('google');
 
   const branchLocations = [
     {
@@ -282,89 +281,6 @@ export const HomePage: React.FC = () => {
       gmapsDirectUrl: 'https://maps.google.com/?q=-6.7320,108.5523',
     },
   ];
-
-  useEffect(() => {
-    if (mapViewMode !== 'osm') return;
-    let mapInstance: L.Map | null = null;
-    let timer1: any = null;
-    let timer2: any = null;
-
-    try {
-      const mapContainer = document.getElementById('map');
-      if (mapContainer && !(mapContainer as any)._leaflet_id) {
-        const bounds = L.latLngBounds([-11.0, 95.0], [6.0, 141.0]);
-        const cur = branchLocations[selectedBranch];
-        mapInstance = L.map('map', {
-          center: [cur.lat, cur.lng],
-          zoom: 11,
-          maxBounds: bounds,
-          maxBoundsViscosity: 1.0,
-          minZoom: 5,
-          maxZoom: 18,
-          zoomControl: true,
-          scrollWheelZoom: false,
-        });
-
-        // 100% Free OpenStreetMap Standard Tiles - Absolutely Zero API Key Needed
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
-          maxZoom: 19,
-        }).addTo(mapInstance);
-
-        const svgMarker = `
-          <svg width="34" height="44" viewBox="0 0 30 42" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="markerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#6b1282" />
-                <stop offset="100%" stop-color="#4a0d5c" />
-              </linearGradient>
-            </defs>
-            <path d="M15 0C8 0 3 6 3 13c0 8 12 26 12 26s12-18 12-26c0-7-5-13-12-13z" fill="url(#markerGrad)" stroke="#ffffff" stroke-width="2.5"/>
-            <circle cx="15" cy="13" r="5" fill="#ffffff"/>
-          </svg>`;
-
-        const customIcon = L.divIcon({
-          className: 'leaflet-custom-marker',
-          html: svgMarker,
-          iconSize: [34, 44],
-          iconAnchor: [17, 44],
-          popupAnchor: [0, -40],
-        });
-
-        branchLocations.forEach((loc) => {
-          const marker = L.marker([loc.lat, loc.lng], { icon: customIcon }).addTo(mapInstance!);
-          marker.bindPopup(`
-            <div style="font-family: inherit; padding: 6px; min-width: 220px;">
-              <span style="font-size: 10px; font-weight: 800; color: #6b1282; text-transform: uppercase;">${loc.badge}</span>
-              <h5 style="font-size: 13px; font-weight: 800; color: #1b183a; margin-top: 2px; margin-bottom: 4px;">${loc.title}</h5>
-              <p style="font-size: 11px; color: #4b5563; line-height: 1.4; margin-bottom: 0;">${loc.address}</p>
-            </div>
-          `);
-        });
-
-        const refreshMapSize = () => {
-          if (mapInstance) {
-            mapInstance.invalidateSize();
-          }
-        };
-        refreshMapSize();
-        timer1 = setTimeout(refreshMapSize, 300);
-        timer2 = setTimeout(refreshMapSize, 800);
-        window.addEventListener('resize', refreshMapSize);
-      }
-    } catch (e) {
-      console.warn('Leaflet map error:', e);
-    }
-
-    return () => {
-      if (timer1) clearTimeout(timer1);
-      if (timer2) clearTimeout(timer2);
-      window.removeEventListener('resize', () => { });
-      if (mapInstance) {
-        mapInstance.remove();
-      }
-    };
-  }, [mapViewMode, selectedBranch]);
 
   return (
     <div className="flex flex-col w-full overflow-hidden bg-white">
@@ -691,7 +607,7 @@ export const HomePage: React.FC = () => {
           />
 
           <div className="mt-12 space-y-10 sm:space-y-14">
-            {/* CARD 1: KEPALA HALAL CENTER (Dr. Tri Cahyanto) - Left: Content, Right: Portrait */}
+            {/* CARD 1: DEWAN PEMBINA (Prof. Dr. H. Rosihon Anwar) - Left: Content, Right: Portrait */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -700,105 +616,8 @@ export const HomePage: React.FC = () => {
               className="relative rounded-3xl border border-neutral-200/90 bg-[#fafbfc] overflow-hidden shadow-xl shadow-purple-950/5 p-6 sm:p-10 lg:p-12 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] bg-[size:22px_22px]"
             >
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-                {/* Left (7 cols): Content & Executive Statement */}
+                {/* Left (7 cols): Content & Institutional Vision */}
                 <div className="lg:col-span-7 flex flex-col justify-between">
-                  <div>
-                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-bold bg-purple-100/90 text-[#6b1282] border border-purple-200/80 uppercase tracking-wider mb-4 shadow-xs">
-                      <ShieldCheck className="w-3.5 h-3.5" />
-                      {isEn ? 'LPH Technical Lead & Head of Halal Center' : 'Pimpinan Teknis LPH & Kepala Pusat Kajian Halal'}
-                    </div>
-
-                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1a0726] tracking-tight">
-                      Dr. Tri Cahyanto, M.Si.
-                    </h3>
-                    <p className="text-xs sm:text-sm font-semibold text-neutral-500 mt-1">
-                      {isEn
-                        ? 'Life Science Expert & Licensed Lead Auditor BPJPH Kemenag RI'
-                        : 'Pakar Sains Hayati & Lead Auditor Halal Berlisensi BPJPH Kemenag RI'}
-                    </p>
-
-                    {/* Executive Quote Box */}
-                    <div className="mt-6 p-6 rounded-2xl bg-white/95 border border-purple-100 shadow-sm relative">
-                      <span className="text-4xl text-[#6b1282]/30 font-serif absolute top-3 left-4 select-none leading-none">“</span>
-                      <p className="text-sm sm:text-base text-neutral-700 italic leading-relaxed pl-6 relative z-10 font-normal">
-                        "{directors[1].quote}"
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Actions */}
-                  <div className="mt-8 pt-6 border-t border-neutral-200/80 flex flex-wrap items-center gap-4">
-                    <Button
-                      variant="primary"
-                      className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold text-xs px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2"
-                      onPress={() => setSelectedDirector(directors[1])}
-                    >
-                      <span>{isEn ? 'View Profile & Credentials' : 'Buka Profil & Kredensial Pimpinan'}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Button>
-                    <Link
-                      to="/layanan/kalkulator"
-                      className="text-xs font-bold text-neutral-700 hover:text-[#6b1282] transition-colors inline-flex items-center gap-1.5"
-                    >
-                      <span>{isEn ? 'Certification Flow Consultation' : 'Konsultasi Alur Sertifikasi'}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Right (5 cols): Cutout Portrait */}
-                <div className="lg:col-span-5 flex flex-col items-center justify-end relative pt-2">
-                  <div className="relative w-full max-w-sm flex flex-col items-center">
-                    <div className="absolute inset-x-8 bottom-0 h-64 bg-gradient-to-t from-purple-200/40 via-purple-100/20 to-transparent rounded-full blur-2xl pointer-events-none" />
-                    <img
-                      src={directors[1].image}
-                      alt={directors[1].name}
-                      className="relative z-10 w-auto max-h-[380px] sm:max-h-[420px] object-contain drop-shadow-xl"
-                    />
-                    <div className="relative z-20 -mt-6 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl border border-purple-100 shadow-md text-center max-w-xs w-full">
-                      <h4 className="text-sm font-bold text-[#1a0726]">
-                        {directors[1].name}
-                      </h4>
-                      <p className="text-[11px] font-semibold text-[#6b1282] mt-0.5">
-                        {isEn ? 'Head of Halal Center UIN Sunan Gunung Djati' : 'Kepala Halal Center UIN Sunan Gunung Djati'}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* CARD 2: DEWAN PEMBINA (Prof. Rosihon Anwar) - Left: Portrait, Right: Content (Alternating) */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="relative rounded-3xl border border-neutral-200/90 bg-[#fafbfc] overflow-hidden shadow-xl shadow-purple-950/5 p-6 sm:p-10 lg:p-12 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] bg-[size:22px_22px]"
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-                {/* Left on Desktop (5 cols): Cutout Portrait */}
-                <div className="lg:col-span-5 flex flex-col items-center justify-end relative pt-2 order-2 lg:order-1">
-                  <div className="relative w-full max-w-sm flex flex-col items-center">
-                    <div className="absolute inset-x-8 bottom-0 h-64 bg-gradient-to-t from-purple-200/40 via-purple-100/20 to-transparent rounded-full blur-2xl pointer-events-none" />
-                    <img
-                      src={directors[0].image}
-                      alt={directors[0].name}
-                      className="relative z-10 w-auto max-h-[380px] sm:max-h-[420px] object-contain drop-shadow-xl"
-                    />
-                    <div className="relative z-20 -mt-6 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl border border-purple-100 shadow-md text-center max-w-xs w-full">
-                      <h4 className="text-sm font-bold text-[#1a0726]">
-                        {directors[0].name}
-                      </h4>
-                      <p className="text-[11px] font-semibold text-[#6b1282] mt-0.5">
-                        {isEn ? 'Rector of UIN SGD & Halal Center Patron' : 'Rektor UIN SGD & Dewan Pembina Halal Center'}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right on Desktop (7 cols): Content & Institutional Vision */}
-                <div className="lg:col-span-7 flex flex-col justify-between order-1 lg:order-2">
                   <div>
                     <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-bold bg-purple-100/90 text-[#6b1282] border border-purple-200/80 uppercase tracking-wider mb-4 shadow-xs">
                       <Sparkles className="w-3.5 h-3.5" />
@@ -838,6 +657,103 @@ export const HomePage: React.FC = () => {
                       className="text-xs font-bold text-neutral-700 hover:text-[#6b1282] transition-colors inline-flex items-center gap-1.5"
                     >
                       <span>{isEn ? 'Explore Institutional Profile & Vision' : 'Pelajari Profil Lembaga & Visi Kampus'}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Right (5 cols): Cutout Portrait */}
+                <div className="lg:col-span-5 flex flex-col items-center justify-end relative pt-2">
+                  <div className="relative w-full max-w-sm flex flex-col items-center">
+                    <div className="absolute inset-x-8 bottom-0 h-64 bg-gradient-to-t from-purple-200/40 via-purple-100/20 to-transparent rounded-full blur-2xl pointer-events-none" />
+                    <img
+                      src={directors[0].image}
+                      alt={directors[0].name}
+                      className="relative z-10 w-auto max-h-[380px] sm:max-h-[420px] object-contain drop-shadow-xl"
+                    />
+                    <div className="relative z-20 -mt-6 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl border border-purple-100 shadow-md text-center max-w-xs w-full">
+                      <h4 className="text-sm font-bold text-[#1a0726]">
+                        {directors[0].name}
+                      </h4>
+                      <p className="text-[11px] font-semibold text-[#6b1282] mt-0.5">
+                        {isEn ? 'Rector of UIN SGD & Halal Center Patron' : 'Rektor UIN SGD & Dewan Pembina Halal Center'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* CARD 2: KEPALA HALAL CENTER (Dr. Tri Cahyanto) - Left: Portrait, Right: Content (Alternating) */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="relative rounded-3xl border border-neutral-200/90 bg-[#fafbfc] overflow-hidden shadow-xl shadow-purple-950/5 p-6 sm:p-10 lg:p-12 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] bg-[size:22px_22px]"
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                {/* Left on Desktop (5 cols): Cutout Portrait */}
+                <div className="lg:col-span-5 flex flex-col items-center justify-end relative pt-2 order-2 lg:order-1">
+                  <div className="relative w-full max-w-sm flex flex-col items-center">
+                    <div className="absolute inset-x-8 bottom-0 h-64 bg-gradient-to-t from-purple-200/40 via-purple-100/20 to-transparent rounded-full blur-2xl pointer-events-none" />
+                    <img
+                      src={directors[1].image}
+                      alt={directors[1].name}
+                      className="relative z-10 w-auto max-h-[380px] sm:max-h-[420px] object-contain drop-shadow-xl"
+                    />
+                    <div className="relative z-20 -mt-6 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl border border-purple-100 shadow-md text-center max-w-xs w-full">
+                      <h4 className="text-sm font-bold text-[#1a0726]">
+                        {directors[1].name}
+                      </h4>
+                      <p className="text-[11px] font-semibold text-[#6b1282] mt-0.5">
+                        {isEn ? 'Head of Halal Center UIN Sunan Gunung Djati' : 'Kepala Halal Center UIN Sunan Gunung Djati'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right on Desktop (7 cols): Content & Executive Statement */}
+                <div className="lg:col-span-7 flex flex-col justify-between order-1 lg:order-2">
+                  <div>
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-bold bg-purple-100/90 text-[#6b1282] border border-purple-200/80 uppercase tracking-wider mb-4 shadow-xs">
+                      <ShieldCheck className="w-3.5 h-3.5" />
+                      {isEn ? 'LPH Technical Lead & Head of Halal Center' : 'Pimpinan Teknis LPH & Kepala Pusat Kajian Halal'}
+                    </div>
+
+                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1a0726] tracking-tight">
+                      Dr. Tri Cahyanto, M.Si.
+                    </h3>
+                    <p className="text-xs sm:text-sm font-semibold text-neutral-500 mt-1">
+                      {isEn
+                        ? 'Life Science Expert & Licensed Lead Auditor BPJPH Kemenag RI'
+                        : 'Pakar Sains Hayati & Lead Auditor Halal Berlisensi BPJPH Kemenag RI'}
+                    </p>
+
+                    {/* Executive Quote Box */}
+                    <div className="mt-6 p-6 rounded-2xl bg-white/95 border border-purple-100 shadow-sm relative">
+                      <span className="text-4xl text-[#6b1282]/30 font-serif absolute top-3 left-4 select-none leading-none">“</span>
+                      <p className="text-sm sm:text-base text-neutral-700 italic leading-relaxed pl-6 relative z-10 font-normal">
+                        "{directors[1].quote}"
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="mt-8 pt-6 border-t border-neutral-200/80 flex flex-wrap items-center gap-4">
+                    <Button
+                      variant="primary"
+                      className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold text-xs px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2"
+                      onPress={() => setSelectedDirector(directors[1])}
+                    >
+                      <span>{isEn ? 'View Profile & Credentials' : 'Buka Profil & Kredensial Pimpinan'}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Button>
+                    <Link
+                      to="/layanan/kalkulator"
+                      className="text-xs font-bold text-neutral-700 hover:text-[#6b1282] transition-colors inline-flex items-center gap-1.5"
+                    >
+                      <span>{isEn ? 'Certification Flow Consultation' : 'Konsultasi Alur Sertifikasi'}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
@@ -1338,66 +1254,35 @@ export const HomePage: React.FC = () => {
               : "Kunjungi kantor layanan kami di Kampus 1, Gedung Laboratorium Terpadu Kampus 2, serta sentra kemitraan Priangan Timur & Ciayumajakuning."}
           />
 
-          {/* Branch Selector Chips & Map Provider Controls */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
-              {branchLocations.map((branch, idx) => (
-                <button
-                  key={branch.id}
-                  type="button"
-                  onClick={() => setSelectedBranch(idx)}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer ${
-                    selectedBranch === idx
-                      ? 'bg-[#6b1282] text-white shadow-sm ring-2 ring-[#6b1282]/30'
-                      : 'bg-white text-neutral-600 hover:text-[#6b1282] border border-neutral-200 hover:border-purple-200'
-                  }`}
-                >
-                  {branch.shortName}
-                </button>
-              ))}
-            </div>
-
-            <div className="inline-flex items-center p-1 bg-purple-50/80 rounded-xl border border-purple-100 text-xs font-semibold text-neutral-600">
+          {/* Branch Selector Chips */}
+          <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
+            {branchLocations.map((branch, idx) => (
               <button
+                key={branch.id}
                 type="button"
-                onClick={() => setMapViewMode('google')}
-                className={`px-3 py-1 rounded-lg transition-all ${
-                  mapViewMode === 'google'
-                    ? 'bg-white text-[#6b1282] font-bold shadow-2xs'
-                    : 'text-neutral-500 hover:text-neutral-900'
+                onClick={() => setSelectedBranch(idx)}
+                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${
+                  selectedBranch === idx
+                    ? 'bg-[#6b1282] text-white shadow-sm ring-2 ring-[#6b1282]/30'
+                    : 'bg-white text-neutral-600 hover:text-[#6b1282] border border-neutral-200 hover:border-purple-200 shadow-2xs'
                 }`}
               >
-                Google Maps ({isEn ? 'No API Key' : 'Bebas API Key'})
+                {branch.shortName}
               </button>
-              <button
-                type="button"
-                onClick={() => setMapViewMode('osm')}
-                className={`px-3 py-1 rounded-lg transition-all ${
-                  mapViewMode === 'osm'
-                    ? 'bg-white text-[#6b1282] font-bold shadow-2xs'
-                    : 'text-neutral-500 hover:text-neutral-900'
-                }`}
-              >
-                OpenStreetMap ({isEn ? 'No API Key' : 'Bebas API Key'})
-              </button>
-            </div>
+            ))}
           </div>
 
           <div className="relative rounded-3xl p-[1.5px] bg-gradient-to-r from-[#4a0d5c] via-[#86198f] to-[#4a0d5c] shadow-2xl shadow-purple-950/10">
             <div className="bg-white rounded-[22px] p-3">
-              {mapViewMode === 'google' ? (
-                <iframe
-                  title="Peta Kantor LPH UIN SGD"
-                  width="100%"
-                  height="460"
-                  className="w-full h-[460px] rounded-2xl border-0 shadow-inner"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  src={`https://maps.google.com/maps?q=${branchLocations[selectedBranch].query}&t=&z=16&ie=UTF8&iwloc=&output=embed`}
-                />
-              ) : (
-                <div id="map" className="w-full h-[460px] rounded-2xl overflow-hidden" />
-              )}
+              <iframe
+                title="Peta Kantor LPH UIN SGD"
+                width="100%"
+                height="460"
+                className="w-full h-[460px] rounded-2xl border-0 shadow-inner"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                src={`https://maps.google.com/maps?q=${branchLocations[selectedBranch].query}&t=&z=16&ie=UTF8&iwloc=&output=embed`}
+              />
             </div>
           </div>
 

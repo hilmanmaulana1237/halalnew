@@ -198,7 +198,7 @@ export const Navbar: React.FC = () => {
                           { label: 'Portal SIHALAL', href: 'https://ptsp.halal.go.id/' },
                           { label: language === 'en' ? 'SJPH Consultation' : 'Konsultasi SJPH', to: '/kontak' },
                         ]}
-                        actionText={language === 'en' ? 'Explore All in Tariff Calculator ->' : 'Lihat Semua di Kalkulator Tarif ->'}
+                        actionText={language === 'en' ? 'Explore All in Tariff Calculator ->' : 'Lihat Semua di Kalkulator Tarif'}
                         actionTo="/layanan/kalkulator"
                         onClick={() => setActiveDropdown(null)}
                       />
@@ -343,8 +343,8 @@ export const Navbar: React.FC = () => {
                   type="button"
                   onClick={() => setLanguage('id')}
                   className={`px-2 py-1 rounded-lg transition-all duration-200 ${language === 'id'
-                      ? 'bg-purple-100 text-[#6b1282] font-black shadow-2xs'
-                      : 'text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100'
+                    ? 'bg-purple-100 text-[#6b1282] font-black shadow-2xs'
+                    : 'text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100'
                     }`}
                 >
                   ID
@@ -354,8 +354,8 @@ export const Navbar: React.FC = () => {
                   type="button"
                   onClick={() => setLanguage('en')}
                   className={`px-2 py-1 rounded-lg transition-all duration-200 ${language === 'en'
-                      ? 'bg-purple-100 text-[#6b1282] font-black shadow-2xs'
-                      : 'text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100'
+                    ? 'bg-purple-100 text-[#6b1282] font-black shadow-2xs'
+                    : 'text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100'
                     }`}
                 >
                   EN
@@ -402,8 +402,8 @@ export const Navbar: React.FC = () => {
                     type="button"
                     onClick={() => setLanguage('id')}
                     className={`px-3 py-1 text-xs font-bold rounded-xl transition-all ${language === 'id'
-                        ? 'bg-[#6b1282] text-white shadow-xs'
-                        : 'text-neutral-600 hover:bg-white'
+                      ? 'bg-[#6b1282] text-white shadow-xs'
+                      : 'text-neutral-600 hover:bg-white'
                       }`}
                   >
                     ID
@@ -412,8 +412,8 @@ export const Navbar: React.FC = () => {
                     type="button"
                     onClick={() => setLanguage('en')}
                     className={`px-3 py-1 text-xs font-bold rounded-xl transition-all ${language === 'en'
-                        ? 'bg-[#6b1282] text-white shadow-xs'
-                        : 'text-neutral-600 hover:bg-white'
+                      ? 'bg-[#6b1282] text-white shadow-xs'
+                      : 'text-neutral-600 hover:bg-white'
                       }`}
                   >
                     EN
