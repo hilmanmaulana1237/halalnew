@@ -33,8 +33,8 @@ export const translations: Translations = {
   // Mega Menu Services
   menu_audit_title: { id: 'Pemeriksaan Halal LPH', en: 'LPH Halal Inspection' },
   menu_audit_desc: { id: 'Audit kehalalan produk pangan, minuman, kosmetik, kimiawi, dan barang gunaan.', en: 'Halal audit for food, beverages, cosmetics, chemicals, and consumer goods.' },
-  menu_self_declare_title: { id: 'Sertifikasi Self Declare', en: 'Self Declare Certification' },
-  menu_self_declare_desc: { id: 'Pendampingan Program SEHATI gratis untuk pelaku Usaha Mikro dan Kecil (UMK).', en: 'Free SEHATI program assistance for Micro and Small Enterprises (MSEs).' },
+  menu_facility_title: { id: 'Pemeriksaan Fasilitas & RPH', en: 'Facility & Slaughterhouse Audit' },
+  menu_facility_desc: { id: 'Pemeriksaan lapangan fasilitas manufaktur, bahan baku, dan rumah potong hewan.', en: 'On-site facility, raw materials, and slaughterhouse halal inspection.' },
   menu_lab_title: { id: 'Pengujian Laboratorium', en: 'Laboratory Testing' },
   menu_lab_desc: { id: 'Uji qPCR DNA babi, cemaran alkohol GC-FID, dan profil asam lemak gelatin.', en: 'Porcine DNA qPCR, GC-FID alcohol residual, and gelatin fatty acid profile tests.' },
   menu_training_title: { id: 'Pelatihan Auditor & Penyelia', en: 'Auditor & Supervisor Training' },
@@ -70,9 +70,9 @@ export const translations: Translations = {
   metric_certs_label: { id: 'SERTIFIKAT HALAL TERBIT', en: 'HALAL CERTIFICATES ISSUED' },
   metric_certs_desc: { id: 'Diterbitkan resmi bagi pelaku usaha mikro, kecil, hingga korporasi multinasional.', en: 'Officially issued for micro, small enterprises up to multinational corporations.' },
 
-  metric_auditors_label: { id: 'AUDITOR & PENDAMPING', en: 'AUDITORS & SUPERVISORS' },
+  metric_auditors_label: { id: 'TIM AUDITOR AHLI', en: 'LEAD AUDITOR TEAM' },
   metric_auditors_change: { id: 'Tersertifikasi', en: 'Certified' },
-  metric_auditors_desc: { id: 'Auditor halal, penyelia, dan pendamping PPH berlisensi BPJPH & MUI di seluruh Indonesia.', en: 'Certified halal auditors, supervisors, and PPH assistants licensed across Indonesia.' },
+  metric_auditors_desc: { id: 'Lead auditor halal dan penyelia halal berlisensi resmi BPJPH & MUI di seluruh Indonesia.', en: 'Certified lead halal auditors and supervisors licensed by BPJPH & MUI across Indonesia.' },
 
   metric_lab_label: { id: 'STANDAR LABORATORIUM', en: 'LABORATORY STANDARD' },
   metric_lab_change: { id: 'Akreditasi KAN', en: 'KAN Accredited' },
@@ -93,7 +93,7 @@ export const translations: Translations = {
   },
   chatbot_wa_button: { id: 'Chat Tim via WhatsApp', en: 'Chat Support via WhatsApp' },
   chatbot_chip_fee: { id: '💰 Biaya Sertifikasi Halal', en: '💰 Halal Certification Fee' },
-  chatbot_chip_selfdeclare: { id: '📋 Syarat Self Declare Gratis', en: '📋 Free Self-Declare Terms' },
+  chatbot_chip_regular: { id: '📋 Syarat Audit Reguler', en: '📋 Regular Audit Requirements' },
   chatbot_chip_lab: { id: '🔬 Uji Lab DNA Babi ISO 17025', en: '🔬 Porcine DNA Lab Test' },
   chatbot_chip_sihalal: { id: '📜 Alur Pendaftaran SIHALAL', en: '📜 SIHALAL Registration Flow' },
 
@@ -137,8 +137,8 @@ export const translations: Translations = {
 
   // Footer
   footer_desc: {
-    id: 'Pusat Halal (Halal Center) UIN Sunan Gunung Djati Bandung melalui visi "Halalsphere University" mengintegrasikan riset multidisiplin, pemeriksaan halal reguler (LPH), pendampingan UMK (LP3H), laboratorium terpadu, dan pelatihan kompetensi SDM halal.',
-    en: 'Halal Center UIN Sunan Gunung Djati Bandung through the "Halalsphere University" vision integrates multidisciplinary research, regular halal audits (LPH), MSE mentoring (LP3H), integrated laboratories, and professional halal training.'
+    id: 'Pusat Halal (Halal Center) UIN Sunan Gunung Djati Bandung melalui visi "Halalsphere University" mengintegrasikan riset multidisiplin, pemeriksaan halal reguler (LPH), laboratorium terpadu, dan pelatihan kompetensi SDM halal.',
+    en: 'Halal Center UIN Sunan Gunung Djati Bandung through the "Halalsphere University" vision integrates multidisciplinary research, regular halal audits (LPH), integrated laboratories, and professional halal training.'
   },
   footer_cta_calc: { id: 'Hitung Estimasi Tarif LPH', en: 'Calculate LPH Fee' },
   footer_col_explore: { id: 'Jelajahi', en: 'Explore' },

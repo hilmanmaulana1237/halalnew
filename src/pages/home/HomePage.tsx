@@ -75,13 +75,13 @@ export const getDirectors = (isEn: boolean): Director[] => [
       ? [
         'Rector of UIN Sunan Gunung Djati Bandung (2023 - Present)',
         'Main Pioneer & Institutional Architect of the "Halalsphere University" Paradigm',
-        'Advisory Board Member of LPH and LP3H Halal Center UIN Sunan Gunung Djati',
+        'Advisory Board Member of LPH Halal Center UIN Sunan Gunung Djati',
         'Vice Rector for Academic Affairs, UIN Sunan Gunung Djati Bandung (2019 - 2023)',
       ]
       : [
         'Rektor UIN Sunan Gunung Djati Bandung (2023 - Sekarang)',
         'Inisiator & Pengarah Utama Paradigma "Halalsphere University"',
-        'Dewan Pembina LPH dan LP3H Halal Center UIN Sunan Gunung Djati',
+        'Dewan Pembina LPH Halal Center UIN Sunan Gunung Djati',
         'Wakil Rektor Bidang Akademik UIN Sunan Gunung Djati Bandung (2019 - 2023)',
       ],
   },
@@ -93,8 +93,8 @@ export const getDirectors = (isEn: boolean): Director[] => [
       : 'Kepala Halal Center UIN SGD',
     image: '/assets/images/uin_sgd/director_tri.webp',
     quote: isEn
-      ? "LPH and LP3H Halal Center UIN SGD are committed to delivering swift, transparent, and accountable inspection grounded in Sharia compliance and ISO/IEC 17025 laboratory precision."
-      : "LPH dan LP3H Halal Center UIN SGD berkomitmen memberikan pelayanan prima, cepat, akuntabel, dan berbasis integritas syar'i serta pengujian laboratorium yang presisi demi melindungi hak konsumen muslim.",
+      ? "LPH Halal Center UIN SGD is committed to delivering swift, transparent, and accountable inspection grounded in Sharia compliance and ISO/IEC 17025 laboratory precision."
+      : "LPH Halal Center UIN SGD berkomitmen memberikan pelayanan prima, cepat, akuntabel, dan berbasis integritas syar'i serta pengujian laboratorium yang presisi demi melindungi hak konsumen muslim.",
     education: isEn
       ? [
         'Doctor (Ph.D) in Biological Sciences & Applied Life Sciences',
@@ -112,13 +112,13 @@ export const getDirectors = (isEn: boolean): Director[] => [
       ? [
         'Head of Halal Center, UIN Sunan Gunung Djati Bandung',
         'Operational & Technical Lead of LPH UIN Sunan Gunung Djati Bandung',
-        'National Coordinator of Halal Process Mentoring Body (LP3H) UIN SGD',
+        'Lead Halal Auditor & Assessor Licensed by BPJPH & MUI',
         'Senior Lecturer & Researcher in Halal Molecular Bio-Testing',
       ]
       : [
         'Kepala Pusat Kajian Halal (Halal Center) UIN SGD Bandung',
         'Pimpinan Teknis Operasional LPH UIN Sunan Gunung Djati Bandung',
-        'Koordinator Nasional Lembaga Pendamping PPH (LP3H) UIN SGD',
+        'Lead Auditor & Asesor Halal Berlisensi Resmi BPJPH & MUI',
         'Dosen & Peneliti Laboratorium Pengujian Autentikasi Kehalalan Hayati',
       ],
   },
@@ -128,17 +128,6 @@ export const DIRECTORS: Director[] = getDirectors(false);
 
 export const getUinServices = (isEn: boolean) => [
   {
-    title: isEn ? 'Self-Declare Halal Certification' : 'Sertifikasi Halal Self Declare',
-    description: isEn
-      ? 'Free, accredited halal product process mentoring tailored for micro and small enterprises (MSEs).'
-      : 'Fasilitasi pendampingan proses produk halal secara gratis dan terakreditasi khusus untuk pelaku usaha mikro & kecil (UMK).',
-    url: 'https://halal.uinsgd.ac.id/sertifikasi-halal-self-declare/',
-    icon: <Users className="w-6 h-6 text-[#6b1282]" />,
-    badge: isEn ? 'MSE Program' : 'Program UMK',
-    accentColor: 'purple' as const,
-    colSpan: 'md:col-span-1',
-  },
-  {
     title: isEn ? 'Regular Halal Certification' : 'Sertifikasi Halal Reguler',
     description: isEn
       ? 'Comprehensive scientific inspection and audit for medium and large industries by certified BPJPH & MUI auditors.'
@@ -147,7 +136,7 @@ export const getUinServices = (isEn: boolean) => [
     icon: <ShieldCheck className="w-6 h-6 text-[#6b1282]" />,
     badge: isEn ? 'Accredited LPH' : 'LPH Terakreditasi',
     accentColor: 'purple' as const,
-    colSpan: 'md:col-span-2',
+    colSpan: 'md:col-span-1',
   },
   {
     title: isEn ? 'Certification & Regulatory Advisory' : 'Konsultasi Sertifikasi & Regulasi',
@@ -168,17 +157,6 @@ export const getUinServices = (isEn: boolean) => [
     url: 'https://journal.uinsgd.ac.id/index.php/ijhar',
     icon: <BookOpen className="w-6 h-6 text-[#6b1282]" />,
     badge: isEn ? 'SINTA Research' : 'Riset SINTA',
-    accentColor: 'purple' as const,
-    colSpan: 'md:col-span-1',
-  },
-  {
-    title: isEn ? 'Halal Mentoring Body (LP3H)' : 'Lembaga Pendamping PPH (LP3H)',
-    description: isEn
-      ? 'Training and coordinating thousands of verified PPH assistants safeguarding product integrity across West Java.'
-      : 'Mencetak dan mengoordinasikan ribuan pendamping PPH terverifikasi untuk mengawal kehalalan produk di seluruh pelosok Jawa Barat.',
-    url: 'https://halal.uinsgd.ac.id/lembaga-pendamping-proses-produk-halal-lp3h',
-    icon: <Award className="w-6 h-6 text-[#6b1282]" />,
-    badge: isEn ? 'Thousands of Cadres' : 'Ribuan Kader',
     accentColor: 'purple' as const,
     colSpan: 'md:col-span-1',
   },
@@ -260,10 +238,10 @@ export const HomePage: React.FC = () => {
     },
     {
       id: 'priangan',
-      title: isEn ? 'Eastern Priangan Partnership Hub' : 'Sentra Halal UMK Priangan Timur',
+      title: isEn ? 'Eastern Priangan Regional Hub' : 'Sentra Layanan Halal Priangan Timur',
       badge: isEn ? 'Tasikmalaya & Garut' : 'Tasikmalaya & Garut',
       shortName: 'Priangan Timur',
-      address: 'Pusat Kemitraan & Pendampingan Halal UMK Wilayah Priangan Timur (Tasikmalaya, Garut, Ciamis), Jawa Barat',
+      address: 'Pusat Koordinasi Layanan & Audit Halal Wilayah Priangan Timur (Tasikmalaya, Garut, Ciamis), Jawa Barat',
       lat: -7.3274,
       lng: 108.2207,
       query: '-7.3274,108.2207+(Sentra+Halal+UIN+SGD+Priangan+Timur)',
@@ -271,10 +249,10 @@ export const HomePage: React.FC = () => {
     },
     {
       id: 'cirebon',
-      title: isEn ? 'Ciayumajakuning Partnership Hub' : 'Sentra Halal UMK Ciayumajakuning',
+      title: isEn ? 'Ciayumajakuning Regional Hub' : 'Sentra Layanan Halal Ciayumajakuning',
       badge: isEn ? 'Cirebon Region' : 'Wilayah Cirebon',
       shortName: 'Ciayumajakuning',
-      address: 'Pusat Kemitraan & Pendampingan Halal UMK Wilayah Ciayumajakuning (Cirebon, Indramayu, Majalengka, Kuningan), Jawa Barat',
+      address: 'Pusat Koordinasi Layanan & Audit Halal Wilayah Ciayumajakuning (Cirebon, Indramayu, Majalengka, Kuningan), Jawa Barat',
       lat: -6.7320,
       lng: 108.5523,
       query: '-6.7320,108.5523+(Sentra+Halal+UIN+SGD+Ciayumajakuning)',
@@ -383,8 +361,8 @@ export const HomePage: React.FC = () => {
 
               <p className="text-base sm:text-lg text-neutral-600 leading-relaxed font-normal">
                 {isEn
-                  ? 'Halal Center UIN Sunan Gunung Djati Bandung is committed to becoming a leading institution in developing national and global halal ecosystems. As a certified Halal Inspection Agency (LPH) and Halal Process Mentoring Body (LP3H) accredited by BPJPH Ministry of Religious Affairs, we uphold strict audit standards, precision scientific laboratory testing, and premium mentoring for all business enterprises.'
-                  : 'Pusat Halal (Halal Center) UIN Sunan Gunung Djati Bandung berkomitmen untuk menjadi lembaga terdepan dalam pengembangan ekosistem halal nasional dan global. Sebagai Lembaga Pemeriksa Halal (LPH) dan Lembaga Pendamping Proses Produk Halal (LP3H) terakreditasi BPJPH Kementerian Agama RI, kami senantiasa menjaga standar mutu pemeriksaan, pengujian laboratorium saintifik presisi, dan pendampingan prima bagi seluruh pelaku usaha.'}
+                  ? 'Halal Center UIN Sunan Gunung Djati Bandung is committed to becoming a leading institution in developing national and global halal ecosystems. As a certified Halal Inspection Agency (LPH) accredited by BPJPH Ministry of Religious Affairs, we uphold strict audit standards, precision scientific laboratory testing, and premium services for all business enterprises.'
+                  : 'Pusat Halal (Halal Center) UIN Sunan Gunung Djati Bandung berkomitmen untuk menjadi lembaga terdepan dalam pengembangan ekosistem halal nasional dan global. Sebagai Lembaga Pemeriksa Halal (LPH) terakreditasi BPJPH Kementerian Agama RI, kami senantiasa menjaga standar mutu pemeriksaan, pengujian laboratorium saintifik presisi, dan pelayanan prima bagi seluruh pelaku usaha.'}
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
@@ -457,7 +435,7 @@ export const HomePage: React.FC = () => {
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Card 1 - LPH & LP3H */}
+            {/* Card 1 - LPH Reguler */}
             <motion.div
               whileHover={{ y: -6 }}
               transition={{ duration: 0.25 }}
@@ -472,18 +450,18 @@ export const HomePage: React.FC = () => {
                   />
                   <div className="absolute top-4 left-4">
                     <span className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-[#6b1282] text-white shadow-md">
-                      LPH &amp; LP3H
+                      LPH Terakreditasi
                     </span>
                   </div>
                 </div>
                 <div className="p-7 pb-2">
                   <h3 className="text-xl sm:text-2xl font-bold text-[#1a0726]">
-                    {isEn ? 'Product Halal Inspection (LPH & LP3H)' : 'Pemeriksaan Kehalalan Produk (LPH & LP3H)'}
+                    {isEn ? 'Product Halal Inspection (Regular Scheme)' : 'Pemeriksaan Kehalalan Produk (Jalur Reguler)'}
                   </h3>
                   <p className="text-neutral-600 text-sm leading-relaxed mt-3">
                     {isEn
-                      ? 'Core services of LPH UIN SGD encompassing thorough evaluations of production processes, raw materials, and Halal Assurance Systems (SJPH) for both regular industrial audits and MSE Self-Declare programs.'
-                      : 'Layanan utama LPH UIN SGD mencakup pemeriksaan menyeluruh terhadap proses produksi, bahan baku, dan Sistem Jaminan Produk Halal (SJPH) baik untuk jalur reguler industri maupun pendampingan Self Declare UMK melalui LP3H.'}
+                      ? 'Core services of LPH UIN SGD encompassing thorough evaluations of production processes, raw materials, on-site facility audits, and Halal Assurance Systems (SJPH) for corporate and industrial enterprises.'
+                      : 'Layanan utama LPH UIN SGD mencakup pemeriksaan menyeluruh terhadap proses produksi, validasi bahan baku, audit fasilitas manufaktur, dan Sistem Jaminan Produk Halal (SJPH) bagi pelaku usaha industri.'}
                   </p>
                 </div>
               </div>
@@ -544,16 +522,16 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 5. 8 SERVICES THEME GRID (Classy Light Mesh Micro-Dots) */}
+      {/* 5. 6 SERVICES THEME GRID (Classy Light Mesh Micro-Dots) */}
       <section className="py-24 bg-[#faf7fd] bg-[radial-gradient(#e9d5ff_1px,transparent_1px)] [background-size:24px_24px] border-y border-purple-100/70" id="layanan-terpadu">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
-            badge={isEn ? "INTEGRATED HALAL SERVICES" : "LAYANAN HALAL TERPADU"}
+            badge={isEn ? "FLAGSHIP HALAL SERVICES" : "LAYANAN HALAL UNGGULAN"}
             badgeColor="purple"
-            title={isEn ? "8 Flagship Services of Halal Center UIN SGD" : "8 Layanan Unggulan Halal Center UIN SGD"}
+            title={isEn ? "6 Flagship Services of Halal Center UIN SGD" : "6 Layanan Unggulan Halal Center UIN SGD"}
             subtitle={isEn
-              ? "A comprehensive ecosystem spanning free MSE certification to advanced molecular bio-testing."
-              : "Ekosistem komprehensif mulai dari sertifikasi gratis UMK hingga pengujian molekuler hayati tingkat lanjut."}
+              ? "Comprehensive ecosystem from regular industrial halal audit to precision molecular bio-testing."
+              : "Ekosistem komprehensif mulai dari audit halal reguler industri hingga pengujian molekuler hayati tingkat lanjut."}
           />
 
           <BentoGrid className="max-w-7xl">
@@ -878,10 +856,10 @@ export const HomePage: React.FC = () => {
                         <Tabs.Indicator className="bg-[#6b1282] rounded-3xl shadow-xs" />
                       </Tabs.Tab>
                       <Tabs.Tab
-                        id="umk"
+                        id="pelatihan"
                         className="data-[selected=true]:text-white font-semibold transition-colors"
                       >
-                        {isEn ? 'MSE Zone & SEHATI' : 'Ruang UMK & SEHATI'}
+                        {isEn ? 'Training & Competence' : 'Pelatihan & Kompetensi'}
                         <Tabs.Indicator className="bg-[#6b1282] rounded-3xl shadow-xs" />
                       </Tabs.Tab>
                       <Tabs.Tab
@@ -977,35 +955,35 @@ export const HomePage: React.FC = () => {
                     {[
                       {
                         img: '/assets/images/uin_sgd/uin_14.webp',
-                        cat: 'LP3H UIN SGD',
+                        cat: 'LPH UIN SGD',
                         title: isEn
-                          ? 'UIN SGD Bandung Conducts PPH Assistant National Training'
-                          : 'UIN SGD Bandung Gelar Pelatihan Pendamping PPH dan Rakornas',
+                          ? 'UIN SGD Bandung Strengthens Halal Audit Standards and National Coordination'
+                          : 'UIN SGD Bandung Perkuat Standar Audit Halal dan Rakornas LPH',
                         desc: isEn
-                          ? 'LP3H Halal Center UIN SGD consistently certifies thousands of competent PPH assistants across Indonesia.'
-                          : 'LP3H Halal Center UIN SGD konsisten mencetak ribuan pendamping PPH berkompeten untuk mengakselerasi sertifikasi halal UMK se-Indonesia.',
+                          ? 'LPH Halal Center UIN SGD consistently enhances auditor competencies to accelerate national industrial certification.'
+                          : 'LPH Halal Center UIN SGD konsisten meningkatkan mutu dan kompetensi auditor halal untuk akselerasi sertifikasi industri nasional.',
                         link: '/artikel/1',
                       },
                       {
                         img: '/assets/images/uin_sgd/uin_15.webp',
-                        cat: 'PROGRAM SEHATI',
+                        cat: 'AKREDITASI LPH',
                         title: isEn
-                          ? 'Facilitating 1,000+ Free Halal Certificates for West Java MSEs'
-                          : 'Fasilitasi Lebih dari 1.000 Sertifikat Halal Gratis UMK Jawa Barat',
+                          ? 'LPH UIN Sunan Gunung Djati Achieves BPJPH Prime Accreditation'
+                          : 'LPH UIN Sunan Gunung Djati Raih Peringkat Akreditasi Utama BPJPH',
                         desc: isEn
-                          ? 'Collaborative program between Halal Center UIN SGD and BPJPH Ministry of Religious Affairs assisting micro businesses.'
-                          : 'Program kolaborasi Halal Center UIN SGD bersama BPJPH Kemenag RI dalam mendampingi pelaku usaha mikro kecil meraih sertifikat halal resmi.',
+                          ? 'Official BPJPH accreditation recognizing high professional integrity in auditing food, pharmaceuticals, and consumer goods.'
+                          : 'Pencapaian akreditasi resmi BPJPH Kemenag RI dalam penyelenggaraan audit kehalalan produk pangan, obat, dan barang gunaan secara profesional.',
                         link: '/artikel/2',
                       },
                       {
                         img: '/assets/images/uin_sgd/uin_16.webp',
-                        cat: isEn ? 'LEGALITY GUIDE' : 'PANDUAN LEGALITAS',
+                        cat: isEn ? 'LEGALITY GUIDE' : 'PANDUAN REGULER',
                         title: isEn
-                          ? 'Complete Guide to OSS NIB Registration & Self-Declare Criteria'
-                          : 'Panduan Lengkap Pengajuan NIB OSS & Syarat Self Declare',
+                          ? 'Complete Guide to Regular SIHALAL Registration & SJPH Manual'
+                          : 'Panduan Lengkap Pengajuan Sertifikasi Halal Reguler via SiHalal',
                         desc: isEn
-                          ? 'Step-by-step guidance on risk-based NIB issuance and SiHalal raw material input assisted by LP3H UIN SGD.'
-                          : 'Langkah mudah pembuatan NIB berbasis risiko dan pengisian data bahan baku di portal SiHalal dengan pendampingan LP3H UIN SGD.',
+                          ? 'Step-by-step guidance on risk-based NIB issuance and SiHalal raw material input selecting LPH-018-ID UIN SGD.'
+                          : 'Langkah mudah pembuatan NIB berbasis risiko dan pengisian data bahan baku di portal SiHalal dengan memilih LPH UIN SGD.',
                         link: '/artikel/3',
                       },
                     ].map((article, i) => (
@@ -1104,39 +1082,39 @@ export const HomePage: React.FC = () => {
                   </div>
                 )}
 
-                {/* Tab 4: Ruang UMK */}
-                {activeTab === 'umk' && (
+                {/* Tab 4: Pelatihan & Kompetensi */}
+                {activeTab === 'pelatihan' && (
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {[
                       {
                         img: '/assets/images/uin_sgd/uin_16.webp',
-                        cat: isEn ? 'MSE CLINIC' : 'KLINIK UMK',
+                        cat: isEn ? 'SUPERVISOR TRAINING' : 'PELATIHAN PENYELIA',
                         title: isEn
-                          ? 'Free Consultation Clinic for OSS NIB & SiHalal Setup'
-                          : 'Klinik Konsultasi Gratis Pembuatan NIB & Akun SiHalal',
+                          ? 'Halal Supervisor Certification Based on National SKKNI'
+                          : 'Pelatihan & Sertifikasi Penyelia Halal Berbasis SKKNI',
                         desc: isEn
-                          ? 'In-person consultation service at Campus 1 UIN Sunan Gunung Djati Bandung assisting MSEs with halal document completeness.'
-                          : 'Layanan konsultasi tatap muka langsung di Kampus 1 UIN Sunan Gunung Djati Bandung membantu UMK melengkapi dokumen halal.',
+                          ? 'Official competence training preparing internal enterprise halal management officers.'
+                          : 'Bimbingan teknis resmi mencetak penyelia halal internal yang kompeten mengawal SJPH di perusahaan.',
                       },
                       {
                         img: '/assets/images/uin_sgd/uin_14.webp',
-                        cat: isEn ? 'SEHATI FACILITATION' : 'FASILITASI SEHATI',
+                        cat: isEn ? 'LEAD AUDITOR' : 'AUDITOR HALAL',
                         title: isEn
-                          ? 'Free Halal Mentoring (SEHATI) for Micro Enterprises'
-                          : 'Pendampingan Halal Gratis (SEHATI) untuk Pelaku Usaha Mikro',
+                          ? 'National Halal Lead Auditor Professional Program'
+                          : 'Program Bimbingan Teknis Auditor Halal Nasional',
                         desc: isEn
-                          ? 'Government free certification quotas verified on-site by certified PPH Assistants from UIN Sunan Gunung Djati.'
-                          : 'Fasilitasi kuota sertifikasi gratis dari pemerintah melalui verifikasi lapangan oleh Pendamping PPH UIN Sunan Gunung Djati.',
+                          ? 'Intensive certification licensed by BPJPH and BNSP for professional industrial auditors.'
+                          : 'Pelatihan intensif berlisensi BPJPH dan BNSP untuk mencetak auditor halal profesional berintegritas tinggi.',
                       },
                       {
                         img: '/assets/images/uin_sgd/uin_15.webp',
-                        cat: isEn ? 'MSE JULEHA' : 'JULEHA UMK',
+                        cat: isEn ? 'JULEHA ACADEMY' : 'AKADEMI JULEHA',
                         title: isEn
-                          ? 'Halal Slaughterer Competency Training for MSE Communities'
-                          : 'Program Pelatihan Juru Sembelih Halal bagi Komunitas UMK',
+                          ? 'Halal Slaughterer Competency Certification (JULEHA)'
+                          : 'Sertifikasi Kompetensi Juru Sembelih Halal (JULEHA)',
                         desc: isEn
-                          ? 'Elevating poultry and small ruminant slaughtering competence to ensure end-to-end halal meat supply chain compliance.'
-                          : 'Peningkatan kompetensi juru sembelih unggas dan ruminansia kecil guna memastikan rantai pasok daging halal dari hulu ke hilir.',
+                          ? 'Elevating ruminant and poultry slaughtering competence to ensure end-to-end halal meat supply chain compliance.'
+                          : 'Peningkatan kompetensi juru sembelih unggas dan ruminansia guna memastikan rantai pasok daging halal dari hulu ke hilir.',
                       },
                     ].map((article, i) => (
                       <motion.div

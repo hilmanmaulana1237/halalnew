@@ -9,12 +9,12 @@ import type { NewsItem } from '@/types';
 const INITIAL_NEWS: NewsItem[] = [
   {
     id: 1,
-    title: 'Akselerasi Sertifikasi Halal: UIN SGD Latih 100+ Pendamping PPH Jawa Barat',
+    title: 'Akselerasi Audit Sertifikasi Halal: LPH UIN SGD Perluas Jangkauan Industri Jawa Barat',
     slug: 'akselerasi-sertifikasi-halal-uin-sgd',
     excerpt:
-      'LP3H Halal Center UIN Sunan Gunung Djati terus menggenjot sertifikasi gratis SEHATI bagi ribuan pelaku usaha mikro di Jawa Barat.',
+      'LPH Halal Center UIN Sunan Gunung Djati terus memperkuat kapasitas audit kehalalan produk dan penerapan Sistem Jaminan Produk Halal (SJPH).',
     content:
-      'Pusat Halal UIN Sunan Gunung Djati Bandung menggelar pelatihan akbar Pendamping Proses Produk Halal (P3H) guna memperluas jangkauan sertifikasi halal bagi UMKM di Jawa Barat...',
+      'LPH Halal Center UIN Sunan Gunung Djati Bandung menggelar bimbingan teknis akbar persiapan audit halal reguler dan verifikasi bahan kritis bagi pelaku usaha di Jawa Barat...',
     category: 'KEGIATAN',
     status: 'PUBLISHED',
     author: 'Humas Halal Center',

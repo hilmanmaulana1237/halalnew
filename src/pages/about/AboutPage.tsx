@@ -44,9 +44,9 @@ export const AboutPage: React.FC = () => {
           spotlight: '#6b1282',
         },
         {
-          title: 'MSE Inclusivity',
-          desc: 'Mentoring thousands of micro and small business actors through the Free Halal Certification (SEHATI) program across West Java.',
-          icon: <Users className="w-6 h-6 text-[#6b1282]" />,
+          title: 'Professional Competence',
+          desc: 'Equipping lead auditors, halal supervisors, and slaughterers (Juleha) with certified national competencies to ensure audit excellence.',
+          icon: <GraduationCap className="w-6 h-6 text-[#6b1282]" />,
           accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
           spotlight: '#6b1282',
         },
@@ -74,9 +74,9 @@ export const AboutPage: React.FC = () => {
           spotlight: '#6b1282',
         },
         {
-          title: 'Inklusivitas UMK',
-          desc: 'Mendampingi ribuan pelaku usaha mikro dan kecil melalui program Sertifikasi Halal Gratis (SEHATI) di seluruh Jawa Barat.',
-          icon: <Users className="w-6 h-6 text-[#6b1282]" />,
+          title: 'Kompetensi Profesional',
+          desc: 'Membekali lead auditor, penyelia halal, dan juru sembelih (Juleha) dengan sertifikasi kompetensi nasional guna menjaga mutu audit.',
+          icon: <GraduationCap className="w-6 h-6 text-[#6b1282]" />,
           accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
           spotlight: '#6b1282',
         },
@@ -111,8 +111,8 @@ export const AboutPage: React.FC = () => {
           </h1>
           <p className="mt-4 text-base sm:text-lg text-neutral-200 max-w-3xl mx-auto leading-relaxed font-normal">
             {isEn
-              ? 'Advancing an integrated halal ecosystem based on the "Halalsphere University" paradigm through scientific research, regular audits, MSE mentoring, and precision laboratories.'
-              : 'Menegakkan ekosistem halal terpadu berbasis paradigma "Halalsphere University" melalui riset saintifik, pemeriksaan reguler, pendampingan UMK, dan laboratorium presisi tinggi.'}
+              ? 'Advancing an integrated halal ecosystem based on the "Halalsphere University" paradigm through scientific research, regular audits, professional competency training, and precision laboratories.'
+              : 'Menegakkan ekosistem halal terpadu berbasis paradigma "Halalsphere University" melalui riset saintifik, pemeriksaan reguler, pelatihan kompetensi, dan laboratorium presisi tinggi.'}
           </p>
         </div>
       </section>

@@ -28,17 +28,17 @@ export const NewsDetailPage: React.FC = () => {
         setNews({
           id: 1,
           title:
-            'Akselerasi Sertifikasi Halal: UIN Sunan Gunung Djati Latih 100+ Pendamping PPH Jawa Barat',
+            'Akselerasi Audit Sertifikasi Halal: LPH UIN Sunan Gunung Djati Perluas Jangkauan Industri Jawa Barat',
           slug: slug || 'akselerasi-sertifikasi-halal-uin-sgd',
           excerpt:
-            'LP3H Halal Center UIN Sunan Gunung Djati terus menggenjot sertifikasi gratis SEHATI bagi ribuan pelaku usaha mikro di Jawa Barat.',
-          content: `Pusat Kajian Halal (Halal Center) UIN Sunan Gunung Djati Bandung terus memperkuat komitmennya sebagai motor penggerak ekosistem halal nasional melalui konsep "Halalsphere University". 
+            'LPH Halal Center UIN Sunan Gunung Djati terus memperkuat kapasitas audit kehalalan produk dan penerapan Sistem Jaminan Produk Halal (SJPH).',
+          content: `Lembaga Pemeriksa Halal (LPH) UIN Sunan Gunung Djati Bandung terus memperkuat komitmennya sebagai motor penggerak ekosistem halal nasional melalui konsep "Halalsphere University". 
 
-Dalam kegiatan pelatihan intensif yang diselenggarakan di Kampus 1 Cibiru, sebanyak lebih dari 100 peserta dari berbagai kabupaten dan kota di Jawa Barat dibekali pemahaman mendalam tentang standar Sistem Jaminan Produk Halal (SJPH), verifikasi dokumen bahan baku, serta integritas pendampingan usaha mikro.
+Dalam kegiatan bimbingan teknis intensif yang diselenggarakan di Kampus 1 Cibiru, tim auditor halal dan pelaku usaha dibekali pemahaman mendalam tentang standar Sistem Jaminan Produk Halal (SJPH), verifikasi dokumen bahan baku, serta validasi saintifik pengujian laboratorium.
 
 Rektor UIN SGD Bandung, Prof. Dr. H. Rosihon Anwar, M.Ag., dalam sambutannya menegaskan bahwa keberadaan Halal Center dan Lembaga Pemeriksa Halal (LPH) UIN SGD adalah bukti nyata hilirisasi riset akademik dan pengabdian masyarakat untuk memberikan rasa aman serta perlindungan konsumen muslim di seluruh penjuru Indonesia.
 
-Kepala Halal Center UIN SGD, Dr. Tri Cahyanto, M.Si., menambahkan bahwa pelatihan ini ditargetkan mampu mempercepat terbitnya ribuan sertifikat halal baru bagi produk olahan makanan, minuman, dan kuliner khas daerah Jawa Barat.`,
+Kepala Halal Center UIN SGD, Dr. Tri Cahyanto, M.Si., menambahkan bahwa kegiatan ini ditargetkan mampu mempercepat kepatuhan sertifikasi halal reguler bagi produk olahan makanan, minuman, dan farmasi di Jawa Barat.`,
           category: 'KEGIATAN',
           status: 'PUBLISHED',
           author: 'Humas Halal Center',

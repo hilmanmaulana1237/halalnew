@@ -91,8 +91,8 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/tentang" className="text-neutral-300 hover:text-white transition-colors">
-                  {isEn ? 'Halal Process Assistant Agency (LP3H)' : 'Lembaga Pendamping PPH (LP3H)'}
+                <Link to="/layanan/kalkulator" className="text-neutral-300 hover:text-white transition-colors">
+                  {isEn ? 'Regular Halal Certification' : 'Sertifikasi Halal Reguler'}
                 </Link>
               </li>
               <li>

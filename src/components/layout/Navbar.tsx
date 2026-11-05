@@ -20,7 +20,8 @@ import {
   FlaskConical,
   GraduationCap,
   Award,
-  MapPin
+  MapPin,
+  Building2
 } from 'lucide-react';
 import {
   MegaMenuItem,
@@ -215,13 +216,13 @@ export const Navbar: React.FC = () => {
                           onClick={() => setActiveDropdown(null)}
                         />
                         <MenuCardItem
-                          icon={<Users className="w-4 h-4" />}
-                          title="Self Declare (SEHATI UMK)"
+                          icon={<Building2 className="w-4 h-4" />}
+                          title={language === 'en' ? 'Facility & Slaughterhouse Audit' : 'Pemeriksaan Fasilitas & RPH'}
                           description={language === 'en'
-                            ? 'Free halal certification facilitation for micro and small enterprises by BPJPH.'
-                            : 'Pendampingan sertifikasi halal gratis pelaku usaha mikro dan kecil binaan BPJPH.'}
-                          href="https://halal.uinsgd.ac.id/sertifikasi-halal-self-declare/"
-                          badge={language === 'en' ? 'Free Rp 0' : 'Gratis Rp 0'}
+                            ? 'On-site facility inspection, raw material validation, and slaughterhouse audit by licensed lead auditors.'
+                            : 'Pemeriksaan lapangan fasilitas manufaktur, validasi bahan baku, dan audit RPH oleh auditor resmi.'}
+                          to="/layanan/kalkulator"
+                          badge={language === 'en' ? 'Audit LPH' : 'Audit LPH'}
                           badgeVariant="sky"
                           onClick={() => setActiveDropdown(null)}
                         />
@@ -490,7 +491,7 @@ export const Navbar: React.FC = () => {
                     { label: language === 'en' ? 'Tariff Calculator' : 'Kalkulator Tarif Halal', to: '/layanan/kalkulator', icon: Calculator },
                     { label: language === 'en' ? 'Whistleblowing & Complaints' : 'Pengaduan & Whistleblowing', to: '/layanan/pengaduan', icon: ShieldAlert },
                     { label: language === 'en' ? 'Satisfaction Survey (IKM)' : 'Survei Kepuasan (IKM)', to: '/layanan/kepuasan', icon: Smile },
-                    { label: 'Self Declare (SEHATI UMK)', href: 'https://halal.uinsgd.ac.id/sertifikasi-halal-self-declare/', icon: Users },
+                    { label: language === 'en' ? 'Facility & RPH Audit' : 'Pemeriksaan Fasilitas & RPH', to: '/layanan/kalkulator', icon: Building2 },
                     { label: language === 'en' ? 'Integrated Bio Lab' : 'Laboratorium Hayati Terpadu', href: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/', icon: FlaskConical },
                   ]}
                   onNavigate={() => setMobileOpen(false)}

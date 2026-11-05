@@ -94,12 +94,12 @@ export const SatisfactionPage: React.FC = () => {
   const services = isEn
     ? [
         'Regular Halal Inspection',
-        'Self-Declare Mentoring',
+        'Facility & Slaughterhouse Audit',
         'Laboratory Testing & Training',
       ]
     : [
         'Sertifikasi Halal Reguler',
-        'Pendampingan Self Declare',
+        'Audit Fasilitas & RPH',
         'Uji Laboratorium & Pelatihan',
       ];
 

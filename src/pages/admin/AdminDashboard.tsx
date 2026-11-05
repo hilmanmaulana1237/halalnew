@@ -155,7 +155,7 @@ export const AdminDashboard: React.FC = () => {
               <div className="divide-y divide-neutral-100 text-xs">
                 {[
                   {
-                    title: 'Akselerasi Sertifikasi Halal: UIN SGD Latih 100+ Pendamping PPH Jawa Barat',
+                    title: 'Akselerasi Audit Sertifikasi Halal: LPH UIN SGD Perluas Jangkauan Industri Jawa Barat',
                     cat: 'KEGIATAN',
                     date: '4 November 2026',
                   },
@@ -243,7 +243,7 @@ export const AdminDashboard: React.FC = () => {
               <div className="space-y-3 text-xs">
                 {[
                   {
-                    q: 'Apa perbedaan skema sertifikasi Halal Self Declare dan Jalur Reguler?',
+                    q: 'Bagaimana tahapan pemeriksaan sertifikasi halal jalur reguler di LPH UIN SGD?',
                     cat: 'PROSEDUR',
                   },
                   {

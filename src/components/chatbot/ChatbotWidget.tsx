@@ -48,8 +48,8 @@ interface SmartAnswer {
 const KNOWLEDGE_BASE: SmartAnswer[] = [
   {
     keywords: ['biaya', 'tarif', 'harga', 'bayar', 'kalkulator', 'cost', 'fee', 'price', 'rate'],
-    answerId: `💰 **Rincian Tarif & Biaya Sertifikasi Halal:**\n\n1. **Program Self Declare (SEHATI UMK):** **GRATIS (Rp 0)** bagi Usaha Mikro & Kecil yang memenuhi kriteria BPJPH.\n2. **Jalur Reguler LPH UIN SGD:** Mengacu pada Keputusan Menteri Agama (KMA) No. 784/2021 & Keputusan Kepala BPJPH. Biaya tergantung skala usaha (Mikro, Kecil, Menengah, Besar) dan kompleksitas fasilitas produksi.\n\nAnda dapat mensimulasikan estimasi biaya secara akurat di fitur Kalkulator Tarif kami.`,
-    answerEn: `💰 **Halal Certification Fees & Rates:**\n\n1. **Self-Declare (SEHATI MSEs):** **FREE (Rp 0)** for eligible Micro and Small Enterprises funded by the government.\n2. **Regular Audit by LPH UIN SGD:** Governed by Ministry of Religious Affairs (KMA) No. 784/2021. Cost depends on company scale (Micro, Small, Medium, Large) and production complexity.\n\nYou can simulate your estimated cost using our Halal Fee Calculator.`,
+    answerId: `💰 **Rincian Tarif & Biaya Sertifikasi Halal LPH UIN SGD:**\n\nBiaya sertifikasi halal jalur reguler mengacu pada Keputusan Menteri Agama (KMA) No. 784/2021 & Keputusan Kepala BPJPH. Biaya tergantung pada:\n• Skala usaha (Mikro, Kecil, Menengah, Besar)\n• Kompleksitas proses dan fasilitas produksi\n• Kebutuhan uji laboratorium saintifik terakreditasi ISO 17025\n\nAnda dapat mensimulasikan estimasi biaya secara akurat di fitur Kalkulator Tarif kami.`,
+    answerEn: `💰 **Halal Certification Fees & Rates (LPH UIN SGD):**\n\nRegular halal audit fees are governed by Ministry of Religious Affairs (KMA) No. 784/2021 and BPJPH regulations. Costs depend on:\n• Company scale (Micro, Small, Medium, Large)\n• Facility and production process complexity\n• ISO/IEC 17025 accredited laboratory testing needs\n\nYou can simulate your estimated cost using our Halal Fee Calculator.`,
     suggestedAction: {
       labelId: 'Buka Kalkulator Tarif Halal',
       labelEn: 'Open Halal Fee Calculator',
@@ -57,13 +57,13 @@ const KNOWLEDGE_BASE: SmartAnswer[] = [
     }
   },
   {
-    keywords: ['self declare', 'sehati', 'gratis', 'umk', 'mikro', 'free', 'self-declare'],
-    answerId: `📋 **Persyaratan Sertifikasi Halal Gratis (Self Declare SEHATI):**\n\n• Memiliki Nomor Induk Berusaha (NIB) berbasis risiko.\n• Omzet penjualan maksimal Rp 500 juta/tahun.\n• Produk tidak berisiko tinggi (tidak mengandung unsur sembelihan hewani tanpa sertifikat halal resmi).\n• Bahan baku sudah memiliki sertifikat halal atau termasuk daftar bahan aman (Positive List BPJPH).\n• Memiliki proses produksi yang sederhana dan higienis.\n• Bersedia didampingi oleh Pendamping PPH Halal Center UIN Sunan Gunung Djati Bandung.`,
-    answerEn: `📋 **Free Halal Certification Requirements (SEHATI Self-Declare):**\n\n• Valid Business Identification Number (NIB).\n• Annual sales turnover below IDR 500 million/year.\n• Low-risk products (no non-certified slaughter or critical animal extracts).\n• Raw ingredients already halal-certified or listed on the official BPJPH positive list.\n• Simple and hygienic production line.\n• Mentored by certified Halal Center UIN SGD PPH supervisors.`,
+    keywords: ['syarat', 'reguler', 'dokumen', 'audit', 'pemeriksaan', 'regular', 'requirements', 'persyaratan'],
+    answerId: `📋 **Persyaratan Audit Sertifikasi Halal Reguler LPH UIN SGD:**\n\n• Memiliki Nomor Induk Berusaha (NIB) berbasis risiko.\n• Manual Sistem Jaminan Produk Halal (SJPH).\n• Daftar produk dan bahan baku beserta sertifikat halal asal bahannya.\n• Matriks produk dan alur proses produksi yang higienis.\n• Surat Keputusan penetapan Penyelia Halal bersertifikat kompetensi.\n• Siap menjalani audit lapangan fasilitas produksi oleh Auditor LPH UIN SGD.`,
+    answerEn: `📋 **Regular Halal Audit Requirements (LPH UIN SGD):**\n\n• Valid Risk-Based Business Identification Number (NIB).\n• Halal Assurance System (SJPH) Manual.\n• List of ingredients and raw materials with supporting halal certificates.\n• Product matrix and hygienic production flow diagrams.\n• Appointment decree of certified internal Halal Supervisor.\n• Preparedness for on-site facility audit by LPH UIN SGD Lead Auditors.`,
     suggestedAction: {
-      labelId: 'Konsultasi PPH via WhatsApp',
-      labelEn: 'Consult Supervisor via WhatsApp',
-      href: 'https://wa.me/6282118201232?text=Halo%20Admin%2C%20saya%20ingin%20konsultasi%20syarat%20Self%20Declare%20SEHATI'
+      labelId: 'Konsultasi Syarat via WhatsApp',
+      labelEn: 'Consult Requirements via WhatsApp',
+      href: 'https://wa.me/6282118201232?text=Halo%20Admin%2C%20saya%20ingin%20konsultasi%20syarat%20Audit%20Reguler%20LPH'
     }
   },
   {
@@ -78,8 +78,8 @@ const KNOWLEDGE_BASE: SmartAnswer[] = [
   },
   {
     keywords: ['alur', 'daftar', 'sihalal', 'ptsp', 'cara', 'prosedur', 'register', 'flow', 'steps', 'syarat'],
-    answerId: `📜 **6 Langkah Mudah Mendaftar Sertifikasi Halal di LPH UIN SGD:**\n\n1. Kunjungi portal resmi BPJPH di **ptsp.halal.go.id**.\n2. Login dengan akun NIB OSS Anda.\n3. Pilih jalur pengajuan: **Reguler** atau **Self Declare**.\n4. Pada pilihan Lembaga Pemeriksa Halal, pilih **LPH UIN Sunan Gunung Djati Bandung** (Kode: **LPH-018-ID**).\n5. Unggah dokumen bahan, manual SJPH, dan alur proses produksi.\n6. Tim auditor kami akan melakukan verifikasi dokumen dan audit lapangan/laboratorium.`,
-    answerEn: `📜 **6 Easy Steps to Register Halal Certification with LPH UIN SGD:**\n\n1. Visit the official BPJPH portal at **ptsp.halal.go.id**.\n2. Log in using your OSS NIB credentials.\n3. Select your application pathway: **Regular** or **Self Declare**.\n4. Under Halal Inspection Agency (LPH), select **LPH UIN Sunan Gunung Djati Bandung** (Code: **LPH-018-ID**).\n5. Upload your ingredient list, Halal Assurance manual (SJPH), and production matrix.\n6. Our certified auditors will conduct document verification and field/lab audit.`,
+    answerId: `📜 **6 Langkah Mudah Mendaftar Sertifikasi Halal di LPH UIN SGD:**\n\n1. Kunjungi portal resmi BPJPH di **ptsp.halal.go.id**.\n2. Login dengan akun NIB OSS Anda.\n3. Pilih jalur pengajuan: **Reguler**.\n4. Pada pilihan Lembaga Pemeriksa Halal, pilih **LPH UIN Sunan Gunung Djati Bandung** (Kode: **LPH-018-ID**).\n5. Unggah dokumen bahan, manual SJPH, dan alur proses produksi.\n6. Tim auditor kami akan melakukan verifikasi dokumen dan audit lapangan/laboratorium.`,
+    answerEn: `📜 **6 Easy Steps to Register Halal Certification with LPH UIN SGD:**\n\n1. Visit the official BPJPH portal at **ptsp.halal.go.id**.\n2. Log in using your OSS NIB credentials.\n3. Select your application pathway: **Regular**.\n4. Under Halal Inspection Agency (LPH), select **LPH UIN Sunan Gunung Djati Bandung** (Code: **LPH-018-ID**).\n5. Upload your ingredient list, Halal Assurance manual (SJPH), and production matrix.\n6. Our certified auditors will conduct document verification and field/lab audit.`,
     suggestedAction: {
       labelId: 'Kunjungi Portal SIHALAL BPJPH',
       labelEn: 'Visit BPJPH SIHALAL Portal',
@@ -327,7 +327,7 @@ export const ChatbotWidget: React.FC = () => {
 
   const quickPromptChips = [
     { label: t('chatbot_chip_fee'), query: language === 'en' ? 'Halal certification fee and cost' : 'Berapa biaya tarif sertifikasi halal?' },
-    { label: t('chatbot_chip_selfdeclare'), query: language === 'en' ? 'Free Self Declare requirements' : 'Syarat sertifikasi halal gratis Self Declare SEHATI' },
+    { label: t('chatbot_chip_regular'), query: language === 'en' ? 'Regular halal audit requirements and documents' : 'Syarat dan dokumen audit halal reguler LPH' },
     { label: t('chatbot_chip_lab'), query: language === 'en' ? 'Porcine DNA and alcohol lab test ISO 17025' : 'Uji laboratorium DNA babi dan alkohol ISO 17025' },
     { label: t('chatbot_chip_sihalal'), query: language === 'en' ? 'How to register on SIHALAL BPJPH' : 'Alur dan cara daftar di SIHALAL BPJPH' },
   ];

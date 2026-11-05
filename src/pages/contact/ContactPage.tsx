@@ -33,8 +33,8 @@ export const ContactPage: React.FC = () => {
           </h1>
           <p className="mt-3 text-neutral-200 max-w-2xl mx-auto text-sm sm:text-base font-normal">
             {isEn
-              ? 'We are ready to assist your halal regular certification, Self-Declare program, laboratory testing, and industrial training partnerships.'
-              : 'Kami siap mendampingi kebutuhan sertifikasi halal reguler, program Self Declare, uji laboratorium, hingga kerja sama pelatihan industri.'}
+              ? 'We are ready to assist your regular halal certification, laboratory testing, auditor training, and industrial partnerships.'
+              : 'Kami siap mendampingi kebutuhan sertifikasi halal reguler, pengujian laboratorium saintifik, hingga pelatihan kompetensi industri.'}
           </p>
         </div>
       </section>
@@ -222,7 +222,7 @@ export const ContactPage: React.FC = () => {
                     </label>
                     <TextArea
                       rows={5}
-                      placeholder={isEn ? 'Provide full details of your halal certification, lab testing, or assistance needs...' : 'Tuliskan secara lengkap kebutuhan sertifikasi halal, pengujian lab, atau pendampingan Anda...'}
+                      placeholder={isEn ? 'Provide full details of your halal certification, lab testing, or audit inquiry...' : 'Tuliskan secara lengkap kebutuhan sertifikasi halal, pengujian lab, atau layanan audit Anda...'}
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
                       required

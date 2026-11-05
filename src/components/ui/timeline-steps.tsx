@@ -90,7 +90,7 @@ const STEPS_ID: StepItem[] = [
       "Penerbitan Sertifikat Halal resmi dengan nomor ID terdaftar",
       "Produk siap dipasarkan dengan logo Halal Indonesia resmi",
     ],
-    ctaText: "Konsultasi Pendampingan",
+    ctaText: "Konsultasi Sertifikasi",
     ctaLink: "/kontak",
   },
 ];

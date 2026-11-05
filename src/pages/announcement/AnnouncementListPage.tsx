@@ -38,13 +38,13 @@ const INITIAL_ANNOUNCEMENTS: AnnouncementItem[] = [
   {
     id: 3,
     title:
-      'Pembukaan Pendaftaran Sertifikasi Halal Gratis (SEHATI) Jalur Self Declare Tahap IV',
-    slug: 'pembukaan-sehati-tahap-iv',
+      'Jadwal Bimbingan Teknis Sistem Jaminan Produk Halal (SJPH) Bagi Pelaku Usaha Industri',
+    slug: 'bimtek-sjph-industri',
     content:
-      'Halal Center UIN Sunan Gunung Djati Bandung membuka kuota pendampingan sertifikasi halal gratis bagi 500 pelaku Usaha Mikro dan Kecil (UMK) di Jawa Barat...',
+      'LPH UIN Sunan Gunung Djati Bandung membuka pendaftaran bimbingan teknis penyusunan dokumen SJPH dan persiapan audit halal reguler bagi industri manufaktur...',
     isPinned: false,
-    fileUrl: '/assets/docs/panduan_sehati_iv.pdf',
-    fileName: 'Panduan_Pendaftaran_SEHATI_IV.pdf',
+    fileUrl: '/assets/docs/panduan_audit_lph.pdf',
+    fileName: 'Panduan_Audit_Halal_LPH.pdf',
     fileSize: '2.1 MB',
     createdAt: '2026-10-25T11:00:00Z',
     updatedAt: '2026-10-25T11:00:00Z',

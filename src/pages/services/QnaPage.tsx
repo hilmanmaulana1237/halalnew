@@ -8,9 +8,9 @@ import { useLanguage } from '@/context/LanguageContext';
 const INITIAL_FAQS_ID: KnowledgeBaseItem[] = [
   {
     id: 1,
-    question: 'Apa perbedaan skema sertifikasi Halal Self Declare dan Jalur Reguler?',
+    question: 'Bagaimana tahapan pemeriksaan sertifikasi halal jalur reguler di LPH UIN SGD Bandung?',
     answer:
-      'Self Declare adalah sertifikasi halal gratis (program SEHATI BPJPH) khusus untuk Usaha Mikro dan Kecil (UMK) dengan produk berisiko rendah yang proses produksinya dipastikan telah memenuhi standar kehalalan dan didampingi oleh LP3H. Sedangkan Jalur Reguler ditujukan bagi usaha kecil, menengah, dan besar atau produk yang menggunakan bahan berisiko dan harus melalui audit fisik serta uji laboratorium oleh Lembaga Pemeriksa Halal (LPH).',
+      'Pemeriksaan halal jalur reguler di LPH UIN SGD mencakup 5 tahapan utama: (1) Pendaftaran permohonan di SIHALAL BPJPH dan memilih LPH UIN Sunan Gunung Djati (Kode: LPH-018-ID), (2) Verifikasi kelengkapan berkas dan dokumen Sistem Jaminan Produk Halal (SJPH), (3) Penjadwalan dan pelaksanaan audit lapangan fasilitas produksi oleh Tim Auditor Halal terlisensi, (4) Pengujian laboratorium terakreditasi ISO 17025 apabila terdapat bahan kritis yang membutuhkan uji qPCR DNA/alkohol, dan (5) Sidang Fatwa Halal MUI hingga penerbitan Sertifikat Halal resmi oleh BPJPH.',
     tags: 'PROSEDUR',
     isActive: true,
     createdAt: new Date().toISOString(),
@@ -61,9 +61,9 @@ const INITIAL_FAQS_ID: KnowledgeBaseItem[] = [
 const INITIAL_FAQS_EN: KnowledgeBaseItem[] = [
   {
     id: 1,
-    question: 'What is the difference between Halal Self-Declare and the Regular Certification scheme?',
+    question: 'What are the key stages of regular halal inspection at LPH UIN SGD Bandung?',
     answer:
-      'Self-Declare is a free halal certification (BPJPH SEHATI program) tailored for Micro and Small Enterprises (MSEs) with low-risk products guided by LP3H. The Regular Scheme applies to small, medium, and large corporations or products containing critical ingredients that require on-site audit and laboratory validation by a licensed Halal Inspection Agency (LPH).',
+      'Regular halal inspection at LPH UIN SGD encompasses 5 essential stages: (1) Submission on BPJPH SIHALAL selecting LPH UIN Sunan Gunung Djati (Code: LPH-018-ID), (2) Verification of Halal Assurance System (SJPH) and ingredient documents, (3) On-site production facility audit by licensed lead auditors, (4) Accredited ISO 17025 laboratory analysis when critical raw materials require qPCR/GC-FID testing, and (5) MUI Fatwa Council decree leading to official BPJPH Halal Certificate issuance.',
     tags: 'PROCEDURE',
     isActive: true,
     createdAt: new Date().toISOString(),
@@ -196,8 +196,8 @@ export const QnaPage: React.FC = () => {
           </h1>
           <p className="mt-3 text-neutral-200 max-w-2xl mx-auto text-sm sm:text-base font-normal">
             {isEn
-              ? 'Find comprehensive answers regarding regular halal certification, Self-Declare, laboratory testing, and official BPJPH regulations.'
-              : 'Temukan jawaban komprehensif seputar proses sertifikasi halal reguler, Self Declare, uji laboratorium, dan regulasi resmi BPJPH.'}
+              ? 'Find comprehensive answers regarding regular halal inspection, laboratory testing, tariff estimation, and official BPJPH regulations.'
+              : 'Temukan jawaban komprehensif seputar proses sertifikasi halal reguler LPH, uji laboratorium hayati, estimasi tarif, dan regulasi resmi BPJPH.'}
           </p>
         </div>
       </section>
