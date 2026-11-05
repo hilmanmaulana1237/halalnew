@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Input, Button } from '@heroui/react';
-import { Search, Sparkles, ShieldCheck, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Search, Sparkles, ArrowRight, Tag, Building2, FileCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { MovingBorderButton } from '@/components/ui/moving-border';
@@ -20,14 +20,12 @@ export const HeroVideoBanner: React.FC = () => {
       'Sharia Integrity',
       'Precision Science',
       'Global Standards',
-      'Trusted Partnership',
     ]
     : [
       'Halal Assurance',
       'Integritas Syar’i',
       'Riset Sains Presisi',
       'Akreditasi Mutlak',
-      'Kemitraan Terpercaya',
     ];
 
   const handleSearch = (e: React.FormEvent) => {
@@ -78,7 +76,7 @@ export const HeroVideoBanner: React.FC = () => {
       <div className="absolute top-1/3 -right-24 w-96 h-96 rounded-full bg-gradient-to-l from-[#6b1282]/35 via-[#4a0d5c]/20 to-transparent blur-3xl pointer-events-none animate-pulse" />
 
       {/* Hero Content */}
-      <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-10 text-center flex flex-col items-center justify-center flex-1">
+      <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 sm:pt-32 pb-8 sm:pb-10 text-center flex flex-col items-center justify-center flex-1">
         {/* Animated Eyebrow Badge (Modern Classic) */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -156,7 +154,7 @@ export const HeroVideoBanner: React.FC = () => {
         className="relative z-20 max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-10 sm:pb-12"
       >
         <div className="relative rounded-3xl p-[1.5px] bg-gradient-to-r from-[#4a0d5c] via-[#86198f] to-[#4a0d5c] shadow-2xl shadow-purple-950/30">
-          <div className="bg-white/95 backdrop-blur-2xl rounded-[22px] p-6 sm:p-8">
+          <div className="bg-white rounded-[22px] p-5 sm:p-7 shadow-sm">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-purple-100 text-[#6b1282] flex items-center justify-center shadow-xs">
@@ -180,7 +178,7 @@ export const HeroVideoBanner: React.FC = () => {
                     key={tag}
                     type="button"
                     onClick={() => quickSearch(tag)}
-                    className="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-purple-50 hover:bg-purple-100 text-[#6b1282] border border-purple-100/70 transition-colors"
+                    className="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-purple-50 hover:bg-purple-100 text-[#6b1282] border border-purple-100/70 transition-colors cursor-pointer"
                   >
                     #{tag}
                   </button>
@@ -188,55 +186,65 @@ export const HeroVideoBanner: React.FC = () => {
               </div>
             </div>
 
-            <form onSubmit={handleSearch} className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-              <div>
-                <label className="block text-xs font-semibold text-neutral-700 uppercase mb-1.5">
-                  {t('search_label_product')}
+            <form onSubmit={handleSearch} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+              <div className="flex flex-col gap-1.5">
+                <label className="text-[11px] sm:text-xs font-bold text-neutral-700 uppercase tracking-wide flex items-center gap-1.5">
+                  <Tag className="w-3.5 h-3.5 text-[#6b1282]" />
+                  <span>{t('search_label_product')}</span>
                 </label>
                 <Input
+                  fullWidth
+                  variant="primary"
                   placeholder={t('search_placeholder_product')}
                   value={productName}
                   onChange={(e) => setProductName(e.target.value)}
-                  variant="secondary"
-                  className="bg-neutral-50 rounded-xl"
+                  className="h-11 rounded-xl bg-white border border-neutral-300 hover:border-purple-300 focus:border-[#6b1282] text-xs sm:text-sm text-neutral-900 shadow-2xs transition-all"
                 />
               </div>
 
-              <div>
-                <label className="block text-xs font-semibold text-neutral-700 uppercase mb-1.5">
-                  {t('search_label_producer')}
+              <div className="flex flex-col gap-1.5">
+                <label className="text-[11px] sm:text-xs font-bold text-neutral-700 uppercase tracking-wide flex items-center gap-1.5">
+                  <Building2 className="w-3.5 h-3.5 text-[#6b1282]" />
+                  <span>{t('search_label_producer')}</span>
                 </label>
                 <Input
+                  fullWidth
+                  variant="primary"
                   placeholder={t('search_placeholder_producer')}
                   value={producerName}
                   onChange={(e) => setProducerName(e.target.value)}
-                  variant="secondary"
-                  className="bg-neutral-50 rounded-xl"
+                  className="h-11 rounded-xl bg-white border border-neutral-300 hover:border-purple-300 focus:border-[#6b1282] text-xs sm:text-sm text-neutral-900 shadow-2xs transition-all"
                 />
               </div>
 
-              <div>
-                <label className="block text-xs font-semibold text-neutral-700 uppercase mb-1.5">
-                  {t('search_label_cert')}
+              <div className="flex flex-col gap-1.5">
+                <label className="text-[11px] sm:text-xs font-bold text-neutral-700 uppercase tracking-wide flex items-center gap-1.5">
+                  <FileCheck className="w-3.5 h-3.5 text-[#6b1282]" />
+                  <span>{t('search_label_cert')}</span>
                 </label>
                 <Input
+                  fullWidth
+                  variant="primary"
                   placeholder={t('search_placeholder_cert')}
                   value={certNo}
                   onChange={(e) => setCertNo(e.target.value)}
-                  variant="secondary"
-                  className="bg-neutral-50 rounded-xl"
+                  className="h-11 rounded-xl bg-white border border-neutral-300 hover:border-purple-300 focus:border-[#6b1282] text-xs sm:text-sm text-neutral-900 shadow-2xs transition-all"
                 />
               </div>
 
-              <div className="md:pt-5">
+              <div className="flex flex-col gap-1.5">
+                {/* Spacer label on desktop to ensure exact height & baseline alignment with other columns */}
+                <span className="hidden lg:block text-[11px] sm:text-xs font-bold text-transparent select-none">
+                  &nbsp;
+                </span>
                 <Button
                   type="submit"
                   variant="primary"
                   fullWidth
-                  className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold h-10 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 hover:scale-[1.01]"
+                  className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold h-11 rounded-xl shadow-md shadow-purple-950/20 transition-all flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99] text-xs sm:text-sm cursor-pointer"
                 >
                   <Search className="w-4 h-4 text-purple-200" />
-                  {t('search_button')}
+                  <span>{t('search_button')}</span>
                 </Button>
               </div>
             </form>
@@ -246,3 +254,5 @@ export const HeroVideoBanner: React.FC = () => {
     </section>
   );
 };
+
+export default HeroVideoBanner;
