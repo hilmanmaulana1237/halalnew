@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Button, Drawer, Dropdown, Label } from '@heroui/react';
+import { Button, Drawer, Label } from '@heroui/react';
 import { 
   Menu, 
   ChevronDown, 
@@ -12,12 +12,40 @@ import {
   Newspaper, 
   Bell, 
   Phone,
-  Sparkles 
+  Sparkles,
+  ShieldCheck,
+  Users,
+  FlaskConical,
+  GraduationCap,
+  Award
 } from 'lucide-react';
+import { 
+  MegaMenuItem, 
+  MenuCardItem, 
+  FeaturedPreviewCard, 
+  MenuFooter 
+} from '@/components/ui/navbar-mega-menu';
 
 export const Navbar: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const timeoutRef = useRef<any>(null);
   const location = useLocation();
+
+  const handleMouseEnter = (name: string) => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setActiveDropdown(name);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 180);
+  };
+
+  const toggleDropdown = (name: string) => {
+    setActiveDropdown((prev) => (prev === name ? null : name));
+  };
 
   const isActive = (path: string) => {
     if (path === '/' && location.pathname === '/') return true;
@@ -55,112 +83,227 @@ export const Navbar: React.FC = () => {
                 Beranda
               </Link>
 
-              {/* Dropdown: Tentang Kami */}
-              <Dropdown>
-                <Dropdown.Trigger>
-                  <Button
-                    variant="ghost"
-                    className="flex items-center gap-1 px-3 py-2 text-sm font-semibold text-neutral-700 hover:text-[#6b1282] rounded-xl"
-                  >
-                    Tentang Kami
-                    <ChevronDown className="w-4 h-4 text-neutral-500" />
-                  </Button>
-                </Dropdown.Trigger>
-                <Dropdown.Popover>
-                  <Dropdown.Menu className="w-56 p-1.5 rounded-2xl shadow-xl border border-purple-100 bg-white">
-                    <Dropdown.Item id="tentang-profil" textValue="Profil & Sejarah LPH">
-                      <Link to="/tentang" className="flex items-center gap-2.5 w-full py-1.5">
-                        <BookOpen className="w-4 h-4 text-[#6b1282]" />
-                        <Label className="cursor-pointer font-bold text-sm text-neutral-800">
-                          Profil &amp; Sejarah LPH
-                        </Label>
-                      </Link>
-                    </Dropdown.Item>
-                    <Dropdown.Item id="tentang-qna" textValue="FAQ & Halal QnA">
-                      <Link to="/layanan/qna" className="flex items-center gap-2.5 w-full py-1.5">
-                        <HelpCircle className="w-4 h-4 text-[#6b1282]" />
-                        <Label className="cursor-pointer font-bold text-sm text-neutral-800">
-                          FAQ &amp; Halal QnA
-                        </Label>
-                      </Link>
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown.Popover>
-              </Dropdown>
+              {/* Mega Menu 1: Tentang Kami */}
+              <MegaMenuItem
+                title="Tentang Kami"
+                isActive={activeDropdown === 'tentang'}
+                onMouseEnter={() => handleMouseEnter('tentang')}
+                onMouseLeave={handleMouseLeave}
+                onClick={() => toggleDropdown('tentang')}
+              >
+                <div className="w-[740px] max-w-[90vw]">
+                  <div className="grid grid-cols-12 gap-6">
+                    {/* Left Column (7 cols): Rich Categorized Cards */}
+                    <div className="col-span-7 space-y-1.5">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300/80 mb-2 block">
+                        Profil &amp; Kelembagaan
+                      </span>
+                      <MenuCardItem
+                        icon={<BookOpen className="w-5 h-5" />}
+                        title="Profil &amp; Sejarah LPH"
+                        description="Sejarah pendirian, landasan fatwa syar'i MUI, dan visi kelembagaan Halalsphere University."
+                        to="/tentang"
+                        onClick={() => setActiveDropdown(null)}
+                      />
+                      <MenuCardItem
+                        icon={<ShieldCheck className="w-5 h-5" />}
+                        title="Akreditasi &amp; Legalitas Resmi"
+                        description="Regulasi resmi BPJPH No. LPH-018-ID dan pengakuan Komite Akreditasi Nasional (KAN)."
+                        to="/tentang"
+                        badge="LPH-018-ID"
+                        onClick={() => setActiveDropdown(null)}
+                      />
+                      <MenuCardItem
+                        icon={<HelpCircle className="w-5 h-5" />}
+                        title="FAQ &amp; Halal QnA"
+                        description="Kumpulan jawaban resmi seputar persyaratan, alur audit, dan dokumen SIHALAL."
+                        to="/layanan/qna"
+                        onClick={() => setActiveDropdown(null)}
+                      />
+                    </div>
 
-              {/* Dropdown: Layanan LPH */}
-              <Dropdown>
-                <Dropdown.Trigger>
-                  <Button
-                    variant="ghost"
-                    className="flex items-center gap-1 px-3 py-2 text-sm font-semibold text-neutral-700 hover:text-[#6b1282] rounded-xl"
-                  >
-                    Layanan LPH
-                    <ChevronDown className="w-4 h-4 text-neutral-500" />
-                  </Button>
-                </Dropdown.Trigger>
-                <Dropdown.Popover>
-                  <Dropdown.Menu className="w-64 p-1.5 rounded-2xl shadow-xl border border-purple-100 bg-white">
-                    <Dropdown.Item id="layanan-kalkulator" textValue="Kalkulator Tarif">
-                      <Link to="/layanan/kalkulator" className="flex items-center gap-2.5 w-full py-1.5">
-                        <Calculator className="w-4 h-4 text-[#6b1282]" />
-                        <Label className="cursor-pointer font-bold text-sm text-neutral-800">
-                          Kalkulator Tarif Halal
-                        </Label>
-                      </Link>
-                    </Dropdown.Item>
-                    <Dropdown.Item id="layanan-pengaduan" textValue="Pengaduan & Whistleblowing">
-                      <Link to="/layanan/pengaduan" className="flex items-center gap-2.5 w-full py-1.5">
-                        <ShieldAlert className="w-4 h-4 text-[#6b1282]" />
-                        <Label className="cursor-pointer font-bold text-sm text-neutral-800">
-                          Pengaduan &amp; Whistleblowing
-                        </Label>
-                      </Link>
-                    </Dropdown.Item>
-                    <Dropdown.Item id="layanan-kepuasan" textValue="Survei Kepuasan Pelanggan">
-                      <Link to="/layanan/kepuasan" className="flex items-center gap-2.5 w-full py-1.5">
-                        <Smile className="w-4 h-4 text-[#6b1282]" />
-                        <Label className="cursor-pointer font-bold text-sm text-neutral-800">
-                          Survei Kepuasan Pelanggan
-                        </Label>
-                      </Link>
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown.Popover>
-              </Dropdown>
+                    {/* Right Column (5 cols): Featured Visual Preview Card with Photo */}
+                    <div className="col-span-5 flex flex-col">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300/80 mb-2 block">
+                        Sorotan Kelembagaan
+                      </span>
+                      <FeaturedPreviewCard
+                        image="/assets/images/certificate.png"
+                        title="Sertifikat Akreditasi LPH"
+                        badge="Resmi BPJPH"
+                        description="Lembaga Pemeriksa Halal rujukan nasional di bawah naungan UIN Sunan Gunung Djati Bandung berstandar ISO 17025."
+                        to="/tentang"
+                        actionText="Pelajari Profil Lembaga"
+                        onClick={() => setActiveDropdown(null)}
+                      />
+                    </div>
+                  </div>
 
-              {/* Dropdown: News & Update */}
-              <Dropdown>
-                <Dropdown.Trigger>
-                  <Button
-                    variant="ghost"
-                    className="flex items-center gap-1 px-3 py-2 text-sm font-semibold text-neutral-700 hover:text-[#6b1282] rounded-xl"
-                  >
-                    News &amp; Update
-                    <ChevronDown className="w-4 h-4 text-neutral-500" />
-                  </Button>
-                </Dropdown.Trigger>
-                <Dropdown.Popover>
-                  <Dropdown.Menu className="w-56 p-1.5 rounded-2xl shadow-xl border border-purple-100 bg-white">
-                    <Dropdown.Item id="news-berita" textValue="Berita & Kegiatan">
-                      <Link to="/berita" className="flex items-center gap-2.5 w-full py-1.5">
-                        <Newspaper className="w-4 h-4 text-[#6b1282]" />
-                        <Label className="cursor-pointer font-bold text-sm text-neutral-800">
-                          Berita &amp; Kegiatan
-                        </Label>
-                      </Link>
-                    </Dropdown.Item>
-                    <Dropdown.Item id="news-pengumuman" textValue="Pengumuman Resmi">
-                      <Link to="/pengumuman" className="flex items-center gap-2.5 w-full py-1.5">
-                        <Bell className="w-4 h-4 text-[#6b1282]" />
-                        <Label className="cursor-pointer font-bold text-sm text-neutral-800">
-                          Pengumuman Resmi
-                        </Label>
-                      </Link>
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown.Popover>
-              </Dropdown>
+                  {/* Bottom Footer Bar */}
+                  <MenuFooter
+                    label="Sentra Jaringan Layanan"
+                    links={[
+                      { label: "Kampus 1 Cibiru Bandung", to: "/kontak" },
+                      { label: "Lab Hayati Kampus 2", to: "/kontak" },
+                      { label: "Sentra Priangan Timur", to: "/kontak" },
+                      { label: "Sentra Ciayumajakuning", to: "/kontak" },
+                    ]}
+                    onClick={() => setActiveDropdown(null)}
+                  />
+                </div>
+              </MegaMenuItem>
+
+              {/* Mega Menu 2: Layanan LPH */}
+              <MegaMenuItem
+                title="Layanan LPH"
+                isActive={activeDropdown === 'layanan'}
+                onMouseEnter={() => handleMouseEnter('layanan')}
+                onMouseLeave={handleMouseLeave}
+                onClick={() => toggleDropdown('layanan')}
+              >
+                <div className="w-[840px] max-w-[92vw]">
+                  <div className="grid grid-cols-12 gap-6">
+                    {/* Left Column (7 cols): Categorized Service Links */}
+                    <div className="col-span-7">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300/80 mb-2 block">
+                        Layanan Pemeriksaan &amp; Sains Halal
+                      </span>
+                      <div className="grid grid-cols-2 gap-2.5">
+                        <div className="space-y-1.5">
+                          <MenuCardItem
+                            icon={<Calculator className="w-5 h-5" />}
+                            title="Kalkulator Tarif"
+                            description="Simulasi estimasi tarif audit halal reguler sesuai regulasi KMA 784."
+                            to="/layanan/kalkulator"
+                            badge="Populer"
+                            onClick={() => setActiveDropdown(null)}
+                          />
+                          <MenuCardItem
+                            icon={<Users className="w-5 h-5" />}
+                            title="Self Declare (SEHATI)"
+                            description="Pendampingan sertifikasi halal gratis pelaku usaha mikro & kecil."
+                            href="https://halal.uinsgd.ac.id/sertifikasi-halal-self-declare/"
+                            onClick={() => setActiveDropdown(null)}
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <MenuCardItem
+                            icon={<FlaskConical className="w-5 h-5" />}
+                            title="Laboratorium Terpadu"
+                            description="Uji qPCR DNA babi, cemaran etanol GC-FID, dan profil asam lemak."
+                            href="https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/"
+                            badge="ISO 17025"
+                            onClick={() => setActiveDropdown(null)}
+                          />
+                          <MenuCardItem
+                            icon={<ShieldAlert className="w-5 h-5" />}
+                            title="Whistleblowing"
+                            description="Saluran pengaduan masyarakat & pengawasan integritas bebas pungli."
+                            to="/layanan/pengaduan"
+                            onClick={() => setActiveDropdown(null)}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Right Column (5 cols): Featured Visual Preview Card with Photo */}
+                    <div className="col-span-5 flex flex-col">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300/80 mb-2 block">
+                        Layanan Unggulan
+                      </span>
+                      <FeaturedPreviewCard
+                        image="/assets/images/uji-laboratorium.jpg"
+                        title="Uji Laboratorium & Pelatihan"
+                        badge="Terakreditasi"
+                        description="Pengujian saintifik presisi tinggi dan standarisasi pelatihan kompetensi Juru Sembelih Halal (JULEHA)."
+                        to="/layanan/kalkulator"
+                        actionText="Hitung Simulasi Tarif"
+                        onClick={() => setActiveDropdown(null)}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Bottom Footer Bar */}
+                  <MenuFooter
+                    label="Kanal Publik & Bantuan"
+                    links={[
+                      { label: "Survei Kepuasan Pelanggan (IKM)", to: "/layanan/kepuasan" },
+                      { label: "Portal SIHALAL BPJPH", href: "https://ptsp.halal.go.id/" },
+                      { label: "WhatsApp Layanan Cepat", href: "https://wa.me/6282118201232" },
+                    ]}
+                    onClick={() => setActiveDropdown(null)}
+                  />
+                </div>
+              </MegaMenuItem>
+
+              {/* Mega Menu 3: News & Update */}
+              <MegaMenuItem
+                title="News & Update"
+                isActive={activeDropdown === 'news'}
+                onMouseEnter={() => handleMouseEnter('news')}
+                onMouseLeave={handleMouseLeave}
+                onClick={() => toggleDropdown('news')}
+              >
+                <div className="w-[740px] max-w-[90vw]">
+                  <div className="grid grid-cols-12 gap-6">
+                    {/* Left Column (7 cols): Categorized Items */}
+                    <div className="col-span-7 space-y-1.5">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300/80 mb-2 block">
+                        Publikasi &amp; Informasi
+                      </span>
+                      <MenuCardItem
+                        icon={<Newspaper className="w-5 h-5" />}
+                        title="Berita &amp; Kegiatan LPH"
+                        description="Liputan audit lapangan, seminar ilmiah, workshop, dan siaran pers resmi."
+                        to="/berita"
+                        badge="Terbaru"
+                        onClick={() => setActiveDropdown(null)}
+                      />
+                      <MenuCardItem
+                        icon={<Bell className="w-5 h-5" />}
+                        title="Pengumuman Resmi"
+                        description="Surat edaran BPJPH, jadwal sidang fatwa, dan informasi penting pelaku usaha."
+                        to="/pengumuman"
+                        onClick={() => setActiveDropdown(null)}
+                      />
+                      <MenuCardItem
+                        icon={<BookOpen className="w-5 h-5" />}
+                        title="Jurnal Riset Halal (IJHR)"
+                        description="Indonesian Journal of Halal Research terakreditasi SINTA nasional."
+                        href="https://journal.uinsgd.ac.id/index.php/ijhar"
+                        onClick={() => setActiveDropdown(null)}
+                      />
+                    </div>
+
+                    {/* Right Column (5 cols): Featured Visual Preview Card with Photo */}
+                    <div className="col-span-5 flex flex-col">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300/80 mb-2 block">
+                        Agenda Strategis
+                      </span>
+                      <FeaturedPreviewCard
+                        image="/assets/images/uin_sgd/uin_07.webp"
+                        title="Konferensi Halal Internasional"
+                        badge="Global Event"
+                        description="Penguatan ekosistem industri halal dunia melalui kolaborasi saintifik dan kepatuhan syariah terpadu."
+                        to="/berita"
+                        actionText="Baca Kabar Selengkapnya"
+                        onClick={() => setActiveDropdown(null)}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Bottom Footer Bar */}
+                  <MenuFooter
+                    label="Dokumen & Riset"
+                    links={[
+                      { label: "Unduh Pedoman SJPH 2024", to: "/berita" },
+                      { label: "Arsip Publikasi SINTA", href: "https://journal.uinsgd.ac.id/index.php/ijhar" },
+                      { label: "Galeri Foto Kegiatan", to: "/berita" },
+                    ]}
+                    onClick={() => setActiveDropdown(null)}
+                  />
+                </div>
+              </MegaMenuItem>
 
               <Link
                 to="/kontak"
