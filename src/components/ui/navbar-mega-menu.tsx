@@ -198,13 +198,13 @@ export const MenuCategoryGrid: React.FC<MenuCategoryGridProps> = ({
   return (
     <div className="flex flex-col justify-between h-full">
       <div>
-        <div className="text-xs font-semibold text-neutral-400 mb-4 tracking-wide">
+        <div className="text-[11px] font-bold uppercase tracking-wider text-neutral-400 mb-3.5">
           {title}
         </div>
-        <div className="grid grid-cols-3 gap-x-5 gap-y-3">
+        <div className="grid grid-cols-3 gap-x-5 gap-y-2.5">
           {items.map((item, idx) => {
             const itemContent = (
-              <span className="text-xs sm:text-[13px] font-medium text-neutral-300 hover:text-white transition-colors cursor-pointer py-0.5 truncate block">
+              <span className="text-xs sm:text-[13px] font-medium text-neutral-300 hover:text-white transition-colors cursor-pointer py-1 block whitespace-nowrap">
                 {item.label}
               </span>
             );

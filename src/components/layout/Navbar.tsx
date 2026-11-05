@@ -182,23 +182,23 @@ export const Navbar: React.FC = () => {
                       <MenuCategoryGrid
                         title={language === 'en' ? 'SERVICES BY CATEGORY' : 'SEMUA LAYANAN BERDASARKAN KATEGORI'}
                         items={[
-                          { label: language === 'en' ? 'Tariff Calculator' : 'Kalkulator Tarif Halal', to: '/layanan/kalkulator' },
-                          { label: 'Self Declare (SEHATI UMK)', href: 'https://halal.uinsgd.ac.id/sertifikasi-halal-self-declare/' },
-                          { label: language === 'en' ? 'Regular Certification' : 'Sertifikasi Halal Reguler', to: '/layanan/kalkulator' },
-                          { label: language === 'en' ? 'Production Facility Audit' : 'Audit Fasilitas Produksi', to: '/layanan/qna' },
-                          { label: language === 'en' ? 'Slaughterhouse Audit' : 'Pemeriksaan RPH & RPU', to: '/layanan/qna' },
-                          { label: language === 'en' ? 'Integrated Bio Lab' : 'Laboratorium Hayati ISO', href: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/' },
-                          { label: 'qPCR DNA Porcine (Babi)', href: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/' },
-                          { label: 'Uji GC-FID Etanol / Alkohol', href: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/' },
-                          { label: 'Analisis Spektro Gelatin', href: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/' },
-                          { label: language === 'en' ? 'Halal Slaughter Training' : 'Pelatihan JULEHA Bersertifikat', to: '/layanan/qna' },
-                          { label: language === 'en' ? 'Whistleblowing Report' : 'Pengaduan Whistleblowing', to: '/layanan/pengaduan' },
-                          { label: language === 'en' ? 'Satisfaction Survey (IKM)' : 'Survei Kepuasan (IKM)', to: '/layanan/kepuasan' },
-                          { label: language === 'en' ? 'Halal QnA Center' : 'Tanya Jawab (Halal QnA)', to: '/layanan/qna' },
-                          { label: 'Portal SIHALAL BPJPH', href: 'https://ptsp.halal.go.id/' },
-                          { label: language === 'en' ? 'SJPH Consultation' : 'Konsultasi Dokumen SJPH', to: '/kontak' },
+                          { label: language === 'en' ? 'Tariff Calculator' : 'Kalkulator Tarif', to: '/layanan/kalkulator' },
+                          { label: 'Self Declare', href: 'https://halal.uinsgd.ac.id/sertifikasi-halal-self-declare/' },
+                          { label: language === 'en' ? 'Regular Audit' : 'Audit Reguler', to: '/layanan/kalkulator' },
+                          { label: language === 'en' ? 'Facility Audit' : 'Audit Fasilitas', to: '/layanan/qna' },
+                          { label: language === 'en' ? 'Slaughterhouse' : 'Audit RPH & RPU', to: '/layanan/qna' },
+                          { label: language === 'en' ? 'Bio Laboratory' : 'Lab Hayati', href: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/' },
+                          { label: language === 'en' ? 'Porcine DNA Test' : 'Uji DNA Babi', href: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/' },
+                          { label: language === 'en' ? 'Ethanol Test' : 'Uji Etanol', href: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/' },
+                          { label: language === 'en' ? 'Gelatin Test' : 'Uji Gelatin', href: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/' },
+                          { label: language === 'en' ? 'Juleha Training' : 'Pelatihan Juleha', to: '/layanan/qna' },
+                          { label: language === 'en' ? 'Whistleblowing' : 'Pengaduan', to: '/layanan/pengaduan' },
+                          { label: language === 'en' ? 'Satisfaction Index' : 'Survei IKM', to: '/layanan/kepuasan' },
+                          { label: language === 'en' ? 'Halal QnA' : 'Halal QnA', to: '/layanan/qna' },
+                          { label: 'Portal SIHALAL', href: 'https://ptsp.halal.go.id/' },
+                          { label: language === 'en' ? 'SJPH Consultation' : 'Konsultasi SJPH', to: '/kontak' },
                         ]}
-                        actionText={language === 'en' ? 'Simulate Certification Fees in Tariff Calculator ->' : 'Hitung Simulasi Tarif di Kalkulator ->'}
+                        actionText={language === 'en' ? 'Explore All in Tariff Calculator ->' : 'Lihat Semua di Kalkulator Tarif ->'}
                         actionTo="/layanan/kalkulator"
                         onClick={() => setActiveDropdown(null)}
                       />
