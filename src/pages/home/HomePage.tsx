@@ -179,97 +179,105 @@ const PARTNER_ITEMS = [
   { name: 'Badan Penyelenggara Jaminan Produk Halal', image: '/assets/images/uin_sgd/uin_18.webp', alt: 'BPJPH Kemenag' },
 ];
 
-export const POJOK_REKTOR_ARTICLES = [
+export const KEPALA_HALAL_PILLARS = [
   {
-    id: 'pr-1',
-    title: 'Konferensi Imam Masjid Internasional',
-    category: 'Gagasan Rektor',
-    date: '28 Okt 2024',
-    image: '/assets/images/uin_sgd/uin_07.webp',
+    id: 'kh-1',
+    title: 'Audit Obyektif, Akuntabel & Bebas Pungli',
+    category: 'INTEGRITAS PEMERIKSAAN',
+    tag: 'Sistem SIHALAL Terpadu',
+    image: '/assets/images/uin_sgd/uin_19.webp',
     summary:
-      'Prof. Dr. H. Rosihon Anwar memaparkan pentingnya standarisasi halal terpadu dalam forum ulama dan imam internasional sebagai jembatan peradaban ekonomi syariah dunia.',
-    author: 'Prof. Dr. H. Rosihon Anwar, M.Ag.',
+      'Penegakan tata kelola pemeriksaan kehalalan produk yang transparan, profesional, dan independen sesuai syariat Islam serta regulasi BPJPH Kemenag RI.',
+    detail:
+      'Seluruh alur pemeriksaan dari verifikasi dokumen Sistem Jaminan Produk Halal (SJPH), audit lapangan fasilitas produksi, hingga sidang fatwa dikawal dengan standar integritas tanpa kompromi.',
   },
   {
-    id: 'pr-2',
-    title: 'Dari Guru Besar UIN Sunan Gunung Djati Bandung untuk Peradaban Dunia',
-    category: 'Akademik & Riset',
-    date: '15 Okt 2024',
-    image: '/assets/images/uin_sgd/uin_08.webp',
+    id: 'kh-2',
+    title: 'Uji Laboratorium Presisi ISO/IEC 17025',
+    category: 'VALIDASI SAINTIFIK',
+    tag: 'Laboratorium Hayati Terpadu',
+    image: '/assets/images/uin_sgd/uin_12.webp',
     summary:
-      'Komitmen transformasi riset sains hayati dan laboratorium terakreditasi internasional guna mendukung Indonesia sebagai pusat produsen halal terkemuka.',
-    author: 'Prof. Dr. H. Rosihon Anwar, M.Ag.',
+      'Pengujian molekuler mutakhir dengan Real-Time PCR (deteksi qPCR DNA babi), GC-FID (cemaran alkohol), dan analisis gelatin presisi tinggi.',
+    detail:
+      'Laboratorium Terpadu Kampus 2 UIN SGD beroperasi dengan instrumen analitik canggih dan metode tervalidasi internasional guna memastikan keabsahan ilmiah setiap produk yang diaudit.',
   },
   {
-    id: 'pr-3',
-    title: 'Meneladani Prof. KH. Anwar Musaddad',
-    category: 'Inspirasi & Nilai',
-    date: '02 Okt 2024',
-    image: '/assets/images/uin_sgd/uin_09.webp',
+    id: 'kh-3',
+    title: 'Pendampingan 10.000+ Pelaku UMK (SEHATI)',
+    category: 'PEMBERDAYAAN UMAT',
+    tag: 'Sertifikasi Halal Gratis',
+    image: '/assets/images/uin_sgd/uin_14.webp',
     summary:
-      'Refleksi keteladanan pendiri UIN SGD dalam merawat integritas syariah, keilmuan mendalam, dan pengabdian tulus bagi kemaslahatan masyarakat.',
-    author: 'Prof. Dr. H. Rosihon Anwar, M.Ag.',
+      'Mengoordinasikan ribuan Pendamping PPH binaan LP3H UIN SGD untuk mengawal legalitas kehalalan usaha mikro-kecil di seluruh pelosok daerah.',
+    detail:
+      'Fasilitasi program SEHATI (Sertifikasi Halal Gratis) BPJPH secara proaktif, mulai dari pembuatan NIB, verifikasi bahan baku halal, hingga terbit sertifikat halal resmi.',
   },
   {
-    id: 'pr-4',
-    title: 'Capaian Kinerja 2023-2025',
-    category: 'Kinerja Universitas',
-    date: '20 Sep 2024',
-    image: '/assets/images/uin_sgd/uin_10.webp',
+    id: 'kh-4',
+    title: 'Standarisasi Auditor & Penyelia Halal',
+    category: 'KAPASITAS PROFESIONAL',
+    tag: 'Sertifikasi BNSP & BPJPH',
+    image: '/assets/images/uin_sgd/uin_15.webp',
     summary:
-      'Laporan komprehensif akselerasi layanan Halalsphere University, penguatan laboratorium uji halal ISO 17025, dan fasilitasi ribuan sertifikasi UMK.',
-    author: 'Prof. Dr. H. Rosihon Anwar, M.Ag.',
+      'Pengembangan kompetensi berkelanjutan bagi Auditor Halal, Penyelia Halal, dan Juru Sembelih Halal (JULEHA) bersertifikasi resmi.',
+    detail:
+      'Menyelenggarakan pelatihan terakreditasi dan uji kompetensi bagi auditor serta juru sembelih RPH untuk menjamin rantai pasok halal hulu ke hilir yang kokoh.',
   },
 ];
 
-export const POJOK_KEPALA_ARTICLES = [
+export const PEMBINA_HALAL_PILLARS = [
   {
-    id: 'pk-1',
-    title: 'Akselerasi Sertifikasi Halal Gratis (SEHATI) bagi 10.000 Pelaku UMK',
-    category: 'Program Strategis',
-    date: '04 Nov 2024',
-    image: '/assets/images/uin_sgd/uin_11.webp',
+    id: 'pb-1',
+    title: 'Visi Strategis Halalsphere University',
+    category: 'ARAH KEBIJAKAN',
+    tag: 'Ekosistem Kampus Halal',
+    image: '/assets/images/uin_sgd/uin_20.webp',
     summary:
-      'Pusat Halal UIN SGD mengerahkan ratusan pendamping PPH terverifikasi untuk mengawal legalitas kehalalan produk usaha mikro di pelosok Jawa Barat.',
-    author: 'Dr. Tri Cahyanto, M.Si.',
+      'Mewujudkan UIN SGD sebagai episentrum unggulan riset sains halal, fatwa syariah, dan pengabdian masyarakat di tingkat nasional serta global.',
+    detail:
+      'Integrasi menyeluruh antara kurikulum keilmuan Islam, pusat kajian riset hayati, dan unit layanan bisnis halal dalam satu ekosistem Halalsphere yang berkelanjutan.',
   },
   {
-    id: 'pk-2',
-    title: 'Pengujian Saintifik DNA Babi qPCR Presisi Tinggi Berstandar ISO 17025',
-    category: 'Sains & Laboratorium',
-    date: '22 Okt 2024',
-    image: '/assets/images/uin_sgd/uin_12.webp',
+    id: 'pb-2',
+    title: 'Sinergi Kelembagaan Kemenag, BPJPH & MUI',
+    category: 'KOLABORASI STRATEGIS',
+    tag: 'Kemitraan Nasional',
+    image: '/assets/images/uin_sgd/uin_18.webp',
     summary:
-      'Metodologi uji laboratorium terpadu UIN SGD dalam mendeteksi cemaran bahan non-halal secara molekuler dengan limit deteksi sangat sensitif.',
-    author: 'Dr. Tri Cahyanto, M.Si.',
+      'Harmonisasi regulasi jaminan produk halal pemerintah dengan fatwa syar’i Majelis Ulama Indonesia demi kepastian hukum umat.',
+    detail:
+      'Membangun komunikasi aktif dan kemitraan strategis dengan kementerian, lembaga sertifikasi, dan asosiasi industri dalam menyukseskan implementasi Wajib Halal.',
   },
   {
-    id: 'pk-3',
-    title: 'Membangun Ekosistem Halalsphere: Sinergi Riset Hayati & Fatwa Syar’i',
-    category: 'Kajian Ilmiah',
-    date: '10 Okt 2024',
-    image: '/assets/images/uin_sgd/uin_13.webp',
+    id: 'pb-3',
+    title: 'Peningkatan Fasilitas Gedung Lab Kampus 2',
+    category: 'INFRASTRUKTUR RISET',
+    tag: 'Fasilitas Kelas Dunia',
+    image: '/assets/images/uin_sgd/uin_08.webp',
     summary:
-      'Harmonisasi kaidah syariah fatwa MUI dengan bukti saintifik laboratorium menjadi fondasi utama reputasi LPH UIN Sunan Gunung Djati Bandung.',
-    author: 'Dr. Tri Cahyanto, M.Si.',
+      'Modernisasi sarana Gedung Riset & Laboratorium Terpadu Kampus 2 Gedebage guna menopang pengujian saintifik skala nasional.',
+    detail:
+      'Dukungan penuh pimpinan universitas terhadap pengadaan instrumen mutakhir laboratorium dan akreditasi ISO/IEC 17025 oleh Komite Akreditasi Nasional (KAN).',
   },
   {
-    id: 'pk-4',
-    title: 'Standarisasi Integritas Auditor Halal & LP3H Hadapi Wajib Halal',
-    category: 'Pengawasan Mutu',
-    date: '18 Sep 2024',
-    image: '/assets/images/uin_sgd/uin_14.webp',
+    id: 'pb-4',
+    title: 'Pemberdayaan Ekonomi Syariah Nasional',
+    category: 'MASLAHAT UMAT',
+    tag: 'Dampak Sosial & Ekonomi',
+    image: '/assets/images/uin_sgd/uin_10.webp',
     summary:
-      'Pembekalan berkelanjutan bagi auditor halal mengenai audit sistem jaminan produk halal (SJPH) pada industri pengolahan pangan dan kosmetik.',
-    author: 'Dr. Tri Cahyanto, M.Si.',
+      'Mendorong daya saing produk lokal Jawa Barat di pasar ekspor halal global melalui pendampingan mutu dan sertifikasi kredibel.',
+    detail:
+      'Melalui Halal Center, universitas berkontribusi nyata dalam mendongkrak ekonomi kerakyatan dan memastikan hak perlindungan konsumen atas produk halal dan thayyib.',
   },
 ];
 
 export const HomePage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>('artikel');
-  const [activeLeaderTab, setActiveLeaderTab] = useState<'rektor' | 'kepala'>('rektor');
+  const [activeLeaderTab, setActiveLeaderTab] = useState<'kepala' | 'rektor'>('kepala');
   const [selectedDirector, setSelectedDirector] = useState<Director | null>(null);
-  const [selectedLeaderArticle, setSelectedLeaderArticle] = useState<any | null>(null);
+  const [selectedLeaderPillar, setSelectedLeaderPillar] = useState<any | null>(null);
 
   useEffect(() => {
     let mapInstance: L.Map | null = null;
@@ -385,9 +393,9 @@ export const HomePage: React.FC = () => {
     };
   }, []);
 
-  const currentLeader = activeLeaderTab === 'rektor' ? DIRECTORS[0] : DIRECTORS[1];
-  const currentLeaderArticles =
-    activeLeaderTab === 'rektor' ? POJOK_REKTOR_ARTICLES : POJOK_KEPALA_ARTICLES;
+  const currentLeader = activeLeaderTab === 'kepala' ? DIRECTORS[1] : DIRECTORS[0];
+  const currentLeaderPillars =
+    activeLeaderTab === 'kepala' ? KEPALA_HALAL_PILLARS : PEMBINA_HALAL_PILLARS;
 
   return (
     <div className="flex flex-col w-full overflow-hidden bg-white">
@@ -671,31 +679,32 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 6. LEADERSHIP SECTION ("POJOK REKTOR & PIMPINAN" - Target Design matching Reference Image) */}
+      {/* 6. LEADERSHIP SECTION (Target Reference Layout: Blueprint Grid + Cutout Portrait + 4 Institutional Pillars) */}
       <section className="py-20 lg:py-28 bg-[#f8f9fc] border-y border-neutral-200/70" id="pimpinan">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader
+            badge="PIMPINAN & DIREKSI"
+            badgeColor="purple"
+            title="Kepemimpinan Berintegritas Syar’i & Keunggulan Riset Halal"
+            subtitle="Komitmen pimpinan Halal Center UIN SGD dalam mengawal tata kelola audit profesional, akuntabilitas saintifik laboratorium, dan kemaslahatan industri halal bagi umat."
+          />
+
           {/* Blueprint / Engineering Grid Paper Card */}
-          <div className="relative rounded-3xl border border-neutral-200/90 bg-[#fafbfc] overflow-hidden shadow-2xl shadow-purple-950/5 p-6 sm:p-10 lg:p-12 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] bg-[size:22px_22px]">
+          <div className="mt-12 relative rounded-3xl border border-neutral-200/90 bg-[#fafbfc] overflow-hidden shadow-2xl shadow-purple-950/5 p-6 sm:p-10 lg:p-12 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] bg-[size:22px_22px]">
             {/* Top Bar: Title, Switcher, and Read More link */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-neutral-200/80">
               <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
-                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1a0726] tracking-tight">
-                  {activeLeaderTab === 'rektor' ? 'Pojok Rektor' : 'Pojok Kepala Halal Center'}
-                </h3>
+                <div>
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#6b1282]">
+                    {activeLeaderTab === 'kepala' ? 'Kepala Halal Center & Direktur LPH' : 'Dewan Pembina Halal Center'}
+                  </span>
+                  <h3 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[#1a0726] tracking-tight">
+                    {currentLeader.name}
+                  </h3>
+                </div>
 
                 {/* Switcher Tab Pills */}
-                <div className="inline-flex p-1 rounded-xl bg-purple-100/60 border border-purple-200/60 shadow-xs">
-                  <button
-                    type="button"
-                    onClick={() => setActiveLeaderTab('rektor')}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                      activeLeaderTab === 'rektor'
-                        ? 'bg-[#6b1282] text-white shadow-sm'
-                        : 'text-neutral-600 hover:text-[#6b1282]'
-                    }`}
-                  >
-                    Prof. Rosihon Anwar
-                  </button>
+                <div className="inline-flex p-1 rounded-xl bg-purple-100/70 border border-purple-200/70 shadow-xs">
                   <button
                     type="button"
                     onClick={() => setActiveLeaderTab('kepala')}
@@ -705,49 +714,78 @@ export const HomePage: React.FC = () => {
                         : 'text-neutral-600 hover:text-[#6b1282]'
                     }`}
                   >
-                    Dr. Tri Cahyanto
+                    Dr. Tri Cahyanto (Kepala)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveLeaderTab('rektor')}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                      activeLeaderTab === 'rektor'
+                        ? 'bg-[#6b1282] text-white shadow-sm'
+                        : 'text-neutral-600 hover:text-[#6b1282]'
+                    }`}
+                  >
+                    Prof. Rosihon Anwar (Pembina)
                   </button>
                 </div>
               </div>
 
               <Link
-                to="/berita"
+                to="/tentang"
                 className="text-xs sm:text-sm font-bold text-neutral-800 hover:text-[#6b1282] transition-colors flex items-center gap-1.5 group shrink-0"
               >
-                <span>Baca artikel lainnya</span>
+                <span>Lihat Struktur Lembaga &amp; Tim Auditor</span>
                 <ArrowRight className="w-4 h-4 text-[#6b1282] group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
 
-            {/* Grid: 4 Articles on Left, Cutout Portrait on Right */}
+            {/* Grid: 4 Pillars on Left, Cutout Portrait on Right */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 pt-8 items-center">
-              {/* Left Column: 4 Articles arranged in 2x2 grid */}
-              <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                {currentLeaderArticles.map((article) => (
-                  <motion.div
-                    key={article.id}
-                    whileHover={{ y: -3, scale: 1.01 }}
-                    transition={{ duration: 0.2 }}
-                    onClick={() => setSelectedLeaderArticle(article)}
-                    className="group flex items-start gap-3.5 p-3.5 sm:p-4 rounded-2xl bg-white/90 hover:bg-white border border-neutral-200/80 hover:border-purple-300 shadow-sm hover:shadow-md transition-all cursor-pointer"
-                  >
-                    <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden shrink-0 border-2 border-white shadow-md bg-purple-50">
-                      <img
-                        src={article.image}
-                        alt={article.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-xs sm:text-sm font-bold text-neutral-800 group-hover:text-[#6b1282] transition-colors line-clamp-2 leading-snug">
-                        {article.title}
-                      </h4>
-                      <span className="text-[11px] text-neutral-500 font-medium block mt-1">
-                        {article.category} • {article.date}
-                      </span>
-                    </div>
-                  </motion.div>
-                ))}
+              {/* Left Column: 4 Leadership Pillars */}
+              <div className="lg:col-span-7 flex flex-col justify-between">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                  {currentLeaderPillars.map((pillar) => (
+                    <motion.div
+                      key={pillar.id}
+                      whileHover={{ y: -3, scale: 1.01 }}
+                      transition={{ duration: 0.2 }}
+                      onClick={() => setSelectedLeaderPillar(pillar)}
+                      className="group flex items-start gap-3.5 p-3.5 sm:p-4 rounded-2xl bg-white/95 hover:bg-white border border-neutral-200/80 hover:border-purple-300 shadow-xs hover:shadow-md transition-all cursor-pointer"
+                    >
+                      <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden shrink-0 border-2 border-white shadow-md bg-purple-50">
+                        <img
+                          src={pillar.image}
+                          alt={pillar.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <span className="text-[10px] font-bold text-[#6b1282] uppercase tracking-wider block">
+                          {pillar.category}
+                        </span>
+                        <h4 className="text-xs sm:text-sm font-bold text-neutral-900 group-hover:text-[#6b1282] transition-colors line-clamp-2 leading-snug mt-0.5">
+                          {pillar.title}
+                        </h4>
+                        <span className="text-[11px] text-neutral-500 font-medium block mt-1 line-clamp-1">
+                          {pillar.tag}
+                        </span>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Leader Commitment Quote Box */}
+                <div className="mt-5 p-4 rounded-2xl bg-white/90 border border-purple-100 shadow-xs flex items-start gap-3">
+                  <span className="text-2xl text-[#6b1282] font-serif leading-none shrink-0">“</span>
+                  <div className="flex-1">
+                    <p className="text-xs text-neutral-600 italic leading-relaxed">
+                      "{currentLeader.quote}"
+                    </p>
+                    <span className="text-[11px] font-bold text-[#6b1282] block mt-1.5">
+                      — {currentLeader.name} ({currentLeader.position})
+                    </span>
+                  </div>
+                </div>
               </div>
 
               {/* Right Column: Leader Cutout Portrait */}
@@ -763,11 +801,11 @@ export const HomePage: React.FC = () => {
                     transition={{ duration: 0.35 }}
                     src={currentLeader.image}
                     alt={currentLeader.name}
-                    className="relative z-10 w-auto max-h-[340px] sm:max-h-[380px] object-contain drop-shadow-xl"
+                    className="relative z-10 w-auto max-h-[350px] sm:max-h-[390px] object-contain drop-shadow-xl"
                   />
 
                   {/* Leader Info Nameplate */}
-                  <div className="relative z-20 -mt-6 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl border border-purple-100 shadow-lg text-center max-w-xs w-full">
+                  <div className="relative z-20 -mt-6 bg-white/95 backdrop-blur-md px-5 py-3.5 rounded-2xl border border-purple-100 shadow-lg text-center max-w-xs w-full">
                     <h5 className="text-sm font-bold text-[#1a0726]">
                       {currentLeader.name}
                     </h5>
@@ -779,7 +817,7 @@ export const HomePage: React.FC = () => {
                       onClick={() => setSelectedDirector(currentLeader)}
                       className="mt-2 text-[11px] font-bold text-purple-700 hover:text-purple-900 inline-flex items-center gap-1"
                     >
-                      Buka Profil &amp; Kredensial <ArrowRight className="w-3 h-3" />
+                      Buka Profil &amp; Kredensial Pimpinan <ArrowRight className="w-3 h-3" />
                     </button>
                   </div>
                 </div>
@@ -788,38 +826,41 @@ export const HomePage: React.FC = () => {
           </div>
         </div>
 
-        {/* Modal Article Reader using HeroUI Modal */}
-        {selectedLeaderArticle && (
-          <Modal.Backdrop isOpen={!!selectedLeaderArticle} onOpenChange={() => setSelectedLeaderArticle(null)}>
+        {/* Modal Pillar Detail using HeroUI Modal */}
+        {selectedLeaderPillar && (
+          <Modal.Backdrop isOpen={!!selectedLeaderPillar} onOpenChange={() => setSelectedLeaderPillar(null)}>
             <Modal.Container>
               <Modal.Dialog className="sm:max-w-[620px] bg-white text-neutral-900 rounded-3xl p-6 sm:p-8">
                 <Modal.CloseTrigger />
                 <Modal.Header className="flex flex-col items-start gap-1 pb-4 border-b border-neutral-100">
                   <div className="flex items-center gap-2 text-xs font-bold text-[#6b1282] uppercase tracking-wider">
-                    <span>{selectedLeaderArticle.category}</span>
+                    <span>{selectedLeaderPillar.category}</span>
                     <span>•</span>
-                    <span>{selectedLeaderArticle.date}</span>
+                    <span>{selectedLeaderPillar.tag}</span>
                   </div>
                   <Modal.Heading className="text-xl sm:text-2xl font-bold text-[#1a0726] mt-1">
-                    {selectedLeaderArticle.title}
+                    {selectedLeaderPillar.title}
                   </Modal.Heading>
                   <span className="text-xs text-neutral-500 font-medium">
-                    Penulis: {selectedLeaderArticle.author}
+                    Fokus Kebijakan: {currentLeader.name}
                   </span>
                 </Modal.Header>
 
                 <Modal.Body className="py-6 space-y-4">
-                  <div className="relative h-48 w-full rounded-2xl overflow-hidden shadow-sm">
+                  <div className="relative h-44 w-full rounded-2xl overflow-hidden shadow-sm bg-purple-50 flex items-center justify-center p-4">
                     <img
-                      src={selectedLeaderArticle.image}
-                      alt={selectedLeaderArticle.title}
-                      className="w-full h-full object-cover"
+                      src={selectedLeaderPillar.image}
+                      alt={selectedLeaderPillar.title}
+                      className="max-h-36 object-contain"
                     />
                   </div>
                   <p className="text-sm text-neutral-700 leading-relaxed font-normal">
-                    {selectedLeaderArticle.summary}
+                    {selectedLeaderPillar.summary}
                   </p>
-                  <div className="p-4 rounded-xl bg-purple-50/60 border border-purple-100 text-xs text-neutral-600 leading-relaxed italic">
+                  <p className="text-xs text-neutral-600 leading-relaxed font-normal bg-neutral-50 p-4 rounded-xl border border-neutral-100">
+                    {selectedLeaderPillar.detail}
+                  </p>
+                  <div className="p-3.5 rounded-xl bg-purple-50/70 border border-purple-100 text-xs text-neutral-700 leading-relaxed italic">
                     "Komitmen LPH dan Halal Center UIN SGD Bandung adalah menghadirkan kepastian hukum syariah dan mutu ilmiah tertinggi demi perlindungan konsumen serta kemajuan industri halal Indonesia."
                   </div>
                 </Modal.Body>
@@ -828,16 +869,16 @@ export const HomePage: React.FC = () => {
                   <Button
                     variant="outline"
                     className="flex-1 border-neutral-200 text-neutral-700 hover:bg-neutral-50 font-bold rounded-xl py-2.5"
-                    onPress={() => setSelectedLeaderArticle(null)}
+                    onPress={() => setSelectedLeaderPillar(null)}
                   >
                     Tutup
                   </Button>
-                  <Link to="/berita" className="flex-1">
+                  <Link to="/tentang" className="flex-1">
                     <Button
                       variant="primary"
                       className="w-full bg-[#6b1282] hover:bg-[#581c87] text-white font-bold rounded-xl py-2.5"
                     >
-                      Baca Berita Lainnya
+                      Pelajari Layanan LPH
                     </Button>
                   </Link>
                 </Modal.Footer>
