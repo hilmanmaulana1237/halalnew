@@ -20,10 +20,10 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
   className,
 }) => {
   const badgeStyles = {
-    purple: "bg-purple-100/80 text-[#6b1282] border-purple-200",
-    emerald: "bg-emerald-100/80 text-[#005a36] border-emerald-200",
-    blue: "bg-sky-100/80 text-[#0284c7] border-sky-200",
-    amber: "bg-amber-100/80 text-amber-800 border-amber-200",
+    purple: "bg-purple-50 text-[#6b1282] border-purple-200/80",
+    emerald: "bg-purple-50 text-[#6b1282] border-purple-200/80",
+    blue: "bg-purple-50 text-[#6b1282] border-purple-200/80",
+    amber: "bg-purple-50 text-[#6b1282] border-purple-200/80",
   };
 
   return (
@@ -41,14 +41,14 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
       {badge && (
         <span
           className={cn(
-            "inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-extrabold border mb-3 tracking-wider uppercase shadow-xs",
+            "inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold border mb-3 tracking-wider uppercase shadow-xs",
             badgeStyles[badgeColor]
           )}
         >
           {badge}
         </span>
       )}
-      <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#1b183a] tracking-tight leading-[1.2]">
+      <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a0726] tracking-tight leading-[1.2]">
         {title}
       </h2>
       {subtitle && (

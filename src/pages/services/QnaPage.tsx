@@ -119,13 +119,13 @@ export const QnaPage: React.FC = () => {
   return (
     <div className="flex flex-col w-full min-h-screen bg-neutral-50 pb-20">
       {/* Banner */}
-      <section className="bg-gradient-to-r from-[#6b1282] via-[#4a0d5c] to-[#005a36] text-white py-16 px-4 sm:px-6 lg:px-8 text-center">
+      <section className="bg-gradient-to-r from-[#1a0726] via-[#4a0d5c] to-[#1a0726] text-white py-16 px-4 sm:px-6 lg:px-8 text-center">
         <div className="max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-emerald-300 text-xs font-bold uppercase tracking-wider mb-4 border border-white/20 shadow-xs">
-            <HelpCircle className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-purple-200 text-xs font-semibold uppercase tracking-wider mb-4 border border-white/20 shadow-xs">
+            <HelpCircle className="w-3.5 h-3.5 text-purple-300" />
             Pusat Bantuan &amp; Konsultasi Cepat
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight">
             FAQ &amp; Halal QnA Center
           </h1>
           <p className="mt-3 text-neutral-200 max-w-2xl mx-auto text-sm sm:text-base font-normal">
@@ -138,8 +138,8 @@ export const QnaPage: React.FC = () => {
       <div className="max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 -mt-8 space-y-8">
         {/* Interactive AI Ask Card */}
         <Card className="bg-white rounded-3xl border border-neutral-200/80 shadow-xl p-6 sm:p-8 space-y-4">
-          <div className="flex items-center gap-2.5 text-[#272353]">
-            <Sparkles className="w-5 h-5 text-amber-500" />
+          <div className="flex items-center gap-2.5 text-[#1a0726]">
+            <Sparkles className="w-5 h-5 text-purple-600" />
             <h3 className="text-lg font-bold">Tanya Asisten AI Halal Center</h3>
           </div>
           <p className="text-xs text-neutral-500 leading-relaxed">
@@ -157,7 +157,7 @@ export const QnaPage: React.FC = () => {
               type="submit"
               variant="primary"
               isPending={aiLoading}
-              className="bg-[#272353] text-white font-bold px-6 rounded-xl text-xs sm:text-sm"
+              className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold px-6 rounded-xl text-xs sm:text-sm"
             >
               Tanya AI
             </Button>

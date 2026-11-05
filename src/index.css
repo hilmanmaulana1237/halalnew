@@ -3,25 +3,27 @@
 
 @layer base {
   :root {
-    /* Official LPH UIN SGD Palette (from Banner & Star Emblem) */
+    /* Royal Purple & Pure White Modern Classic Palette */
     --brand-purple: #6b1282;
+    --brand-purple-deep: #25032e;
     --brand-purple-dark: #4a0d5c;
-    --brand-purple-light: #9333ea;
-    --brand-green: #10b981;
-    --brand-green-dark: #005a36;
-    --brand-blue: #0284c7;
-    --brand-blue-dark: #1d4ed8;
-    --brand-gold: #f59e0b;
-    --brand-gold-dark: #d97706;
+    --brand-purple-light: #86198f;
+    --brand-purple-lavender: #c084fc;
+    --brand-purple-soft: #f3e8ff;
+    --brand-purple-subtle: #fdf4ff;
   }
 
   body {
-    font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    color: #111827;
+    font-family: 'Plus Jakarta Sans', 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #0f172a;
     background-color: #ffffff;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+  }
+
+  h1, h2, h3, .font-serif-classic {
+    font-family: 'Playfair Display', Georgia, Cambria, 'Times New Roman', serif;
   }
 }
 

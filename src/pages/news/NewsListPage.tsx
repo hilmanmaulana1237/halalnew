@@ -115,13 +115,13 @@ export const NewsListPage: React.FC = () => {
   return (
     <div className="flex flex-col w-full min-h-screen bg-neutral-50 pb-20">
       {/* Banner */}
-      <section className="bg-gradient-to-r from-[#6b1282] via-[#4a0d5c] to-[#005a36] text-white py-16 px-4 sm:px-6 lg:px-8 text-center">
+      <section className="bg-gradient-to-r from-[#1a0726] via-[#4a0d5c] to-[#1a0726] text-white py-16 px-4 sm:px-6 lg:px-8 text-center">
         <div className="max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-emerald-300 text-xs font-bold uppercase tracking-wider mb-4 border border-white/20 shadow-xs">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-purple-200 text-xs font-semibold uppercase tracking-wider mb-4 border border-white/20 shadow-xs">
             <Newspaper className="w-3.5 h-3.5" />
             Warta, Riset &amp; Kegiatan
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight">
             Berita Halal Center UIN SGD
           </h1>
           <p className="mt-3 text-neutral-200 max-w-2xl mx-auto text-sm sm:text-base font-normal">
@@ -142,7 +142,7 @@ export const NewsListPage: React.FC = () => {
                 variant={category === cat ? 'primary' : 'outline'}
                 className={
                   category === cat
-                    ? 'bg-[#005a36] text-white font-bold text-xs py-1.5 px-3 rounded-lg'
+                    ? 'bg-[#6b1282] text-white font-bold text-xs py-1.5 px-3 rounded-lg'
                     : 'border-neutral-200 text-neutral-700 text-xs py-1.5 px-3 rounded-lg hover:bg-neutral-50'
                 }
                 onPress={() => handleCategoryChange(cat)}

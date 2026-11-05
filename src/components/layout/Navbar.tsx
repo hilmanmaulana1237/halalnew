@@ -27,10 +27,10 @@ export const Navbar: React.FC = () => {
 
   return (
     <>
-      {/* Top Colorful Jewel Line (Echoing the LPH Star Palette) */}
-      <div className="h-1.5 w-full bg-gradient-to-r from-[#6b1282] via-[#0284c7] via-[#10b981] to-[#f59e0b]" />
+      {/* Top Royal Purple Line */}
+      <div className="h-1 w-full bg-gradient-to-r from-[#4a0d5c] via-[#6b1282] to-[#86198f]" />
 
-      <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-neutral-200/70 shadow-xs transition-all">
+      <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-purple-100/70 shadow-xs transition-all">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo: Official LPH Banner from User Upload */}
@@ -42,14 +42,14 @@ export const Navbar: React.FC = () => {
               />
             </Link>
 
-            {/* Desktop Navigation */}
+            {/* Desktop Navigation (Modern Classic Typography) */}
             <nav className="hidden lg:flex items-center gap-1">
               <Link
                 to="/"
-                className={`px-3.5 py-2 rounded-xl text-sm font-bold transition-all ${
+                className={`px-3.5 py-2 rounded-xl text-sm font-semibold transition-all ${
                   isActive('/')
-                    ? 'text-[#6b1282] bg-purple-50/80 shadow-xs'
-                    : 'text-neutral-700 hover:text-[#6b1282] hover:bg-neutral-50'
+                    ? 'text-[#6b1282] bg-purple-50/90 shadow-xs'
+                    : 'text-neutral-700 hover:text-[#6b1282] hover:bg-purple-50/40'
                 }`}
               >
                 Beranda
@@ -60,14 +60,14 @@ export const Navbar: React.FC = () => {
                 <Dropdown.Trigger>
                   <Button
                     variant="ghost"
-                    className="flex items-center gap-1 px-3 py-2 text-sm font-bold text-neutral-700 hover:text-[#6b1282] rounded-xl"
+                    className="flex items-center gap-1 px-3 py-2 text-sm font-semibold text-neutral-700 hover:text-[#6b1282] rounded-xl"
                   >
                     Tentang Kami
                     <ChevronDown className="w-4 h-4 text-neutral-500" />
                   </Button>
                 </Dropdown.Trigger>
                 <Dropdown.Popover>
-                  <Dropdown.Menu className="w-56 p-1.5 rounded-2xl shadow-xl border border-neutral-100">
+                  <Dropdown.Menu className="w-56 p-1.5 rounded-2xl shadow-xl border border-purple-100 bg-white">
                     <Dropdown.Item id="tentang-profil" textValue="Profil & Sejarah LPH">
                       <Link to="/tentang" className="flex items-center gap-2.5 w-full py-1.5">
                         <BookOpen className="w-4 h-4 text-[#6b1282]" />
@@ -78,7 +78,7 @@ export const Navbar: React.FC = () => {
                     </Dropdown.Item>
                     <Dropdown.Item id="tentang-qna" textValue="FAQ & Halal QnA">
                       <Link to="/layanan/qna" className="flex items-center gap-2.5 w-full py-1.5">
-                        <HelpCircle className="w-4 h-4 text-[#005a36]" />
+                        <HelpCircle className="w-4 h-4 text-[#6b1282]" />
                         <Label className="cursor-pointer font-bold text-sm text-neutral-800">
                           FAQ &amp; Halal QnA
                         </Label>
@@ -93,14 +93,14 @@ export const Navbar: React.FC = () => {
                 <Dropdown.Trigger>
                   <Button
                     variant="ghost"
-                    className="flex items-center gap-1 px-3 py-2 text-sm font-bold text-neutral-700 hover:text-[#005a36] rounded-xl"
+                    className="flex items-center gap-1 px-3 py-2 text-sm font-semibold text-neutral-700 hover:text-[#6b1282] rounded-xl"
                   >
                     Layanan LPH
                     <ChevronDown className="w-4 h-4 text-neutral-500" />
                   </Button>
                 </Dropdown.Trigger>
                 <Dropdown.Popover>
-                  <Dropdown.Menu className="w-64 p-1.5 rounded-2xl shadow-xl border border-neutral-100">
+                  <Dropdown.Menu className="w-64 p-1.5 rounded-2xl shadow-xl border border-purple-100 bg-white">
                     <Dropdown.Item id="layanan-kalkulator" textValue="Kalkulator Tarif">
                       <Link to="/layanan/kalkulator" className="flex items-center gap-2.5 w-full py-1.5">
                         <Calculator className="w-4 h-4 text-[#6b1282]" />
@@ -111,7 +111,7 @@ export const Navbar: React.FC = () => {
                     </Dropdown.Item>
                     <Dropdown.Item id="layanan-pengaduan" textValue="Pengaduan & Whistleblowing">
                       <Link to="/layanan/pengaduan" className="flex items-center gap-2.5 w-full py-1.5">
-                        <ShieldAlert className="w-4 h-4 text-rose-600" />
+                        <ShieldAlert className="w-4 h-4 text-[#6b1282]" />
                         <Label className="cursor-pointer font-bold text-sm text-neutral-800">
                           Pengaduan &amp; Whistleblowing
                         </Label>
@@ -119,7 +119,7 @@ export const Navbar: React.FC = () => {
                     </Dropdown.Item>
                     <Dropdown.Item id="layanan-kepuasan" textValue="Survei Kepuasan Pelanggan">
                       <Link to="/layanan/kepuasan" className="flex items-center gap-2.5 w-full py-1.5">
-                        <Smile className="w-4 h-4 text-amber-600" />
+                        <Smile className="w-4 h-4 text-[#6b1282]" />
                         <Label className="cursor-pointer font-bold text-sm text-neutral-800">
                           Survei Kepuasan Pelanggan
                         </Label>
@@ -134,17 +134,17 @@ export const Navbar: React.FC = () => {
                 <Dropdown.Trigger>
                   <Button
                     variant="ghost"
-                    className="flex items-center gap-1 px-3 py-2 text-sm font-bold text-neutral-700 hover:text-[#0284c7] rounded-xl"
+                    className="flex items-center gap-1 px-3 py-2 text-sm font-semibold text-neutral-700 hover:text-[#6b1282] rounded-xl"
                   >
                     News &amp; Update
                     <ChevronDown className="w-4 h-4 text-neutral-500" />
                   </Button>
                 </Dropdown.Trigger>
                 <Dropdown.Popover>
-                  <Dropdown.Menu className="w-56 p-1.5 rounded-2xl shadow-xl border border-neutral-100">
+                  <Dropdown.Menu className="w-56 p-1.5 rounded-2xl shadow-xl border border-purple-100 bg-white">
                     <Dropdown.Item id="news-berita" textValue="Berita & Kegiatan">
                       <Link to="/berita" className="flex items-center gap-2.5 w-full py-1.5">
-                        <Newspaper className="w-4 h-4 text-[#0284c7]" />
+                        <Newspaper className="w-4 h-4 text-[#6b1282]" />
                         <Label className="cursor-pointer font-bold text-sm text-neutral-800">
                           Berita &amp; Kegiatan
                         </Label>
@@ -152,7 +152,7 @@ export const Navbar: React.FC = () => {
                     </Dropdown.Item>
                     <Dropdown.Item id="news-pengumuman" textValue="Pengumuman Resmi">
                       <Link to="/pengumuman" className="flex items-center gap-2.5 w-full py-1.5">
-                        <Bell className="w-4 h-4 text-[#f59e0b]" />
+                        <Bell className="w-4 h-4 text-[#6b1282]" />
                         <Label className="cursor-pointer font-bold text-sm text-neutral-800">
                           Pengumuman Resmi
                         </Label>
@@ -164,24 +164,24 @@ export const Navbar: React.FC = () => {
 
               <Link
                 to="/kontak"
-                className={`px-3.5 py-2 rounded-xl text-sm font-bold transition-all ${
+                className={`px-3.5 py-2 rounded-xl text-sm font-semibold transition-all ${
                   isActive('/kontak')
-                    ? 'text-[#005a36] bg-emerald-50/80 shadow-xs'
-                    : 'text-neutral-700 hover:text-[#005a36] hover:bg-neutral-50'
+                    ? 'text-[#6b1282] bg-purple-50/90 shadow-xs'
+                    : 'text-neutral-700 hover:text-[#6b1282] hover:bg-purple-50/40'
                 }`}
               >
                 Kontak
               </Link>
             </nav>
 
-            {/* Actions: Colorful Gradient CTA & Language */}
+            {/* Actions: Modern Classic Purple CTA & Language */}
             <div className="hidden lg:flex items-center gap-4">
               <Link to="/layanan/kalkulator">
                 <Button
                   variant="primary"
-                  className="bg-gradient-to-r from-[#6b1282] via-[#7e22ce] to-[#005a36] hover:brightness-110 text-white font-bold px-5 py-2.5 rounded-full text-xs sm:text-sm shadow-md transition-all flex items-center gap-1.5"
+                  className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold px-5 py-2.5 rounded-full text-xs sm:text-sm shadow-md transition-all flex items-center gap-1.5"
                 >
-                  <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                  <Sparkles className="w-3.5 h-3.5 text-purple-200" />
                   Hitung Tarif Halal
                 </Button>
               </Link>

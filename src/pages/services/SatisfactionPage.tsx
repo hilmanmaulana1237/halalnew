@@ -51,7 +51,7 @@ export const SatisfactionPage: React.FC = () => {
     return (
       <div className="p-4 bg-neutral-50 rounded-2xl border border-neutral-200/80 space-y-3">
         <div className="flex items-center gap-2.5">
-          <span className="w-6 h-6 rounded-full bg-[#005a36] text-white flex items-center justify-center text-xs font-bold">
+          <span className="w-6 h-6 rounded-full bg-[#6b1282] text-white flex items-center justify-center text-xs font-bold">
             {index}
           </span>
           <span className="font-bold text-sm text-neutral-800">{label}</span>
@@ -64,7 +64,7 @@ export const SatisfactionPage: React.FC = () => {
               variant={currentVal === item.val ? 'primary' : 'outline'}
               className={
                 currentVal === item.val
-                  ? 'bg-[#005a36] text-white font-bold text-xs py-1.5 px-3 rounded-lg shadow-xs'
+                  ? 'bg-[#6b1282] text-white font-bold text-xs py-1.5 px-3 rounded-lg shadow-xs'
                   : 'border-neutral-200 text-neutral-700 text-xs py-1.5 px-3 rounded-lg hover:bg-white'
               }
               onPress={() => setVal(item.val)}
@@ -80,13 +80,13 @@ export const SatisfactionPage: React.FC = () => {
   return (
     <div className="flex flex-col w-full min-h-screen bg-neutral-50 pb-20">
       {/* Banner */}
-      <section className="bg-gradient-to-r from-[#6b1282] via-[#4a0d5c] to-[#005a36] text-white py-16 px-4 sm:px-6 lg:px-8 text-center">
+      <section className="bg-gradient-to-r from-[#1a0726] via-[#4a0d5c] to-[#1a0726] text-white py-16 px-4 sm:px-6 lg:px-8 text-center">
         <div className="max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-emerald-300 text-xs font-bold uppercase tracking-wider mb-4 border border-white/20 shadow-xs">
-            <Smile className="w-3.5 h-3.5 text-amber-400" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-purple-200 text-xs font-semibold uppercase tracking-wider mb-4 border border-white/20 shadow-xs">
+            <Smile className="w-3.5 h-3.5 text-purple-300" />
             Indeks Kepuasan Masyarakat (IKM)
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight">
             Survei Kepuasan Pelanggan
           </h1>
           <p className="mt-3 text-neutral-200 max-w-2xl mx-auto text-sm sm:text-base font-normal">
@@ -100,7 +100,7 @@ export const SatisfactionPage: React.FC = () => {
         <Card className="bg-white rounded-3xl border border-neutral-200/80 shadow-xl p-6 sm:p-10">
           {submitted ? (
             <div className="p-8 text-center space-y-4">
-              <div className="w-16 h-16 rounded-full bg-emerald-100 text-[#005a36] flex items-center justify-center mx-auto">
+              <div className="w-16 h-16 rounded-full bg-purple-100 text-[#6b1282] flex items-center justify-center mx-auto">
                 <CheckCircle2 className="w-8 h-8" />
               </div>
               <h3 className="text-2xl font-bold text-neutral-900">

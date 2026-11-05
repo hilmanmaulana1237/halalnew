@@ -93,9 +93,9 @@ const UIN_SERVICES = [
     description:
       'Fasilitasi pendampingan proses produk halal secara gratis dan terakreditasi khusus untuk pelaku usaha mikro & kecil (UMK).',
     url: 'https://halal.uinsgd.ac.id/sertifikasi-halal-self-declare/',
-    icon: <Users className="w-6 h-6 text-[#10b981]" />,
+    icon: <Users className="w-6 h-6 text-[#6b1282]" />,
     badge: 'Program UMK',
-    accentColor: 'emerald' as const,
+    accentColor: 'purple' as const,
     colSpan: 'md:col-span-1',
   },
   {
@@ -113,9 +113,9 @@ const UIN_SERVICES = [
     description:
       'Layanan konsultasi tatap muka maupun daring mengenai kelayakan bahan baku, sistem jaminan halal, dan regulasi BPJPH.',
     url: 'https://wa.me/6282118201232',
-    icon: <Phone className="w-6 h-6 text-[#f59e0b]" />,
+    icon: <Phone className="w-6 h-6 text-[#6b1282]" />,
     badge: 'Layanan Cepat',
-    accentColor: 'amber' as const,
+    accentColor: 'purple' as const,
     colSpan: 'md:col-span-1',
   },
   {
@@ -123,9 +123,9 @@ const UIN_SERVICES = [
     description:
       'Penerbitan jurnal ilmiah berkala Indonesian Journal of Halal Research (IJHR) terakreditasi SINTA bidang kehalalan hayati.',
     url: 'https://journal.uinsgd.ac.id/index.php/ijhar',
-    icon: <BookOpen className="w-6 h-6 text-[#0284c7]" />,
+    icon: <BookOpen className="w-6 h-6 text-[#6b1282]" />,
     badge: 'Riset SINTA',
-    accentColor: 'blue' as const,
+    accentColor: 'purple' as const,
     colSpan: 'md:col-span-1',
   },
   {
@@ -143,9 +143,9 @@ const UIN_SERVICES = [
     description:
       'Program sertifikasi kompetensi resmi untuk Penyelia Halal, Auditor Halal, dan tim manajemen mutu perusahaan.',
     url: 'https://halal.uinsgd.ac.id/lembaga-pelatihan-jaminan-produk-halal-jph/',
-    icon: <GraduationCap className="w-6 h-6 text-teal-600" />,
+    icon: <GraduationCap className="w-6 h-6 text-[#6b1282]" />,
     badge: 'Pelatihan Resmi',
-    accentColor: 'teal' as const,
+    accentColor: 'purple' as const,
     colSpan: 'md:col-span-1',
   },
   {
@@ -153,9 +153,9 @@ const UIN_SERVICES = [
     description:
       'Pendidikan dan standarisasi teknik penyembelihan syar’i bagi juru sembelih RPH ruminansia dan unggas bersertifikat BNSP.',
     url: 'https://halal.uinsgd.ac.id/akademi-juru-sembelih-halal-juleha/',
-    icon: <Utensils className="w-6 h-6 text-pink-600" />,
+    icon: <Utensils className="w-6 h-6 text-[#6b1282]" />,
     badge: 'Standar Syar’i',
-    accentColor: 'rose' as const,
+    accentColor: 'purple' as const,
     colSpan: 'md:col-span-1',
   },
   {
@@ -163,9 +163,9 @@ const UIN_SERVICES = [
     description:
       'Uji saintifik presisi tinggi: Deteksi DNA Babi qPCR, Uji Cemaran Etanol (GC-FID), serta analisa gelatin dan profil asam lemak.',
     url: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/',
-    icon: <FlaskConical className="w-6 h-6 text-[#005a36]" />,
+    icon: <FlaskConical className="w-6 h-6 text-[#6b1282]" />,
     badge: 'ISO/IEC 17025',
-    accentColor: 'emerald' as const,
+    accentColor: 'purple' as const,
     colSpan: 'md:col-span-1',
   },
 ];
@@ -208,11 +208,11 @@ export const HomePage: React.FC = () => {
             <defs>
               <linearGradient id="markerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stop-color="#6b1282" />
-                <stop offset="100%" stop-color="#10b981" />
+                <stop offset="100%" stop-color="#4a0d5c" />
               </linearGradient>
             </defs>
             <path d="M15 0C8 0 3 6 3 13c0 8 12 26 12 26s12-18 12-26c0-7-5-13-12-13z" fill="url(#markerGrad)" stroke="#ffffff" stroke-width="2.5"/>
-            <circle cx="15" cy="13" r="5" fill="#f59e0b"/>
+            <circle cx="15" cy="13" r="5" fill="#ffffff"/>
           </svg>`;
 
         const customIcon = L.divIcon({
@@ -352,9 +352,9 @@ export const HomePage: React.FC = () => {
                 Tentang Kami
               </div>
 
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#1b183a] tracking-tight leading-snug">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a0726] tracking-tight leading-snug">
                 Pusat Halal UIN SGD Melalui Konsep{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6b1282] via-[#0284c7] to-[#10b981]">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6b1282] to-[#86198f]">
                   “Halalsphere University”
                 </span>
               </h2>
@@ -364,24 +364,24 @@ export const HomePage: React.FC = () => {
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                <div className="p-4 rounded-2xl bg-purple-50/60 border border-purple-200/80 flex items-start gap-3">
+                <div className="p-4 rounded-2xl bg-purple-50/50 border border-purple-100 flex items-start gap-3">
                   <div className="w-10 h-10 rounded-xl bg-purple-100 text-[#6b1282] flex items-center justify-center shrink-0">
                     <ShieldCheck className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="font-extrabold text-neutral-900 text-sm">Integritas Syar’i</h4>
+                    <h4 className="font-bold text-neutral-900 text-sm">Integritas Syar’i</h4>
                     <p className="text-xs text-neutral-600 mt-1">
                       Kepatuhan mutlak terhadap fatwa MUI dan regulasi jaminan produk halal.
                     </p>
                   </div>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-emerald-50/60 border border-emerald-200/80 flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-100 text-[#005a36] flex items-center justify-center shrink-0">
+                <div className="p-4 rounded-2xl bg-purple-50/50 border border-purple-100 flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-purple-100 text-[#6b1282] flex items-center justify-center shrink-0">
                     <Microscope className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="font-extrabold text-neutral-900 text-sm">Saintifik &amp; Presisi</h4>
+                    <h4 className="font-bold text-neutral-900 text-sm">Saintifik &amp; Presisi</h4>
                     <p className="text-xs text-neutral-600 mt-1">
                       Laboratorium pengujian DNA babi dan cemaran alkohol terakreditasi ISO 17025.
                     </p>
@@ -393,7 +393,7 @@ export const HomePage: React.FC = () => {
                 <Link to="/tentang">
                   <Button
                     variant="primary"
-                    className="bg-gradient-to-r from-[#6b1282] to-[#4a0d5c] hover:brightness-110 text-white font-bold px-7 py-3 rounded-xl text-sm shadow-lg shadow-purple-900/20"
+                    className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold px-7 py-3 rounded-xl text-sm shadow-md shadow-purple-950/15"
                   >
                     Lihat Profil Lengkap
                   </Button>
@@ -401,7 +401,7 @@ export const HomePage: React.FC = () => {
                 <Link to="/layanan/kalkulator">
                   <Button
                     variant="outline"
-                    className="border-neutral-300 text-neutral-700 hover:bg-neutral-50 font-bold px-7 py-3 rounded-xl text-sm"
+                    className="border-neutral-300 text-neutral-700 hover:bg-neutral-50 font-semibold px-7 py-3 rounded-xl text-sm"
                   >
                     Mulai Sertifikasi Halal
                   </Button>
@@ -412,12 +412,12 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. TWO MAIN SERVICES CARDS (Rich Colored HeroUI Cards) */}
+      {/* 4. TWO MAIN SERVICES CARDS (Modern Classic Purple & White) */}
       <section className="py-20 bg-neutral-50/80 border-y border-neutral-200/70" id="layanan">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             badge="LAYANAN UTAMA"
-            badgeColor="emerald"
+            badgeColor="purple"
             title="Kemudahan dalam Setiap Langkah Sertifikasi Halal"
             subtitle="Pemeriksaan komprehensif dari hulu ke hilir untuk memastikan produk Anda memenuhi syarat syariah dan regulasi pemerintah."
           />
@@ -427,7 +427,7 @@ export const HomePage: React.FC = () => {
             <motion.div
               whileHover={{ y: -6 }}
               transition={{ duration: 0.25 }}
-              className="rounded-3xl border border-purple-200/80 bg-white overflow-hidden shadow-xl shadow-purple-500/5 hover:shadow-purple-500/15 flex flex-col justify-between"
+              className="rounded-3xl border border-purple-100 bg-white overflow-hidden shadow-lg shadow-purple-950/5 hover:shadow-xl hover:shadow-purple-950/10 flex flex-col justify-between"
             >
               <div>
                 <div className="relative h-64 overflow-hidden">
@@ -437,13 +437,13 @@ export const HomePage: React.FC = () => {
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-4 left-4">
-                    <span className="px-3.5 py-1.5 rounded-full text-xs font-black bg-[#6b1282] text-white shadow-lg">
+                    <span className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-[#6b1282] text-white shadow-md">
                       LPH &amp; LP3H
                     </span>
                   </div>
                 </div>
                 <div className="p-7 pb-2">
-                  <h3 className="text-xl sm:text-2xl font-black text-[#1b183a]">
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#1a0726]">
                     Pemeriksaan Kehalalan Produk (LPH &amp; LP3H)
                   </h3>
                   <p className="text-neutral-600 text-sm leading-relaxed mt-3">
@@ -467,7 +467,7 @@ export const HomePage: React.FC = () => {
             <motion.div
               whileHover={{ y: -6 }}
               transition={{ duration: 0.25 }}
-              className="rounded-3xl border border-emerald-200/80 bg-white overflow-hidden shadow-xl shadow-emerald-500/5 hover:shadow-emerald-500/15 flex flex-col justify-between"
+              className="rounded-3xl border border-purple-100 bg-white overflow-hidden shadow-lg shadow-purple-950/5 hover:shadow-xl hover:shadow-purple-950/10 flex flex-col justify-between"
             >
               <div>
                 <div className="relative h-64 overflow-hidden">
@@ -477,13 +477,13 @@ export const HomePage: React.FC = () => {
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-4 left-4">
-                    <span className="px-3.5 py-1.5 rounded-full text-xs font-black bg-[#005a36] text-white shadow-lg">
+                    <span className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-[#6b1282] text-white shadow-md">
                       Laboratorium Terpadu
                     </span>
                   </div>
                 </div>
                 <div className="p-7 pb-2">
-                  <h3 className="text-xl sm:text-2xl font-black text-[#1b183a]">
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#1a0726]">
                     Uji Laboratorium &amp; Pelatihan Halal
                   </h3>
                   <p className="text-neutral-600 text-sm leading-relaxed mt-3">
@@ -493,11 +493,11 @@ export const HomePage: React.FC = () => {
               </div>
               <div className="p-7 pt-4 flex items-center justify-between border-t border-neutral-100 mt-4">
                 <Link to="/kontak">
-                  <Button variant="primary" className="bg-[#005a36] hover:bg-[#00472a] text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-md">
+                  <Button variant="primary" className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-md">
                     Reservasi Pengujian Lab
                   </Button>
                 </Link>
-                <Link to="/tentang" className="text-xs font-bold text-[#005a36] hover:underline flex items-center gap-1">
+                <Link to="/tentang" className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
                   Lihat Detail <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
@@ -552,22 +552,22 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 6. LEADERSHIP BOARD SECTION (Aceternity UI Spotlight in Royal Purple & Emerald) */}
-      <section className="py-24 bg-[#1b183a] text-white relative overflow-hidden" id="pimpinan">
-        {/* Spotlight Beams matching the LPH Purple & Emerald */}
+      {/* 6. LEADERSHIP BOARD SECTION (Modern Classic Royal Purple Spotlight) */}
+      <section className="py-24 bg-[#1a0726] text-white relative overflow-hidden" id="pimpinan">
+        {/* Spotlight Beams in Royal Purple & Lavender */}
         <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="#6b1282" />
-        <Spotlight className="top-20 right-0 md:right-40" fill="#10b981" />
+        <Spotlight className="top-20 right-0 md:right-40" fill="#86198f" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold bg-purple-900/60 text-purple-300 border border-purple-700/50 uppercase tracking-wider mb-3 shadow-sm">
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold bg-purple-900/60 text-purple-200 border border-purple-700/50 uppercase tracking-wider mb-3 shadow-sm">
+              <Sparkles className="w-3.5 h-3.5 text-purple-300" />
               Pimpinan Halal Center
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
               Kepemimpinan Berintegritas Syar’i &amp; Keunggulan Saintifik
             </h2>
-            <p className="mt-3 text-neutral-300 text-base">
+            <p className="mt-3 text-neutral-300 text-base font-normal">
               Komitmen Pengabdian, Tata Kelola Profesional, dan Standar Mutu Laboratorium Berkelanjutan.
             </p>
           </div>
@@ -579,25 +579,25 @@ export const HomePage: React.FC = () => {
                 whileHover={{ y: -6, scale: 1.01 }}
                 transition={{ duration: 0.25 }}
                 onClick={() => setSelectedDirector(director)}
-                className="group relative rounded-3xl border border-white/15 bg-white/5 backdrop-blur-xl p-6 sm:p-8 hover:bg-white/10 transition-all duration-300 cursor-pointer hover:border-purple-400/60 hover:shadow-2xl hover:shadow-purple-900/40"
+                className="group relative rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 sm:p-8 hover:bg-white/10 transition-all duration-300 cursor-pointer hover:border-purple-400/50 hover:shadow-2xl hover:shadow-purple-950/40"
               >
                 <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
                   <div className="relative shrink-0">
                     <img
                       src={director.image}
                       alt={director.name}
-                      className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl object-cover object-top border-2 border-purple-400/50 shadow-xl"
+                      className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl object-cover object-top border-2 border-purple-400/40 shadow-xl"
                     />
-                    <span className="absolute -bottom-2 -right-2 p-1.5 rounded-lg bg-gradient-to-r from-[#6b1282] to-[#10b981] text-white shadow-md">
+                    <span className="absolute -bottom-2 -right-2 p-1.5 rounded-lg bg-[#6b1282] text-white shadow-md">
                       <Award className="w-4 h-4" />
                     </span>
                   </div>
 
                   <div className="text-center sm:text-left flex-1">
-                    <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider">
+                    <span className="text-xs font-bold text-purple-300 uppercase tracking-wider">
                       {director.position}
                     </span>
-                    <h3 className="text-lg sm:text-xl font-black text-white mt-1 group-hover:text-purple-300 transition-colors">
+                    <h3 className="text-lg sm:text-xl font-bold text-white mt-1 group-hover:text-purple-200 transition-colors">
                       {director.name}
                     </h3>
                     <p className="text-xs text-neutral-300 mt-2 line-clamp-3 italic leading-relaxed">
@@ -859,20 +859,20 @@ export const HomePage: React.FC = () => {
                 >
                   <img src={article.img} alt={article.title} className="w-full h-48 object-cover" />
                   <div className="p-6">
-                    <span className="text-[11px] font-black text-[#0284c7] uppercase tracking-wider">
+                    <span className="text-[11px] font-bold text-[#6b1282] uppercase tracking-wider">
                       {article.cat}
                     </span>
-                    <h3 className="font-extrabold text-lg text-neutral-900 mt-2 mb-2 line-clamp-2">
+                    <h3 className="font-bold text-lg text-neutral-900 mt-2 mb-2 line-clamp-2">
                       {article.title}
                     </h3>
-                    <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed mb-4">
+                    <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed mb-4 font-normal">
                       {article.desc}
                     </p>
                     <a
                       href={article.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs font-bold text-[#0284c7] hover:underline flex items-center gap-1"
+                      className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1"
                     >
                       Buka Tautan Riset <ExternalLink className="w-3.5 h-3.5" />
                     </a>
@@ -913,16 +913,16 @@ export const HomePage: React.FC = () => {
                 >
                   <img src={article.img} alt={article.title} className="w-full h-48 object-cover" />
                   <div className="p-6">
-                    <span className="text-[11px] font-black text-[#10b981] uppercase tracking-wider">
+                    <span className="text-[11px] font-bold text-[#6b1282] uppercase tracking-wider">
                       {article.cat}
                     </span>
-                    <h3 className="font-extrabold text-lg text-neutral-900 mt-2 mb-2 line-clamp-2">
+                    <h3 className="font-bold text-lg text-neutral-900 mt-2 mb-2 line-clamp-2">
                       {article.title}
                     </h3>
-                    <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed mb-4">
+                    <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed mb-4 font-normal">
                       {article.desc}
                     </p>
-                    <Link to="/layanan" className="text-xs font-bold text-[#10b981] hover:underline flex items-center gap-1">
+                    <Link to="/layanan" className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
                       Pelajari Program <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
@@ -962,16 +962,16 @@ export const HomePage: React.FC = () => {
                 >
                   <img src={article.img} alt={article.title} className="w-full h-48 object-cover" />
                   <div className="p-6">
-                    <span className="text-[11px] font-black text-[#f59e0b] uppercase tracking-wider">
+                    <span className="text-[11px] font-bold text-[#6b1282] uppercase tracking-wider">
                       {article.cat}
                     </span>
-                    <h3 className="font-extrabold text-lg text-neutral-900 mt-2 mb-2 line-clamp-2">
+                    <h3 className="font-bold text-lg text-neutral-900 mt-2 mb-2 line-clamp-2">
                       {article.title}
                     </h3>
-                    <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed mb-4">
+                    <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed mb-4 font-normal">
                       {article.desc}
                     </p>
-                    <Link to="/artikel/3" className="text-xs font-bold text-[#f59e0b] hover:underline flex items-center gap-1">
+                    <Link to="/artikel/3" className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
                       Baca Sekarang <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
@@ -983,26 +983,26 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* 8. MITRA & AKREDITASI MARQUEE (Aceternity UI Infinite Moving Cards) */}
-      <section className="py-14 bg-gradient-to-r from-purple-50/40 via-white to-emerald-50/40 border-t border-neutral-200/80">
+      <section className="py-14 bg-gradient-to-r from-purple-50/30 via-white to-purple-50/30 border-t border-purple-100/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-6">
-          <p className="text-xs font-black uppercase tracking-widest text-[#6b1282]">
+          <p className="text-xs font-bold uppercase tracking-widest text-[#6b1282]">
             Jaringan Afiliasi, Pembina &amp; Lembaga Akreditasi Resmi
           </p>
         </div>
         <InfiniteMovingCards items={PARTNER_ITEMS} direction="left" speed="normal" />
       </section>
 
-      {/* 9. MAP LOCATION SECTION (Leaflet + Iridescent Container) */}
-      <section className="py-24 bg-neutral-50 border-t border-neutral-200" id="lokasi">
+      {/* 9. MAP LOCATION SECTION (Leaflet + Royal Purple Container) */}
+      <section className="py-24 bg-neutral-50 border-t border-purple-100/60" id="lokasi">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             badge="JARINGAN LAYANAN & LABORATORIUM"
-            badgeColor="blue"
+            badgeColor="purple"
             title="Lokasi Kantor & Sentra Layanan Halal UIN SGD"
             subtitle="Kunjungi kantor layanan kami di Kampus 1, Gedung Laboratorium Terpadu Kampus 2, serta sentra kemitraan Priangan Timur & Ciayumajakuning."
           />
 
-          <div className="relative rounded-3xl p-[2px] bg-gradient-to-r from-[#6b1282] via-[#0284c7] to-[#10b981] shadow-2xl">
+          <div className="relative rounded-3xl p-[1.5px] bg-gradient-to-r from-[#4a0d5c] via-[#86198f] to-[#4a0d5c] shadow-2xl shadow-purple-950/10">
             <div className="bg-white rounded-[22px] p-3">
               <div id="map" className="w-full h-[460px] rounded-2xl overflow-hidden" />
             </div>

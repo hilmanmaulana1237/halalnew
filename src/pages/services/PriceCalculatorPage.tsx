@@ -116,14 +116,14 @@ export const PriceCalculatorPage: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-neutral-50 pb-20">
-      {/* Header Banner in LPH Royal Purple & Emerald Gradient */}
-      <section className="bg-gradient-to-r from-[#6b1282] via-[#4a0d5c] to-[#005a36] text-white py-16 px-4 sm:px-6 lg:px-8">
+      {/* Header Banner in Royal Purple Gradient */}
+      <section className="bg-gradient-to-r from-[#1a0726] via-[#4a0d5c] to-[#1a0726] text-white py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-emerald-300 text-xs font-bold uppercase tracking-wider mb-4 border border-white/20">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-purple-200 text-xs font-semibold uppercase tracking-wider mb-4 border border-white/20">
             <Calculator className="w-3.5 h-3.5" />
             Transparansi Biaya Sertifikasi Halal
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
             Kalkulator Tarif Halal LPH UIN SGD
           </h1>
           <p className="mt-3 text-neutral-200 max-w-2xl mx-auto text-sm sm:text-base font-normal">
@@ -188,18 +188,18 @@ export const PriceCalculatorPage: React.FC = () => {
                 </label>
                 <div className="grid grid-cols-2 gap-2">
                   {[
-                    { id: 'MIKRO', label: 'Usaha Mikro (UMK)', color: 'bg-[#005a36]' },
-                    { id: 'KECIL', label: 'Usaha Kecil', color: 'bg-[#6b1282]' },
-                    { id: 'MENENGAH', label: 'Usaha Menengah', color: 'bg-[#0284c7]' },
-                    { id: 'BESAR', label: 'Industri Besar', color: 'bg-[#d97706]' },
+                    { id: 'MIKRO', label: 'Usaha Mikro (UMK)' },
+                    { id: 'KECIL', label: 'Usaha Kecil' },
+                    { id: 'MENENGAH', label: 'Usaha Menengah' },
+                    { id: 'BESAR', label: 'Industri Besar' },
                   ].map((s) => (
                     <Button
                       key={s.id}
                       variant={businessScale === s.id ? 'primary' : 'outline'}
                       className={
                         businessScale === s.id
-                          ? `${s.color} text-white font-bold text-xs py-2.5 rounded-xl shadow-xs`
-                          : 'border-neutral-200 text-neutral-700 text-xs py-2.5 rounded-xl'
+                          ? 'bg-[#6b1282] text-white font-bold text-xs py-2.5 rounded-xl shadow-xs'
+                          : 'border-neutral-200 text-neutral-700 text-xs py-2.5 rounded-xl hover:bg-purple-50/50'
                       }
                       onPress={() => setBusinessScale(s.id)}
                     >
@@ -296,19 +296,19 @@ export const PriceCalculatorPage: React.FC = () => {
                         </span>
                       </div>
 
-                      <div className="p-5 rounded-2xl bg-gradient-to-br from-emerald-50 via-purple-50/20 to-emerald-50 border border-emerald-300">
+                      <div className="p-5 rounded-2xl bg-purple-50/70 border border-purple-200">
                         <div className="flex items-center justify-between">
-                          <span className="text-xs font-bold text-[#005a36] uppercase">
+                          <span className="text-xs font-bold text-[#6b1282] uppercase">
                             Estimasi LPH UIN SGD
                           </span>
-                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-[#005a36] text-white">
+                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#6b1282] text-white">
                             Hemat {result.savingsPercent}%
                           </span>
                         </div>
-                        <span className="text-2xl sm:text-3xl font-black text-[#005a36] block mt-1 font-mono">
+                        <span className="text-2xl sm:text-3xl font-black text-[#6b1282] block mt-1 font-mono">
                           {formatRupiah(result.totalLph)}
                         </span>
-                        <span className="text-[11px] text-emerald-800 mt-1 block font-bold">
+                        <span className="text-[11px] text-purple-900 mt-1 block font-semibold">
                           Efisiensi hemat {formatRupiah(result.savingsNominal)}
                         </span>
                       </div>
@@ -316,28 +316,28 @@ export const PriceCalculatorPage: React.FC = () => {
 
                     {/* Breakdown Table */}
                     <div>
-                      <h4 className="text-xs font-black text-neutral-700 uppercase tracking-wide mb-3">
+                      <h4 className="text-xs font-bold text-neutral-700 uppercase tracking-wide mb-3">
                         Rincian Komponen Biaya
                       </h4>
                       <div className="rounded-2xl border border-neutral-200 overflow-hidden text-xs">
                         <table className="w-full text-left">
-                          <thead className="bg-neutral-100/80 text-neutral-700 font-black border-b border-neutral-200">
+                          <thead className="bg-neutral-100/80 text-neutral-700 font-bold border-b border-neutral-200">
                             <tr>
                               <th className="py-3 px-4">Komponen Layanan</th>
                               <th className="py-3 px-4 text-right">Maks. BPJPH</th>
-                              <th className="py-3 px-4 text-right text-[#005a36]">LPH UIN SGD</th>
+                              <th className="py-3 px-4 text-right text-[#6b1282]">LPH UIN SGD</th>
                             </tr>
                           </thead>
                           <tbody className="divide-y divide-neutral-100">
                             {result.breakdown.map((row, idx) => (
                               <tr key={idx} className="hover:bg-purple-50/30 transition-colors">
-                                <td className="py-3 px-4 font-bold text-neutral-800">
+                                <td className="py-3 px-4 font-semibold text-neutral-800">
                                   {row.item}
                                 </td>
                                 <td className="py-3 px-4 text-right text-neutral-500 font-mono font-medium">
                                   {formatRupiah(row.bpjph)}
                                 </td>
-                                <td className="py-3 px-4 text-right font-black text-[#005a36] font-mono">
+                                <td className="py-3 px-4 text-right font-black text-[#6b1282] font-mono">
                                   {formatRupiah(row.lph)}
                                 </td>
                               </tr>

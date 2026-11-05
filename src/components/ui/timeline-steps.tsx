@@ -100,36 +100,36 @@ export const TimelineSteps: React.FC = () => {
 
   const colorConfig = {
     purple: {
-      border: "border-purple-300",
+      border: "border-purple-200",
       activeBg: "bg-[#6b1282] text-white",
-      badge: "bg-purple-100 text-[#6b1282] border-purple-200",
+      badge: "bg-purple-50 text-[#6b1282] border-purple-200",
       accentText: "text-[#6b1282]",
       button: "bg-[#6b1282] hover:bg-[#581c87] text-white",
-      glow: "shadow-purple-500/20",
+      glow: "shadow-purple-950/20",
     },
     blue: {
-      border: "border-sky-300",
-      activeBg: "bg-[#0284c7] text-white",
-      badge: "bg-sky-100 text-[#0284c7] border-sky-200",
-      accentText: "text-[#0284c7]",
-      button: "bg-[#0284c7] hover:bg-[#0369a1] text-white",
-      glow: "shadow-sky-500/20",
+      border: "border-purple-200",
+      activeBg: "bg-[#6b1282] text-white",
+      badge: "bg-purple-50 text-[#6b1282] border-purple-200",
+      accentText: "text-[#6b1282]",
+      button: "bg-[#6b1282] hover:bg-[#581c87] text-white",
+      glow: "shadow-purple-950/20",
     },
     emerald: {
-      border: "border-emerald-300",
-      activeBg: "bg-[#005a36] text-white",
-      badge: "bg-emerald-100 text-[#005a36] border-emerald-200",
-      accentText: "text-[#005a36]",
-      button: "bg-[#005a36] hover:bg-[#00472a] text-white",
-      glow: "shadow-emerald-500/20",
+      border: "border-purple-200",
+      activeBg: "bg-[#6b1282] text-white",
+      badge: "bg-purple-50 text-[#6b1282] border-purple-200",
+      accentText: "text-[#6b1282]",
+      button: "bg-[#6b1282] hover:bg-[#581c87] text-white",
+      glow: "shadow-purple-950/20",
     },
     amber: {
-      border: "border-amber-300",
-      activeBg: "bg-[#d97706] text-white",
-      badge: "bg-amber-100 text-amber-900 border-amber-200",
-      accentText: "text-amber-800",
-      button: "bg-[#d97706] hover:bg-[#b45309] text-white",
-      glow: "shadow-amber-500/20",
+      border: "border-purple-200",
+      activeBg: "bg-[#6b1282] text-white",
+      badge: "bg-purple-50 text-[#6b1282] border-purple-200",
+      accentText: "text-[#6b1282]",
+      button: "bg-[#6b1282] hover:bg-[#581c87] text-white",
+      glow: "shadow-purple-950/20",
     },
   };
 
@@ -198,7 +198,7 @@ export const TimelineSteps: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -15 }}
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="relative rounded-3xl p-[2px] bg-gradient-to-r from-[#6b1282] via-[#0284c7] via-[#10b981] to-[#f59e0b] shadow-2xl"
+          className="relative rounded-3xl p-[1.5px] bg-gradient-to-r from-[#4a0d5c] via-[#86198f] to-[#4a0d5c] shadow-2xl shadow-purple-950/15"
         >
           <div className="bg-white rounded-[22px] p-6 sm:p-10 flex flex-col lg:flex-row items-center gap-8 justify-between">
             <div className="flex-1 space-y-4">

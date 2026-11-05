@@ -28,50 +28,50 @@ export const AboutPage: React.FC = () => {
       title: 'Integritas Syar’i',
       desc: 'Menegakkan standar kepatuhan halal berlandaskan fatwa MUI dan regulasi jaminan produk halal secara mutlak dan terpercaya.',
       icon: <ShieldCheck className="w-6 h-6 text-[#6b1282]" />,
-      accent: 'border-purple-200 bg-purple-50/40 text-[#6b1282]',
+      accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
       spotlight: '#6b1282',
     },
     {
       title: 'Keunggulan Saintifik',
       desc: 'Didukung laboratorium pengujian modern (qPCR, GC-FID) berstandar ISO/IEC 17025 untuk validasi molekuler bahan kritis.',
-      icon: <Sparkles className="w-6 h-6 text-[#005a36]" />,
-      accent: 'border-emerald-200 bg-emerald-50/40 text-[#005a36]',
-      spotlight: '#10b981',
+      icon: <Sparkles className="w-6 h-6 text-[#6b1282]" />,
+      accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
+      spotlight: '#6b1282',
     },
     {
       title: 'Inklusivitas UMK',
       desc: 'Mendampingi ribuan pelaku usaha mikro dan kecil melalui program Sertifikasi Halal Gratis (SEHATI) di seluruh Jawa Barat.',
-      icon: <Users className="w-6 h-6 text-[#0284c7]" />,
-      accent: 'border-sky-200 bg-sky-50/40 text-[#0284c7]',
-      spotlight: '#0284c7',
+      icon: <Users className="w-6 h-6 text-[#6b1282]" />,
+      accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
+      spotlight: '#6b1282',
     },
     {
       title: 'Sinergi Kolaboratif',
       desc: 'Menjalin kemitraan erat bersama BPJPH, Kementerian Agama RI, KAN, MUI, dinas terkait, serta perguruan tinggi global.',
-      icon: <Award className="w-6 h-6 text-[#f59e0b]" />,
-      accent: 'border-amber-200 bg-amber-50/40 text-amber-700',
-      spotlight: '#f59e0b',
+      icon: <Award className="w-6 h-6 text-[#6b1282]" />,
+      accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
+      spotlight: '#6b1282',
     },
   ];
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-white">
-      {/* Hero Banner in LPH Royal Purple & Emerald Gradient with Sparkles */}
-      <section className="relative py-20 lg:py-28 bg-[#1b183a] text-white overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#6b1282] via-[#4a0d5c] to-[#005a36]/80 opacity-95" />
+      {/* Hero Banner in Royal Purple Gradient with Sparkles */}
+      <section className="relative py-20 lg:py-28 bg-[#1a0726] text-white overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1a0726] via-[#4a0d5c] to-[#1a0726] opacity-95" />
         <SparklesCore
           id="about-sparkles"
           minSize={0.7}
           maxSize={2.2}
           particleDensity={35}
-          particleColor={['#c084fc', '#34d399', '#38bdf8', '#fbbf24', '#ffffff']}
+          particleColor={['#ffffff', '#f5d0fe', '#e9d5ff', '#d8b4fe']}
         />
         <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-emerald-300 text-xs font-bold uppercase tracking-wider mb-4 border border-white/20">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-purple-200 text-xs font-semibold uppercase tracking-wider mb-4 border border-white/20">
             <BookOpen className="w-3.5 h-3.5" />
             Profil &amp; Sejarah Lembaga
           </div>
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
             Tentang Halal Center UIN SGD Bandung
           </h1>
           <p className="mt-4 text-base sm:text-lg text-neutral-200 max-w-3xl mx-auto leading-relaxed font-normal">
@@ -142,34 +142,34 @@ export const AboutPage: React.FC = () => {
                 <div className="w-12 h-12 rounded-2xl bg-purple-100 text-[#6b1282] flex items-center justify-center mb-6 shadow-xs">
                   <Target className="w-6 h-6" />
                 </div>
-                <h3 className="text-2xl font-black text-[#1b183a] mb-4">Visi Utama</h3>
+                <h3 className="text-2xl font-bold text-[#1a0726] mb-4">Visi Utama</h3>
                 <p className="text-neutral-600 leading-relaxed text-base font-normal">
                   "Menjadi Lembaga Pemeriksa Halal (LPH) dan Pusat Kajian Halal bereputasi internasional, unggul dalam sains autentikasi halal, berintegritas syar'i, dan terdepan dalam pemberdayaan UMK menuju Indonesia Pusat Halal Dunia."
                 </p>
               </div>
             </Card>
 
-            <Card className="rounded-3xl p-8 bg-white border border-emerald-200/80 shadow-md flex flex-col justify-between">
+            <Card className="rounded-3xl p-8 bg-white border border-purple-100 shadow-md shadow-purple-950/5 flex flex-col justify-between">
               <div>
-                <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-[#005a36] flex items-center justify-center mb-6 shadow-xs">
+                <div className="w-12 h-12 rounded-2xl bg-purple-100 text-[#6b1282] flex items-center justify-center mb-6 shadow-xs">
                   <CheckCircle2 className="w-6 h-6" />
                 </div>
-                <h3 className="text-2xl font-black text-[#1b183a] mb-4">Misi Strategis</h3>
+                <h3 className="text-2xl font-bold text-[#1a0726] mb-4">Misi Strategis</h3>
                 <ul className="space-y-3 text-neutral-600 text-sm">
                   <li className="flex items-start gap-2.5">
-                    <span className="w-2 h-2 rounded-full bg-[#005a36] mt-2 shrink-0" />
+                    <span className="w-2 h-2 rounded-full bg-[#6b1282] mt-2 shrink-0" />
                     Menyelenggarakan pemeriksaan kehalalan produk yang profesional, akuntabel, dan tepat waktu.
                   </li>
                   <li className="flex items-start gap-2.5">
-                    <span className="w-2 h-2 rounded-full bg-[#005a36] mt-2 shrink-0" />
+                    <span className="w-2 h-2 rounded-full bg-[#6b1282] mt-2 shrink-0" />
                     Mengembangkan laboratorium uji kehalalan berbasis teknologi mutakhir dan standar ISO 17025.
                   </li>
                   <li className="flex items-start gap-2.5">
-                    <span className="w-2 h-2 rounded-full bg-[#005a36] mt-2 shrink-0" />
+                    <span className="w-2 h-2 rounded-full bg-[#6b1282] mt-2 shrink-0" />
                     Mendampingi serta mengedukasi pelaku usaha mikro, kecil, dan menengah secara berkesinambungan.
                   </li>
                   <li className="flex items-start gap-2.5">
-                    <span className="w-2 h-2 rounded-full bg-[#005a36] mt-2 shrink-0" />
+                    <span className="w-2 h-2 rounded-full bg-[#6b1282] mt-2 shrink-0" />
                     Menerbitkan hasil riset internasional melalui Indonesian Journal of Halal Research (IJHR).
                   </li>
                 </ul>

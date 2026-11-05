@@ -18,13 +18,13 @@ export const ContactPage: React.FC = () => {
   return (
     <div className="flex flex-col w-full min-h-screen bg-neutral-50 pb-20">
       {/* Banner */}
-      <section className="bg-gradient-to-r from-[#6b1282] via-[#4a0d5c] to-[#005a36] text-white py-16 px-4 sm:px-6 lg:px-8 text-center">
+      <section className="bg-gradient-to-r from-[#1a0726] via-[#4a0d5c] to-[#1a0726] text-white py-16 px-4 sm:px-6 lg:px-8 text-center">
         <div className="max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-emerald-300 text-xs font-bold uppercase tracking-wider mb-4 border border-white/20 shadow-xs">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-purple-200 text-xs font-semibold uppercase tracking-wider mb-4 border border-white/20 shadow-xs">
             <Phone className="w-3.5 h-3.5" />
             Layanan Komunikasi &amp; Kemitraan
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight">
             Hubungi Halal Center UIN SGD
           </h1>
           <p className="mt-3 text-neutral-200 max-w-2xl mx-auto text-sm sm:text-base font-normal">
@@ -40,17 +40,17 @@ export const ContactPage: React.FC = () => {
           <div className="lg:col-span-5">
             <Card className="bg-white rounded-3xl border border-neutral-200/80 shadow-md p-6 sm:p-8 space-y-6 h-full">
               <div className="border-b border-neutral-100 pb-4">
-                <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider">
+                <span className="text-xs font-bold text-[#6b1282] uppercase tracking-wider">
                   SEKRETARIAT &amp; LABORATORIUM
                 </span>
-                <h3 className="text-xl font-bold text-[#272353] mt-1">
+                <h3 className="text-xl font-bold text-[#1a0726] mt-1">
                   Kantor Pusat LPH UIN SGD
                 </h3>
               </div>
 
               <div className="space-y-4 text-xs sm:text-sm">
                 <div className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-[#005a36] shrink-0 mt-0.5" />
+                  <MapPin className="w-5 h-5 text-[#6b1282] shrink-0 mt-0.5" />
                   <div>
                     <h5 className="font-bold text-neutral-900">Alamat Kantor &amp; Lab</h5>
                     <p className="text-neutral-600 mt-1">
@@ -63,12 +63,12 @@ export const ContactPage: React.FC = () => {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Phone className="w-5 h-5 text-[#005a36] shrink-0 mt-0.5" />
+                  <Phone className="w-5 h-5 text-[#6b1282] shrink-0 mt-0.5" />
                   <div>
                     <h5 className="font-bold text-neutral-900">Telepon &amp; WhatsApp</h5>
                     <p className="text-neutral-600 mt-1">
                       WA Resmi:{' '}
-                      <a href="https://wa.me/6282118201232" className="text-emerald-700 font-bold hover:underline">
+                      <a href="https://wa.me/6282118201232" className="text-[#6b1282] font-bold hover:underline">
                         +62 821 1820 1232
                       </a>
                     </p>
@@ -77,17 +77,17 @@ export const ContactPage: React.FC = () => {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Mail className="w-5 h-5 text-[#005a36] shrink-0 mt-0.5" />
+                  <Mail className="w-5 h-5 text-[#6b1282] shrink-0 mt-0.5" />
                   <div>
                     <h5 className="font-bold text-neutral-900">Email Resmi</h5>
-                    <a href="mailto:halal@uinsgd.ac.id" className="text-emerald-700 hover:underline">
+                    <a href="mailto:halal@uinsgd.ac.id" className="text-[#6b1282] hover:underline">
                       halal@uinsgd.ac.id
                     </a>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Clock className="w-5 h-5 text-[#005a36] shrink-0 mt-0.5" />
+                  <Clock className="w-5 h-5 text-[#6b1282] shrink-0 mt-0.5" />
                   <div>
                     <h5 className="font-bold text-neutral-900">Jam Operasional Layanan</h5>
                     <p className="text-neutral-600 mt-1">
@@ -108,7 +108,7 @@ export const ContactPage: React.FC = () => {
                   <Button
                     variant="primary"
                     fullWidth
-                    className="bg-[#25D366] hover:bg-[#20ba59] text-white font-bold py-2.5 rounded-xl shadow-xs text-xs sm:text-sm flex items-center justify-center gap-2"
+                    className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold py-2.5 rounded-xl shadow-xs text-xs sm:text-sm flex items-center justify-center gap-2"
                   >
                     <MessageSquare className="w-4 h-4" />
                     Chat Langsung via WhatsApp
@@ -123,7 +123,7 @@ export const ContactPage: React.FC = () => {
             <Card className="bg-white rounded-3xl border border-neutral-200/80 shadow-md p-6 sm:p-8">
               {sent ? (
                 <div className="p-8 text-center space-y-4">
-                  <div className="w-16 h-16 rounded-full bg-emerald-100 text-[#005a36] flex items-center justify-center mx-auto">
+                  <div className="w-16 h-16 rounded-full bg-purple-100 text-[#6b1282] flex items-center justify-center mx-auto">
                     <CheckCircle2 className="w-8 h-8" />
                   </div>
                   <h3 className="text-2xl font-bold text-neutral-900">
@@ -134,7 +134,7 @@ export const ContactPage: React.FC = () => {
                   </p>
                   <Button
                     variant="primary"
-                    className="bg-[#272353] text-white rounded-xl"
+                    className="bg-[#6b1282] text-white rounded-xl"
                     onPress={() => setSent(false)}
                   >
                     Kirim Pesan Lain
@@ -143,10 +143,10 @@ export const ContactPage: React.FC = () => {
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="border-b border-neutral-100 pb-3">
-                    <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider">
+                    <span className="text-xs font-bold text-[#6b1282] uppercase tracking-wider">
                       FORMULIR PERTANYAAN
                     </span>
-                    <h3 className="text-xl font-bold text-[#272353] mt-1">
+                    <h3 className="text-xl font-bold text-[#1a0726] mt-1">
                       Kirim Pesan Langsung
                     </h3>
                   </div>
@@ -224,7 +224,7 @@ export const ContactPage: React.FC = () => {
                     type="submit"
                     variant="primary"
                     fullWidth
-                    className="bg-[#272353] hover:bg-[#1c183d] text-white font-bold py-3 rounded-xl shadow-md text-sm"
+                    className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold py-3 rounded-xl shadow-md text-sm"
                   >
                     Kirimkan Pesan
                   </Button>

@@ -82,7 +82,7 @@ export const AdminDashboard: React.FC = () => {
                 onClick={() => setActiveTab(item.id as any)}
                 className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all ${
                   activeTab === item.id
-                    ? 'bg-gradient-to-r from-[#6b1282] to-[#005a36] text-white shadow-md'
+                    ? 'bg-[#6b1282] text-white shadow-md'
                     : 'text-neutral-300 hover:bg-white/10 hover:text-white'
                 }`}
               >
