@@ -9,12 +9,14 @@ import {
   BookOpen,
   CheckCircle2,
   FileCheck,
+  FileText,
   FlaskConical,
   GraduationCap,
   HelpCircle,
   MapPin,
   MessageCircle,
   Microscope,
+  Newspaper,
   Phone,
   ShieldCheck,
   Sparkles,
@@ -22,7 +24,7 @@ import {
   Utensils,
   ExternalLink,
 } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { HeroVideoBanner } from '@/components/ui/hero-video-banner';
 import { MetricCard } from '@/components/ui/metric-card';
 import { BentoGrid, BentoGridItem } from '@/components/ui/bento-grid';
@@ -339,7 +341,7 @@ export const HomePage: React.FC = () => {
     return () => {
       if (timer1) clearTimeout(timer1);
       if (timer2) clearTimeout(timer2);
-      window.removeEventListener('resize', () => {});
+      window.removeEventListener('resize', () => { });
       if (mapInstance) {
         mapInstance.remove();
       }
@@ -911,27 +913,89 @@ export const HomePage: React.FC = () => {
             </Link>
           </div>
 
-          {/* Category Tabs using HeroUI Tabs */}
-          <div className="mb-8">
+          {/* Category Tabs using HeroUI Tabs with Framer Motion Highlight Pill */}
+          <div className="mb-10">
             <Tabs
               selectedKey={activeTab}
               onSelectionChange={(key) => setActiveTab(key as string)}
-              className="w-full overflow-x-auto"
+              className="w-full"
             >
-              <Tabs.ListContainer>
-                <Tabs.List aria-label={isEn ? "Article Categories" : "Kategori Artikel"}>
-                  <Tabs.Tab id="artikel">{isEn ? 'Key Articles & Regulations' : 'Artikel & Regulasi Utama'}</Tabs.Tab>
-                  <Tabs.Tab id="uin_berita">{isEn ? 'Halal Center News' : 'Berita Halal Center'}</Tabs.Tab>
-                  <Tabs.Tab id="jurnal">{isEn ? 'Journal & Research (IJHR)' : 'Jurnal & Riset (IJHR)'}</Tabs.Tab>
-                  <Tabs.Tab id="umk">{isEn ? 'MSE Zone & SEHATI' : 'Ruang UMK & SEHATI'}</Tabs.Tab>
-                  <Tabs.Tab id="fatwa">{isEn ? 'Fatwa & BPJPH Regulations' : 'Fatwa & Regulasi BPJPH'}</Tabs.Tab>
+              <Tabs.ListContainer className="p-1.5 rounded-2xl bg-neutral-100/90 border border-neutral-200/80 shadow-xs backdrop-blur-md inline-block max-w-full overflow-x-auto">
+                <Tabs.List
+                  aria-label={isEn ? "Article Categories" : "Kategori Artikel"}
+                  className="flex flex-nowrap sm:flex-wrap items-center gap-1.5 bg-transparent border-none p-0"
+                >
+                  {[
+                    {
+                      id: 'artikel',
+                      label: isEn ? 'Key Articles & Regulations' : 'Artikel & Regulasi Utama',
+                      icon: <BookOpen className="w-3.5 h-3.5" />,
+                    },
+                    {
+                      id: 'uin_berita',
+                      label: isEn ? 'Halal Center News' : 'Berita Halal Center',
+                      icon: <Newspaper className="w-3.5 h-3.5" />,
+                    },
+                    {
+                      id: 'jurnal',
+                      label: isEn ? 'Journal & Research (IJHR)' : 'Jurnal & Riset (IJHR)',
+                      icon: <FlaskConical className="w-3.5 h-3.5" />,
+                    },
+                    {
+                      id: 'umk',
+                      label: isEn ? 'MSE Zone & SEHATI' : 'Ruang UMK & SEHATI',
+                      icon: <Users className="w-3.5 h-3.5" />,
+                    },
+                    {
+                      id: 'fatwa',
+                      label: isEn ? 'Fatwa & BPJPH Regulations' : 'Fatwa & Regulasi BPJPH',
+                      icon: <ShieldCheck className="w-3.5 h-3.5" />,
+                    },
+                  ].map((tab) => {
+                    const isActive = activeTab === tab.id;
+                    return (
+                      <Tabs.Tab
+                        key={tab.id}
+                        id={tab.id}
+                        className={`relative z-10 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-colors duration-200 outline-none select-none flex items-center gap-2 cursor-pointer shrink-0 border-none bg-transparent ${
+                          isActive
+                            ? 'text-white'
+                            : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-200/50'
+                        }`}
+                      >
+                        {isActive && (
+                          <motion.div
+                            layoutId="activeArticleTabBadge"
+                            className="absolute inset-0 bg-gradient-to-r from-[#6b1282] via-[#7e1499] to-[#6b1282] rounded-xl shadow-md shadow-purple-950/25 -z-10"
+                            transition={{
+                              type: 'spring',
+                              stiffness: 450,
+                              damping: 32,
+                            }}
+                          />
+                        )}
+                        <span className="relative z-10 flex items-center gap-2">
+                          {tab.icon}
+                          {tab.label}
+                        </span>
+                      </Tabs.Tab>
+                    );
+                  })}
                 </Tabs.List>
               </Tabs.ListContainer>
             </Tabs>
           </div>
 
-          {/* Tab 1: Artikel */}
-          {activeTab === 'artikel' && (
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 16, filter: 'blur(4px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, y: -12, filter: 'blur(4px)' }}
+              transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {/* Tab 1: Artikel */}
+              {activeTab === 'artikel' && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
                 {
@@ -1251,6 +1315,8 @@ export const HomePage: React.FC = () => {
               ))}
             </div>
           )}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </section>
 
