@@ -77,8 +77,8 @@ export const Navbar: React.FC = () => {
               <Link
                 to="/"
                 className={`px-3.5 py-2 rounded-xl text-sm font-semibold transition-all ${isActive('/')
-                    ? 'text-[#6b1282] bg-purple-50/90 shadow-xs'
-                    : 'text-neutral-700 hover:text-[#6b1282] hover:bg-purple-50/40'
+                  ? 'text-[#6b1282] bg-purple-50/90 shadow-xs'
+                  : 'text-neutral-700 hover:text-[#6b1282] hover:bg-purple-50/40'
                   }`}
               >
                 {t('nav_home')}
@@ -329,8 +329,8 @@ export const Navbar: React.FC = () => {
               <Link
                 to="/kontak"
                 className={`px-3.5 py-2 rounded-xl text-sm font-semibold transition-all ${isActive('/kontak')
-                    ? 'text-[#6b1282] bg-purple-50/90 shadow-xs'
-                    : 'text-neutral-700 hover:text-[#6b1282] hover:bg-purple-50/40'
+                  ? 'text-[#6b1282] bg-purple-50/90 shadow-xs'
+                  : 'text-neutral-700 hover:text-[#6b1282] hover:bg-purple-50/40'
                   }`}
               >
                 {t('nav_contact')}
@@ -344,7 +344,6 @@ export const Navbar: React.FC = () => {
                   variant="primary"
                   className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold px-5 py-2.5 rounded-full text-xs sm:text-sm shadow-md transition-all flex items-center gap-1.5"
                 >
-                  <Sparkles className="w-3.5 h-3.5 text-purple-200" />
                   {t('nav_calc_fee')}
                 </Button>
               </Link>
@@ -352,11 +351,10 @@ export const Navbar: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setLanguage('id')}
-                  className={`px-2 py-1 rounded-lg transition-all duration-200 ${
-                    language === 'id'
+                  className={`px-2 py-1 rounded-lg transition-all duration-200 ${language === 'id'
                       ? 'bg-purple-100 text-[#6b1282] font-black shadow-2xs'
                       : 'text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100'
-                  }`}
+                    }`}
                 >
                   ID
                 </button>
@@ -364,11 +362,10 @@ export const Navbar: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setLanguage('en')}
-                  className={`px-2 py-1 rounded-lg transition-all duration-200 ${
-                    language === 'en'
+                  className={`px-2 py-1 rounded-lg transition-all duration-200 ${language === 'en'
                       ? 'bg-purple-100 text-[#6b1282] font-black shadow-2xs'
                       : 'text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100'
-                  }`}
+                    }`}
                 >
                   EN
                 </button>
@@ -413,22 +410,20 @@ export const Navbar: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setLanguage('id')}
-                    className={`px-3 py-1 text-xs font-bold rounded-xl transition-all ${
-                      language === 'id'
+                    className={`px-3 py-1 text-xs font-bold rounded-xl transition-all ${language === 'id'
                         ? 'bg-[#6b1282] text-white shadow-xs'
                         : 'text-neutral-600 hover:bg-white'
-                    }`}
+                      }`}
                   >
                     ID
                   </button>
                   <button
                     type="button"
                     onClick={() => setLanguage('en')}
-                    className={`px-3 py-1 text-xs font-bold rounded-xl transition-all ${
-                      language === 'en'
+                    className={`px-3 py-1 text-xs font-bold rounded-xl transition-all ${language === 'en'
                         ? 'bg-[#6b1282] text-white shadow-xs'
                         : 'text-neutral-600 hover:bg-white'
-                    }`}
+                      }`}
                   >
                     EN
                   </button>

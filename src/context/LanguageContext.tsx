@@ -66,7 +66,7 @@ export const translations: Translations = {
   metric_exp_label: { id: 'PENGALAMAN & DEDIKASI', en: 'EXPERIENCE & DEDICATION' },
   metric_exp_change: { id: 'Sejak 2016', en: 'Since 2016' },
   metric_exp_desc: { id: 'Dedikasi riset sains halal & sertifikasi resmi berkelanjutan bagi kemaslahatan umat.', en: 'Dedicated halal science research & official certification for community welfare.' },
-  
+
   metric_certs_label: { id: 'SERTIFIKAT HALAL TERBIT', en: 'HALAL CERTIFICATES ISSUED' },
   metric_certs_desc: { id: 'Diterbitkan resmi bagi pelaku usaha mikro, kecil, hingga korporasi multinasional.', en: 'Officially issued for micro, small enterprises up to multinational corporations.' },
 
@@ -158,7 +158,7 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType>({
   language: 'id',
-  setLanguage: () => {},
+  setLanguage: () => { },
   t: (key: string) => key,
 });
 

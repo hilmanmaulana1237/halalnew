@@ -119,6 +119,53 @@ const KNOWLEDGE_BASE: SmartAnswer[] = [
   }
 ];
 
+const renderFormattedMessage = (text: string, isUser: boolean) => {
+  if (isUser) {
+    return <span className="whitespace-pre-line">{text}</span>;
+  }
+
+  const lines = text.split('\n');
+
+  return (
+    <div className="space-y-1 text-xs sm:text-[13px] leading-relaxed">
+      {lines.map((line, lineIdx) => {
+        if (!line.trim()) {
+          return <div key={lineIdx} className="h-1.5" />;
+        }
+
+        // Split by markdown bold (**...**) and italic (*...*)
+        const segments = line.split(/(\*\*.*?\*\*|\*.*?\*)/g);
+
+        return (
+          <div key={lineIdx} className="leading-relaxed">
+            {segments.map((seg, segIdx) => {
+              if (seg.startsWith('**') && seg.endsWith('**') && seg.length >= 4) {
+                const boldContent = seg.slice(2, -2);
+                return (
+                  <strong key={segIdx} className="font-bold text-[#1a0726]">
+                    {boldContent}
+                  </strong>
+                );
+              }
+              if (seg.startsWith('*') && seg.endsWith('*') && seg.length >= 2) {
+                const italicContent = seg.slice(1, -1);
+                return (
+                  <em key={segIdx} className="italic text-neutral-700">
+                    {italicContent}
+                  </em>
+                );
+              }
+              // Clean any stray asterisks just in case
+              const cleaned = seg.replace(/\*\*/g, '');
+              return <span key={segIdx}>{cleaned}</span>;
+            })}
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
 export const ChatbotWidget: React.FC = () => {
   const { language, t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
@@ -392,13 +439,13 @@ export const ChatbotWidget: React.FC = () => {
                   >
                     {/* Message Bubble */}
                     <div
-                      className={`px-4 py-3 rounded-2xl whitespace-pre-line text-xs sm:text-[13px] leading-relaxed ${
+                      className={`px-4 py-3 rounded-2xl text-xs sm:text-[13px] leading-relaxed ${
                         isUser
                           ? 'bg-[#6b1282] text-white rounded-tr-xs shadow-md shadow-purple-950/10'
                           : 'bg-white text-neutral-800 border border-purple-100 rounded-tl-xs shadow-xs'
                       }`}
                     >
-                      {m.text}
+                      {renderFormattedMessage(m.text, isUser)}
                     </div>
 
                     <span className="text-[10px] text-neutral-400 mt-1 px-1 flex items-center gap-1">
