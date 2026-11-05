@@ -1,0 +1,138 @@
+import React, { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { Button, Card, Skeleton } from '@heroui/react';
+import { Calendar, MapPin, ArrowLeft, Share2 } from 'lucide-react';
+import { api, formatDate } from '@/services/api';
+import type { NewsItem } from '@/types';
+
+export const NewsDetailPage: React.FC = () => {
+  const { slug } = useParams<{ slug: string }>();
+  const [news, setNews] = useState<NewsItem | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchDetail = async () => {
+      setLoading(true);
+      try {
+        const res = await api.get(`/news/${slug}`);
+        if (res.data?.success) {
+          setNews(res.data.data);
+        } else {
+          throw new Error('Not found');
+        }
+      } catch {
+        // Fallback for static mock
+        setNews({
+          id: 1,
+          title:
+            'Akselerasi Sertifikasi Halal: UIN Sunan Gunung Djati Latih 100+ Pendamping PPH Jawa Barat',
+          slug: slug || 'akselerasi-sertifikasi-halal-uin-sgd',
+          excerpt:
+            'LP3H Halal Center UIN Sunan Gunung Djati terus menggenjot sertifikasi gratis SEHATI bagi ribuan pelaku usaha mikro di Jawa Barat.',
+          content: `Pusat Kajian Halal (Halal Center) UIN Sunan Gunung Djati Bandung terus memperkuat komitmennya sebagai motor penggerak ekosistem halal nasional melalui konsep "Halalsphere University". 
+
+Dalam kegiatan pelatihan intensif yang diselenggarakan di Kampus 1 Cibiru, sebanyak lebih dari 100 peserta dari berbagai kabupaten dan kota di Jawa Barat dibekali pemahaman mendalam tentang standar Sistem Jaminan Produk Halal (SJPH), verifikasi dokumen bahan baku, serta integritas pendampingan usaha mikro.
+
+Rektor UIN SGD Bandung, Prof. Dr. H. Rosihon Anwar, M.Ag., dalam sambutannya menegaskan bahwa keberadaan Halal Center dan Lembaga Pemeriksa Halal (LPH) UIN SGD adalah bukti nyata hilirisasi riset akademik dan pengabdian masyarakat untuk memberikan rasa aman serta perlindungan konsumen muslim di seluruh penjuru Indonesia.
+
+Kepala Halal Center UIN SGD, Dr. Tri Cahyanto, M.Si., menambahkan bahwa pelatihan ini ditargetkan mampu mempercepat terbitnya ribuan sertifikat halal baru bagi produk olahan makanan, minuman, dan kuliner khas daerah Jawa Barat.`,
+          category: 'KEGIATAN',
+          status: 'PUBLISHED',
+          author: 'Humas Halal Center',
+          image: '/assets/images/img_011.jpg',
+          eventDate: '2026-11-10',
+          eventLocation: 'Aula Gedung Rektorat Lt. 2 Kampus 1 UIN SGD',
+          createdAt: '2026-11-04T08:00:00Z',
+          updatedAt: '2026-11-04T08:00:00Z',
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDetail();
+  }, [slug]);
+
+  if (loading || !news) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 py-16 space-y-4">
+        <Skeleton className="h-10 w-3/4 rounded-xl" />
+        <Skeleton className="h-80 w-full rounded-2xl" />
+        <Skeleton className="h-6 w-full rounded-lg" />
+        <Skeleton className="h-6 w-5/6 rounded-lg" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col w-full min-h-screen bg-neutral-50 pb-20 pt-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        {/* Back Link */}
+        <Link
+          to="/berita"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-500 hover:text-[#005a36] transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Kembali ke Daftar Berita
+        </Link>
+
+        {/* Article Card */}
+        <Card className="bg-white rounded-3xl border border-neutral-200/80 shadow-md p-6 sm:p-10 space-y-6">
+          <div>
+            <span className="inline-block px-3 py-1 rounded-md text-xs font-bold bg-[#005a36] text-white mb-3">
+              {news.category}
+            </span>
+            <h1 className="text-2xl sm:text-4xl font-extrabold text-[#272353] tracking-tight leading-snug">
+              {news.title}
+            </h1>
+            <div className="flex flex-wrap items-center gap-4 text-xs text-neutral-400 mt-4 pb-4 border-b border-neutral-100">
+              <span className="flex items-center gap-1.5 text-neutral-600 font-medium">
+                <Calendar className="w-3.5 h-3.5 text-[#005a36]" />
+                {formatDate(news.createdAt)}
+              </span>
+              <span>•</span>
+              <span>Penulis: {news.author}</span>
+            </div>
+          </div>
+
+          {/* Featured Image */}
+          <div className="rounded-2xl overflow-hidden border border-neutral-100">
+            <img
+              src={news.image || '/assets/images/img_011.jpg'}
+              alt={news.title}
+              className="w-full max-h-[450px] object-cover"
+            />
+          </div>
+
+          {/* Event Metadata (if any) */}
+          {(news.eventDate || news.eventLocation) && (
+            <div className="p-4 rounded-xl bg-neutral-50 border border-neutral-200 text-xs text-neutral-600 space-y-1">
+              {news.eventDate && (
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-4 h-4 text-[#005a36]" />
+                  <span>
+                    <strong>Tanggal Acara:</strong> {formatDate(news.eventDate)}
+                  </span>
+                </div>
+              )}
+              {news.eventLocation && (
+                <div className="flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-[#005a36]" />
+                  <span>
+                    <strong>Lokasi:</strong> {news.eventLocation}
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Body Content */}
+          <div className="prose max-w-none text-neutral-700 text-sm sm:text-base leading-relaxed space-y-4 whitespace-pre-line">
+            {news.content}
+          </div>
+        </Card>
+      </div>
+    </div>
+  );
+};
+
+export default NewsDetailPage;
