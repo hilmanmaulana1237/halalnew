@@ -179,97 +179,9 @@ const PARTNER_ITEMS = [
   { name: 'Badan Penyelenggara Jaminan Produk Halal', image: '/assets/images/uin_sgd/uin_18.webp', alt: 'BPJPH Kemenag' },
 ];
 
-export interface LeaderArticle {
-  id: string;
-  title: string;
-  image: string;
-  category: string;
-  author: string;
-  summary: string;
-}
-
-export const KEPALA_LPH_ARTICLES: LeaderArticle[] = [
-  {
-    id: 'kl-1',
-    title: 'Pengujian qPCR DNA Babi & Akreditasi ISO 17025',
-    image: '/assets/images/uji-laboratorium.jpg',
-    category: 'Laboratorium Hayati',
-    author: 'Dr. Tri Cahyanto, M.Si.',
-    summary:
-      'Laboratorium Terpadu UIN SGD menerapkan metode amplifikasi DNA presisi tinggi untuk deteksi cemaran non-halal secara molekuler dengan limit deteksi sangat sensitif dan berstandar internasional ISO/IEC 17025.',
-  },
-  {
-    id: 'kl-2',
-    title: 'Pemeriksaan Sistem Jaminan Produk Halal Terpadu',
-    image: '/assets/images/pemeriksaaan-kehalalan-produk.jpg',
-    category: 'Integritas Audit LPH',
-    author: 'Dr. Tri Cahyanto, M.Si.',
-    summary:
-      'Standar pemeriksaan lapangan berintegritas tinggi untuk memastikan seluruh rantai pasok bahan baku, fasilitas pengolahan, dan SJPH industri memenuhi ketentuan fatwa MUI serta regulasi SIHALAL BPJPH.',
-  },
-  {
-    id: 'kl-3',
-    title: 'Dampingan 10.000+ Pelaku Usaha Mikro & Kecil',
-    image: '/assets/images/award-1.jpg',
-    category: 'Pemberdayaan UMK',
-    author: 'Dr. Tri Cahyanto, M.Si.',
-    summary:
-      'Pusat Halal UIN SGD mengerahkan ratusan pendamping PPH berlisensi di seluruh wilayah Jawa Barat untuk akselerasi legalitas sertifikasi halal gratis (SEHATI) bagi pelaku usaha mikro dan kecil.',
-  },
-  {
-    id: 'kl-4',
-    title: 'Standarisasi Auditor Halal & Penyelia Berlisensi',
-    image: '/assets/images/award-3.jpg',
-    category: 'Pengembangan SDM',
-    author: 'Dr. Tri Cahyanto, M.Si.',
-    summary:
-      'Program pembekalan dan sertifikasi kompetensi resmi berstandar BNSP dan BPJPH bagi auditor halal, penyelia halal industri, serta juru sembelih halal (JULEHA) profesional.',
-  },
-];
-
-export const PEMBINA_REKTOR_ARTICLES: LeaderArticle[] = [
-  {
-    id: 'pr-1',
-    title: 'Gagasan Halalsphere University untuk Peradaban Dunia',
-    image: '/assets/images/uin_sgd/uin_07.webp',
-    category: 'Visi Peradaban',
-    author: 'Prof. Dr. H. Rosihon Anwar, M.Ag.',
-    summary:
-      'UIN Sunan Gunung Djati Bandung mengintegrasikan seluruh fakultas, riset multidisiplin, dan laboratorium terpadu guna mewujudkan kampus sebagai pusat rujukan industri halal berkelas dunia.',
-  },
-  {
-    id: 'pr-2',
-    title: 'Penguatan Lab Riset Hayati Kampus 2 Berstandar Dunia',
-    image: '/assets/images/uin_sgd/uin_08.webp',
-    category: 'Infrastruktur Riset',
-    author: 'Prof. Dr. H. Rosihon Anwar, M.Ag.',
-    summary:
-      'Pembangunan dan modernisasi fasilitas instrumen saintifik canggih di Kampus 2 Gedebage untuk pengujian autentikasi bahan pangan, farmasi, dan kosmetik bertaraf internasional.',
-  },
-  {
-    id: 'pr-3',
-    title: 'Sinergi Strategis Kemenag, BPJPH, MUI & KAN',
-    image: '/assets/images/uin_sgd/uin_09.webp',
-    category: 'Kolaborasi Kelembagaan',
-    author: 'Prof. Dr. H. Rosihon Anwar, M.Ag.',
-    summary:
-      'Kolaborasi kelembagaan tripartit yang kokoh antara perguruan tinggi, regulator pemerintah, dan komisi fatwa memastikan kepastian hukum syariah dan perlindungan hak konsumen muslim.',
-  },
-  {
-    id: 'pr-4',
-    title: 'Capaian Kinerja & Rekognisi Internasional 2023-2025',
-    image: '/assets/images/uin_sgd/uin_13.webp',
-    category: 'Akselerasi Mutu',
-    author: 'Prof. Dr. H. Rosihon Anwar, M.Ag.',
-    summary:
-      'Laporan komprehensif transformasi tata kelola institusi yang menempatkan Halal Center UIN SGD sebagai mitra terpercaya bagi ribuan industri nasional dan multinasional.',
-  },
-];
-
 export const HomePage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>('artikel');
   const [selectedDirector, setSelectedDirector] = useState<Director | null>(null);
-  const [selectedArticle, setSelectedArticle] = useState<LeaderArticle | null>(null);
 
   useEffect(() => {
     let mapInstance: L.Map | null = null;
@@ -390,52 +302,58 @@ export const HomePage: React.FC = () => {
       {/* 1. HERO BANNER WITH VIDEO & SEARCH CARD (Aceternity UI Rebuild) */}
       <HeroVideoBanner />
 
-      {/* 2. STATS SECTION (Untitled UI Metric Cards Row - Floating over Hero Banner) */}
-      <section className="relative z-30 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 -mt-10 sm:-mt-14 mb-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          <MetricCard
-            label="PENGALAMAN & DEDIKASI"
-            value="8+"
-            numberTarget={8}
-            suffix="+"
-            change="Sejak 2016"
-            isPositive={true}
-            accentColor="purple"
-            description="Dedikasi riset sains halal & sertifikasi resmi berkelanjutan bagi kemaslahatan umat."
-            icon={<Award className="w-5 h-5" />}
-          />
-          <MetricCard
-            label="SERTIFIKAT HALAL TERBIT"
-            value="1.000+"
-            numberTarget={1000}
-            suffix="+"
-            change="+28% YoY"
-            isPositive={true}
-            accentColor="purple"
-            description="Diterbitkan resmi bagi pelaku usaha mikro, kecil, hingga korporasi multinasional."
-            icon={<FileCheck className="w-5 h-5" />}
-          />
-          <MetricCard
-            label="AUDITOR & PENDAMPING"
-            value="100+"
-            numberTarget={100}
-            suffix="+"
-            change="Tersertifikasi"
-            isPositive={true}
-            accentColor="purple"
-            description="Auditor halal, penyelia, dan pendamping PPH berlisensi BPJPH & MUI di seluruh Indonesia."
-            icon={<Users className="w-5 h-5" />}
-          />
-          <MetricCard
-            label="STANDAR LABORATORIUM"
-            value="ISO 17025"
-            suffix=""
-            change="Akreditasi KAN"
-            isPositive={true}
-            accentColor="purple"
-            description="Pengujian saintifik presisi tinggi: Deteksi qPCR DNA Babi, GC-FID Etanol, & Gelatin."
-            icon={<FlaskConical className="w-5 h-5" />}
-          />
+      {/* 2. STATS SECTION (Untitled UI Metric Cards Row - Seamless Ungu Hitam Background) */}
+      <section className="relative z-20 w-full bg-[#1a0726] pt-0 pb-16 sm:pb-20 -mt-px border-b border-purple-900/40">
+        {/* Subtle ambient light glow continuing the royal purple atmosphere */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(107,18,130,0.35),_transparent_70%)] pointer-events-none" />
+        <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-[#12041b] to-transparent pointer-events-none" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <MetricCard
+              label="PENGALAMAN & DEDIKASI"
+              value="8+"
+              numberTarget={8}
+              suffix="+"
+              change="Sejak 2016"
+              isPositive={true}
+              accentColor="purple"
+              description="Dedikasi riset sains halal & sertifikasi resmi berkelanjutan bagi kemaslahatan umat."
+              icon={<Award className="w-5 h-5" />}
+            />
+            <MetricCard
+              label="SERTIFIKAT HALAL TERBIT"
+              value="1.000+"
+              numberTarget={1000}
+              suffix="+"
+              change="+28% YoY"
+              isPositive={true}
+              accentColor="purple"
+              description="Diterbitkan resmi bagi pelaku usaha mikro, kecil, hingga korporasi multinasional."
+              icon={<FileCheck className="w-5 h-5" />}
+            />
+            <MetricCard
+              label="AUDITOR & PENDAMPING"
+              value="100+"
+              numberTarget={100}
+              suffix="+"
+              change="Tersertifikasi"
+              isPositive={true}
+              accentColor="purple"
+              description="Auditor halal, penyelia, dan pendamping PPH berlisensi BPJPH & MUI di seluruh Indonesia."
+              icon={<Users className="w-5 h-5" />}
+            />
+            <MetricCard
+              label="STANDAR LABORATORIUM"
+              value="ISO 17025"
+              suffix=""
+              change="Akreditasi KAN"
+              isPositive={true}
+              accentColor="purple"
+              description="Pengujian saintifik presisi tinggi: Deteksi qPCR DNA Babi, GC-FID Etanol, & Gelatin."
+              icon={<FlaskConical className="w-5 h-5" />}
+            />
+          </div>
         </div>
       </section>
 
@@ -681,82 +599,74 @@ export const HomePage: React.FC = () => {
           />
 
           <div className="mt-12 space-y-10 sm:space-y-14">
-            {/* CARD 1: KEPALA HALAL CENTER (Dr. Tri Cahyanto) - Left: Content & 4 Articles, Right: Portrait */}
+            {/* CARD 1: KEPALA HALAL CENTER (Dr. Tri Cahyanto) - Left: Content, Right: Portrait */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="relative rounded-3xl border border-neutral-200/90 bg-[#fafbfc] overflow-hidden shadow-xl shadow-purple-950/5 p-6 sm:p-8 lg:p-10 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] bg-[size:20px_20px]"
+              className="relative rounded-3xl border border-neutral-200/90 bg-[#fafbfc] overflow-hidden shadow-xl shadow-purple-950/5 p-6 sm:p-10 lg:p-12 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] bg-[size:22px_22px]"
             >
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-                {/* Left (8 cols): Header, 4 Circular Items, Executive Quote */}
-                <div className="lg:col-span-8 flex flex-col justify-between">
-                  {/* Header Row: Title & Link */}
-                  <div className="flex items-center justify-between gap-4 pb-4 border-b border-neutral-200/70">
-                    <h3 className="text-xl sm:text-2xl font-bold text-[#1a0726] tracking-tight">
-                      Pojok Kepala LPH
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                {/* Left (7 cols): Content & Executive Statement */}
+                <div className="lg:col-span-7 flex flex-col justify-between">
+                  <div>
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-bold bg-purple-100/90 text-[#6b1282] border border-purple-200/80 uppercase tracking-wider mb-4 shadow-xs">
+                      <ShieldCheck className="w-3.5 h-3.5" />
+                      Pimpinan Teknis LPH &amp; Kepala Pusat Kajian Halal
+                    </div>
+
+                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1a0726] tracking-tight">
+                      Dr. Tri Cahyanto, M.Si.
                     </h3>
-                    <Link
-                      to="/berita"
-                      className="text-xs font-bold text-neutral-600 hover:text-[#6b1282] transition-colors flex items-center gap-1 shrink-0"
+                    <p className="text-xs sm:text-sm font-semibold text-neutral-500 mt-1">
+                      Pakar Sains Hayati &amp; Lead Auditor Halal Berlisensi BPJPH Kemenag RI
+                    </p>
+
+                    {/* Executive Quote Box */}
+                    <div className="mt-6 p-6 rounded-2xl bg-white/95 border border-purple-100 shadow-sm relative">
+                      <span className="text-4xl text-[#6b1282]/30 font-serif absolute top-3 left-4 select-none leading-none">“</span>
+                      <p className="text-sm sm:text-base text-neutral-700 italic leading-relaxed pl-6 relative z-10 font-normal">
+                        "{DIRECTORS[1].quote}"
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="mt-8 pt-6 border-t border-neutral-200/80 flex flex-wrap items-center gap-4">
+                    <Button
+                      variant="primary"
+                      className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold text-xs px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2"
+                      onPress={() => setSelectedDirector(DIRECTORS[1])}
                     >
-                      <span>Baca artikel lainnya</span>
+                      <span>Buka Profil &amp; Kredensial Pimpinan</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Button>
+                    <Link
+                      to="/layanan/kalkulator"
+                      className="text-xs font-bold text-neutral-700 hover:text-[#6b1282] transition-colors inline-flex items-center gap-1.5"
+                    >
+                      <span>Konsultasi Alur Sertifikasi</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
-
-                  {/* 4 Featured Items (2x2 Grid with Circular Thumbnails) */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-5 my-6">
-                    {KEPALA_LPH_ARTICLES.map((art) => (
-                      <button
-                        key={art.id}
-                        type="button"
-                        onClick={() => setSelectedArticle(art)}
-                        className="group flex items-center gap-3.5 text-left p-1.5 -m-1.5 rounded-xl hover:bg-white/80 transition-all cursor-pointer"
-                      >
-                        <img
-                          src={art.image}
-                          alt={art.title}
-                          className="w-12 h-12 rounded-full object-cover shrink-0 shadow-sm border border-neutral-200/80 group-hover:scale-105 group-hover:border-[#6b1282] transition-all"
-                        />
-                        <span className="text-xs sm:text-[13px] font-bold text-neutral-800 leading-snug line-clamp-2 group-hover:text-[#6b1282] transition-colors">
-                          {art.title}
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-
-                  {/* Footer Action & Executive Statement */}
-                  <div className="pt-4 border-t border-neutral-200/70 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <p className="text-xs text-neutral-600 italic line-clamp-2 max-w-md font-normal">
-                      "{DIRECTORS[1].quote}"
-                    </p>
-                    <Button
-                      variant="primary"
-                      className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-md shrink-0 inline-flex items-center gap-1.5"
-                      onPress={() => setSelectedDirector(DIRECTORS[1])}
-                    >
-                      <span>Profil Pimpinan</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Button>
-                  </div>
                 </div>
 
-                {/* Right (4 cols): Cutout Portrait Grounded at Bottom */}
-                <div className="lg:col-span-4 flex flex-col items-center justify-end relative pt-2">
-                  <div className="relative w-full max-w-[280px] sm:max-w-xs flex flex-col items-center">
+                {/* Right (5 cols): Cutout Portrait */}
+                <div className="lg:col-span-5 flex flex-col items-center justify-end relative pt-2">
+                  <div className="relative w-full max-w-sm flex flex-col items-center">
+                    <div className="absolute inset-x-8 bottom-0 h-64 bg-gradient-to-t from-purple-200/40 via-purple-100/20 to-transparent rounded-full blur-2xl pointer-events-none" />
                     <img
                       src={DIRECTORS[1].image}
                       alt={DIRECTORS[1].name}
-                      className="relative z-10 w-auto max-h-[320px] sm:max-h-[360px] object-contain drop-shadow-xl"
+                      className="relative z-10 w-auto max-h-[380px] sm:max-h-[420px] object-contain drop-shadow-xl"
                     />
-                    <div className="relative z-20 -mt-6 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-xl border border-purple-100 shadow-md text-center w-full">
-                      <h4 className="text-xs sm:text-sm font-bold text-[#1a0726]">
+                    <div className="relative z-20 -mt-6 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl border border-purple-100 shadow-md text-center max-w-xs w-full">
+                      <h4 className="text-sm font-bold text-[#1a0726]">
                         {DIRECTORS[1].name}
                       </h4>
-                      <p className="text-[10px] sm:text-[11px] font-semibold text-[#6b1282] mt-0.5">
-                        Kepala Halal Center UIN SGD
+                      <p className="text-[11px] font-semibold text-[#6b1282] mt-0.5">
+                        Kepala Halal Center UIN Sunan Gunung Djati
                       </p>
                     </div>
                   </div>
@@ -764,147 +674,82 @@ export const HomePage: React.FC = () => {
               </div>
             </motion.div>
 
-            {/* CARD 2: DEWAN PEMBINA (Prof. Rosihon Anwar) - Left: Portrait, Right: Content (Mirrored Blueprint Layout) */}
+            {/* CARD 2: DEWAN PEMBINA (Prof. Rosihon Anwar) - Left: Portrait, Right: Content (Alternating) */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="relative rounded-3xl border border-neutral-200/90 bg-[#fafbfc] overflow-hidden shadow-xl shadow-purple-950/5 p-6 sm:p-8 lg:p-10 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] bg-[size:20px_20px]"
+              className="relative rounded-3xl border border-neutral-200/90 bg-[#fafbfc] overflow-hidden shadow-xl shadow-purple-950/5 p-6 sm:p-10 lg:p-12 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] bg-[size:22px_22px]"
             >
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-                {/* Left on Desktop (4 cols): Cutout Portrait Grounded at Bottom */}
-                <div className="lg:col-span-4 flex flex-col items-center justify-end relative pt-2 order-2 lg:order-1">
-                  <div className="relative w-full max-w-[280px] sm:max-w-xs flex flex-col items-center">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                {/* Left on Desktop (5 cols): Cutout Portrait */}
+                <div className="lg:col-span-5 flex flex-col items-center justify-end relative pt-2 order-2 lg:order-1">
+                  <div className="relative w-full max-w-sm flex flex-col items-center">
+                    <div className="absolute inset-x-8 bottom-0 h-64 bg-gradient-to-t from-purple-200/40 via-purple-100/20 to-transparent rounded-full blur-2xl pointer-events-none" />
                     <img
                       src={DIRECTORS[0].image}
                       alt={DIRECTORS[0].name}
-                      className="relative z-10 w-auto max-h-[320px] sm:max-h-[360px] object-contain drop-shadow-xl"
+                      className="relative z-10 w-auto max-h-[380px] sm:max-h-[420px] object-contain drop-shadow-xl"
                     />
-                    <div className="relative z-20 -mt-6 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-xl border border-purple-100 shadow-md text-center w-full">
-                      <h4 className="text-xs sm:text-sm font-bold text-[#1a0726]">
+                    <div className="relative z-20 -mt-6 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl border border-purple-100 shadow-md text-center max-w-xs w-full">
+                      <h4 className="text-sm font-bold text-[#1a0726]">
                         {DIRECTORS[0].name}
                       </h4>
-                      <p className="text-[10px] sm:text-[11px] font-semibold text-[#6b1282] mt-0.5">
-                        Rektor UIN SGD &amp; Dewan Pembina
+                      <p className="text-[11px] font-semibold text-[#6b1282] mt-0.5">
+                        Rektor UIN SGD &amp; Dewan Pembina Halal Center
                       </p>
                     </div>
                   </div>
                 </div>
 
-                {/* Right on Desktop (8 cols): Header, 4 Circular Items, Institutional Vision */}
-                <div className="lg:col-span-8 flex flex-col justify-between order-1 lg:order-2">
-                  {/* Header Row: Title & Link */}
-                  <div className="flex items-center justify-between gap-4 pb-4 border-b border-neutral-200/70">
-                    <h3 className="text-xl sm:text-2xl font-bold text-[#1a0726] tracking-tight">
-                      Pojok Dewan Pembina / Rektor
+                {/* Right on Desktop (7 cols): Content & Institutional Vision */}
+                <div className="lg:col-span-7 flex flex-col justify-between order-1 lg:order-2">
+                  <div>
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-bold bg-purple-100/90 text-[#6b1282] border border-purple-200/80 uppercase tracking-wider mb-4 shadow-xs">
+                      <Sparkles className="w-3.5 h-3.5" />
+                      Rektor UIN SGD &amp; Dewan Pembina Halal Center
+                    </div>
+
+                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1a0726] tracking-tight">
+                      Prof. Dr. H. Rosihon Anwar, M.Ag.
                     </h3>
-                    <Link
-                      to="/berita"
-                      className="text-xs font-bold text-neutral-600 hover:text-[#6b1282] transition-colors flex items-center gap-1 shrink-0"
-                    >
-                      <span>Baca artikel lainnya</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
-
-                  {/* 4 Featured Items (2x2 Grid with Circular Thumbnails) */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-5 my-6">
-                    {PEMBINA_REKTOR_ARTICLES.map((art) => (
-                      <button
-                        key={art.id}
-                        type="button"
-                        onClick={() => setSelectedArticle(art)}
-                        className="group flex items-center gap-3.5 text-left p-1.5 -m-1.5 rounded-xl hover:bg-white/80 transition-all cursor-pointer"
-                      >
-                        <img
-                          src={art.image}
-                          alt={art.title}
-                          className="w-12 h-12 rounded-full object-cover shrink-0 shadow-sm border border-neutral-200/80 group-hover:scale-105 group-hover:border-[#6b1282] transition-all"
-                        />
-                        <span className="text-xs sm:text-[13px] font-bold text-neutral-800 leading-snug line-clamp-2 group-hover:text-[#6b1282] transition-colors">
-                          {art.title}
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-
-                  {/* Footer Action & Institutional Statement */}
-                  <div className="pt-4 border-t border-neutral-200/70 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <p className="text-xs text-neutral-600 italic line-clamp-2 max-w-md font-normal">
-                      "{DIRECTORS[0].quote}"
+                    <p className="text-xs sm:text-sm font-semibold text-neutral-500 mt-1">
+                      Guru Besar Ilmu Al-Qur'an &amp; Tafsir • Inisiator Paradigma "Halalsphere University"
                     </p>
+
+                    {/* Institutional Quote Box */}
+                    <div className="mt-6 p-6 rounded-2xl bg-white/95 border border-purple-100 shadow-sm relative">
+                      <span className="text-4xl text-[#6b1282]/30 font-serif absolute top-3 left-4 select-none leading-none">“</span>
+                      <p className="text-sm sm:text-base text-neutral-700 italic leading-relaxed pl-6 relative z-10 font-normal">
+                        "{DIRECTORS[0].quote}"
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="mt-8 pt-6 border-t border-neutral-200/80 flex flex-wrap items-center gap-4">
                     <Button
                       variant="primary"
-                      className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-md shrink-0 inline-flex items-center gap-1.5"
+                      className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold text-xs px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2"
                       onPress={() => setSelectedDirector(DIRECTORS[0])}
                     >
-                      <span>Profil Rektor</span>
+                      <span>Buka Profil &amp; Rekam Jejak Rektor</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Button>
+                    <Link
+                      to="/tentang"
+                      className="text-xs font-bold text-neutral-700 hover:text-[#6b1282] transition-colors inline-flex items-center gap-1.5"
+                    >
+                      <span>Pelajari Profil Lembaga &amp; Visi Kampus</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
                   </div>
                 </div>
               </div>
             </motion.div>
           </div>
         </div>
-
-        {/* Modal Article Detail using HeroUI v3 Modal */}
-        {selectedArticle && (
-          <Modal.Backdrop isOpen={!!selectedArticle} onOpenChange={() => setSelectedArticle(null)}>
-            <Modal.Container>
-              <Modal.Dialog className="sm:max-w-[560px] bg-white text-neutral-900 rounded-3xl p-6 sm:p-8">
-                <Modal.CloseTrigger />
-                <Modal.Header className="flex flex-col items-start gap-1 pb-4 border-b border-neutral-100">
-                  <span className="text-xs font-bold text-[#6b1282] uppercase tracking-wider">
-                    {selectedArticle.category}
-                  </span>
-                  <Modal.Heading className="text-xl sm:text-2xl font-bold text-[#1a0726] mt-1 leading-snug">
-                    {selectedArticle.title}
-                  </Modal.Heading>
-                  <span className="text-xs text-neutral-500 font-medium">
-                    Penulis / Narasumber: {selectedArticle.author}
-                  </span>
-                </Modal.Header>
-
-                <Modal.Body className="py-6 space-y-4">
-                  <div className="relative h-48 w-full rounded-2xl overflow-hidden shadow-sm">
-                    <img
-                      src={selectedArticle.image}
-                      alt={selectedArticle.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <p className="text-sm text-neutral-700 leading-relaxed font-normal">
-                    {selectedArticle.summary}
-                  </p>
-                  <div className="p-4 rounded-xl bg-purple-50/70 border border-purple-100 text-xs text-neutral-600 leading-relaxed italic">
-                    "Komitmen LPH dan Halal Center UIN SGD Bandung adalah menghadirkan kepastian hukum syariah dan mutu ilmiah tertinggi demi perlindungan konsumen serta kemajuan industri halal Indonesia."
-                  </div>
-                </Modal.Body>
-
-                <Modal.Footer className="border-t border-neutral-100 pt-4 flex gap-3">
-                  <Button
-                    variant="outline"
-                    className="flex-1 border-neutral-200 text-neutral-700 hover:bg-neutral-50 font-bold rounded-xl py-2.5"
-                    onPress={() => setSelectedArticle(null)}
-                  >
-                    Tutup
-                  </Button>
-                  <Link to="/berita" className="flex-1">
-                    <Button
-                      variant="primary"
-                      className="w-full bg-[#6b1282] hover:bg-[#581c87] text-white font-bold rounded-xl py-2.5"
-                      onPress={() => setSelectedArticle(null)}
-                    >
-                      Baca Berita Terkait
-                    </Button>
-                  </Link>
-                </Modal.Footer>
-              </Modal.Dialog>
-            </Modal.Container>
-          </Modal.Backdrop>
-        )}
 
         {/* Modal Director Detail using HeroUI v3 Modal */}
         {selectedDirector && (
