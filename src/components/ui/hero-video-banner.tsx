@@ -145,7 +145,7 @@ export const HeroVideoBanner: React.FC = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-20 max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-10"
+        className="relative z-20 max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20"
       >
         <div className="relative rounded-3xl p-[1.5px] bg-gradient-to-r from-[#4a0d5c] via-[#86198f] to-[#4a0d5c] shadow-2xl shadow-purple-950/30">
           <div className="bg-white/95 backdrop-blur-2xl rounded-[22px] p-6 sm:p-8">
