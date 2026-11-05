@@ -233,8 +233,58 @@ export const HomePage: React.FC = () => {
   const uinServices = getUinServices(isEn);
   const [activeTab, setActiveTab] = useState<string>('artikel');
   const [selectedDirector, setSelectedDirector] = useState<Director | null>(null);
+  const [selectedBranch, setSelectedBranch] = useState(0);
+  const [mapViewMode, setMapViewMode] = useState<'google' | 'osm'>('google');
+
+  const branchLocations = [
+    {
+      id: 'kampus1',
+      title: isEn ? 'Campus 1 (LPH Headquarters & Secretariat)' : 'Kampus 1 (Kantor Pusat LPH & Sekretariat)',
+      badge: isEn ? 'Main Secretariat' : 'Sekretariat Utama',
+      shortName: 'Kampus 1 Cibiru',
+      address: 'Gedung Lecture Hall Lt. 1, Kampus 1 UIN SGD, Jl. A.H. Nasution No. 105, Cipadung, Kec. Cibiru, Kota Bandung, Jawa Barat 40614',
+      lat: -6.9248,
+      lng: 107.7176,
+      query: '-6.9248,107.7176+(LPH+UIN+Sunan+Gunung+Djati+Bandung)',
+      gmapsDirectUrl: 'https://maps.google.com/?q=-6.9248,107.7176',
+    },
+    {
+      id: 'kampus2',
+      title: isEn ? 'Campus 2 (Integrated Lab ISO 17025)' : 'Kampus 2 (Lab Riset Terpadu ISO 17025)',
+      badge: 'ISO/IEC 17025',
+      shortName: 'Kampus 2 Gedebage',
+      address: 'Gedung Riset & Laboratorium Terpadu, Kampus 2 UIN SGD, Jl. Cimencrang, Gedebage, Kota Bandung 40294 (Dekat Masjid Raya Al-Jabbar)',
+      lat: -6.9389,
+      lng: 107.7025,
+      query: '-6.9389,107.7025+(Laboratorium+Halal+Kampus+2+UIN+Sunan+Gunung+Djati)',
+      gmapsDirectUrl: 'https://maps.google.com/?q=-6.9389,107.7025',
+    },
+    {
+      id: 'priangan',
+      title: isEn ? 'Eastern Priangan Partnership Hub' : 'Sentra Halal UMK Priangan Timur',
+      badge: isEn ? 'Tasikmalaya & Garut' : 'Tasikmalaya & Garut',
+      shortName: 'Priangan Timur',
+      address: 'Pusat Kemitraan & Pendampingan Halal UMK Wilayah Priangan Timur (Tasikmalaya, Garut, Ciamis), Jawa Barat',
+      lat: -7.3274,
+      lng: 108.2207,
+      query: '-7.3274,108.2207+(Sentra+Halal+UIN+SGD+Priangan+Timur)',
+      gmapsDirectUrl: 'https://maps.google.com/?q=-7.3274,108.2207',
+    },
+    {
+      id: 'cirebon',
+      title: isEn ? 'Ciayumajakuning Partnership Hub' : 'Sentra Halal UMK Ciayumajakuning',
+      badge: isEn ? 'Cirebon Region' : 'Wilayah Cirebon',
+      shortName: 'Ciayumajakuning',
+      address: 'Pusat Kemitraan & Pendampingan Halal UMK Wilayah Ciayumajakuning (Cirebon, Indramayu, Majalengka, Kuningan), Jawa Barat',
+      lat: -6.7320,
+      lng: 108.5523,
+      query: '-6.7320,108.5523+(Sentra+Halal+UIN+SGD+Ciayumajakuning)',
+      gmapsDirectUrl: 'https://maps.google.com/?q=-6.7320,108.5523',
+    },
+  ];
 
   useEffect(() => {
+    if (mapViewMode !== 'osm') return;
     let mapInstance: L.Map | null = null;
     let timer1: any = null;
     let timer2: any = null;
@@ -243,9 +293,10 @@ export const HomePage: React.FC = () => {
       const mapContainer = document.getElementById('map');
       if (mapContainer && !(mapContainer as any)._leaflet_id) {
         const bounds = L.latLngBounds([-11.0, 95.0], [6.0, 141.0]);
+        const cur = branchLocations[selectedBranch];
         mapInstance = L.map('map', {
-          center: [-6.9248, 107.7176],
-          zoom: 10,
+          center: [cur.lat, cur.lng],
+          zoom: 11,
           maxBounds: bounds,
           maxBoundsViscosity: 1.0,
           minZoom: 5,
@@ -254,10 +305,9 @@ export const HomePage: React.FC = () => {
           scrollWheelZoom: false,
         });
 
-        // CartoDB Voyager tiles - highly reliable, modern purple/slate tones, crystal clear
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-          subdomains: 'abcd',
+        // 100% Free OpenStreetMap Standard Tiles - Absolutely Zero API Key Needed
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
           maxZoom: 19,
         }).addTo(mapInstance);
 
@@ -281,49 +331,17 @@ export const HomePage: React.FC = () => {
           popupAnchor: [0, -40],
         });
 
-        const locations = [
-          {
-            label: 'LPH & Halal Center UIN SGD (Kantor Pusat)',
-            address:
-              'Gedung Lecture Hall Lt. 1, Kampus 1 UIN SGD, Jl. A.H. Nasution No. 105, Cibiru, Bandung 40614',
-            lat: -6.9248,
-            lng: 107.7176,
-          },
-          {
-            label: 'Laboratorium Pengujian Halal Terpadu',
-            address:
-              'Gedung Riset & Laboratorium Terpadu, Kampus 2 UIN SGD, Jl. Cimencrang, Gedebage, Bandung 40294',
-            lat: -6.9389,
-            lng: 107.7025,
-          },
-          {
-            label: 'Sentra Halal UMK Priangan Timur',
-            address:
-              'Pusat Kemitraan Halal UIN SGD Tasikmalaya & Garut, Jawa Barat',
-            lat: -7.3274,
-            lng: 108.2207,
-          },
-          {
-            label: 'Sentra Halal UMK Ciayumajakuning',
-            address:
-              'Pusat Kemitraan Halal UIN SGD Cirebon & Sekitarnya, Jawa Barat',
-            lat: -6.732,
-            lng: 108.5523,
-          },
-        ];
-
-        locations.forEach((loc) => {
+        branchLocations.forEach((loc) => {
           const marker = L.marker([loc.lat, loc.lng], { icon: customIcon }).addTo(mapInstance!);
           marker.bindPopup(`
             <div style="font-family: inherit; padding: 6px; min-width: 220px;">
-              <span style="font-size: 10px; font-weight: 800; color: #6b1282; text-transform: uppercase;">Sentra Layanan LPH</span>
-              <h5 style="font-size: 13px; font-weight: 800; color: #1b183a; margin-top: 2px; margin-bottom: 4px;">${loc.label}</h5>
+              <span style="font-size: 10px; font-weight: 800; color: #6b1282; text-transform: uppercase;">${loc.badge}</span>
+              <h5 style="font-size: 13px; font-weight: 800; color: #1b183a; margin-top: 2px; margin-bottom: 4px;">${loc.title}</h5>
               <p style="font-size: 11px; color: #4b5563; line-height: 1.4; margin-bottom: 0;">${loc.address}</p>
             </div>
           `);
         });
 
-        // Trigger invalidateSize to ensure tiles render immediately
         const refreshMapSize = () => {
           if (mapInstance) {
             mapInstance.invalidateSize();
@@ -331,7 +349,7 @@ export const HomePage: React.FC = () => {
         };
         refreshMapSize();
         timer1 = setTimeout(refreshMapSize, 300);
-        timer2 = setTimeout(refreshMapSize, 900);
+        timer2 = setTimeout(refreshMapSize, 800);
         window.addEventListener('resize', refreshMapSize);
       }
     } catch (e) {
@@ -346,7 +364,7 @@ export const HomePage: React.FC = () => {
         mapInstance.remove();
       }
     };
-  }, []);
+  }, [mapViewMode, selectedBranch]);
 
   return (
     <div className="flex flex-col w-full overflow-hidden bg-white">
@@ -1320,22 +1338,113 @@ export const HomePage: React.FC = () => {
               : "Kunjungi kantor layanan kami di Kampus 1, Gedung Laboratorium Terpadu Kampus 2, serta sentra kemitraan Priangan Timur & Ciayumajakuning."}
           />
 
-          <div className="relative rounded-3xl p-[1.5px] bg-gradient-to-r from-[#4a0d5c] via-[#86198f] to-[#4a0d5c] shadow-2xl shadow-purple-950/10">
-            <div className="bg-white rounded-[22px] p-3">
-              <div id="map" className="w-full h-[460px] rounded-2xl overflow-hidden" />
+          {/* Branch Selector Chips & Map Provider Controls */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
+              {branchLocations.map((branch, idx) => (
+                <button
+                  key={branch.id}
+                  type="button"
+                  onClick={() => setSelectedBranch(idx)}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer ${
+                    selectedBranch === idx
+                      ? 'bg-[#6b1282] text-white shadow-sm ring-2 ring-[#6b1282]/30'
+                      : 'bg-white text-neutral-600 hover:text-[#6b1282] border border-neutral-200 hover:border-purple-200'
+                  }`}
+                >
+                  {branch.shortName}
+                </button>
+              ))}
+            </div>
+
+            <div className="inline-flex items-center p-1 bg-purple-50/80 rounded-xl border border-purple-100 text-xs font-semibold text-neutral-600">
+              <button
+                type="button"
+                onClick={() => setMapViewMode('google')}
+                className={`px-3 py-1 rounded-lg transition-all ${
+                  mapViewMode === 'google'
+                    ? 'bg-white text-[#6b1282] font-bold shadow-2xs'
+                    : 'text-neutral-500 hover:text-neutral-900'
+                }`}
+              >
+                Google Maps ({isEn ? 'No API Key' : 'Bebas API Key'})
+              </button>
+              <button
+                type="button"
+                onClick={() => setMapViewMode('osm')}
+                className={`px-3 py-1 rounded-lg transition-all ${
+                  mapViewMode === 'osm'
+                    ? 'bg-white text-[#6b1282] font-bold shadow-2xs'
+                    : 'text-neutral-500 hover:text-neutral-900'
+                }`}
+              >
+                OpenStreetMap ({isEn ? 'No API Key' : 'Bebas API Key'})
+              </button>
             </div>
           </div>
 
-          <div className="mt-8 flex justify-center">
-            <Link to="/kontak">
-              <Button
-                variant="outline"
-                className="border-neutral-300 text-[#6b1282] hover:bg-purple-50 font-bold px-7 py-3 rounded-2xl text-sm inline-flex items-center gap-2 shadow-xs"
+          <div className="relative rounded-3xl p-[1.5px] bg-gradient-to-r from-[#4a0d5c] via-[#86198f] to-[#4a0d5c] shadow-2xl shadow-purple-950/10">
+            <div className="bg-white rounded-[22px] p-3">
+              {mapViewMode === 'google' ? (
+                <iframe
+                  title="Peta Kantor LPH UIN SGD"
+                  width="100%"
+                  height="460"
+                  className="w-full h-[460px] rounded-2xl border-0 shadow-inner"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  src={`https://maps.google.com/maps?q=${branchLocations[selectedBranch].query}&t=&z=16&ie=UTF8&iwloc=&output=embed`}
+                />
+              ) : (
+                <div id="map" className="w-full h-[460px] rounded-2xl overflow-hidden" />
+              )}
+            </div>
+          </div>
+
+          {/* Active Branch Location Info Card */}
+          <div className="mt-6 p-4 sm:p-5 rounded-2xl bg-white border border-purple-100 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 rounded-xl bg-purple-100 text-[#6b1282] flex items-center justify-center shrink-0">
+                <MapPin className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h4 className="font-bold text-sm sm:text-base text-neutral-900">
+                    {branchLocations[selectedBranch].title}
+                  </h4>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-50 text-[#6b1282] border border-purple-200">
+                    {branchLocations[selectedBranch].badge}
+                  </span>
+                </div>
+                <p className="text-xs text-neutral-600 mt-1 max-w-3xl">
+                  {branchLocations[selectedBranch].address}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              <a
+                href={branchLocations[selectedBranch].gmapsDirectUrl}
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <MapPin className="w-4 h-4 text-[#6b1282]" />
-                {isEn ? 'View Location Details & Consultation' : 'Lihat Selengkapnya & Konsultasi Lokasi'}
-              </Button>
-            </Link>
+                <Button
+                  variant="primary"
+                  className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-xs"
+                >
+                  <MapPin className="w-3.5 h-3.5" />
+                  {isEn ? 'Directions on Google Maps' : 'Petunjuk Arah Google Maps'}
+                </Button>
+              </a>
+              <Link to="/kontak">
+                <Button
+                  variant="outline"
+                  className="border-neutral-300 text-neutral-700 hover:bg-neutral-50 font-bold px-4 py-2 rounded-xl text-xs"
+                >
+                  {isEn ? 'Contact Info' : 'Info Kontak'}
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>

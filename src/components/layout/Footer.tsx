@@ -112,7 +112,7 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="https://journal.uinsgd.ac.id/index.php/ijhr"
+                  href="https://journal.uinsgd.ac.id/index.php/ijhar"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-neutral-300 hover:text-white transition-colors inline-flex items-center gap-1.5"

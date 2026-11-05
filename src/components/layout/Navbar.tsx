@@ -22,8 +22,10 @@ import {
 import {
   MegaMenuItem,
   MenuCardItem,
+  MenuCategoryGrid,
   FeaturedPreviewCard,
-  MenuFooter
+  MenuFooter,
+  BlueprintBadge
 } from '@/components/ui/navbar-mega-menu';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -92,79 +94,80 @@ export const Navbar: React.FC = () => {
                 onMouseLeave={handleMouseLeave}
                 onClick={() => toggleDropdown('tentang')}
               >
-                <div className="w-[760px] max-w-[92vw]">
-                  <div className="grid grid-cols-12 gap-5 items-stretch">
-                    {/* Left Column (7 cols): 3 Rich Categorized Cards */}
-                    <div className="col-span-7 flex flex-col justify-between">
-                      <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/10">
-                        <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300/80">
-                          Profil &amp; Kelembagaan
-                        </span>
-                        <span className="text-[10px] text-neutral-400 font-medium">3 Layanan</span>
+                <div className="w-[820px] max-w-[94vw]">
+                  <div className="grid grid-cols-12 gap-3.5 items-stretch">
+                    {/* Left Sub-card (7 cols): Screenshot 1 "Get started" style */}
+                    <div className="col-span-7 rounded-2xl bg-white/[0.03] border border-white/[0.08] p-4 sm:p-5 flex flex-col justify-between hover:border-white/[0.12] transition-colors">
+                      <div className="text-xs font-semibold text-neutral-400 mb-3 tracking-wide">
+                        {language === 'en' ? 'INSTITUTIONAL PROFILE' : 'PROFIL & KELEMBAGAAN LPH'}
                       </div>
-                      <div className="space-y-1.5 flex-1 flex flex-col justify-between">
+                      <div className="space-y-1 flex-1 flex flex-col justify-between">
                         <MenuCardItem
                           icon={<BookOpen className="w-4 h-4" />}
-                          title="Profil &amp; Sejarah LPH"
-                          description="Sejarah pendirian, landasan fatwa syar'i MUI, dan visi Halalsphere University."
+                          title={language === 'en' ? 'Profile & History' : 'Profil & Sejarah LPH'}
+                          description={language === 'en'
+                            ? 'Establishment history, MUI sharia fatwa foundation, and Halalsphere University vision.'
+                            : "Sejarah pendirian, landasan fatwa syar'i MUI, dan visi riset Halalsphere University."}
                           to="/tentang"
                           onClick={() => setActiveDropdown(null)}
                         />
                         <MenuCardItem
                           icon={<ShieldCheck className="w-4 h-4" />}
-                          title="Akreditasi &amp; Legalitas Resmi"
-                          description="Regulasi resmi BPJPH No. LPH-018-ID dan pengakuan KAN ISO/IEC 17025."
+                          title={language === 'en' ? 'Accreditation & Legality' : 'Akreditasi & Legalitas Resmi'}
+                          description={language === 'en'
+                            ? 'Official BPJPH decree No. LPH-018-ID and KAN ISO/IEC 17025 recognition.'
+                            : 'Regulasi resmi BPJPH No. LPH-018-ID dan pengakuan KAN ISO/IEC 17025.'}
                           to="/tentang"
                           badge="LPH-018-ID"
+                          badgeVariant="purple"
                           onClick={() => setActiveDropdown(null)}
                         />
                         <MenuCardItem
                           icon={<HelpCircle className="w-4 h-4" />}
-                          title="FAQ &amp; Halal QnA"
-                          description="Kumpulan jawaban resmi seputar persyaratan, alur audit, dan dokumen SIHALAL."
+                          title={language === 'en' ? 'FAQ & Halal QnA' : 'Tanya Jawab & Halal QnA'}
+                          description={language === 'en'
+                            ? 'Official guidelines on certification procedures, audit workflows, and SIHALAL documents.'
+                            : 'Kumpulan jawaban resmi seputar persyaratan, alur audit, dan dokumen SIHALAL.'}
                           to="/layanan/qna"
+                          badge="FAQ"
+                          badgeVariant="sky"
                           onClick={() => setActiveDropdown(null)}
                         />
                       </div>
                     </div>
 
-                    {/* Right Column (5 cols): Featured Visual Preview Card with Photo */}
-                    <div className="col-span-5 flex flex-col justify-between">
-                      <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/10">
-                        <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300/80">
-                          Sorotan Resmi
-                        </span>
-                        <span className="text-[10px] text-purple-400 font-medium">ISO 17025</span>
-                      </div>
-                      <div className="flex-1">
-                        <FeaturedPreviewCard
-                          image="/assets/images/certificate.png"
-                          title="Sertifikat Akreditasi LPH"
-                          badge="Resmi BPJPH"
-                          description="Lembaga Pemeriksa Halal rujukan nasional di bawah naungan UIN Sunan Gunung Djati Bandung."
-                          to="/tentang"
-                          actionText="Pelajari Profil Lembaga"
-                          onClick={() => setActiveDropdown(null)}
-                        />
-                      </div>
+                    {/* Right Sub-card (5 cols): Screenshot 2 Featured Visual Card */}
+                    <div className="col-span-5 rounded-2xl bg-white/[0.03] border border-white/[0.08] p-3.5 sm:p-4 flex flex-col justify-between hover:border-white/[0.12] transition-colors">
+                      <FeaturedPreviewCard
+                        image="/assets/images/certificate.png"
+                        title={language === 'en' ? 'Official LPH Accreditation' : 'Sertifikat Akreditasi LPH'}
+                        badge={language === 'en' ? 'BPJPH Certified' : 'Resmi BPJPH'}
+                        badgeVariant="sky"
+                        description={language === 'en'
+                          ? 'National benchmark Halal Inspection Agency under UIN Sunan Gunung Djati Bandung.'
+                          : 'Lembaga Pemeriksa Halal rujukan nasional di bawah naungan UIN Sunan Gunung Djati Bandung.'}
+                        to="/tentang"
+                        actionText={language === 'en' ? 'Learn Institutional Profile' : 'Pelajari Profil Lembaga'}
+                        onClick={() => setActiveDropdown(null)}
+                      />
                     </div>
                   </div>
 
-                  {/* Bottom Footer Bar */}
+                  {/* Bottom Footer Bar (Screenshot 1 Community style) */}
                   <MenuFooter
-                    label="Sentra Jaringan Layanan"
+                    label={language === 'en' ? 'Campus Service Hubs' : 'Sentra Jaringan Layanan'}
                     links={[
-                      { label: "Kampus 1 Cibiru Bandung", to: "/kontak" },
-                      { label: "Lab Hayati Kampus 2", to: "/kontak" },
-                      { label: "Sentra Priangan Timur", to: "/kontak" },
-                      { label: "Sentra Ciayumajakuning", to: "/kontak" },
+                      { label: language === 'en' ? 'Campus 1 Cibiru' : 'Kampus 1 Cibiru Bandung', to: '/kontak' },
+                      { label: language === 'en' ? 'Bio Lab Campus 2' : 'Lab Hayati Kampus 2', to: '/kontak' },
+                      { label: language === 'en' ? 'Eastern Priangan Hub' : 'Sentra Priangan Timur', to: '/kontak' },
+                      { label: language === 'en' ? 'Ciayumajakuning Hub' : 'Sentra Ciayumajakuning', to: '/kontak' },
                     ]}
                     onClick={() => setActiveDropdown(null)}
                   />
                 </div>
               </MegaMenuItem>
 
-              {/* Mega Menu 2: Layanan LPH */}
+              {/* Mega Menu 2: Layanan LPH (Screenshot 2 "Blocks by section" 3-column style) */}
               <MegaMenuItem
                 title={language === 'en' ? 'Halal Services' : 'Layanan LPH'}
                 isActive={activeDropdown === 'layanan'}
@@ -172,74 +175,60 @@ export const Navbar: React.FC = () => {
                 onMouseLeave={handleMouseLeave}
                 onClick={() => toggleDropdown('layanan')}
               >
-                <div className="w-[760px] max-w-[92vw]">
-                  <div className="grid grid-cols-12 gap-5 items-stretch">
-                    {/* Left Column (7 cols): 3 Rich Categorized Cards */}
-                    <div className="col-span-7 flex flex-col justify-between">
-                      <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/10">
-                        <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300/80">
-                          Layanan Pemeriksaan &amp; Lab
-                        </span>
-                        <span className="text-[10px] text-neutral-400 font-medium">3 Program</span>
-                      </div>
-                      <div className="space-y-1.5 flex-1 flex flex-col justify-between">
-                        <MenuCardItem
-                          icon={<Calculator className="w-4 h-4" />}
-                          title="Kalkulator Tarif Halal"
-                          description="Simulasi estimasi tarif audit halal reguler sesuai regulasi resmi KMA 784."
-                          to="/layanan/kalkulator"
-                          badge="Populer"
-                          onClick={() => setActiveDropdown(null)}
-                        />
-                        <MenuCardItem
-                          icon={<Users className="w-4 h-4" />}
-                          title="Self Declare (SEHATI UMK)"
-                          description="Pendampingan sertifikasi halal gratis pelaku usaha mikro dan kecil."
-                          href="https://halal.uinsgd.ac.id/sertifikasi-halal-self-declare/"
-                          badge="Gratis"
-                          onClick={() => setActiveDropdown(null)}
-                        />
-                        <MenuCardItem
-                          icon={<FlaskConical className="w-4 h-4" />}
-                          title="Laboratorium Uji Hayati"
-                          description="Uji qPCR DNA babi, cemaran alkohol GC-FID, dan profil asam lemak gelatin."
-                          href="https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/"
-                          badge="ISO 17025"
-                          onClick={() => setActiveDropdown(null)}
-                        />
-                      </div>
+                <div className="w-[860px] max-w-[95vw]">
+                  <div className="grid grid-cols-12 gap-3.5 items-stretch">
+                    {/* Left Sub-card (7 cols): Screenshot 2 3-Column Category Grid */}
+                    <div className="col-span-7 rounded-2xl bg-white/[0.03] border border-white/[0.08] p-4 sm:p-5 flex flex-col justify-between hover:border-white/[0.12] transition-colors">
+                      <MenuCategoryGrid
+                        title={language === 'en' ? 'SERVICES BY CATEGORY' : 'SEMUA LAYANAN BERDASARKAN KATEGORI'}
+                        items={[
+                          { label: language === 'en' ? 'Tariff Calculator' : 'Kalkulator Tarif Halal', to: '/layanan/kalkulator' },
+                          { label: 'Self Declare (SEHATI UMK)', href: 'https://halal.uinsgd.ac.id/sertifikasi-halal-self-declare/' },
+                          { label: language === 'en' ? 'Regular Certification' : 'Sertifikasi Halal Reguler', to: '/layanan/kalkulator' },
+                          { label: language === 'en' ? 'Production Facility Audit' : 'Audit Fasilitas Produksi', to: '/layanan/qna' },
+                          { label: language === 'en' ? 'Slaughterhouse Audit' : 'Pemeriksaan RPH & RPU', to: '/layanan/qna' },
+                          { label: language === 'en' ? 'Integrated Bio Lab' : 'Laboratorium Hayati ISO', href: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/' },
+                          { label: 'qPCR DNA Porcine (Babi)', href: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/' },
+                          { label: 'Uji GC-FID Etanol / Alkohol', href: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/' },
+                          { label: 'Analisis Spektro Gelatin', href: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/' },
+                          { label: language === 'en' ? 'Halal Slaughter Training' : 'Pelatihan JULEHA Bersertifikat', to: '/layanan/qna' },
+                          { label: language === 'en' ? 'Whistleblowing Report' : 'Pengaduan Whistleblowing', to: '/layanan/pengaduan' },
+                          { label: language === 'en' ? 'Satisfaction Survey (IKM)' : 'Survei Kepuasan (IKM)', to: '/layanan/kepuasan' },
+                          { label: language === 'en' ? 'Halal QnA Center' : 'Tanya Jawab (Halal QnA)', to: '/layanan/qna' },
+                          { label: 'Portal SIHALAL BPJPH', href: 'https://ptsp.halal.go.id/' },
+                          { label: language === 'en' ? 'SJPH Consultation' : 'Konsultasi Dokumen SJPH', to: '/kontak' },
+                        ]}
+                        actionText={language === 'en' ? 'Simulate Certification Fees in Tariff Calculator ->' : 'Hitung Simulasi Tarif di Kalkulator ->'}
+                        actionTo="/layanan/kalkulator"
+                        onClick={() => setActiveDropdown(null)}
+                      />
                     </div>
 
-                    {/* Right Column (5 cols): Featured Visual Preview Card with Photo */}
-                    <div className="col-span-5 flex flex-col justify-between">
-                      <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/10">
-                        <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300/80">
-                          Layanan Unggulan
-                        </span>
-                        <span className="text-[10px] text-purple-400 font-medium">Saintifik</span>
-                      </div>
-                      <div className="flex-1">
-                        <FeaturedPreviewCard
-                          image="/assets/images/uji-laboratorium.jpg"
-                          title="Uji Lab qPCR DNA Babi"
-                          badge="Terakreditasi"
-                          description="Pengujian saintifik presisi tinggi dan standarisasi kompetensi Juru Sembelih Halal (JULEHA)."
-                          to="/layanan/kalkulator"
-                          actionText="Hitung Simulasi Tarif"
-                          onClick={() => setActiveDropdown(null)}
-                        />
-                      </div>
+                    {/* Right Sub-card (5 cols): Screenshot 2 Featured Visual Card with Photo */}
+                    <div className="col-span-5 rounded-2xl bg-white/[0.03] border border-white/[0.08] p-3.5 sm:p-4 flex flex-col justify-between hover:border-white/[0.12] transition-colors">
+                      <FeaturedPreviewCard
+                        image="/assets/images/uji-laboratorium.jpg"
+                        title={language === 'en' ? 'Certified Halal Laboratory' : 'Laboratorium Halal Terpadu'}
+                        badge="ISO 17025"
+                        badgeVariant="sky"
+                        description={language === 'en'
+                          ? 'High-precision qPCR DNA & GC-FID ethanol testing with international KAN ISO/IEC 17025 accreditation.'
+                          : 'Pengujian saintifik presisi tinggi untuk qPCR DNA porcine dan alkohol GC-FID standar akreditasi KAN ISO 17025.'}
+                        to="/layanan/kalkulator"
+                        actionText={language === 'en' ? 'Simulate Audit & Fees' : 'Simulasi Biaya & Jadwal Audit'}
+                        onClick={() => setActiveDropdown(null)}
+                      />
                     </div>
                   </div>
 
                   {/* Bottom Footer Bar */}
                   <MenuFooter
-                    label="Kanal Publik & Bantuan"
+                    label={language === 'en' ? 'Official Public Channels & Help' : 'Kanal Publik & Bantuan Resmi'}
                     links={[
-                      { label: "Pengaduan Whistleblowing", to: "/layanan/pengaduan" },
-                      { label: "Survei Kepuasan (IKM)", to: "/layanan/kepuasan" },
-                      { label: "Portal SIHALAL BPJPH", href: "https://ptsp.halal.go.id/" },
-                      { label: "WhatsApp Layanan", href: "https://wa.me/6282118201232" },
+                      { label: language === 'en' ? 'Whistleblower System' : 'Pengaduan Whistleblowing', to: '/layanan/pengaduan' },
+                      { label: language === 'en' ? 'Satisfaction Index' : 'Survei Kepuasan (IKM)', to: '/layanan/kepuasan' },
+                      { label: 'Portal SIHALAL BPJPH', href: 'https://ptsp.halal.go.id/' },
+                      { label: language === 'en' ? 'WhatsApp Helpdesk' : 'WhatsApp Layanan', href: 'https://wa.me/6282118201232' },
                     ]}
                     onClick={() => setActiveDropdown(null)}
                   />
@@ -254,72 +243,74 @@ export const Navbar: React.FC = () => {
                 onMouseLeave={handleMouseLeave}
                 onClick={() => toggleDropdown('news')}
               >
-                <div className="w-[760px] max-w-[92vw]">
-                  <div className="grid grid-cols-12 gap-5 items-stretch">
-                    {/* Left Column (7 cols): 3 Rich Categorized Cards */}
-                    <div className="col-span-7 flex flex-col justify-between">
-                      <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/10">
-                        <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300/80">
-                          Publikasi &amp; Informasi
-                        </span>
-                        <span className="text-[10px] text-neutral-400 font-medium">3 Kanal</span>
+                <div className="w-[820px] max-w-[94vw]">
+                  <div className="grid grid-cols-12 gap-3.5 items-stretch">
+                    {/* Left Sub-card (7 cols): Screenshot 1 "Get started" style */}
+                    <div className="col-span-7 rounded-2xl bg-white/[0.03] border border-white/[0.08] p-4 sm:p-5 flex flex-col justify-between hover:border-white/[0.12] transition-colors">
+                      <div className="text-xs font-semibold text-neutral-400 mb-3 tracking-wide">
+                        {language === 'en' ? 'PUBLICATIONS & CIRCULARS' : 'PUBLIKASI, RISET & PENGUMUMAN'}
                       </div>
-                      <div className="space-y-1.5 flex-1 flex flex-col justify-between">
+                      <div className="space-y-1 flex-1 flex flex-col justify-between">
                         <MenuCardItem
                           icon={<Newspaper className="w-4 h-4" />}
-                          title="Berita &amp; Kegiatan LPH"
-                          description="Liputan audit lapangan, seminar ilmiah, workshop, dan siaran pers resmi."
+                          title={language === 'en' ? 'LPH News & Activities' : 'Berita & Kegiatan LPH'}
+                          description={language === 'en'
+                            ? 'Field audit coverage, scientific seminars, workshops, and official press releases.'
+                            : 'Liputan audit lapangan, seminar ilmiah, workshop, dan siaran pers resmi.'}
                           to="/berita"
-                          badge="Terbaru"
+                          badge={language === 'en' ? 'Latest' : 'Terbaru'}
+                          badgeVariant="sky"
                           onClick={() => setActiveDropdown(null)}
                         />
                         <MenuCardItem
                           icon={<Bell className="w-4 h-4" />}
-                          title="Pengumuman Resmi"
-                          description="Surat edaran BPJPH, jadwal sidang fatwa, dan informasi penting pelaku usaha."
+                          title={language === 'en' ? 'Official Announcements' : 'Pengumuman Resmi BPJPH'}
+                          description={language === 'en'
+                            ? 'BPJPH circulars, fatwa session schedules, and crucial business notices.'
+                            : 'Surat edaran BPJPH, jadwal sidang fatwa, dan informasi penting pelaku usaha.'}
                           to="/pengumuman"
+                          badge={language === 'en' ? 'Notice' : 'Edaran'}
+                          badgeVariant="purple"
                           onClick={() => setActiveDropdown(null)}
                         />
                         <MenuCardItem
-                          icon={<BookOpen className="w-4 h-4" />}
-                          title="Jurnal Riset Halal (IJHR)"
-                          description="Indonesian Journal of Halal Research terakreditasi SINTA nasional."
+                          icon={<GraduationCap className="w-4 h-4" />}
+                          title={language === 'en' ? 'Halal Research Journal (IJHR)' : 'Jurnal Riset Halal (IJHR)'}
+                          description={language === 'en'
+                            ? 'Indonesian Journal of Halal Research nationally accredited by SINTA.'
+                            : 'Indonesian Journal of Halal Research terakreditasi SINTA 2 nasional.'}
                           href="https://journal.uinsgd.ac.id/index.php/ijhar"
-                          badge="SINTA"
+                          badge="SINTA 2"
+                          badgeVariant="emerald"
                           onClick={() => setActiveDropdown(null)}
                         />
                       </div>
                     </div>
 
-                    {/* Right Column (5 cols): Featured Visual Preview Card with Photo */}
-                    <div className="col-span-5 flex flex-col justify-between">
-                      <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/10">
-                        <span className="text-[11px] font-bold uppercase tracking-wider text-purple-300/80">
-                          Agenda Strategis
-                        </span>
-                        <span className="text-[10px] text-purple-400 font-medium">Global</span>
-                      </div>
-                      <div className="flex-1">
-                        <FeaturedPreviewCard
-                          image="/assets/images/uin_sgd/uin_07.webp"
-                          title="Konferensi Halal Dunia"
-                          badge="Internasional"
-                          description="Penguatan ekosistem industri halal dunia melalui kolaborasi saintifik dan kepatuhan syariah."
-                          to="/berita"
-                          actionText="Baca Kabar Selengkapnya"
-                          onClick={() => setActiveDropdown(null)}
-                        />
-                      </div>
+                    {/* Right Sub-card (5 cols): Screenshot 2 Featured Visual Card with Photo */}
+                    <div className="col-span-5 rounded-2xl bg-white/[0.03] border border-white/[0.08] p-3.5 sm:p-4 flex flex-col justify-between hover:border-white/[0.12] transition-colors">
+                      <FeaturedPreviewCard
+                        image="/assets/images/uin_sgd/uin_07.webp"
+                        title={language === 'en' ? 'World Halal Conference' : 'Konferensi Halal Dunia'}
+                        badge={language === 'en' ? 'Global Agenda' : 'Agenda Global'}
+                        badgeVariant="sky"
+                        description={language === 'en'
+                          ? 'Strengthening global halal industry ecosystem through scientific research and sharia compliance.'
+                          : 'Penguatan ekosistem industri halal dunia melalui kolaborasi saintifik dan kepatuhan syariah.'}
+                        to="/berita"
+                        actionText={language === 'en' ? 'Read Full Story' : 'Baca Kabar Selengkapnya'}
+                        onClick={() => setActiveDropdown(null)}
+                      />
                     </div>
                   </div>
 
                   {/* Bottom Footer Bar */}
                   <MenuFooter
-                    label="Dokumen & Riset"
+                    label={language === 'en' ? 'Official Documents & Research' : 'Dokumen & Riset Resmi'}
                     links={[
-                      { label: "Unduh Pedoman SJPH", to: "/berita" },
-                      { label: "Arsip Publikasi SINTA", href: "https://journal.uinsgd.ac.id/index.php/ijhar" },
-                      { label: "Galeri Foto Kegiatan", to: "/berita" },
+                      { label: language === 'en' ? 'Download SJPH Manual' : 'Unduh Pedoman SJPH', to: '/berita' },
+                      { label: language === 'en' ? 'SINTA Journal Archive' : 'Arsip Publikasi SINTA', href: 'https://journal.uinsgd.ac.id/index.php/ijhar' },
+                      { label: language === 'en' ? 'Activity Gallery' : 'Galeri Foto Kegiatan', to: '/berita' },
                     ]}
                     onClick={() => setActiveDropdown(null)}
                   />
