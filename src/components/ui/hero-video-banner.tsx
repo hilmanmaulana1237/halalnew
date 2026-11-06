@@ -77,24 +77,22 @@ export const HeroVideoBanner: React.FC = () => {
 
       {/* Hero Content */}
       <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 sm:pt-32 pb-8 sm:pb-10 text-center flex flex-col items-center justify-center flex-1">
-        {/* Animated Eyebrow Badge (Modern Classic) */}
+        {/* Animated Eyebrow Badge (Modern Classic with Gold Accent) */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-purple-200 text-xs sm:text-sm font-semibold mb-6 shadow-xl"
+          className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-purple-950/50 backdrop-blur-md border border-amber-400/40 text-amber-200 text-xs sm:text-sm font-semibold mb-6 shadow-xl shadow-purple-950/40"
         >
           <span className="flex h-2 w-2 relative">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-300"></span>
           </span>
+          <Sparkles className="w-3.5 h-3.5 text-amber-300" />
           <span className="text-white tracking-wide">{t('hero_badge_lph')}</span>
-          <span className="px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 text-[10px] font-extrabold uppercase tracking-wider">
-            Akreditasi Utama BPJPH
-          </span>
         </motion.div>
 
-        {/* Main Heading with Modern Classic Serif Typography & FlipWords */}
+        {/* Main Heading with Modern Classic Typography & Golden FlipWords */}
         <motion.h1
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -102,8 +100,8 @@ export const HeroVideoBanner: React.FC = () => {
           className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.15] drop-shadow-2xl"
         >
           Leading in{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-white to-purple-200">
-            <FlipWords words={words} className="text-purple-200" />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-300 to-yellow-100">
+            <FlipWords words={words} className="text-amber-300" />
           </span>
           <br className="hidden sm:inline" />
           Solutions
@@ -129,14 +127,12 @@ export const HeroVideoBanner: React.FC = () => {
           <Link to="/layanan/kalkulator">
             <MovingBorderButton
               duration={3200}
-              className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold hover:brightness-110 shadow-xl"
+              borderClassName="bg-[radial-gradient(#f59e0b_40%,transparent_60%)]"
+              className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold hover:brightness-110 shadow-xl shadow-purple-950/40"
             >
               <span className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-amber-300 animate-pulse" />
-                <span>{t('hero_cta_calc')}</span>
-                <span className="hidden sm:inline px-1.5 py-0.5 rounded text-[10px] font-black bg-gradient-to-r from-amber-400 to-yellow-400 text-purple-950 uppercase tracking-tight shadow-xs">
-                  KMA 784
-                </span>
+                <Sparkles className="w-4 h-4 text-amber-300" />
+                {t('hero_cta_calc')}
                 <ArrowRight className="w-4 h-4 text-amber-300" />
               </span>
             </MovingBorderButton>
@@ -144,7 +140,7 @@ export const HeroVideoBanner: React.FC = () => {
           <Link to="/tentang">
             <Button
               variant="outline"
-              className="h-12 bg-white/10 hover:bg-white/20 text-white border border-white/30 backdrop-blur-md font-semibold text-sm px-6 rounded-2xl transition-all shadow-xl hover:scale-105"
+              className="h-12 bg-white/10 hover:bg-white/20 text-white border border-white/30 hover:border-amber-300/60 backdrop-blur-md font-semibold text-sm px-6 rounded-2xl transition-all shadow-xl hover:scale-105"
             >
               {t('hero_cta_profile')}
             </Button>
@@ -152,18 +148,18 @@ export const HeroVideoBanner: React.FC = () => {
         </motion.div>
       </div>
 
-      {/* Floating Search Box with Refined Royal Purple Border Frame */}
+      {/* Floating Search Box with Purple & Gold Halo Border Frame */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
         className="relative z-20 max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-10 sm:pb-12"
       >
-        <div className="relative rounded-3xl p-[1.5px] bg-gradient-to-r from-[#4a0d5c] via-[#86198f] to-[#4a0d5c] shadow-2xl shadow-purple-950/30">
+        <div className="relative rounded-3xl p-[1.5px] bg-gradient-to-r from-[#4a0d5c] via-amber-400 to-[#4a0d5c] shadow-2xl shadow-purple-950/30">
           <div className="bg-white rounded-[22px] p-5 sm:p-7 shadow-sm">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-purple-100 text-[#6b1282] flex items-center justify-center shadow-xs">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-100 to-amber-100/70 text-[#6b1282] border border-amber-200/60 flex items-center justify-center shadow-xs">
                   <Search className="w-5 h-5" />
                 </div>
                 <div>
@@ -176,7 +172,7 @@ export const HeroVideoBanner: React.FC = () => {
                 </div>
               </div>
 
-              {/* Quick tags in Purple & White */}
+              {/* Quick tags in Gold, Purple & White */}
               <div className="flex items-center gap-1.5 flex-wrap">
                 <span className="text-xs font-semibold text-neutral-400">{t('search_popular')}</span>
                 {(language === 'en' ? ['Coffee', 'Bread', 'Cosmetics', 'Meat'] : ['Kopi', 'Roti', 'Kosmetik', 'Daging']).map((tag) => (
@@ -184,7 +180,7 @@ export const HeroVideoBanner: React.FC = () => {
                     key={tag}
                     type="button"
                     onClick={() => quickSearch(tag)}
-                    className="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-purple-50 hover:bg-purple-100 text-[#6b1282] border border-purple-100/70 transition-colors cursor-pointer"
+                    className="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-amber-50/70 hover:bg-amber-100 text-amber-900 border border-amber-200/80 transition-colors cursor-pointer"
                   >
                     #{tag}
                   </button>
@@ -247,9 +243,9 @@ export const HeroVideoBanner: React.FC = () => {
                   type="submit"
                   variant="primary"
                   fullWidth
-                  className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold h-11 rounded-xl shadow-md shadow-purple-950/20 transition-all flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99] text-xs sm:text-sm cursor-pointer border-t border-purple-300/30"
+                  className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold h-11 rounded-xl border border-amber-400/40 hover:border-amber-400 shadow-md shadow-purple-950/20 transition-all flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99] text-xs sm:text-sm cursor-pointer group"
                 >
-                  <Search className="w-4 h-4 text-amber-300" />
+                  <Search className="w-4 h-4 text-amber-300 group-hover:scale-110 transition-transform" />
                   <span>{t('search_button')}</span>
                 </Button>
               </div>

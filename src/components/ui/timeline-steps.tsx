@@ -46,8 +46,8 @@ const STEPS_ID: StepItem[] = [
     subtitle: "Screening Dokumen & Matriks Bahan Baku",
     description:
       "Tim verifikator LPH UIN SGD memeriksa kelengkapan daftar bahan, matriks asal bahan, keabsahan sertifikat halal bahan dari pemasok, serta kesiapan fasilitas produksi secara menyeluruh.",
-    icon: <FileSearch className="w-6 h-6" />,
-    accent: "blue",
+    icon: <FileSearch className="w-6 h-6 text-amber-600" />,
+    accent: "amber",
     badge: "Verifikasi Cepat",
     points: [
       "Pemeriksaan ketat terhadap bahan nabati, hewani, & mikrobial",
@@ -64,8 +64,8 @@ const STEPS_ID: StepItem[] = [
     subtitle: "Pemeriksaan Fisik & Pengujian DNA qPCR",
     description:
       "Auditor Halal berlisensi melakukan audit on-site ke fasilitas produksi. Jika terdapat bahan kritis, sampel diuji saintifik di Laboratorium Terpadu Kampus 2 UIN SGD (Real-Time PCR DNA Porcine & GC-FID Alkohol).",
-    icon: <FlaskConical className="w-6 h-6" />,
-    accent: "emerald",
+    icon: <FlaskConical className="w-6 h-6 text-[#6b1282]" />,
+    accent: "purple",
     badge: "Saintifik ISO 17025",
     points: [
       "Audit ketertelusuran (traceability) alur proses produksi",
@@ -121,8 +121,8 @@ const STEPS_EN: StepItem[] = [
     subtitle: "Document Audit & Ingredient Traceability Matrix",
     description:
       "LPH UIN SGD verifiers examine ingredient matrices, supplier halal certificates, and production facility cleanliness readiness.",
-    icon: <FileSearch className="w-6 h-6" />,
-    accent: "blue",
+    icon: <FileSearch className="w-6 h-6 text-amber-600" />,
+    accent: "amber",
     badge: "Fast Screening",
     points: [
       "Strict evaluation of plant, animal, and microbial derivatives",
@@ -139,8 +139,8 @@ const STEPS_EN: StepItem[] = [
     subtitle: "Physical Inspection & Porcine qPCR DNA Assay",
     description:
       "Certified Halal Auditors conduct on-site factory verification. Critical samples undergo scientific testing at Integrated Lab Campus 2 (Real-Time Porcine DNA qPCR & GC-FID Ethanol).",
-    icon: <FlaskConical className="w-6 h-6" />,
-    accent: "emerald",
+    icon: <FlaskConical className="w-6 h-6 text-[#6b1282]" />,
+    accent: "purple",
     badge: "ISO 17025 Scientific",
     points: [
       "Full traceability check of raw ingredients to finished packaging",
@@ -201,11 +201,11 @@ export const TimelineSteps: React.FC = () => {
       bullet: "bg-[#005a36]",
     },
     amber: {
-      activeBg: "bg-[#d97706] text-white shadow-lg shadow-amber-900/30 ring-4 ring-amber-100",
-      activeTab: "border-[#d97706] bg-amber-50/70",
-      badge: "bg-amber-100 text-[#d97706] border-amber-200",
-      button: "bg-[#d97706] hover:bg-[#b45309] text-white",
-      bullet: "bg-[#d97706]",
+      activeBg: "bg-gradient-to-r from-amber-400 to-amber-500 text-neutral-950 font-black shadow-lg shadow-amber-900/20 ring-4 ring-amber-100",
+      activeTab: "border-amber-400 bg-amber-50/70",
+      badge: "bg-gradient-to-r from-amber-50 to-yellow-50 text-amber-900 border-amber-300 font-bold",
+      button: "bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-neutral-950 font-bold shadow-md shadow-amber-500/20",
+      bullet: "bg-amber-500",
     },
   };
 

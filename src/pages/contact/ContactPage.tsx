@@ -24,8 +24,8 @@ export const ContactPage: React.FC = () => {
       {/* Banner */}
       <section className="bg-gradient-to-r from-[#1a0726] via-[#4a0d5c] to-[#1a0726] text-white py-16 px-4 sm:px-6 lg:px-8 text-center">
         <div className="max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-purple-200 text-xs font-semibold uppercase tracking-wider mb-4 border border-white/20 shadow-xs">
-            <Phone className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/10 text-amber-300 text-xs font-semibold uppercase tracking-wider mb-4 border border-amber-400/30 shadow-xs">
+            <Phone className="w-3.5 h-3.5 text-amber-300" />
             {isEn ? 'Communication & Partnerships' : 'Layanan Komunikasi & Kemitraan'}
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold tracking-tight">
@@ -116,9 +116,9 @@ export const ContactPage: React.FC = () => {
                   <Button
                     variant="primary"
                     fullWidth
-                    className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold py-2.5 rounded-xl shadow-xs text-xs sm:text-sm flex items-center justify-center gap-2"
+                    className="bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-neutral-950 font-bold py-2.5 rounded-xl shadow-xs text-xs sm:text-sm flex items-center justify-center gap-2 transition-all"
                   >
-                    <MessageSquare className="w-4 h-4" />
+                    <MessageSquare className="w-4 h-4 text-neutral-900" />
                     {isEn ? 'Chat Directly via WhatsApp' : 'Chat Langsung via WhatsApp'}
                   </Button>
                 </a>

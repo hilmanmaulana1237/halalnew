@@ -309,21 +309,20 @@ export const PriceCalculatorPage: React.FC = () => {
                         </span>
                       </div>
 
-                      <div className="p-5 rounded-2xl bg-gradient-to-br from-purple-50 via-white to-amber-50/50 border border-purple-200 shadow-sm relative overflow-hidden">
+                      <div className="p-5 rounded-2xl bg-purple-50/70 border border-purple-200">
                         <div className="flex items-center justify-between">
-                          <span className="text-xs font-bold text-[#6b1282] uppercase tracking-wide">
+                          <span className="text-xs font-bold text-[#6b1282] uppercase">
                             {t('calc_uin_estimate')}
                           </span>
-                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-gradient-to-r from-amber-400 to-amber-500 text-purple-950 shadow-xs border border-amber-300">
-                            ★ {t('calc_save')} {result.savingsPercent}%
+                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-gradient-to-r from-amber-400 to-amber-500 text-neutral-950 shadow-xs border border-amber-300">
+                            {t('calc_save')} {result.savingsPercent}%
                           </span>
                         </div>
                         <span className="text-2xl sm:text-3xl font-black text-[#6b1282] block mt-1 font-mono">
                           {formatRupiah(result.totalLph)}
                         </span>
-                        <span className="text-[11px] text-amber-800 mt-1 block font-semibold flex items-center gap-1">
-                          <Sparkles className="w-3.5 h-3.5 text-amber-500 shrink-0" />
-                          <span>{t('calc_saving_efficiency')} {formatRupiah(result.savingsNominal)}</span>
+                        <span className="text-[11px] text-purple-900 mt-1 block font-semibold">
+                          {t('calc_saving_efficiency')} {formatRupiah(result.savingsNominal)}
                         </span>
                       </div>
                     </div>

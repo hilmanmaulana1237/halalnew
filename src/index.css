@@ -3,22 +3,22 @@
 
 @layer base {
   :root {
-    /* Royal Purple, Lilac & Warm Gold Palette */
+    /* Royal Purple & Pure White Modern Classic Palette */
     --brand-purple: #6b1282;
     --brand-purple-deep: #25032e;
     --brand-purple-dark: #4a0d5c;
     --brand-purple-light: #86198f;
     --brand-purple-lavender: #c084fc;
-    
-    /* Ungu Muda / Soft Lilac */
     --brand-purple-soft: #f3e8ff;
-    --brand-purple-subtle: #faf5ff;
-    
-    /* Kuning / Warm Golden Amber Accent */
+    --brand-purple-subtle: #fdf4ff;
+
+    /* Corporate Warm Gold / Amber Yellow Accent Palette */
     --brand-gold: #f59e0b;
     --brand-gold-bright: #fbbf24;
-    --brand-gold-light: #fef3c7;
-    --brand-gold-dark: #b45309;
+    --brand-gold-warm: #d97706;
+    --brand-gold-deep: #b45309;
+    --brand-gold-soft: #fef3c7;
+    --brand-gold-subtle: #fffbeb;
   }
 
   body {
