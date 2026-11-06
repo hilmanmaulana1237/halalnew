@@ -7,6 +7,7 @@ import {
   ArrowRight,
   Award,
   BookOpen,
+  Calculator,
   CheckCircle2,
   FileCheck,
   FileText,
@@ -36,6 +37,7 @@ import { MovingBorderButton } from '@/components/ui/moving-border';
 import { TimelineSteps } from '@/components/ui/timeline-steps';
 import { CardSpotlight } from '@/components/ui/card-spotlight';
 import { useLanguage } from '@/context/LanguageContext';
+import { OrganicWave, LiquidDripWave, YellowDotGrid, YellowHighlight, OrganicBlob } from '@/components/ui/decorative-shapes';
 
 interface Director {
   id: number;
@@ -144,9 +146,9 @@ export const getUinServices = (isEn: boolean) => [
       ? 'In-person and virtual consultation regarding ingredient eligibility, Halal Assurance Systems, and BPJPH guidelines.'
       : 'Layanan konsultasi tatap muka maupun daring mengenai kelayakan bahan baku, sistem jaminan halal, dan regulasi BPJPH.',
     url: 'https://wa.me/6282118201232',
-    icon: <Phone className="w-6 h-6 text-amber-600" />,
+    icon: <Phone className="w-6 h-6 text-[#6b1282]" />,
     badge: isEn ? 'Fast Response' : 'Layanan Cepat',
-    accentColor: 'amber' as const,
+    accentColor: 'purple' as const,
     colSpan: 'md:col-span-1',
   },
   {
@@ -166,9 +168,9 @@ export const getUinServices = (isEn: boolean) => [
       ? 'Official competency certification programs for Halal Supervisors, Halal Auditors, and enterprise QA management.'
       : 'Program sertifikasi kompetensi resmi untuk Penyelia Halal, Auditor Halal, dan tim manajemen mutu perusahaan.',
     url: 'https://halal.uinsgd.ac.id/lembaga-pelatihan-jaminan-produk-halal-jph/',
-    icon: <GraduationCap className="w-6 h-6 text-amber-600" />,
+    icon: <GraduationCap className="w-6 h-6 text-[#6b1282]" />,
     badge: isEn ? 'Certified Training' : 'Pelatihan Resmi',
-    accentColor: 'amber' as const,
+    accentColor: 'purple' as const,
     colSpan: 'md:col-span-1',
   },
   {
@@ -188,9 +190,9 @@ export const getUinServices = (isEn: boolean) => [
       ? 'High-precision scientific testing: Porcine DNA qPCR detection, ethanol residuals (GC-FID), and gelatin analysis.'
       : 'Uji saintifik presisi tinggi: Deteksi DNA Babi qPCR, Uji Cemaran Etanol (GC-FID), serta analisa gelatin dan profil asam lemak.',
     url: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/',
-    icon: <FlaskConical className="w-6 h-6 text-amber-600" />,
+    icon: <FlaskConical className="w-6 h-6 text-[#6b1282]" />,
     badge: 'ISO/IEC 17025',
-    accentColor: 'amber' as const,
+    accentColor: 'purple' as const,
     colSpan: 'md:col-span-1',
   },
 ];
@@ -265,13 +267,9 @@ export const HomePage: React.FC = () => {
       {/* 1. HERO BANNER WITH VIDEO & SEARCH CARD (Aceternity UI Rebuild) */}
       <HeroVideoBanner />
 
-      {/* 2. STATS SECTION (Untitled UI Metric Cards Row - 1/3 Dark Purple Overlap, 2/3 Light) */}
-      <section className="relative z-30 w-full pb-10 sm:pb-14">
-        {/* Top 1/3 dark purple-black background connecting seamlessly to Hero */}
-        <div className="absolute top-0 inset-x-0 h-1/3 sm:h-[35%] bg-[#1a0726] -mt-px pointer-events-none">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(107,18,130,0.3),_transparent_75%)]" />
-        </div>
-
+      {/* 2. STATS SECTION (Untitled UI Metric Cards Row with Yellow Accents) */}
+      <section className="relative z-30 w-full pt-4 pb-12 sm:pb-16 bg-white overflow-hidden">
+        <YellowDotGrid rows={3} cols={6} className="absolute -top-4 right-12 opacity-30 pointer-events-none hidden md:grid" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             <MetricCard
@@ -292,9 +290,9 @@ export const HomePage: React.FC = () => {
               suffix="+"
               change="+28% YoY"
               isPositive={true}
-              accentColor="amber"
+              accentColor="purple"
               description={t('metric_certs_desc')}
-              icon={<FileCheck className="w-5 h-5 text-amber-700" />}
+              icon={<FileCheck className="w-5 h-5" />}
             />
             <MetricCard
               label={t('metric_auditors_label')}
@@ -313,22 +311,25 @@ export const HomePage: React.FC = () => {
               suffix=""
               change={t('metric_lab_change')}
               isPositive={true}
-              accentColor="amber"
+              accentColor="purple"
               description={t('metric_lab_desc')}
-              icon={<FlaskConical className="w-5 h-5 text-amber-700" />}
+              icon={<FlaskConical className="w-5 h-5" />}
             />
           </div>
         </div>
       </section>
 
-      {/* 3. ABOUT HALAL CENTER SECTION (Classy Pearl Background) */}
-      <section className="py-20 lg:py-28 bg-[#faf8fc] border-y border-neutral-200/70" id="tentang">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 3. ABOUT HALAL CENTER SECTION (Soft Purple Canvas with Yellow Accents) */}
+      <section className="py-20 lg:py-28 bg-[#FAF7FD] border-y border-[#C9A5E8]/30 relative overflow-hidden" id="tentang">
+        <YellowDotGrid rows={4} cols={5} className="absolute top-8 left-8 opacity-25 pointer-events-none hidden lg:grid" />
+        <YellowDotGrid rows={3} cols={4} className="absolute bottom-8 right-8 opacity-20 pointer-events-none hidden md:grid" />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             {/* Certificate Visual with Aceternity BackgroundGradient Glow */}
             <div className="lg:col-span-5 flex justify-center">
-              <BackgroundGradient className="rounded-[22px] p-2 bg-white">
-                <div className="relative rounded-2xl overflow-hidden bg-white p-3">
+              <BackgroundGradient className="rounded-[24px] p-2 bg-white shadow-xl shadow-purple-900/10">
+                <div className="relative rounded-2xl overflow-hidden bg-white p-3 border border-[#C9A5E8]/30">
                   <img
                     src="/assets/images/certificate.png"
                     alt="Sertifikat Akreditasi LPH UIN SGD"
@@ -339,7 +340,9 @@ export const HomePage: React.FC = () => {
                       <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                       {isEn ? 'Official BPJPH Accreditation' : 'Akreditasi Resmi BPJPH'}
                     </span>
-                    <span className="text-purple-700 font-mono font-bold">No. Reg: LPH-018-ID</span>
+                    <span className="text-[#6B18A8] font-mono font-bold bg-[#F5EDFB] px-2.5 py-1 rounded-md border border-[#C9A5E8]/40">
+                      No. Reg: LPH-018-ID
+                    </span>
                   </div>
                 </div>
               </BackgroundGradient>
@@ -347,34 +350,34 @@ export const HomePage: React.FC = () => {
 
             {/* Content (7 cols) */}
             <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-bold bg-purple-100 text-[#6b1282] border border-purple-200 uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] uppercase tracking-wider shadow-xs">
+                <Sparkles className="w-3.5 h-3.5 text-[#eab308]" />
                 {isEn ? 'About Us' : 'Tentang Kami'}
               </div>
 
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a0726] tracking-tight leading-snug">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#292333] tracking-tight leading-snug">
                 {isEn ? 'Halal Center UIN SGD Through the ' : 'Pusat Halal UIN SGD Melalui Konsep '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6b1282] to-[#86198f]">
+                <YellowHighlight className="text-[#6B18A8]">
                   “Halalsphere University”
-                </span>
+                </YellowHighlight>
               </h2>
 
-              <p className="text-base sm:text-lg text-neutral-600 leading-relaxed font-normal">
+              <p className="text-base sm:text-lg text-[#756D7C] leading-relaxed font-normal">
                 {isEn
                   ? 'Halal Center UIN Sunan Gunung Djati Bandung is committed to becoming a leading institution in developing national and global halal ecosystems. As a certified Halal Inspection Agency (LPH) accredited by BPJPH Ministry of Religious Affairs, we uphold strict audit standards, precision scientific laboratory testing, and premium services for all business enterprises.'
                   : 'Pusat Halal (Halal Center) UIN Sunan Gunung Djati Bandung berkomitmen untuk menjadi lembaga terdepan dalam pengembangan ekosistem halal nasional dan global. Sebagai Lembaga Pemeriksa Halal (LPH) terakreditasi BPJPH Kementerian Agama RI, kami senantiasa menjaga standar mutu pemeriksaan, pengujian laboratorium saintifik presisi, dan pelayanan prima bagi seluruh pelaku usaha.'}
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                <div className="p-4 rounded-2xl bg-purple-50/50 border border-purple-100 flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-purple-100 text-[#6b1282] flex items-center justify-center shrink-0">
-                    <ShieldCheck className="w-5 h-5" />
+                <div className="p-4 rounded-2xl bg-white border border-[#C9A5E8]/40 shadow-sm flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-[#F5EDFB] text-[#6B18A8] border border-[#C9A5E8]/30 flex items-center justify-center shrink-0">
+                    <ShieldCheck className="w-5 h-5 text-[#6B18A8]" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-neutral-900 text-sm">
+                    <h4 className="font-bold text-[#292333] text-sm">
                       {isEn ? 'Sharia Integrity' : 'Integritas Syar’i'}
                     </h4>
-                    <p className="text-xs text-neutral-600 mt-1">
+                    <p className="text-xs text-[#756D7C] mt-1">
                       {isEn
                         ? 'Absolute compliance with MUI fatwas and halal product assurance regulations.'
                         : 'Kepatuhan mutlak terhadap fatwa MUI dan regulasi jaminan produk halal.'}
@@ -382,15 +385,15 @@ export const HomePage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-purple-50/50 border border-purple-100 flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-purple-100 text-[#6b1282] flex items-center justify-center shrink-0">
-                    <Microscope className="w-5 h-5" />
+                <div className="p-4 rounded-2xl bg-white border border-[#F5D32F]/50 shadow-sm flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F]/40 flex items-center justify-center shrink-0">
+                    <Microscope className="w-5 h-5 text-[#eab308]" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-neutral-900 text-sm">
+                    <h4 className="font-bold text-[#292333] text-sm">
                       {isEn ? 'Scientific & Precision' : 'Saintifik & Presisi'}
                     </h4>
-                    <p className="text-xs text-neutral-600 mt-1">
+                    <p className="text-xs text-[#756D7C] mt-1">
                       {isEn
                         ? 'ISO 17025 accredited laboratory testing for porcine DNA and ethanol contamination.'
                         : 'Laboratorium pengujian DNA babi dan cemaran alkohol terakreditasi ISO 17025.'}
@@ -403,15 +406,15 @@ export const HomePage: React.FC = () => {
                 <Link to="/tentang">
                   <Button
                     variant="primary"
-                    className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold px-7 py-3 rounded-xl text-sm shadow-md shadow-purple-950/15"
+                    className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-bold px-7 py-3 rounded-xl text-sm shadow-md shadow-purple-950/15 cursor-pointer"
                   >
                     {isEn ? 'View Full Profile' : 'Lihat Profil Lengkap'}
                   </Button>
                 </Link>
                 <Link to="/layanan/kalkulator">
                   <Button
-                    variant="outline"
-                    className="border-neutral-300 text-neutral-700 hover:bg-neutral-50 font-semibold px-7 py-3 rounded-xl text-sm"
+                    variant="primary"
+                    className="bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold px-7 py-3 rounded-xl text-sm shadow-sm cursor-pointer"
                   >
                     {isEn ? 'Start Halal Certification' : 'Mulai Sertifikasi Halal'}
                   </Button>
@@ -422,12 +425,13 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. TWO MAIN SERVICES CARDS (Crisp Pure White) */}
-      <section className="py-20 lg:py-24 bg-white" id="layanan">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 4. TWO MAIN SERVICES CARDS (Crisp Pure White with Yellow & Purple Accents) */}
+      <section className="py-20 lg:py-24 bg-white relative overflow-hidden" id="layanan">
+        <YellowDotGrid rows={3} cols={6} className="absolute top-10 right-10 opacity-25 pointer-events-none hidden lg:grid" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <SectionHeader
             badge={isEn ? 'CORE SERVICES' : 'LAYANAN UTAMA'}
-            badgeColor="purple"
+            badgeColor="yellow"
             title={isEn ? 'Excellence in Every Step of Halal Certification' : 'Kemudahan dalam Setiap Langkah Sertifikasi Halal'}
             subtitle={isEn
               ? 'Comprehensive end-to-end inspection ensuring your products meet both Islamic sharia requirements and government regulations.'
@@ -439,7 +443,7 @@ export const HomePage: React.FC = () => {
             <motion.div
               whileHover={{ y: -6 }}
               transition={{ duration: 0.25 }}
-              className="rounded-3xl border border-purple-100 bg-white overflow-hidden shadow-lg shadow-purple-950/5 hover:shadow-xl hover:shadow-purple-950/10 flex flex-col justify-between"
+              className="rounded-3xl border border-[#C9A5E8]/40 bg-white overflow-hidden shadow-lg shadow-purple-950/5 hover:shadow-xl hover:border-[#6B18A8]/60 transition-all flex flex-col justify-between"
             >
               <div>
                 <div className="relative h-64 overflow-hidden">
@@ -449,29 +453,29 @@ export const HomePage: React.FC = () => {
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-4 left-4">
-                    <span className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-[#6b1282] text-white shadow-md">
+                    <span className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-[#6B18A8] text-white shadow-md">
                       LPH Terakreditasi
                     </span>
                   </div>
                 </div>
                 <div className="p-7 pb-2">
-                  <h3 className="text-xl sm:text-2xl font-bold text-[#1a0726]">
+                  <h3 className="text-xl sm:text-2xl font-black text-[#292333]">
                     {isEn ? 'Product Halal Inspection (Regular Scheme)' : 'Pemeriksaan Kehalalan Produk (Jalur Reguler)'}
                   </h3>
-                  <p className="text-neutral-600 text-sm leading-relaxed mt-3">
+                  <p className="text-[#756D7C] text-sm leading-relaxed mt-3">
                     {isEn
                       ? 'Core services of LPH UIN SGD encompassing thorough evaluations of production processes, raw materials, on-site facility audits, and Halal Assurance Systems (SJPH) for corporate and industrial enterprises.'
                       : 'Layanan utama LPH UIN SGD mencakup pemeriksaan menyeluruh terhadap proses produksi, validasi bahan baku, audit fasilitas manufaktur, dan Sistem Jaminan Produk Halal (SJPH) bagi pelaku usaha industri.'}
                   </p>
                 </div>
               </div>
-              <div className="p-7 pt-4 flex items-center justify-between border-t border-neutral-100 mt-4">
+              <div className="p-7 pt-4 flex items-center justify-between border-t border-purple-50 mt-4">
                 <Link to="/layanan/kalkulator">
-                  <Button variant="primary" className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-md">
+                  <Button variant="primary" className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-md cursor-pointer">
                     {isEn ? 'Calculate Estimated Cost' : 'Hitung Estimasi Biaya'}
                   </Button>
                 </Link>
-                <Link to="/tentang" className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
+                <Link to="/tentang" className="text-xs font-bold text-[#6B18A8] hover:text-[#58138a] hover:underline flex items-center gap-1">
                   {isEn ? 'View Details' : 'Lihat Detail'} <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
@@ -481,7 +485,7 @@ export const HomePage: React.FC = () => {
             <motion.div
               whileHover={{ y: -6 }}
               transition={{ duration: 0.25 }}
-              className="rounded-3xl border border-amber-200/90 bg-white overflow-hidden shadow-lg shadow-amber-950/5 hover:shadow-xl hover:shadow-amber-900/10 flex flex-col justify-between"
+              className="rounded-3xl border border-[#F5D32F]/50 bg-white overflow-hidden shadow-lg shadow-purple-950/5 hover:shadow-xl hover:border-[#F5D32F] transition-all flex flex-col justify-between"
             >
               <div>
                 <div className="relative h-64 overflow-hidden">
@@ -491,29 +495,29 @@ export const HomePage: React.FC = () => {
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-4 left-4">
-                    <span className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-amber-400 to-amber-500 text-neutral-950 border border-amber-300 shadow-md">
+                    <span className="px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-[#F5D32F] text-[#3B074A] shadow-md">
                       {isEn ? 'Integrated Laboratory' : 'Laboratorium Terpadu'}
                     </span>
                   </div>
                 </div>
                 <div className="p-7 pb-2">
-                  <h3 className="text-xl sm:text-2xl font-bold text-[#1a0726]">
+                  <h3 className="text-xl sm:text-2xl font-black text-[#292333]">
                     {isEn ? 'Laboratory Testing & Halal Training' : 'Uji Laboratorium & Pelatihan Halal'}
                   </h3>
-                  <p className="text-neutral-600 text-sm leading-relaxed mt-3">
+                  <p className="text-[#756D7C] text-sm leading-relaxed mt-3">
                     {isEn
                       ? 'Integrated Laboratory services for manufacturers to verify halal compliance (qPCR porcine DNA detection, alcohol, gelatin) and competency training for certified Halal Slaughterers (JULEHA) and Supervisors.'
                       : 'Layanan pengujian Laboratorium Terpadu bagi produsen untuk mematuhi regulasi halal (deteksi DNA babi qPCR, alkohol, gelatin) serta pelatihan kompetensi Juru Sembelih Halal (JULEHA) dan Penyelia Halal terakreditasi.'}
                   </p>
                 </div>
               </div>
-              <div className="p-7 pt-4 flex items-center justify-between border-t border-neutral-100 mt-4">
+              <div className="p-7 pt-4 flex items-center justify-between border-t border-purple-50 mt-4">
                 <Link to="/kontak">
-                  <Button variant="primary" className="bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-neutral-950 font-bold text-xs px-5 py-2.5 rounded-xl shadow-md transition-all">
+                  <Button variant="primary" className="bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md cursor-pointer">
                     {isEn ? 'Book Lab Testing' : 'Reservasi Pengujian Lab'}
                   </Button>
                 </Link>
-                <Link to="/tentang" className="text-xs font-bold text-amber-700 hover:text-amber-800 hover:underline flex items-center gap-1">
+                <Link to="/tentang" className="text-xs font-bold text-[#6B18A8] hover:text-[#58138a] hover:underline flex items-center gap-1">
                   {isEn ? 'View Details' : 'Lihat Detail'} <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
@@ -522,12 +526,14 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 5. 6 SERVICES THEME GRID (Classy Light Mesh Micro-Dots) */}
-      <section className="py-24 bg-[#faf7fd] bg-[radial-gradient(#e9d5ff_1px,transparent_1px)] [background-size:24px_24px] border-y border-purple-100/70" id="layanan-terpadu">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 5. 6 SERVICES THEME GRID (Classy Light Mesh Micro-Dots with Yellow Dot Decor) */}
+      <section className="py-24 bg-[#FAF7FD] border-y border-[#C9A5E8]/30 relative overflow-hidden" id="layanan-terpadu">
+        <YellowDotGrid rows={4} cols={5} className="absolute top-10 right-8 opacity-25 pointer-events-none hidden lg:grid" />
+        <YellowDotGrid rows={3} cols={4} className="absolute bottom-10 left-8 opacity-20 pointer-events-none hidden md:grid" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <SectionHeader
             badge={isEn ? "FLAGSHIP HALAL SERVICES" : "LAYANAN HALAL UNGGULAN"}
-            badgeColor="purple"
+            badgeColor="yellow"
             title={isEn ? "6 Flagship Services of Halal Center UIN SGD" : "6 Layanan Unggulan Halal Center UIN SGD"}
             subtitle={isEn
               ? "Comprehensive ecosystem from regular industrial halal audit to precision molecular bio-testing."
@@ -544,7 +550,7 @@ export const HomePage: React.FC = () => {
                 badge={srv.badge}
                 accentColor={srv.accentColor}
                 header={
-                  <div className="text-neutral-400 hover:text-[#6b1282] transition-colors p-1">
+                  <div className="text-neutral-400 hover:text-[#6B18A8] transition-colors p-1">
                     <ExternalLink className="w-4 h-4" />
                   </div>
                 }
@@ -572,12 +578,14 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 6. DUAL LEADERSHIP SHOWCASE (Both Leaders Displayed Directly with Alternating Blueprint Layout) */}
-      <section className="py-20 lg:py-28 bg-[#f8f9fc] border-y border-neutral-200/70" id="pimpinan">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 6. DUAL LEADERSHIP SHOWCASE (Both Leaders Displayed Directly with Alternating Layout) */}
+      <section className="py-20 lg:py-28 bg-[#FAF7FD] border-y border-[#C9A5E8]/30 relative overflow-hidden" id="pimpinan">
+        <YellowDotGrid rows={4} cols={5} className="absolute top-10 left-10 opacity-20 pointer-events-none hidden lg:grid" />
+        <YellowDotGrid rows={3} cols={4} className="absolute bottom-10 right-10 opacity-20 pointer-events-none hidden md:grid" />
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <SectionHeader
             badge={isEn ? "EXECUTIVE BOARD & PATRON" : "DEWAN PIMPINAN & PEMBINA"}
-            badgeColor="purple"
+            badgeColor="yellow"
             title={isEn ? "Leadership with Sharia Integrity & Halal Research Excellence" : "Kepemimpinan Berintegritas Syar’i & Keunggulan Riset Halal"}
             subtitle={isEn
               ? "Synergy between university strategic vision and bio-science research expertise to safeguard halal audit quality, ISO 17025 laboratory accountability, and public welfare."
@@ -591,29 +599,29 @@ export const HomePage: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="relative rounded-3xl border border-amber-200/90 bg-[#fdfdfc] overflow-hidden shadow-xl shadow-amber-950/5 p-6 sm:p-10 lg:p-12 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] bg-[size:22px_22px]"
+              className="relative rounded-3xl border border-[#C9A5E8]/40 bg-white overflow-hidden shadow-xl shadow-purple-950/5 p-6 sm:p-10 lg:p-12"
             >
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                 {/* Left (7 cols): Content & Institutional Vision */}
                 <div className="lg:col-span-7 flex flex-col justify-between">
                   <div>
-                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-bold bg-gradient-to-r from-amber-50 to-amber-100/90 text-amber-900 border border-amber-300 uppercase tracking-wider mb-4 shadow-xs">
-                      <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-extrabold bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] uppercase tracking-wider mb-4 shadow-xs">
+                      <Sparkles className="w-3.5 h-3.5 text-[#eab308]" />
                       {isEn ? 'Rector of UIN SGD & Halal Center Patron' : 'Rektor UIN SGD & Dewan Pembina Halal Center'}
                     </div>
 
-                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1a0726] tracking-tight">
+                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#292333] tracking-tight">
                       Prof. Dr. H. Rosihon Anwar, M.Ag.
                     </h3>
-                    <p className="text-xs sm:text-sm font-semibold text-neutral-500 mt-1">
+                    <p className="text-xs sm:text-sm font-semibold text-[#756D7C] mt-1">
                       {isEn
                         ? 'Professor of Quranic Exegesis & Tafsir • Pioneer of "Halalsphere University"'
                         : "Guru Besar Ilmu Al-Qur'an & Tafsir • Inisiator Paradigma \"Halalsphere University\""}
                     </p>
 
                     {/* Institutional Quote Box */}
-                    <div className="mt-6 p-6 rounded-2xl bg-white/95 border border-purple-100 shadow-sm relative">
-                      <span className="text-4xl text-[#6b1282]/30 font-serif absolute top-3 left-4 select-none leading-none">“</span>
+                    <div className="mt-6 p-6 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 shadow-xs relative">
+                      <span className="text-4xl text-[#F5D32F] font-serif absolute top-3 left-4 select-none leading-none">“</span>
                       <p className="text-sm sm:text-base text-neutral-700 italic leading-relaxed pl-6 relative z-10 font-normal">
                         "{directors[0].quote}"
                       </p>
@@ -621,10 +629,10 @@ export const HomePage: React.FC = () => {
                   </div>
 
                   {/* Actions */}
-                  <div className="mt-8 pt-6 border-t border-neutral-200/80 flex flex-wrap items-center gap-4">
+                  <div className="mt-8 pt-6 border-t border-purple-100 flex flex-wrap items-center gap-4">
                     <Button
                       variant="primary"
-                      className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold text-xs px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2"
+                      className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-bold text-xs px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2 cursor-pointer"
                       onPress={() => setSelectedDirector(directors[0])}
                     >
                       <span>{isEn ? "View Rector's Track Record & Profile" : 'Buka Profil & Rekam Jejak Rektor'}</span>
@@ -632,7 +640,7 @@ export const HomePage: React.FC = () => {
                     </Button>
                     <Link
                       to="/tentang"
-                      className="text-xs font-bold text-neutral-700 hover:text-[#6b1282] transition-colors inline-flex items-center gap-1.5"
+                      className="text-xs font-bold text-neutral-700 hover:text-[#6B18A8] transition-colors inline-flex items-center gap-1.5"
                     >
                       <span>{isEn ? 'Explore Institutional Profile & Vision' : 'Pelajari Profil Lembaga & Visi Kampus'}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -643,17 +651,17 @@ export const HomePage: React.FC = () => {
                 {/* Right (5 cols): Cutout Portrait */}
                 <div className="lg:col-span-5 flex flex-col items-center justify-end relative pt-2">
                   <div className="relative w-full max-w-sm flex flex-col items-center">
-                    <div className="absolute inset-x-8 bottom-0 h-64 bg-gradient-to-t from-amber-200/40 via-amber-100/20 to-transparent rounded-full blur-2xl pointer-events-none" />
+                    <div className="absolute inset-x-8 bottom-0 h-64 bg-gradient-to-t from-purple-200/40 via-[#F5EDFB]/30 to-transparent rounded-full blur-2xl pointer-events-none" />
                     <img
                       src={directors[0].image}
                       alt={directors[0].name}
                       className="relative z-10 w-auto max-h-[380px] sm:max-h-[420px] object-contain drop-shadow-xl"
                     />
-                    <div className="relative z-20 -mt-6 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl border border-amber-200 shadow-md text-center max-w-xs w-full">
-                      <h4 className="text-sm font-bold text-[#1a0726]">
+                    <div className="relative z-20 -mt-6 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl border border-[#C9A5E8]/40 shadow-md text-center max-w-xs w-full">
+                      <h4 className="text-sm font-black text-[#292333]">
                         {directors[0].name}
                       </h4>
-                      <p className="text-[11px] font-bold text-amber-800 mt-0.5">
+                      <p className="text-[11px] font-bold text-[#6B18A8] mt-0.5">
                         {isEn ? 'Rector of UIN SGD & Halal Center Patron' : 'Rektor UIN SGD & Dewan Pembina Halal Center'}
                       </p>
                     </div>
@@ -668,23 +676,23 @@ export const HomePage: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="relative rounded-3xl border border-neutral-200/90 bg-[#fafbfc] overflow-hidden shadow-xl shadow-purple-950/5 p-6 sm:p-10 lg:p-12 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] bg-[size:22px_22px]"
+              className="relative rounded-3xl border border-[#F5D32F]/50 bg-white overflow-hidden shadow-xl shadow-purple-950/5 p-6 sm:p-10 lg:p-12"
             >
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                 {/* Left on Desktop (5 cols): Cutout Portrait */}
                 <div className="lg:col-span-5 flex flex-col items-center justify-end relative pt-2 order-2 lg:order-1">
                   <div className="relative w-full max-w-sm flex flex-col items-center">
-                    <div className="absolute inset-x-8 bottom-0 h-64 bg-gradient-to-t from-purple-200/40 via-purple-100/20 to-transparent rounded-full blur-2xl pointer-events-none" />
+                    <div className="absolute inset-x-8 bottom-0 h-64 bg-gradient-to-t from-yellow-200/30 via-[#FFF7D1]/20 to-transparent rounded-full blur-2xl pointer-events-none" />
                     <img
                       src={directors[1].image}
                       alt={directors[1].name}
                       className="relative z-10 w-auto max-h-[380px] sm:max-h-[420px] object-contain drop-shadow-xl"
                     />
-                    <div className="relative z-20 -mt-6 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl border border-purple-100 shadow-md text-center max-w-xs w-full">
-                      <h4 className="text-sm font-bold text-[#1a0726]">
+                    <div className="relative z-20 -mt-6 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl border border-[#F5D32F]/50 shadow-md text-center max-w-xs w-full">
+                      <h4 className="text-sm font-black text-[#292333]">
                         {directors[1].name}
                       </h4>
-                      <p className="text-[11px] font-semibold text-[#6b1282] mt-0.5">
+                      <p className="text-[11px] font-bold text-[#6B18A8] mt-0.5">
                         {isEn ? 'Head of Halal Center UIN Sunan Gunung Djati' : 'Kepala Halal Center UIN Sunan Gunung Djati'}
                       </p>
                     </div>
@@ -694,23 +702,23 @@ export const HomePage: React.FC = () => {
                 {/* Right on Desktop (7 cols): Content & Executive Statement */}
                 <div className="lg:col-span-7 flex flex-col justify-between order-1 lg:order-2">
                   <div>
-                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-bold bg-purple-100/90 text-[#6b1282] border border-purple-200/80 uppercase tracking-wider mb-4 shadow-xs">
-                      <ShieldCheck className="w-3.5 h-3.5" />
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-bold bg-[#F5EDFB] text-[#6B18A8] border border-[#C9A5E8] uppercase tracking-wider mb-4 shadow-xs">
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#6B18A8]" />
                       {isEn ? 'LPH Technical Lead & Head of Halal Center' : 'Pimpinan Teknis LPH & Kepala Pusat Kajian Halal'}
                     </div>
 
-                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1a0726] tracking-tight">
+                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#292333] tracking-tight">
                       Dr. Tri Cahyanto, M.Si.
                     </h3>
-                    <p className="text-xs sm:text-sm font-semibold text-neutral-500 mt-1">
+                    <p className="text-xs sm:text-sm font-semibold text-[#756D7C] mt-1">
                       {isEn
                         ? 'Life Science Expert & Licensed Lead Auditor BPJPH Kemenag RI'
                         : 'Pakar Sains Hayati & Lead Auditor Halal Berlisensi BPJPH Kemenag RI'}
                     </p>
 
                     {/* Executive Quote Box */}
-                    <div className="mt-6 p-6 rounded-2xl bg-white/95 border border-purple-100 shadow-sm relative">
-                      <span className="text-4xl text-[#6b1282]/30 font-serif absolute top-3 left-4 select-none leading-none">“</span>
+                    <div className="mt-6 p-6 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 shadow-xs relative">
+                      <span className="text-4xl text-[#F5D32F] font-serif absolute top-3 left-4 select-none leading-none">“</span>
                       <p className="text-sm sm:text-base text-neutral-700 italic leading-relaxed pl-6 relative z-10 font-normal">
                         "{directors[1].quote}"
                       </p>
@@ -718,10 +726,10 @@ export const HomePage: React.FC = () => {
                   </div>
 
                   {/* Actions */}
-                  <div className="mt-8 pt-6 border-t border-neutral-200/80 flex flex-wrap items-center gap-4">
+                  <div className="mt-8 pt-6 border-t border-purple-100 flex flex-wrap items-center gap-4">
                     <Button
                       variant="primary"
-                      className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold text-xs px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2"
+                      className="bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold text-xs px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2 cursor-pointer"
                       onPress={() => setSelectedDirector(directors[1])}
                     >
                       <span>{isEn ? 'View Profile & Credentials' : 'Buka Profil & Kredensial Pimpinan'}</span>
@@ -729,7 +737,7 @@ export const HomePage: React.FC = () => {
                     </Button>
                     <Link
                       to="/layanan/kalkulator"
-                      className="text-xs font-bold text-neutral-700 hover:text-[#6b1282] transition-colors inline-flex items-center gap-1.5"
+                      className="text-xs font-bold text-neutral-700 hover:text-[#6B18A8] transition-colors inline-flex items-center gap-1.5"
                     >
                       <span>{isEn ? 'Certification Flow Consultation' : 'Konsultasi Alur Sertifikasi'}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -1220,12 +1228,13 @@ export const HomePage: React.FC = () => {
         <InfiniteMovingCards items={PARTNER_ITEMS} direction="left" speed="normal" />
       </section>
 
-      {/* 9. MAP LOCATION SECTION (Classy Subtle Lavender Tint Gradient) */}
-      <section className="py-24 bg-gradient-to-b from-white via-[#fdfbfe] to-[#f7f2fb]" id="lokasi">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 9. MAP LOCATION SECTION (Clean White & Lavender with Yellow Accents) */}
+      <section className="py-24 bg-gradient-to-b from-white via-[#fdfbfe] to-[#f7f2fb] relative overflow-hidden" id="lokasi">
+        <YellowDotGrid rows={3} cols={6} className="absolute top-8 right-10 opacity-25 pointer-events-none hidden lg:grid" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <SectionHeader
             badge={isEn ? "SERVICE & LAB NETWORK" : "JARINGAN LAYANAN & LABORATORIUM"}
-            badgeColor="amber"
+            badgeColor="yellow"
             title={isEn ? "Office & Halal Service Centers of UIN SGD" : "Lokasi Kantor & Sentra Layanan Halal UIN SGD"}
             subtitle={isEn
               ? "Visit our service office at Campus 1, Integrated Laboratory Building Campus 2, and partnership centers in Eastern Priangan & Ciayumajakuning."
@@ -1239,17 +1248,18 @@ export const HomePage: React.FC = () => {
                 key={branch.id}
                 type="button"
                 onClick={() => setSelectedBranch(idx)}
-                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${selectedBranch === idx
-                    ? 'bg-[#6b1282] text-white shadow-sm ring-2 ring-[#6b1282]/30'
-                    : 'bg-white text-neutral-600 hover:text-[#6b1282] border border-neutral-200 hover:border-purple-200 shadow-2xs'
-                  }`}
+                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${
+                  selectedBranch === idx
+                    ? 'bg-[#6B18A8] text-white shadow-sm ring-2 ring-[#F5D32F]'
+                    : 'bg-white text-neutral-600 hover:text-[#6B18A8] border border-neutral-200 hover:border-[#C9A5E8] shadow-2xs'
+                }`}
               >
                 {branch.shortName}
               </button>
             ))}
           </div>
 
-          <div className="relative rounded-3xl p-[1.5px] bg-gradient-to-r from-[#4a0d5c] via-amber-400 to-[#6b1282] shadow-2xl shadow-purple-950/10">
+          <div className="relative rounded-3xl p-[2px] bg-gradient-to-r from-[#4B0D78] via-[#6B18A8] via-[#F5D32F] to-[#4B0D78] shadow-2xl shadow-purple-950/10">
             <div className="bg-white rounded-[22px] p-3">
               <iframe
                 title="Peta Kantor LPH UIN SGD"
@@ -1264,9 +1274,9 @@ export const HomePage: React.FC = () => {
           </div>
 
           {/* Active Branch Location Info Card */}
-          <div className="mt-6 p-4 sm:p-5 rounded-2xl bg-white border border-purple-100 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="mt-6 p-4 sm:p-5 rounded-2xl bg-white border border-[#C9A5E8]/40 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-xl bg-purple-100 text-[#6b1282] flex items-center justify-center shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-[#F5EDFB] text-[#6B18A8] border border-[#C9A5E8]/30 flex items-center justify-center shrink-0">
                 <MapPin className="w-5 h-5" />
               </div>
               <div>
@@ -1274,7 +1284,7 @@ export const HomePage: React.FC = () => {
                   <h4 className="font-bold text-sm sm:text-base text-neutral-900">
                     {branchLocations[selectedBranch].title}
                   </h4>
-                  <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-900 border border-amber-300">
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F]">
                     {branchLocations[selectedBranch].badge}
                   </span>
                 </div>
@@ -1292,7 +1302,7 @@ export const HomePage: React.FC = () => {
               >
                 <Button
                   variant="primary"
-                  className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-xs"
+                  className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-xs cursor-pointer"
                 >
                   <MapPin className="w-3.5 h-3.5" />
                   {isEn ? 'Directions on Google Maps' : 'Petunjuk Arah Google Maps'}
@@ -1300,13 +1310,64 @@ export const HomePage: React.FC = () => {
               </a>
               <Link to="/kontak">
                 <Button
-                  variant="outline"
-                  className="border-neutral-300 text-neutral-700 hover:bg-neutral-50 font-bold px-4 py-2 rounded-xl text-xs"
+                  variant="primary"
+                  className="bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold px-4 py-2 rounded-xl text-xs cursor-pointer shadow-xs"
                 >
                   {isEn ? 'Contact Info' : 'Info Kontak'}
                 </Button>
               </Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 10. PRE-FOOTER CALL TO ACTION BANNER (White + Soft Purple Canvas with Yellow Sparkles) */}
+      <section className="py-16 sm:py-20 bg-gradient-to-b from-[#F7F2FB] to-[#FAF7FD] relative overflow-hidden">
+        <YellowDotGrid rows={4} cols={6} className="absolute top-6 left-8 opacity-25 pointer-events-none hidden md:grid" />
+        <YellowDotGrid rows={3} cols={5} className="absolute bottom-6 right-8 opacity-20 pointer-events-none hidden sm:grid" />
+
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] uppercase tracking-wider mb-4 shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-[#eab308]" />
+            {isEn ? 'OFFICIAL HALAL PARTNERSHIP' : 'KEMITRAAN SERTIFIKASI HALAL'}
+          </div>
+
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#292333] tracking-tight leading-tight">
+            {isEn ? 'Ready to Elevate Your Products to the ' : 'Siap Membawa Produk Anda Menuju '}
+            <YellowHighlight className="text-[#6B18A8]">
+              {isEn ? 'Global Halal Market?' : 'Pasar Halal Global?'}
+            </YellowHighlight>
+          </h2>
+
+          <p className="mt-4 text-base sm:text-lg text-[#756D7C] max-w-2xl mx-auto leading-relaxed">
+            {isEn
+              ? 'Get swift regular halal inspection, ISO/IEC 17025 accredited laboratory testing, and professional advisory by certified lead auditors of LPH UIN SGD Bandung.'
+              : 'Dapatkan pendampingan audit halal reguler, pengujian laboratorium ISO/IEC 17025, dan sertifikasi resmi bersama tim auditor berlisensi LPH UIN Sunan Gunung Djati Bandung.'}
+          </p>
+
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <Link to="/layanan/kalkulator">
+              <Button
+                variant="primary"
+                className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-extrabold px-8 py-3.5 rounded-xl text-sm sm:text-base shadow-lg shadow-purple-950/20 inline-flex items-center gap-2 cursor-pointer hover:scale-[1.02] transition-transform"
+              >
+                <Calculator className="w-5 h-5 text-purple-200" />
+                {isEn ? 'Simulate Halal Fee Now' : 'Hitung Simulasi Tarif Halal'}
+              </Button>
+            </Link>
+            <a
+              href="https://wa.me/6282118201232"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button
+                variant="primary"
+                className="bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold px-8 py-3.5 rounded-xl text-sm sm:text-base shadow-md shadow-yellow-500/20 inline-flex items-center gap-2 cursor-pointer hover:scale-[1.02] transition-transform"
+              >
+                <Phone className="w-5 h-5 text-[#3B074A]" />
+                {isEn ? 'WhatsApp Official Desk' : 'Konsultasi WhatsApp Resmi'}
+              </Button>
+            </a>
           </div>
         </div>
       </section>

@@ -21,14 +21,15 @@ export const ContactPage: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-neutral-50 pb-20">
-      {/* Banner */}
-      <section className="bg-gradient-to-r from-[#1a0726] via-[#4a0d5c] to-[#1a0726] text-white py-16 px-4 sm:px-6 lg:px-8 text-center">
-        <div className="max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/10 text-amber-300 text-xs font-semibold uppercase tracking-wider mb-4 border border-amber-400/30 shadow-xs">
-            <Phone className="w-3.5 h-3.5 text-amber-300" />
+      {/* Banner in Royal Purple Gradient with Yellow Accents */}
+      <section className="bg-gradient-to-r from-[#1a0726] via-[#4a0d5c] to-[#1a0726] text-white py-16 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden">
+        <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[#4B0D78] via-[#6B18A8] via-[#F5D32F] to-[#6B18A8]" />
+        <div className="max-w-4xl mx-auto relative z-10">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFF7D1] text-[#713f12] text-xs font-extrabold uppercase tracking-wider mb-4 border border-[#F5D32F] shadow-xs">
+            <Phone className="w-3.5 h-3.5 text-[#eab308]" />
             {isEn ? 'Communication & Partnerships' : 'Layanan Komunikasi & Kemitraan'}
           </div>
-          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-black tracking-tight">
             {isEn ? 'Contact Halal Center UIN SGD' : 'Hubungi Halal Center UIN SGD'}
           </h1>
           <p className="mt-3 text-neutral-200 max-w-2xl mx-auto text-sm sm:text-base font-normal">
@@ -116,9 +117,9 @@ export const ContactPage: React.FC = () => {
                   <Button
                     variant="primary"
                     fullWidth
-                    className="bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-neutral-950 font-bold py-2.5 rounded-xl shadow-xs text-xs sm:text-sm flex items-center justify-center gap-2 transition-all"
+                    className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold py-2.5 rounded-xl shadow-xs text-xs sm:text-sm flex items-center justify-center gap-2"
                   >
-                    <MessageSquare className="w-4 h-4 text-neutral-900" />
+                    <MessageSquare className="w-4 h-4" />
                     {isEn ? 'Chat Directly via WhatsApp' : 'Chat Langsung via WhatsApp'}
                   </Button>
                 </a>
@@ -234,7 +235,7 @@ export const ContactPage: React.FC = () => {
                     type="submit"
                     variant="primary"
                     fullWidth
-                    className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold py-3 rounded-xl shadow-md text-sm"
+                    className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-extrabold py-3.5 rounded-xl shadow-lg shadow-purple-950/20 text-sm cursor-pointer hover:scale-[1.01] transition-all"
                   >
                     {isEn ? 'Send Message' : 'Kirimkan Pesan'}
                   </Button>

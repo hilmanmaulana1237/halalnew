@@ -69,8 +69,8 @@ export const Navbar: React.FC = () => {
 
   return (
     <>
-      {/* Top Royal Purple Line */}
-      <div className="h-1 w-full bg-gradient-to-r from-[#4a0d5c] via-[#6b1282] to-[#86198f]" />
+      {/* Top 4-Color Accent Line */}
+      <div className="h-1.5 w-full bg-gradient-to-r from-[#4B0D78] via-[#6B18A8] via-[#F5D32F] to-[#6B18A8]" />
 
       <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-purple-100/70 shadow-xs transition-all">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -89,8 +89,8 @@ export const Navbar: React.FC = () => {
               <Link
                 to="/"
                 className={`px-3.5 py-2 rounded-xl text-sm font-semibold transition-all ${isActive('/')
-                  ? 'text-[#6b1282] bg-purple-50/90 shadow-xs'
-                  : 'text-neutral-700 hover:text-[#6b1282] hover:bg-purple-50/40'
+                  ? 'text-[#6B18A8] bg-[#F5EDFB] shadow-xs border-b-2 border-[#F5D32F]'
+                  : 'text-[#292333] hover:text-[#6B18A8] hover:bg-[#F5EDFB]/60'
                   }`}
               >
                 {t('nav_home')}
@@ -201,7 +201,7 @@ export const Navbar: React.FC = () => {
                             : 'Simulasi perhitungan estimasi tarif audit halal reguler sesuai regulasi resmi KMA 784.'}
                           to="/layanan/kalkulator"
                           badge={language === 'en' ? 'Popular' : 'Populer'}
-                          badgeVariant="purple"
+                          badgeVariant="yellow"
                           onClick={() => setActiveDropdown(null)}
                         />
                         <MenuCardItem
@@ -246,7 +246,7 @@ export const Navbar: React.FC = () => {
                         image="/assets/images/value-integritas.jpg"
                         title={language === 'en' ? 'Whistleblowing & Complaints' : 'Pengaduan & Whistleblowing'}
                         badge={language === 'en' ? 'Main Feature' : 'Fitur Utama'}
-                        badgeVariant="sky"
+                        badgeVariant="yellow"
                         description={language === 'en'
                           ? 'Official confidential channel to report violations, auditor ethics, or sharia compliance issues.'
                           : 'Kanal resmi pengaduan pelanggaran proses sertifikasi halal, kode etik auditor, dan integritas kepatuhan syariah.'}
@@ -356,42 +356,43 @@ export const Navbar: React.FC = () => {
               <Link
                 to="/kontak"
                 className={`px-3.5 py-2 rounded-xl text-sm font-semibold transition-all ${isActive('/kontak')
-                  ? 'text-[#6b1282] bg-purple-50/90 shadow-xs'
-                  : 'text-neutral-700 hover:text-[#6b1282] hover:bg-purple-50/40'
+                  ? 'text-[#6B18A8] bg-[#F5EDFB] shadow-xs border-b-2 border-[#F5D32F]'
+                  : 'text-[#292333] hover:text-[#6B18A8] hover:bg-[#F5EDFB]/60'
                   }`}
               >
                 {t('nav_contact')}
               </Link>
             </nav>
 
-            {/* Actions: Modern Classic Purple CTA & Language */}
+            {/* Actions: Modern Purple CTA with Yellow Sparkle & Language */}
             <div className="hidden lg:flex items-center gap-4">
               <Link to="/layanan/kalkulator">
                 <Button
                   variant="primary"
-                  className="bg-gradient-to-r from-[#6b1282] to-[#581c87] hover:from-[#581c87] hover:to-[#4a0d5c] text-white border border-amber-400/40 hover:border-amber-400 font-bold px-5 py-2.5 rounded-full text-xs sm:text-sm shadow-md shadow-purple-950/20 transition-all flex items-center gap-1.5 group cursor-pointer"
+                  className="bg-[#6B18A8] hover:bg-[#4B0D78] text-white font-bold px-5 py-2.5 rounded-full text-xs sm:text-sm shadow-md shadow-purple-950/20 transition-all flex items-center gap-2 hover:scale-105 active:scale-98 cursor-pointer"
                 >
+                  <Calculator className="w-4 h-4 text-[#F5D32F]" />
                   <span>{t('nav_calc_fee')}</span>
                 </Button>
               </Link>
-              <div className="flex items-center gap-1 text-xs font-bold text-neutral-500 border-l border-neutral-200 pl-3">
+              <div className="flex items-center gap-1 text-xs font-bold text-neutral-500 border-l border-[#C9A5E8]/40 pl-3">
                 <button
                   type="button"
                   onClick={() => setLanguage('id')}
-                  className={`px-2 py-1 rounded-lg transition-all duration-200 ${language === 'id'
-                    ? 'bg-purple-100 text-[#6b1282] font-black shadow-2xs'
-                    : 'text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100'
+                  className={`px-2.5 py-1 rounded-xl transition-all duration-200 cursor-pointer ${language === 'id'
+                    ? 'bg-[#6B18A8] text-white font-black shadow-xs ring-1 ring-[#F5D32F]'
+                    : 'text-[#756D7C] hover:text-[#6B18A8] hover:bg-[#F5EDFB]'
                     }`}
                 >
                   ID
                 </button>
-                <span className="text-neutral-300">|</span>
+                <span className="text-[#C9A5E8]">|</span>
                 <button
                   type="button"
                   onClick={() => setLanguage('en')}
-                  className={`px-2 py-1 rounded-lg transition-all duration-200 ${language === 'en'
-                    ? 'bg-purple-100 text-[#6b1282] font-black shadow-2xs'
-                    : 'text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100'
+                  className={`px-2.5 py-1 rounded-xl transition-all duration-200 cursor-pointer ${language === 'en'
+                    ? 'bg-[#6B18A8] text-white font-black shadow-xs ring-1 ring-[#F5D32F]'
+                    : 'text-[#756D7C] hover:text-[#6B18A8] hover:bg-[#F5EDFB]'
                     }`}
                 >
                   EN
@@ -408,94 +409,94 @@ export const Navbar: React.FC = () => {
                 aria-expanded={mobileOpen}
                 aria-label={mobileOpen ? "Tutup menu" : "Buka menu"}
               >
-                {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-              </button>
-            </div>
-          </div>
-        </div>
-      </header >
-
-      {/* Mobile Backdrop Overlay (HMI Android style) */}
-      <div
-        className={`fixed inset-0 z-[60] bg-purple-950/50 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${mobileOpen ? "visible opacity-100 pointer-events-auto" : "invisible opacity-0 pointer-events-none"
-          }`}
-        onClick={() => setMobileOpen(false)}
-        aria-hidden={!mobileOpen}
-      />
-
-      {/* Mobile Aside Drawer Container (HMI Android style with rounded-l-[2.5rem]) */}
-      <aside
-        className={`fixed right-0 top-0 z-[80] h-dvh w-[86%] max-w-[360px] overflow-y-auto rounded-l-[2.5rem] bg-gradient-to-b from-white via-[#faf5ff] to-[#f5e8ff] px-5 pb-10 pt-6 shadow-[-20px_0_60px_rgba(107,18,130,0.22)] transition-transform duration-300 ease-out lg:hidden ${mobileOpen ? "pointer-events-auto translate-x-0" : "pointer-events-none translate-x-full"
-          }`}
-        aria-hidden={!mobileOpen}
-      >
-        {/* Top Header: Brand Logo & Elevated Circular Close Button */}
-        <div className="flex items-center justify-between mb-5 pb-3 border-b border-purple-100">
-          <img
-            src="/assets/images/uin_sgd/logo_lph_official_purple.webp"
-            alt="LPH UIN SGD"
-            className="h-10 w-auto object-contain rounded-lg shadow-2xs"
-          />
-          <button
-            type="button"
-            onClick={() => setMobileOpen(false)}
-            className="grid h-10 w-10 place-items-center rounded-full bg-[#6b1282] text-white shadow-[0_8px_20px_rgba(107,18,130,0.3)] hover:scale-105 active:scale-95 transition-all cursor-pointer"
-            aria-label="Tutup menu"
-          >
-            <X className="h-5 w-5" />
-          </button>
-        </div>
-
-        {/* Language Selector Pill */}
-        <div className="mb-4 flex items-center justify-between p-2 rounded-2xl bg-purple-100/70 border border-purple-200/60">
-          <span className="text-xs font-bold text-neutral-700 pl-2">
-            {language === 'en' ? 'Language' : 'Pilihan Bahasa'}
-          </span>
-          <div className="flex items-center gap-1">
-            <button
-              type="button"
-              onClick={() => setLanguage('id')}
-              className={`px-3 py-1 rounded-xl text-xs font-extrabold transition cursor-pointer ${language === 'id' ? 'bg-[#6b1282] text-white shadow-xs' : 'text-neutral-600 hover:text-neutral-900'
-                }`}
-            >
-              ID
-            </button>
-            <span className="text-purple-300">|</span>
-            <button
-              type="button"
-              onClick={() => setLanguage('en')}
-              className={`px-3 py-1 rounded-xl text-xs font-extrabold transition cursor-pointer ${language === 'en' ? 'bg-[#6b1282] text-white shadow-xs' : 'text-neutral-600 hover:text-neutral-900'
-                }`}
-            >
-              EN
+              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </div>
+      </div>
+    </header >
 
-        {/* Navigation Items (HMI Style Mobile Group & Mobile Link) */}
-        <MobileLink to="/" icon={Home} label={t('nav_home')} onClick={() => setMobileOpen(false)} />
+            {/* Mobile Backdrop Overlay (HMI Android style) */}
+            <div
+              className={`fixed inset-0 z-[60] bg-purple-950/50 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${mobileOpen ? "visible opacity-100 pointer-events-auto" : "invisible opacity-0 pointer-events-none"
+                }`}
+              onClick={() => setMobileOpen(false)}
+              aria-hidden={!mobileOpen}
+            />
 
-        <MobileGroup
-          label={language === 'en' ? 'About Us' : 'Tentang Kami'}
-          links={[
-            { label: language === 'en' ? 'Profile & History' : 'Profil & Sejarah LPH', to: '/tentang', icon: BookOpen },
-            { label: language === 'en' ? 'Accreditation & Legality' : 'Akreditasi & Legalitas Resmi', to: '/tentang', icon: ShieldCheck },
-            { label: language === 'en' ? 'FAQ & Halal QnA' : 'FAQ & Halal QnA', to: '/layanan/qna', icon: HelpCircle },
-          ]}
-          onNavigate={() => setMobileOpen(false)}
-        />
+              {/* Mobile Aside Drawer Container (HMI Android style with rounded-l-[2.5rem]) */}
+              <aside
+                className={`fixed right-0 top-0 z-[80] h-dvh w-[86%] max-w-[360px] overflow-y-auto rounded-l-[2.5rem] bg-gradient-to-b from-white via-[#faf5ff] to-[#f5e8ff] px-5 pb-10 pt-6 shadow-[-20px_0_60px_rgba(107,18,130,0.22)] transition-transform duration-300 ease-out lg:hidden ${mobileOpen ? "pointer-events-auto translate-x-0" : "pointer-events-none translate-x-full"
+                  }`}
+                aria-hidden={!mobileOpen}
+              >
+                {/* Top Header: Brand Logo & Elevated Circular Close Button */}
+                <div className="flex items-center justify-between mb-5 pb-3 border-b border-purple-100">
+                  <img
+                    src="/assets/images/uin_sgd/logo_lph_official_purple.webp"
+                    alt="LPH UIN SGD"
+                    className="h-10 w-auto object-contain rounded-lg shadow-2xs"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setMobileOpen(false)}
+                    className="grid h-10 w-10 place-items-center rounded-full bg-[#6b1282] text-white shadow-[0_8px_20px_rgba(107,18,130,0.3)] hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                    aria-label="Tutup menu"
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
+                </div>
 
-        <MobileGroup
-          label={language === 'en' ? 'Halal Services' : 'Layanan LPH'}
-          links={[
-            { label: language === 'en' ? 'Tariff Calculator' : 'Kalkulator Tarif Halal', to: '/layanan/kalkulator', icon: Calculator },
-            { label: language === 'en' ? 'Whistleblowing & Complaints' : 'Pengaduan & Whistleblowing', to: '/layanan/pengaduan', icon: ShieldAlert },
-            { label: language === 'en' ? 'Satisfaction Survey (IKM)' : 'Survei Kepuasan (IKM)', to: '/layanan/kepuasan', icon: Smile },
-            { label: language === 'en' ? 'Facility & RPH Audit' : 'Pemeriksaan Fasilitas & RPH', to: '/layanan/kalkulator', icon: Building2 },
-            { label: language === 'en' ? 'Integrated Bio Lab' : 'Laboratorium Hayati Terpadu', href: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/', icon: FlaskConical },
-          ]}
-          onNavigate={() => setMobileOpen(false)}
-        />
+                  {/* Language Selector Pill */}
+                  <div className="mb-4 flex items-center justify-between p-2 rounded-2xl bg-purple-100/70 border border-purple-200/60">
+                    <span className="text-xs font-bold text-neutral-700 pl-2">
+                      {language === 'en' ? 'Language' : 'Pilihan Bahasa'}
+                    </span>
+                    <div className="flex items-center gap-1">
+                      <button
+                        type="button"
+                        onClick={() => setLanguage('id')}
+                        className={`px-3 py-1 rounded-xl text-xs font-extrabold transition cursor-pointer ${language === 'id' ? 'bg-[#6b1282] text-white shadow-xs' : 'text-neutral-600 hover:text-neutral-900'
+                          }`}
+                      >
+                        ID
+                      </button>
+                      <span className="text-purple-300">|</span>
+                      <button
+                        type="button"
+                        onClick={() => setLanguage('en')}
+                        className={`px-3 py-1 rounded-xl text-xs font-extrabold transition cursor-pointer ${language === 'en' ? 'bg-[#6b1282] text-white shadow-xs' : 'text-neutral-600 hover:text-neutral-900'
+                          }`}
+                      >
+                        EN
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Navigation Items (HMI Style Mobile Group & Mobile Link) */}
+                  <MobileLink to="/" icon={Home} label={t('nav_home')} onClick={() => setMobileOpen(false)} />
+
+                  <MobileGroup
+                    label={language === 'en' ? 'About Us' : 'Tentang Kami'}
+                    links={[
+                      { label: language === 'en' ? 'Profile & History' : 'Profil & Sejarah LPH', to: '/tentang', icon: BookOpen },
+                      { label: language === 'en' ? 'Accreditation & Legality' : 'Akreditasi & Legalitas Resmi', to: '/tentang', icon: ShieldCheck },
+                      { label: language === 'en' ? 'FAQ & Halal QnA' : 'FAQ & Halal QnA', to: '/layanan/qna', icon: HelpCircle },
+                    ]}
+                    onNavigate={() => setMobileOpen(false)}
+                  />
+
+                <MobileGroup
+                  label={language === 'en' ? 'Halal Services' : 'Layanan LPH'}
+                  links={[
+                    { label: language === 'en' ? 'Tariff Calculator' : 'Kalkulator Tarif Halal', to: '/layanan/kalkulator', icon: Calculator },
+                    { label: language === 'en' ? 'Whistleblowing & Complaints' : 'Pengaduan & Whistleblowing', to: '/layanan/pengaduan', icon: ShieldAlert },
+                    { label: language === 'en' ? 'Satisfaction Survey (IKM)' : 'Survei Kepuasan (IKM)', to: '/layanan/kepuasan', icon: Smile },
+                    { label: language === 'en' ? 'Facility & RPH Audit' : 'Pemeriksaan Fasilitas & RPH', to: '/layanan/kalkulator', icon: Building2 },
+                    { label: language === 'en' ? 'Integrated Bio Lab' : 'Laboratorium Hayati Terpadu', href: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/', icon: FlaskConical },
+                  ]}
+                  onNavigate={() => setMobileOpen(false)}
+                />
 
         <MobileGroup
           label={language === 'en' ? 'News & Media' : 'News & Update'}
@@ -509,26 +510,26 @@ export const Navbar: React.FC = () => {
 
         <MobileLink to="/kontak" icon={Phone} label={t('nav_contact')} onClick={() => setMobileOpen(false)} />
 
-        {/* Accent CTA Button like HMI */}
-        <MobileLink
-          to="/layanan/kalkulator"
-          icon={Calculator}
-          label={t('nav_calc_fee')}
-          onClick={() => setMobileOpen(false)}
-          accent
-        />
+{/* Accent CTA Button like HMI */ }
+<MobileLink
+  to="/layanan/kalkulator"
+  icon={Calculator}
+  label={t('nav_calc_fee')}
+  onClick={() => setMobileOpen(false)}
+  accent
+/>
 
-        {/* Direct WhatsApp Consultation Button */}
-        <a
-          href="https://wa.me/6282118201232"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => setMobileOpen(false)}
-          className="mt-3 flex items-center justify-center gap-2 rounded-2xl border border-purple-200/90 bg-white/95 px-4 py-3 text-xs font-bold text-[#6b1282] shadow-xs hover:bg-purple-50 transition"
-        >
-          <Phone className="h-4 w-4 text-emerald-600" />
-          <span>WhatsApp Layanan & Konsultasi</span>
-        </a>
+{/* Direct WhatsApp Consultation Button */ }
+<a
+  href="https://wa.me/6282118201232"
+  target="_blank"
+  rel="noopener noreferrer"
+  onClick={() => setMobileOpen(false)}
+  className="mt-3 flex items-center justify-center gap-2 rounded-2xl border border-[#F5D32F] bg-[#FFF7D1] px-4 py-3 text-xs font-bold text-[#713f12] shadow-xs hover:bg-[#fef08a] transition"
+>
+  <Phone className="h-4 w-4 text-[#713f12]" />
+  <span>WhatsApp Layanan & Konsultasi</span>
+</a>
       </aside >
     </>
   );
@@ -561,8 +562,8 @@ function MobileLink({
   );
 
   const className = `mb-2 flex items-center justify-between rounded-2xl px-4 py-3.5 text-sm font-extrabold transition shadow-xs cursor-pointer ${accent
-    ? "bg-gradient-to-r from-[#6b1282] to-[#86198f] text-white shadow-purple-950/20 hover:brightness-110"
-    : "bg-purple-50/70 text-[#1a0726] hover:bg-purple-100/70 border border-purple-100/60"
+      ? "bg-[#6B18A8] text-white shadow-md shadow-purple-950/20 hover:bg-[#4B0D78] border border-[#F5D32F]/40"
+      : "bg-[#F5EDFB]/70 text-[#292333] hover:bg-[#F5EDFB] hover:text-[#6B18A8] border border-[#C9A5E8]/40"
     }`;
 
   if (href) {

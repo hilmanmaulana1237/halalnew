@@ -75,7 +75,7 @@ export const MegaMenuItem: React.FC<MegaMenuItemProps> = ({
 /* Aceternity Signature Blueprint Crosshair Badge (e.g. "[ new ]" from user screenshot) */
 export interface BlueprintBadgeProps {
   text: string;
-  variant?: 'sky' | 'purple' | 'emerald';
+  variant?: 'sky' | 'purple' | 'emerald' | 'yellow';
 }
 
 export const BlueprintBadge: React.FC<BlueprintBadgeProps> = ({
@@ -86,9 +86,10 @@ export const BlueprintBadge: React.FC<BlueprintBadgeProps> = ({
     sky: 'text-sky-300 border-sky-400/50 bg-sky-950/30 border-corner-sky',
     purple: 'text-purple-300 border-purple-400/50 bg-purple-950/30 border-corner-purple',
     emerald: 'text-emerald-300 border-emerald-400/50 bg-emerald-950/30 border-corner-emerald',
+    yellow: 'text-amber-300 border-amber-400/70 bg-amber-950/40 border-corner-yellow',
   };
 
-  const cornerColor = variant === 'purple' ? 'border-purple-400' : variant === 'emerald' ? 'border-emerald-400' : 'border-sky-400';
+  const cornerColor = variant === 'yellow' ? 'border-amber-400' : variant === 'purple' ? 'border-purple-400' : variant === 'emerald' ? 'border-emerald-400' : 'border-sky-400';
 
   return (
     <span className={cn(
@@ -113,7 +114,7 @@ export interface MenuCardItemProps {
   to?: string;
   href?: string;
   badge?: string;
-  badgeVariant?: 'sky' | 'purple' | 'emerald';
+  badgeVariant?: 'sky' | 'purple' | 'emerald' | 'yellow';
   onClick?: () => void;
 }
 
@@ -270,7 +271,7 @@ export interface FeaturedPreviewCardProps {
   image: string;
   title: string;
   badge?: string;
-  badgeVariant?: 'sky' | 'purple' | 'emerald';
+  badgeVariant?: 'sky' | 'purple' | 'emerald' | 'yellow';
   description: string;
   to?: string;
   href?: string;

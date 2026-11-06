@@ -3,27 +3,31 @@
 
 @layer base {
   :root {
-    /* Royal Purple & Pure White Modern Classic Palette */
-    --brand-purple: #6b1282;
-    --brand-purple-deep: #25032e;
-    --brand-purple-dark: #4a0d5c;
-    --brand-purple-light: #86198f;
-    --brand-purple-lavender: #c084fc;
-    --brand-purple-soft: #f3e8ff;
-    --brand-purple-subtle: #fdf4ff;
+    /* 4-Color Theme: White, Purple, Light/Soft Purple, Yellow */
+    --color-white: #ffffff;
+    --color-purple: #6b18a8;
+    --color-purple-dark: #4b0d78;
+    --color-purple-deep: #25032e;
+    --color-purple-light: #c9a5e8;
+    --color-purple-soft: #f5edfb;
+    --color-purple-lavender: #e9d5ff;
+    --color-yellow: #f5d32f;
+    --color-yellow-hover: #e5c21e;
+    --color-yellow-soft: #fff7d1;
+    --color-text-dark: #292333;
+    --color-text-muted: #756d7c;
 
-    /* Corporate Warm Gold / Amber Yellow Accent Palette */
-    --brand-gold: #f59e0b;
-    --brand-gold-bright: #fbbf24;
-    --brand-gold-warm: #d97706;
-    --brand-gold-deep: #b45309;
-    --brand-gold-soft: #fef3c7;
-    --brand-gold-subtle: #fffbeb;
+    /* Legacy compatibility mappings */
+    --brand-purple: #6b18a8;
+    --brand-purple-deep: #25032e;
+    --brand-purple-dark: #4b0d78;
+    --brand-purple-light: #c9a5e8;
+    --brand-purple-soft: #f5edfb;
   }
 
   body {
     font-family: 'Plus Jakarta Sans', 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    color: #0f172a;
+    color: var(--color-text-dark);
     background-color: #ffffff;
     margin: 0;
     padding: 0;
@@ -33,7 +37,19 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Montserrat', 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     letter-spacing: -0.02em;
+    color: #292333;
   }
+}
+
+/* Reusable Decorative Dot Patterns (Yellow & Soft Purple) */
+.bg-dots-yellow {
+  background-image: radial-gradient(#f5d32f 1.5px, transparent 1.5px);
+  background-size: 18px 18px;
+}
+
+.bg-dots-purple {
+  background-image: radial-gradient(#c9a5e8 1.5px, transparent 1.5px);
+  background-size: 18px 18px;
 }
 
 /* Animations for Aceternity UI Components */
@@ -65,6 +81,19 @@
   animation: spotlight 2s ease 0.75s 1 forwards;
 }
 
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
 /* Leaflet Map Styles */
 #map {
   width: 100% !important;
@@ -72,21 +101,21 @@
   min-height: 480px !important;
   position: relative !important;
   z-index: 10;
-  border-radius: 1rem;
+  border-radius: 1.5rem;
 }
 
 .leaflet-container {
   width: 100% !important;
   height: 100% !important;
   min-height: 480px !important;
-  border-radius: 1rem;
+  border-radius: 1.5rem;
   z-index: 10;
   background-color: #f8fafc;
   font-family: inherit !important;
 }
 
 .leaflet-custom-marker {
-  filter: drop-shadow(0 6px 12px rgba(107, 18, 130, 0.35));
+  filter: drop-shadow(0 6px 12px rgba(107, 24, 168, 0.35));
   transition: transform 0.2s ease-in-out;
 }
 

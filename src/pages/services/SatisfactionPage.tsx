@@ -105,14 +105,15 @@ export const SatisfactionPage: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-neutral-50 pb-20">
-      {/* Banner */}
-      <section className="bg-gradient-to-r from-[#1a0726] via-[#4a0d5c] to-[#1a0726] text-white py-16 px-4 sm:px-6 lg:px-8 text-center">
-        <div className="max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-purple-200 text-xs font-semibold uppercase tracking-wider mb-4 border border-white/20 shadow-xs">
-            <Smile className="w-3.5 h-3.5 text-purple-300" />
+      {/* Banner in Royal Purple Gradient with Yellow Accents */}
+      <section className="bg-gradient-to-r from-[#1a0726] via-[#4a0d5c] to-[#1a0726] text-white py-16 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden">
+        <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[#4B0D78] via-[#6B18A8] via-[#F5D32F] to-[#6B18A8]" />
+        <div className="max-w-4xl mx-auto relative z-10">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFF7D1] text-[#713f12] text-xs font-extrabold uppercase tracking-wider mb-4 border border-[#F5D32F] shadow-xs">
+            <Smile className="w-3.5 h-3.5 text-[#eab308]" />
             {isEn ? 'Community Satisfaction Index (CSI)' : 'Indeks Kepuasan Masyarakat (IKM)'}
           </div>
-          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-black tracking-tight">
             {isEn ? 'Customer Satisfaction Survey' : 'Survei Kepuasan Pelanggan'}
           </h1>
           <p className="mt-3 text-neutral-200 max-w-2xl mx-auto text-sm sm:text-base font-normal">

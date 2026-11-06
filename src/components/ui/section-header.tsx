@@ -4,8 +4,8 @@ import { motion } from "motion/react";
 
 interface SectionHeaderProps {
   badge?: string;
-  badgeColor?: "purple" | "emerald" | "blue" | "amber";
-  title: string;
+  badgeColor?: "purple" | "yellow" | "emerald" | "amber";
+  title: string | React.ReactNode;
   subtitle?: string;
   align?: "left" | "center";
   className?: string;
@@ -20,10 +20,17 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
   className,
 }) => {
   const badgeStyles = {
-    purple: "bg-purple-50 text-[#6b1282] border-purple-200/80 font-bold",
-    emerald: "bg-emerald-50 text-emerald-800 border-emerald-200/80 font-bold",
-    blue: "bg-sky-50 text-sky-800 border-sky-200/80 font-bold",
-    amber: "bg-gradient-to-r from-amber-50 to-yellow-50 text-amber-900 border-amber-300 font-bold shadow-xs",
+    purple: "bg-[#F5EDFB] text-[#6B18A8] border-[#C9A5E8]/80 shadow-xs",
+    yellow: "bg-[#FFF7D1] text-[#713f12] border-[#F5D32F] shadow-xs",
+    emerald: "bg-emerald-50 text-emerald-800 border-emerald-200 shadow-xs",
+    amber: "bg-[#FFF7D1] text-[#854d0e] border-[#F5D32F] shadow-xs",
+  };
+
+  const dotStyles = {
+    purple: "bg-[#6B18A8]",
+    yellow: "bg-[#F5D32F]",
+    emerald: "bg-emerald-500",
+    amber: "bg-[#F5D32F]",
   };
 
   return (
@@ -41,21 +48,24 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
       {badge && (
         <span
           className={cn(
-            "inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold border mb-3 tracking-wider uppercase shadow-xs",
+            "inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold border mb-4 tracking-wider uppercase",
             badgeStyles[badgeColor]
           )}
         >
-          {badge}
+          <span className={cn("w-2 h-2 rounded-full", dotStyles[badgeColor])} />
+          <span>{badge}</span>
         </span>
       )}
-      <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a0726] tracking-tight leading-[1.2]">
+      <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#292333] tracking-tight leading-[1.2]">
         {title}
       </h2>
       {subtitle && (
-        <p className="mt-4 text-base sm:text-lg text-neutral-600 leading-relaxed font-normal">
+        <p className="mt-4 text-base sm:text-lg text-[#756D7C] leading-relaxed font-normal">
           {subtitle}
         </p>
       )}
     </motion.div>
   );
 };
+
+export default SectionHeader;

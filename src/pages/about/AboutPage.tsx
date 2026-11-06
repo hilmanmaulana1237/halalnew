@@ -39,9 +39,9 @@ export const AboutPage: React.FC = () => {
         {
           title: 'Scientific Excellence',
           desc: 'Supported by modern testing laboratories (qPCR, GC-FID) accredited to ISO/IEC 17025 for molecular validation of critical ingredients.',
-          icon: <Sparkles className="w-6 h-6 text-amber-500" />,
-          accent: 'border-amber-200/80 bg-white hover:bg-amber-50/20 text-neutral-900',
-          spotlight: '#f59e0b',
+          icon: <Sparkles className="w-6 h-6 text-[#6b1282]" />,
+          accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
+          spotlight: '#6b1282',
         },
         {
           title: 'Professional Competence',
@@ -53,9 +53,9 @@ export const AboutPage: React.FC = () => {
         {
           title: 'Collaborative Synergy',
           desc: 'Fostering close partnerships with BPJPH, Ministry of Religious Affairs, KAN, MUI, regional agencies, and global universities.',
-          icon: <Award className="w-6 h-6 text-amber-500" />,
-          accent: 'border-amber-200/80 bg-white hover:bg-amber-50/20 text-neutral-900',
-          spotlight: '#f59e0b',
+          icon: <Award className="w-6 h-6 text-[#6b1282]" />,
+          accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
+          spotlight: '#6b1282',
         },
       ]
     : [
@@ -69,9 +69,9 @@ export const AboutPage: React.FC = () => {
         {
           title: 'Keunggulan Saintifik',
           desc: 'Didukung laboratorium pengujian modern (qPCR, GC-FID) berstandar ISO/IEC 17025 untuk validasi molekuler bahan kritis.',
-          icon: <Sparkles className="w-6 h-6 text-amber-500" />,
-          accent: 'border-amber-200/80 bg-white hover:bg-amber-50/20 text-neutral-900',
-          spotlight: '#f59e0b',
+          icon: <Sparkles className="w-6 h-6 text-[#6b1282]" />,
+          accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
+          spotlight: '#6b1282',
         },
         {
           title: 'Kompetensi Profesional',
@@ -83,30 +83,31 @@ export const AboutPage: React.FC = () => {
         {
           title: 'Sinergi Kolaboratif',
           desc: 'Menjalin kemitraan erat bersama BPJPH, Kementerian Agama RI, KAN, MUI, dinas terkait, serta perguruan tinggi global.',
-          icon: <Award className="w-6 h-6 text-amber-500" />,
-          accent: 'border-amber-200/80 bg-white hover:bg-amber-50/20 text-neutral-900',
-          spotlight: '#f59e0b',
+          icon: <Award className="w-6 h-6 text-[#6b1282]" />,
+          accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
+          spotlight: '#6b1282',
         },
       ];
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-white">
-      {/* Hero Banner in Royal Purple Gradient with Sparkles */}
+      {/* Hero Banner in Royal Purple Gradient with Sparkles & Yellow Accents */}
       <section className="relative py-20 lg:py-28 bg-[#1a0726] text-white overflow-hidden">
+        <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[#4B0D78] via-[#6B18A8] via-[#F5D32F] to-[#6B18A8]" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#1a0726] via-[#4a0d5c] to-[#1a0726] opacity-95" />
         <SparklesCore
           id="about-sparkles"
           minSize={0.7}
           maxSize={2.2}
           particleDensity={35}
-          particleColor={['#ffffff', '#fde68a', '#fbbf24', '#f5d0fe', '#d8b4fe']}
+          particleColor={['#ffffff', '#f5d0fe', '#F5D32F', '#d8b4fe']}
         />
         <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/10 text-amber-300 text-xs font-semibold uppercase tracking-wider mb-4 border border-amber-400/30">
-            <BookOpen className="w-3.5 h-3.5 text-amber-300" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFF7D1] text-[#713f12] text-xs font-extrabold uppercase tracking-wider mb-4 border border-[#F5D32F] shadow-xs">
+            <BookOpen className="w-3.5 h-3.5 text-[#eab308]" />
             {isEn ? 'Institutional Profile & History' : 'Profil & Sejarah Lembaga'}
           </div>
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight">
             {isEn ? 'About Halal Center UIN SGD Bandung' : 'Tentang Halal Center UIN SGD Bandung'}
           </h1>
           <p className="mt-4 text-base sm:text-lg text-neutral-200 max-w-3xl mx-auto leading-relaxed font-normal">
@@ -282,7 +283,7 @@ export const AboutPage: React.FC = () => {
       <section className="py-20 bg-[#1b183a] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-xs font-black uppercase tracking-wider text-amber-300">
+            <span className="text-xs font-black uppercase tracking-wider text-purple-400">
               {isEn ? 'EXECUTIVE BOARD' : 'DEWAN PIMPINAN'}
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-white mt-1">
@@ -303,7 +304,7 @@ export const AboutPage: React.FC = () => {
                   className="w-20 h-20 rounded-2xl object-cover object-top border-2 border-purple-400/50 shadow-md"
                 />
                 <div>
-                  <span className="text-xs font-bold text-amber-300 uppercase">
+                  <span className="text-xs font-bold text-emerald-400 uppercase">
                     {dir.position}
                   </span>
                   <h3 className="text-base font-extrabold text-white mt-1">{dir.name}</h3>

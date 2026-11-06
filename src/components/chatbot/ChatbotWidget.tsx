@@ -340,26 +340,26 @@ export const ChatbotWidget: React.FC = () => {
         {!isOpen && (
           <div 
             onClick={() => setIsOpen(true)}
-            className="hidden md:flex items-center gap-2 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-full shadow-xl shadow-purple-950/10 border border-purple-200/80 cursor-pointer hover:border-[#6b1282] hover:scale-105 transition-all duration-300 group"
+            className="hidden md:flex items-center gap-2 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-full shadow-xl shadow-purple-950/10 border border-[#C9A5E8]/60 cursor-pointer hover:border-[#F5D32F] hover:scale-105 transition-all duration-300 group"
           >
             <span className="flex h-2.5 w-2.5 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#6b1282]"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#F5D32F]"></span>
             </span>
-            <span className="text-xs font-bold text-[#1a0726] group-hover:text-[#6b1282] transition-colors">
+            <span className="text-xs font-bold text-[#292333] group-hover:text-[#6B18A8] transition-colors">
               {language === 'en' ? 'Ask Halal AI' : 'Tanya AI Halal'}
             </span>
-            <Sparkles className="w-3.5 h-3.5 text-purple-600" />
+            <Sparkles className="w-3.5 h-3.5 text-[#eab308]" />
           </div>
         )}
 
         <Button
           variant="primary"
           aria-label={isOpen ? 'Tutup Chatbot' : 'Buka Asisten AI Halal'}
-          className={`w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 ${
+          className={`w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 cursor-pointer ${
             isOpen
               ? 'bg-neutral-800 hover:bg-neutral-900 text-white rotate-90 scale-95'
-              : 'bg-gradient-to-r from-[#6b1282] via-[#86198f] to-[#4a0d5c] hover:brightness-110 text-white ring-4 ring-purple-200/60 shadow-purple-950/30 hover:scale-110'
+              : 'bg-gradient-to-r from-[#4B0D78] via-[#6B18A8] to-[#4B0D78] hover:brightness-110 text-white ring-4 ring-[#F5D32F]/50 shadow-purple-950/30 hover:scale-110'
           }`}
           onPress={() => setIsOpen(!isOpen)}
         >
@@ -368,32 +368,32 @@ export const ChatbotWidget: React.FC = () => {
           ) : (
             <div className="relative">
               <Bot className="w-7 h-7 text-white" />
-              <span className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full border-2 border-[#6b1282]" />
+              <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-[#F5D32F] rounded-full border-2 border-[#4B0D78]" />
             </div>
           )}
         </Button>
       </div>
 
-      {/* Floating Chat Panel (Dominantly White, Royal Purple Accents) */}
+      {/* Floating Chat Panel (Dominantly White, Royal Purple & Yellow Accents) */}
       {isOpen && (
         <div className="fixed bottom-24 right-4 sm:right-6 z-50 w-[380px] sm:w-[420px] max-w-[calc(100vw-2rem)] animate-in fade-in slide-in-from-bottom-5 duration-300">
-          <Card className="rounded-[28px] border border-purple-200/90 bg-white shadow-2xl shadow-purple-950/25 overflow-hidden flex flex-col h-[580px] max-h-[82vh] ring-1 ring-purple-100">
-            {/* Top Royal Purple Gradient Strip */}
-            <div className="h-1.5 w-full bg-gradient-to-r from-[#4a0d5c] via-[#86198f] to-[#6b1282]" />
+          <Card className="rounded-[28px] border border-[#C9A5E8]/60 bg-white shadow-2xl shadow-purple-950/25 overflow-hidden flex flex-col h-[580px] max-h-[82vh] ring-1 ring-purple-100">
+            {/* Top 4-Color Gradient Strip */}
+            <div className="h-1.5 w-full bg-gradient-to-r from-[#4B0D78] via-[#6B18A8] via-[#F5D32F] to-[#6B18A8]" />
 
-            {/* Header: Pure White with Royal Purple Branding */}
+            {/* Header: Pure White with Royal Purple Branding & Yellow Badge */}
             <div className="bg-white px-5 py-3.5 border-b border-purple-100/90 flex items-center justify-between shadow-xs">
               <div className="flex items-center gap-3">
-                <div className="relative w-10 h-10 rounded-2xl bg-gradient-to-br from-[#6b1282] to-[#4a0d5c] flex items-center justify-center text-white shadow-md shadow-purple-900/20">
+                <div className="relative w-10 h-10 rounded-2xl bg-gradient-to-br from-[#6B18A8] to-[#4B0D78] flex items-center justify-center text-white shadow-md shadow-purple-900/20">
                   <Bot className="w-5 h-5 text-white" />
-                  <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white" />
+                  <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-[#F5D32F] rounded-full border-2 border-white" />
                 </div>
                 <div>
                   <div className="flex items-center gap-1.5">
-                    <h4 className="font-extrabold text-sm text-[#1a0726]">
+                    <h4 className="font-extrabold text-sm text-[#292333]">
                       {t('chatbot_title')}
                     </h4>
-                    <span className="text-[10px] font-bold px-1.5 py-0.5 bg-purple-100 text-[#6b1282] rounded-md">
+                    <span className="text-[10px] font-extrabold px-1.5 py-0.5 bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F]/50 rounded-md">
                       AI 24/7
                     </span>
                   </div>
@@ -409,7 +409,7 @@ export const ChatbotWidget: React.FC = () => {
                   variant="ghost"
                   size="sm"
                   aria-label="Reset Chat"
-                  className="text-neutral-400 hover:text-[#6b1282] hover:bg-purple-50 p-1.5 rounded-xl min-w-0"
+                  className="text-neutral-400 hover:text-[#6B18A8] hover:bg-purple-50 p-1.5 rounded-xl min-w-0 cursor-pointer"
                   onPress={resetChat}
                 >
                   <RotateCcw className="w-4 h-4" />
@@ -459,7 +459,7 @@ export const ChatbotWidget: React.FC = () => {
                         {m.suggestedAction.to ? (
                           <a
                             href={m.suggestedAction.to}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-50 hover:bg-purple-100 text-[#6b1282] font-bold text-xs border border-purple-200/80 transition-colors shadow-xs"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFF7D1] hover:bg-[#ffef9e] text-[#713f12] font-extrabold text-xs border border-[#F5D32F] transition-colors shadow-xs"
                           >
                             <span>{m.suggestedAction.label}</span>
                             <ArrowUpRight className="w-3.5 h-3.5" />
@@ -469,7 +469,7 @@ export const ChatbotWidget: React.FC = () => {
                             href={m.suggestedAction.href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-50 hover:bg-purple-100 text-[#6b1282] font-bold text-xs border border-purple-200/80 transition-colors shadow-xs"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFF7D1] hover:bg-[#ffef9e] text-[#713f12] font-extrabold text-xs border border-[#F5D32F] transition-colors shadow-xs"
                           >
                             <span>{m.suggestedAction.label}</span>
                             <ArrowUpRight className="w-3.5 h-3.5" />
@@ -565,7 +565,7 @@ export const ChatbotWidget: React.FC = () => {
                   size="sm"
                   isPending={loading}
                   aria-label="Kirim Pesan"
-                  className="bg-[#6b1282] hover:bg-[#581c87] text-white px-4 h-10 rounded-xl shadow-md transition-all shrink-0"
+                  className="bg-[#6B18A8] hover:bg-[#58138a] text-white px-4 h-10 rounded-xl shadow-md transition-all shrink-0 cursor-pointer"
                 >
                   <Send className="w-4 h-4" />
                 </Button>
@@ -578,7 +578,7 @@ export const ChatbotWidget: React.FC = () => {
                   href="https://wa.me/6282118201232"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#6b1282] hover:underline font-bold shrink-0 ml-2"
+                  className="text-[#6B18A8] hover:text-[#58138a] hover:underline font-bold shrink-0 ml-2"
                 >
                   WhatsApp ↗
                 </a>

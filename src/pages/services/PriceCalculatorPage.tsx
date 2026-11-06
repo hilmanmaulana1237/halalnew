@@ -129,14 +129,15 @@ export const PriceCalculatorPage: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-neutral-50 pb-20">
-      {/* Header Banner in Royal Purple Gradient */}
-      <section className="bg-gradient-to-r from-[#1a0726] via-[#4a0d5c] to-[#1a0726] text-white py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-purple-200 text-xs font-semibold uppercase tracking-wider mb-4 border border-white/20">
-            <Calculator className="w-3.5 h-3.5" />
+      {/* Header Banner in Royal Purple Gradient with Yellow Accents */}
+      <section className="bg-gradient-to-r from-[#1a0726] via-[#4a0d5c] to-[#1a0726] text-white py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#4B0D78] via-[#6B18A8] via-[#F5D32F] to-[#6B18A8]" />
+        <div className="max-w-5xl mx-auto text-center relative z-10">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFF7D1] text-[#713f12] text-xs font-extrabold uppercase tracking-wider mb-4 border border-[#F5D32F] shadow-xs">
+            <Calculator className="w-3.5 h-3.5 text-[#eab308]" />
             {t('calc_badge')}
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight">
             {t('calc_title')}
           </h1>
           <p className="mt-3 text-neutral-200 max-w-2xl mx-auto text-sm sm:text-base font-normal leading-relaxed">
@@ -309,16 +310,16 @@ export const PriceCalculatorPage: React.FC = () => {
                         </span>
                       </div>
 
-                      <div className="p-5 rounded-2xl bg-purple-50/70 border border-purple-200">
+                      <div className="p-5 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/40 shadow-sm">
                         <div className="flex items-center justify-between">
-                          <span className="text-xs font-bold text-[#6b1282] uppercase">
+                          <span className="text-xs font-bold text-[#6B18A8] uppercase">
                             {t('calc_uin_estimate')}
                           </span>
-                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-gradient-to-r from-amber-400 to-amber-500 text-neutral-950 shadow-xs border border-amber-300">
+                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-[#F5D32F] text-[#3B074A] shadow-xs">
                             {t('calc_save')} {result.savingsPercent}%
                           </span>
                         </div>
-                        <span className="text-2xl sm:text-3xl font-black text-[#6b1282] block mt-1 font-mono">
+                        <span className="text-2xl sm:text-3xl font-black text-[#6B18A8] block mt-1 font-mono">
                           {formatRupiah(result.totalLph)}
                         </span>
                         <span className="text-[11px] text-purple-900 mt-1 block font-semibold">
@@ -379,7 +380,7 @@ export const PriceCalculatorPage: React.FC = () => {
                         <Button
                           variant="primary"
                           fullWidth
-                          className="bg-gradient-to-r from-[#6b1282] via-[#86198f] to-[#4a0d5c] hover:brightness-110 text-white font-black py-3.5 rounded-2xl shadow-xl flex items-center justify-center gap-2 text-sm"
+                          className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-extrabold py-3.5 rounded-2xl shadow-xl shadow-purple-950/20 flex items-center justify-center gap-2 text-sm cursor-pointer hover:scale-[1.01] transition-transform"
                         >
                           {t('calc_cta_button')}
                           <ArrowRight className="w-4 h-4" />
