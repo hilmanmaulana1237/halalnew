@@ -85,10 +85,13 @@ export const HeroVideoBanner: React.FC = () => {
           className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-purple-200 text-xs sm:text-sm font-semibold mb-6 shadow-xl"
         >
           <span className="flex h-2 w-2 relative">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-300 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-200"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
           </span>
           <span className="text-white tracking-wide">{t('hero_badge_lph')}</span>
+          <span className="px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 text-[10px] font-extrabold uppercase tracking-wider">
+            Akreditasi Utama BPJPH
+          </span>
         </motion.div>
 
         {/* Main Heading with Modern Classic Serif Typography & FlipWords */}
@@ -129,9 +132,12 @@ export const HeroVideoBanner: React.FC = () => {
               className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold hover:brightness-110 shadow-xl"
             >
               <span className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-purple-200" />
-                {t('hero_cta_calc')}
-                <ArrowRight className="w-4 h-4" />
+                <Sparkles className="w-4 h-4 text-amber-300 animate-pulse" />
+                <span>{t('hero_cta_calc')}</span>
+                <span className="hidden sm:inline px-1.5 py-0.5 rounded text-[10px] font-black bg-gradient-to-r from-amber-400 to-yellow-400 text-purple-950 uppercase tracking-tight shadow-xs">
+                  KMA 784
+                </span>
+                <ArrowRight className="w-4 h-4 text-amber-300" />
               </span>
             </MovingBorderButton>
           </Link>
@@ -241,9 +247,9 @@ export const HeroVideoBanner: React.FC = () => {
                   type="submit"
                   variant="primary"
                   fullWidth
-                  className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold h-11 rounded-xl shadow-md shadow-purple-950/20 transition-all flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99] text-xs sm:text-sm cursor-pointer"
+                  className="bg-[#6b1282] hover:bg-[#581c87] text-white font-bold h-11 rounded-xl shadow-md shadow-purple-950/20 transition-all flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99] text-xs sm:text-sm cursor-pointer border-t border-purple-300/30"
                 >
-                  <Search className="w-4 h-4 text-purple-200" />
+                  <Search className="w-4 h-4 text-amber-300" />
                   <span>{t('search_button')}</span>
                 </Button>
               </div>

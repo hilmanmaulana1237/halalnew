@@ -41,21 +41,21 @@ export const BentoGridItem = ({
   onClick?: () => void;
 }) => {
   const colorStyles = {
-    purple: "border-purple-100/90 hover:border-[#6b1282] bg-white hover:bg-purple-50/20 shadow-sm hover:shadow-xl shadow-purple-950/5",
-    emerald: "border-purple-100/90 hover:border-[#6b1282] bg-white hover:bg-purple-50/20 shadow-sm hover:shadow-xl shadow-purple-950/5",
-    blue: "border-purple-100/90 hover:border-[#6b1282] bg-white hover:bg-purple-50/20 shadow-sm hover:shadow-xl shadow-purple-950/5",
-    amber: "border-purple-100/90 hover:border-[#6b1282] bg-white hover:bg-purple-50/20 shadow-sm hover:shadow-xl shadow-purple-950/5",
-    rose: "border-purple-100/90 hover:border-[#6b1282] bg-white hover:bg-purple-50/20 shadow-sm hover:shadow-xl shadow-purple-950/5",
-    teal: "border-purple-100/90 hover:border-[#6b1282] bg-white hover:bg-purple-50/20 shadow-sm hover:shadow-xl shadow-purple-950/5",
+    purple: "border-purple-100/90 hover:border-[#6b1282] bg-white hover:bg-purple-50/30 shadow-sm hover:shadow-xl shadow-purple-950/5",
+    emerald: "border-purple-100/90 hover:border-[#6b1282] bg-white hover:bg-purple-50/30 shadow-sm hover:shadow-xl shadow-purple-950/5",
+    blue: "border-purple-100/90 hover:border-[#6b1282] bg-white hover:bg-purple-50/30 shadow-sm hover:shadow-xl shadow-purple-950/5",
+    amber: "border-amber-200/90 hover:border-amber-500 bg-white hover:bg-amber-50/30 shadow-sm hover:shadow-xl shadow-amber-950/5",
+    rose: "border-purple-100/90 hover:border-[#6b1282] bg-white hover:bg-purple-50/30 shadow-sm hover:shadow-xl shadow-purple-950/5",
+    teal: "border-purple-100/90 hover:border-[#6b1282] bg-white hover:bg-purple-50/30 shadow-sm hover:shadow-xl shadow-purple-950/5",
   };
 
   const badgeStyles = {
-    purple: "bg-purple-50 text-[#6b1282] border-purple-200",
-    emerald: "bg-purple-50 text-[#6b1282] border-purple-200",
-    blue: "bg-purple-50 text-[#6b1282] border-purple-200",
-    amber: "bg-purple-50 text-[#6b1282] border-purple-200",
-    rose: "bg-purple-50 text-[#6b1282] border-purple-200",
-    teal: "bg-purple-50 text-[#6b1282] border-purple-200",
+    purple: "bg-purple-50 text-[#6b1282] border-purple-200 font-bold",
+    emerald: "bg-purple-50 text-[#6b1282] border-purple-200 font-bold",
+    blue: "bg-purple-50 text-[#6b1282] border-purple-200 font-bold",
+    amber: "bg-gradient-to-r from-amber-400 to-yellow-400 text-purple-950 border-amber-300 font-black shadow-2xs",
+    rose: "bg-purple-50 text-[#6b1282] border-purple-200 font-bold",
+    teal: "bg-purple-50 text-[#6b1282] border-purple-200 font-bold",
   };
 
   return (

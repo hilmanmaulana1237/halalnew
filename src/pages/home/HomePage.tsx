@@ -146,7 +146,7 @@ export const getUinServices = (isEn: boolean) => [
     url: 'https://wa.me/6282118201232',
     icon: <Phone className="w-6 h-6 text-[#6b1282]" />,
     badge: isEn ? 'Fast Response' : 'Layanan Cepat',
-    accentColor: 'purple' as const,
+    accentColor: 'amber' as const,
     colSpan: 'md:col-span-1',
   },
   {
@@ -179,7 +179,7 @@ export const getUinServices = (isEn: boolean) => [
     url: 'https://halal.uinsgd.ac.id/akademi-juru-sembelih-halal-juleha/',
     icon: <Utensils className="w-6 h-6 text-[#6b1282]" />,
     badge: isEn ? 'Sharia Compliant' : 'Standar Syar’i',
-    accentColor: 'purple' as const,
+    accentColor: 'amber' as const,
     colSpan: 'md:col-span-1',
   },
   {
@@ -292,7 +292,7 @@ export const HomePage: React.FC = () => {
               suffix="+"
               change="+28% YoY"
               isPositive={true}
-              accentColor="purple"
+              accentColor="amber"
               description={t('metric_certs_desc')}
               icon={<FileCheck className="w-5 h-5" />}
             />
@@ -313,7 +313,7 @@ export const HomePage: React.FC = () => {
               suffix=""
               change={t('metric_lab_change')}
               isPositive={true}
-              accentColor="purple"
+              accentColor="amber"
               description={t('metric_lab_desc')}
               icon={<FlaskConical className="w-5 h-5" />}
             />

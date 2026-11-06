@@ -343,13 +343,13 @@ export const ChatbotWidget: React.FC = () => {
             className="hidden md:flex items-center gap-2 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-full shadow-xl shadow-purple-950/10 border border-purple-200/80 cursor-pointer hover:border-[#6b1282] hover:scale-105 transition-all duration-300 group"
           >
             <span className="flex h-2.5 w-2.5 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#6b1282]"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-400"></span>
             </span>
             <span className="text-xs font-bold text-[#1a0726] group-hover:text-[#6b1282] transition-colors">
               {language === 'en' ? 'Ask Halal AI' : 'Tanya AI Halal'}
             </span>
-            <Sparkles className="w-3.5 h-3.5 text-purple-600" />
+            <Sparkles className="w-3.5 h-3.5 text-amber-500" />
           </div>
         )}
 

@@ -76,12 +76,12 @@ export const MetricCard: React.FC<MetricCardProps> = ({
       glow: "shadow-lg shadow-purple-950/5 hover:shadow-purple-950/15",
     },
     amber: {
-      border: "border-purple-200/80 hover:border-[#6b1282]",
-      bg: "bg-white hover:bg-purple-50/30",
-      iconBg: "bg-purple-100 text-[#6b1282]",
-      badge: "bg-purple-50 text-[#6b1282] border-purple-200",
-      number: "text-[#6b1282]",
-      glow: "shadow-lg shadow-purple-950/5 hover:shadow-purple-950/15",
+      border: "border-amber-200/90 hover:border-amber-500",
+      bg: "bg-white hover:bg-gradient-to-b hover:from-white hover:to-amber-50/40",
+      iconBg: "bg-amber-100 text-amber-700 shadow-xs",
+      badge: "bg-gradient-to-r from-amber-400 to-yellow-400 text-purple-950 border-amber-300 font-black shadow-xs",
+      number: "text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600",
+      glow: "shadow-lg shadow-amber-500/10 hover:shadow-amber-500/25",
     },
   };
 

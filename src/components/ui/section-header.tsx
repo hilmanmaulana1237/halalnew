@@ -20,10 +20,10 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
   className,
 }) => {
   const badgeStyles = {
-    purple: "bg-purple-50 text-[#6b1282] border-purple-200/80",
-    emerald: "bg-purple-50 text-[#6b1282] border-purple-200/80",
-    blue: "bg-purple-50 text-[#6b1282] border-purple-200/80",
-    amber: "bg-purple-50 text-[#6b1282] border-purple-200/80",
+    purple: "bg-purple-50 text-[#6b1282] border-purple-200/80 font-bold",
+    emerald: "bg-purple-50 text-[#6b1282] border-purple-200/80 font-bold",
+    blue: "bg-purple-50 text-[#6b1282] border-purple-200/80 font-bold",
+    amber: "bg-amber-50 text-amber-900 border-amber-300 font-bold shadow-xs",
   };
 
   return (
