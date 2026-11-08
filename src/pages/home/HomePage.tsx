@@ -545,170 +545,240 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 6. DUAL LEADERSHIP SHOWCASE (Both Leaders Displayed Directly with Alternating Layout) */}
+      {/* 6. DUAL LEADERSHIP SHOWCASE (Dewan Pembina & Dewan Pimpinan) */}
       <section className="py-20 lg:py-28 bg-[#FAF7FD] border-y border-[#C9A5E8]/30 relative overflow-hidden" id="pimpinan">
-        <YellowDotGrid rows={4} cols={5} className="absolute top-10 left-10 opacity-20 pointer-events-none hidden lg:grid" />
-        <YellowDotGrid rows={3} cols={4} className="absolute bottom-10 right-10 opacity-20 pointer-events-none hidden md:grid" />
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <SectionHeader
-            badge={isEn ? "EXECUTIVE BOARD & PATRON" : "DEWAN PIMPINAN & PEMBINA"}
-            badgeColor="yellow"
-            title={isEn ? "Leadership with Sharia Integrity & Halal Research Excellence" : "Kepemimpinan Berintegritas Syar’i & Keunggulan Riset Halal"}
-            subtitle={isEn
-              ? "Synergy between university strategic vision and bio-science research expertise to safeguard halal audit quality, ISO 17025 laboratory accountability, and public welfare."
-              : "Sinergi visi strategis universitas dan keahlian riset sains hayati untuk mengawal mutu pemeriksaan halal, akuntabilitas laboratorium ISO 17025, dan kemaslahatan industri bagi umat."}
+        {/* Subtle Campus Building Faint Background like in reference image */}
+        <div className="absolute top-0 right-0 w-full max-w-xl h-full opacity-[0.05] pointer-events-none overflow-hidden select-none hidden md:block">
+          <img
+            src="/assets/images/uin_sgd/uin_08.webp"
+            alt="UIN SGD Campus"
+            className="w-full h-full object-cover object-left-top filter grayscale contrast-125"
           />
+        </div>
 
-          <div className="mt-12 space-y-10 sm:space-y-14">
-            {/* CARD 1: DEWAN PEMBINA (Prof. Dr. H. Rosihon Anwar) - Left: Content, Right: Portrait */}
+        {/* Decorative Wave & Dot Accents */}
+        <YellowDotGrid rows={4} cols={5} className="absolute top-10 left-8 opacity-25 pointer-events-none hidden lg:grid" />
+        <YellowDotGrid rows={3} cols={4} className="absolute bottom-10 right-8 opacity-20 pointer-events-none hidden md:grid" />
+
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          {/* Section Header matching reference image: [--- TENTANG KAMI ---] + Title + Subtitle + [--- ◆ ---] */}
+          <div className="text-center max-w-3xl mx-auto mb-14">
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <span className="h-[1.5px] w-12 sm:w-16 bg-[#C9A5E8]/70" />
+              <span className="text-[11px] sm:text-xs font-black tracking-widest uppercase px-4 py-1 rounded-full border border-[#F5D32F] bg-[#FFF7D1] text-[#713f12] shadow-2xs">
+                {isEn ? "ABOUT US" : "TENTANG KAMI"}
+              </span>
+              <span className="h-[1.5px] w-12 sm:w-16 bg-[#C9A5E8]/70" />
+            </div>
+
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#292333] tracking-tight">
+              {isEn ? "Board of Patrons & Executives" : "Dewan Pembina & Pimpinan"}
+            </h2>
+
+            <p className="mt-3.5 text-sm sm:text-base text-[#756D7C] leading-relaxed font-normal">
+              {isEn
+                ? "Get to know the leadership board and patron steering the strategic direction and institutional development of Halal Center UIN SGD Bandung."
+                : "Mengenal jajaran pimpinan dan pembina yang berperan dalam arah serta perkembangan organisasi."}
+            </p>
+
+            {/* Reference image ornament: line with gold diamond */}
+            <div className="mt-4 flex items-center justify-center gap-2">
+              <span className="h-[1.5px] w-10 bg-[#C9A5E8]/70" />
+              <span className="w-2.5 h-2.5 rotate-45 bg-[#F5D32F] rounded-xs shadow-2xs" />
+              <span className="h-[1.5px] w-10 bg-[#C9A5E8]/70" />
+            </div>
+          </div>
+
+          <div className="space-y-8 sm:space-y-10">
+            {/* CARD 1: PAK REKTOR (Prof. Dr. H. Rosihon Anwar) - Left: Photo, Right: Content */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="relative rounded-3xl border border-[#C9A5E8]/40 bg-white overflow-hidden shadow-xl shadow-purple-950/5 p-6 sm:p-10 lg:p-12"
+              className="relative rounded-[28px] border border-[#C9A5E8]/50 bg-white overflow-hidden shadow-xl shadow-purple-950/5 p-6 sm:p-8 lg:p-10 hover:border-[#6B18A8]/60 transition-all duration-300"
             >
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-                {/* Left (7 cols): Content & Institutional Vision */}
-                <div className="lg:col-span-7 flex flex-col justify-between">
-                  <div>
-                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-extrabold bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] uppercase tracking-wider mb-4 shadow-xs">
-                      <Sparkles className="w-3.5 h-3.5 text-[#eab308]" />
-                      {isEn ? 'Rector of UIN SGD & Halal Center Patron' : 'Rektor UIN SGD & Dewan Pembina Halal Center'}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+                {/* Photo Column (4 cols on desktop) */}
+                <div className="lg:col-span-4 flex justify-center">
+                  <div className="relative w-full max-w-[280px] sm:max-w-[310px] h-[320px] sm:h-[350px] rounded-2xl overflow-hidden bg-gradient-to-br from-[#3B074A] via-[#4B0D78] to-[#6B18A8] flex items-end justify-center shadow-lg shadow-purple-950/20 shrink-0">
+                    {/* Elegant Yellow Curved Swoosh Accent (Matching reference gold swoosh) */}
+                    <svg
+                      className="absolute inset-0 w-full h-full pointer-events-none"
+                      viewBox="0 0 320 360"
+                      fill="none"
+                      preserveAspectRatio="none"
+                    >
+                      <path
+                        d="M-20 220 C60 140, 160 90, 340 50 L340 0 L-20 0 Z"
+                        fill="#C9A5E8"
+                        fillOpacity="0.15"
+                      />
+                      <path
+                        d="M-30 290 C50 250, 90 310, 190 360 L-30 360 Z"
+                        fill="#F5D32F"
+                        fillOpacity="0.9"
+                      />
+                      <path
+                        d="M-40 270 C40 230, 80 290, 175 360 L145 360 C65 290, 25 245, -40 270 Z"
+                        fill="#FFF7D1"
+                        fillOpacity="0.6"
+                      />
+                    </svg>
+
+                    <div className="absolute top-3 left-3 opacity-25">
+                      <YellowDotGrid rows={3} cols={3} dotColor="#F5D32F" />
                     </div>
 
-                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#292333] tracking-tight">
-                      Prof. Dr. H. Rosihon Anwar, M.Ag.
+                    <img
+                      src={directors[0].image}
+                      alt={directors[0].name}
+                      className="relative z-10 w-auto h-full max-h-[320px] sm:max-h-[350px] object-cover object-top drop-shadow-2xl"
+                    />
+                  </div>
+                </div>
+
+                {/* Content Column (8 cols on desktop) */}
+                <div className="lg:col-span-8 flex flex-col justify-center">
+                  <div>
+                    {/* Dark Pill Badge matching reference */}
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#4B0D78] text-white text-xs font-extrabold shadow-sm">
+                      <ShieldCheck className="w-4 h-4 text-[#F5D32F]" />
+                      <span>{isEn ? 'Board of Patrons' : 'Dewan Pembina'}</span>
+                    </div>
+
+                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#292333] tracking-tight mt-3">
+                      {directors[0].name}
                     </h3>
-                    <p className="text-xs sm:text-sm font-semibold text-[#756D7C] mt-1">
-                      {isEn
-                        ? 'Professor of Quranic Exegesis & Tafsir • Pioneer of "Halalsphere University"'
-                        : "Guru Besar Ilmu Al-Qur'an & Tafsir • Inisiator Paradigma \"Halalsphere University\""}
+                    <p className="text-xs sm:text-sm font-bold text-[#6B18A8] mt-1">
+                      {isEn ? 'Chairman of the Board of Patrons / Rector of UIN SGD Bandung' : 'Ketua Dewan Pembina'}
                     </p>
 
-                    {/* Institutional Quote Box */}
-                    <div className="mt-6 p-6 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 shadow-xs relative">
-                      <span className="text-4xl text-[#F5D32F] font-serif absolute top-3 left-4 select-none leading-none">“</span>
-                      <p className="text-sm sm:text-base text-neutral-700 italic leading-relaxed pl-6 relative z-10 font-normal">
+                    {/* Quote block matching reference image */}
+                    <div className="mt-5 flex items-start gap-3">
+                      <span className="text-3xl sm:text-4xl font-serif text-[#F5D32F] leading-none select-none shrink-0 font-bold">
+                        “
+                      </span>
+                      <p className="text-xs sm:text-sm text-[#756D7C] italic leading-relaxed font-normal pt-1">
                         "{directors[0].quote}"
                       </p>
                     </div>
                   </div>
 
                   {/* Actions */}
-                  <div className="mt-8 pt-6 border-t border-purple-100 flex flex-wrap items-center gap-4">
+                  <div className="mt-7 pt-5 border-t border-[#F5EDFB] flex flex-wrap items-center gap-3">
                     <Button
                       variant="primary"
-                      className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-bold text-xs px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2 cursor-pointer"
+                      className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md inline-flex items-center gap-2 cursor-pointer transition-transform hover:scale-[1.02]"
                       onPress={() => setSelectedDirector(directors[0])}
                     >
-                      <span>{isEn ? "View Rector's Track Record & Profile" : 'Buka Profil & Rekam Jejak Rektor'}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      <span>{isEn ? "View Rector's Track Record" : 'Buka Profil & Rekam Jejak'}</span>
+                      <ArrowRight className="w-3.5 h-3.5 text-[#F5D32F]" />
                     </Button>
                     <Link
                       to="/tentang"
-                      className="text-xs font-bold text-neutral-700 hover:text-[#6B18A8] transition-colors inline-flex items-center gap-1.5"
+                      className="text-xs font-bold text-[#292333] hover:text-[#6B18A8] transition-colors inline-flex items-center gap-1.5 px-3 py-2"
                     >
-                      <span>{isEn ? 'Explore Institutional Profile & Vision' : 'Pelajari Profil Lembaga & Visi Kampus'}</span>
+                      <span>{isEn ? 'Institutional Vision' : 'Visi Lembaga'}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
-                  </div>
-                </div>
-
-                {/* Right (5 cols): Cutout Portrait */}
-                <div className="lg:col-span-5 flex flex-col items-center justify-end relative pt-2">
-                  <div className="relative w-full max-w-sm flex flex-col items-center">
-                    <div className="absolute inset-x-8 bottom-0 h-64 bg-gradient-to-t from-purple-200/40 via-[#F5EDFB]/30 to-transparent rounded-full blur-2xl pointer-events-none" />
-                    <img
-                      src={directors[0].image}
-                      alt={directors[0].name}
-                      className="relative z-10 w-auto max-h-[380px] sm:max-h-[420px] object-contain drop-shadow-xl"
-                    />
-                    <div className="relative z-20 -mt-6 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl border border-[#C9A5E8]/40 shadow-md text-center max-w-xs w-full">
-                      <h4 className="text-sm font-black text-[#292333]">
-                        {directors[0].name}
-                      </h4>
-                      <p className="text-[11px] font-bold text-[#6B18A8] mt-0.5">
-                        {isEn ? 'Rector of UIN SGD & Halal Center Patron' : 'Rektor UIN SGD & Dewan Pembina Halal Center'}
-                      </p>
-                    </div>
                   </div>
                 </div>
               </div>
             </motion.div>
 
-            {/* CARD 2: KEPALA HALAL CENTER (Dr. Tri Cahyanto) - Left: Portrait, Right: Content (Alternating) */}
+            {/* CARD 2: PAK TRI (Dr. Tri Cahyanto) - Left: Content, Right: Photo (Alternating) */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="relative rounded-3xl border border-[#F5D32F]/50 bg-white overflow-hidden shadow-xl shadow-purple-950/5 p-6 sm:p-10 lg:p-12"
+              className="relative rounded-[28px] border border-[#C9A5E8]/50 bg-white overflow-hidden shadow-xl shadow-purple-950/5 p-6 sm:p-8 lg:p-10 hover:border-[#6B18A8]/60 transition-all duration-300"
             >
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-                {/* Left on Desktop (5 cols): Cutout Portrait */}
-                <div className="lg:col-span-5 flex flex-col items-center justify-end relative pt-2 order-2 lg:order-1">
-                  <div className="relative w-full max-w-sm flex flex-col items-center">
-                    <div className="absolute inset-x-8 bottom-0 h-64 bg-gradient-to-t from-yellow-200/30 via-[#FFF7D1]/20 to-transparent rounded-full blur-2xl pointer-events-none" />
-                    <img
-                      src={directors[1].image}
-                      alt={directors[1].name}
-                      className="relative z-10 w-auto max-h-[380px] sm:max-h-[420px] object-contain drop-shadow-xl"
-                    />
-                    <div className="relative z-20 -mt-6 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl border border-[#F5D32F]/50 shadow-md text-center max-w-xs w-full">
-                      <h4 className="text-sm font-black text-[#292333]">
-                        {directors[1].name}
-                      </h4>
-                      <p className="text-[11px] font-bold text-[#6B18A8] mt-0.5">
-                        {isEn ? 'Head of Halal Center UIN Sunan Gunung Djati' : 'Kepala Halal Center UIN Sunan Gunung Djati'}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right on Desktop (7 cols): Content & Executive Statement */}
-                <div className="lg:col-span-7 flex flex-col justify-between order-1 lg:order-2">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+                {/* Content Column (8 cols on desktop, order-2 on mobile, order-1 on desktop) */}
+                <div className="lg:col-span-8 flex flex-col justify-center order-2 lg:order-1">
                   <div>
-                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-bold bg-[#F5EDFB] text-[#6B18A8] border border-[#C9A5E8] uppercase tracking-wider mb-4 shadow-xs">
-                      <ShieldCheck className="w-3.5 h-3.5 text-[#6B18A8]" />
-                      {isEn ? 'LPH Technical Lead & Head of Halal Center' : 'Pimpinan Teknis LPH & Kepala Pusat Kajian Halal'}
+                    {/* Dark Pill Badge matching reference */}
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#4B0D78] text-white text-xs font-extrabold shadow-sm">
+                      <Users className="w-4 h-4 text-[#F5D32F]" />
+                      <span>{isEn ? 'Executive Board' : 'Dewan Pimpinan'}</span>
                     </div>
 
-                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#292333] tracking-tight">
-                      Dr. Tri Cahyanto, M.Si.
+                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#292333] tracking-tight mt-3">
+                      {directors[1].name}
                     </h3>
-                    <p className="text-xs sm:text-sm font-semibold text-[#756D7C] mt-1">
-                      {isEn
-                        ? 'Life Science Expert & Licensed Lead Auditor BPJPH Kemenag RI'
-                        : 'Pakar Sains Hayati & Lead Auditor Halal Berlisensi BPJPH Kemenag RI'}
+                    <p className="text-xs sm:text-sm font-bold text-[#6B18A8] mt-1">
+                      {isEn ? 'Head of Halal Center / Chairman of LPH UIN SGD Bandung' : 'Ketua Umum'}
                     </p>
 
-                    {/* Executive Quote Box */}
-                    <div className="mt-6 p-6 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 shadow-xs relative">
-                      <span className="text-4xl text-[#F5D32F] font-serif absolute top-3 left-4 select-none leading-none">“</span>
-                      <p className="text-sm sm:text-base text-neutral-700 italic leading-relaxed pl-6 relative z-10 font-normal">
+                    {/* Quote block matching reference image */}
+                    <div className="mt-5 flex items-start gap-3">
+                      <span className="text-3xl sm:text-4xl font-serif text-[#F5D32F] leading-none select-none shrink-0 font-bold">
+                        “
+                      </span>
+                      <p className="text-xs sm:text-sm text-[#756D7C] italic leading-relaxed font-normal pt-1">
                         "{directors[1].quote}"
                       </p>
                     </div>
                   </div>
 
                   {/* Actions */}
-                  <div className="mt-8 pt-6 border-t border-purple-100 flex flex-wrap items-center gap-4">
+                  <div className="mt-7 pt-5 border-t border-[#F5EDFB] flex flex-wrap items-center gap-3">
                     <Button
                       variant="primary"
-                      className="bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold text-xs px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2 cursor-pointer"
+                      className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md inline-flex items-center gap-2 cursor-pointer transition-transform hover:scale-[1.02]"
                       onPress={() => setSelectedDirector(directors[1])}
                     >
-                      <span>{isEn ? 'View Profile & Credentials' : 'Buka Profil & Kredensial Pimpinan'}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      <span>{isEn ? 'View Profile & Credentials' : 'Buka Profil & Kredensial'}</span>
+                      <ArrowRight className="w-3.5 h-3.5 text-[#F5D32F]" />
                     </Button>
                     <Link
                       to="/layanan/kalkulator"
-                      className="text-xs font-bold text-neutral-700 hover:text-[#6B18A8] transition-colors inline-flex items-center gap-1.5"
+                      className="text-xs font-bold text-[#292333] hover:text-[#6B18A8] transition-colors inline-flex items-center gap-1.5 px-3 py-2"
                     >
-                      <span>{isEn ? 'Certification Flow Consultation' : 'Konsultasi Alur Sertifikasi'}</span>
+                      <span>{isEn ? 'Certification Flow' : 'Konsultasi Alur'}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
+                  </div>
+                </div>
+
+                {/* Photo Column (4 cols on desktop, order-1 on mobile, order-2 on desktop) */}
+                <div className="lg:col-span-4 flex justify-center order-1 lg:order-2">
+                  <div className="relative w-full max-w-[280px] sm:max-w-[310px] h-[320px] sm:h-[350px] rounded-2xl overflow-hidden bg-gradient-to-br from-[#3B074A] via-[#4B0D78] to-[#6B18A8] flex items-end justify-center shadow-lg shadow-purple-950/20 shrink-0">
+                    {/* Flipped Yellow Curved Swoosh Accent for right placement */}
+                    <svg
+                      className="absolute inset-0 w-full h-full pointer-events-none"
+                      viewBox="0 0 320 360"
+                      fill="none"
+                      preserveAspectRatio="none"
+                    >
+                      <path
+                        d="M340 220 C260 140, 160 90, -20 50 L-20 0 L340 0 Z"
+                        fill="#C9A5E8"
+                        fillOpacity="0.15"
+                      />
+                      <path
+                        d="M350 290 C270 250, 230 310, 130 360 L350 360 Z"
+                        fill="#F5D32F"
+                        fillOpacity="0.9"
+                      />
+                      <path
+                        d="M360 270 C280 230, 240 290, 145 360 L175 360 C255 290, 295 245, 360 270 Z"
+                        fill="#FFF7D1"
+                        fillOpacity="0.6"
+                      />
+                    </svg>
+
+                    <div className="absolute top-3 right-3 opacity-25">
+                      <YellowDotGrid rows={3} cols={3} dotColor="#F5D32F" />
+                    </div>
+
+                    <img
+                      src={directors[1].image}
+                      alt={directors[1].name}
+                      className="relative z-10 w-auto h-full max-h-[320px] sm:max-h-[350px] object-cover object-top drop-shadow-2xl"
+                    />
                   </div>
                 </div>
               </div>
