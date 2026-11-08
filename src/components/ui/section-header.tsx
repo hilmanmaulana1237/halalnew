@@ -9,6 +9,9 @@ interface SectionHeaderProps {
   subtitle?: string;
   align?: "left" | "center";
   className?: string;
+  theme?: "light" | "dark";
+  titleClassName?: string;
+  subtitleClassName?: string;
 }
 
 export const SectionHeader: React.FC<SectionHeaderProps> = ({
@@ -18,13 +21,27 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
   subtitle,
   align = "center",
   className,
+  theme = "light",
+  titleClassName,
+  subtitleClassName,
 }) => {
-  const badgeStyles = {
+  const isDark = theme === "dark";
+
+  const badgeStylesLight = {
     purple: "bg-[#F5EDFB] text-[#6B18A8] border-[#C9A5E8]/80 shadow-xs",
     yellow: "bg-[#FFF7D1] text-[#713f12] border-[#F5D32F] shadow-xs",
     emerald: "bg-emerald-50 text-emerald-800 border-emerald-200 shadow-xs",
     amber: "bg-[#FFF7D1] text-[#854d0e] border-[#F5D32F] shadow-xs",
   };
+
+  const badgeStylesDark = {
+    purple: "bg-[#6B18A8]/20 text-purple-300 border-[#6B18A8]/40 shadow-xs backdrop-blur-md",
+    yellow: "bg-[#F5D32F]/15 text-[#F5D32F] border-[#F5D32F]/40 shadow-xs backdrop-blur-md",
+    emerald: "bg-emerald-500/20 text-emerald-300 border-emerald-500/40 shadow-xs backdrop-blur-md",
+    amber: "bg-[#F5D32F]/15 text-[#F5D32F] border-[#F5D32F]/40 shadow-xs backdrop-blur-md",
+  };
+
+  const badgeStyles = isDark ? badgeStylesDark : badgeStylesLight;
 
   const dotStyles = {
     purple: "bg-[#6B18A8]",
@@ -56,11 +73,23 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
           <span>{badge}</span>
         </span>
       )}
-      <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#292333] tracking-tight leading-[1.2]">
+      <h2
+        className={cn(
+          "text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.2]",
+          isDark ? "text-white" : "text-[#292333]",
+          titleClassName
+        )}
+      >
         {title}
       </h2>
       {subtitle && (
-        <p className="mt-4 text-base sm:text-lg text-[#756D7C] leading-relaxed font-normal">
+        <p
+          className={cn(
+            "mt-4 text-base sm:text-lg leading-relaxed font-normal",
+            isDark ? "text-neutral-300" : "text-[#756D7C]",
+            subtitleClassName
+          )}
+        >
           {subtitle}
         </p>
       )}

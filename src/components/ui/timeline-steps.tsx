@@ -162,7 +162,12 @@ const STEPS_EN: StepItem[] = [
   },
 ];
 
-export const TimelineSteps: React.FC = () => {
+interface TimelineStepsProps {
+  theme?: "light" | "dark";
+}
+
+export const TimelineSteps: React.FC<TimelineStepsProps> = ({ theme = "dark" }) => {
+  const isDark = theme === "dark";
   const { language } = useLanguage();
   const isEn = language === "en";
   const steps = isEn ? STEPS_EN : STEPS_ID;
@@ -183,18 +188,26 @@ export const TimelineSteps: React.FC = () => {
               onClick={() => setActiveStep(step.id)}
               className={cn(
                 "relative text-left p-3 sm:p-5 rounded-2xl sm:rounded-3xl border transition-all duration-300 flex flex-col justify-between group cursor-pointer",
-                isActive
-                  ? "border-[#6B18A8] bg-[#F5EDFB] shadow-lg shadow-purple-950/10 ring-2 ring-[#6B18A8]/20"
-                  : "border-[#C9A5E8]/40 bg-white hover:border-[#6B18A8]/60 hover:bg-[#F5EDFB]/40"
+                isDark
+                  ? isActive
+                    ? "border-[#F5D32F] bg-gradient-to-br from-[#2D0A3D]/95 to-[#190325]/95 text-white shadow-xl shadow-purple-950/40 ring-2 ring-[#F5D32F]/40 backdrop-blur-xl"
+                    : "border-white/10 bg-[#1A0423]/60 hover:border-[#F5D32F]/50 hover:bg-[#250633]/70 text-neutral-300 backdrop-blur-md"
+                  : isActive
+                    ? "border-[#6B18A8] bg-[#F5EDFB] shadow-lg shadow-purple-950/10 ring-2 ring-[#6B18A8]/20"
+                    : "border-[#C9A5E8]/40 bg-white hover:border-[#6B18A8]/60 hover:bg-[#F5EDFB]/40"
               )}
             >
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1.5 sm:gap-2 w-full mb-2 sm:mb-3">
                 <span
                   className={cn(
                     "w-7 h-7 sm:w-10 sm:h-10 rounded-lg sm:rounded-2xl flex items-center justify-center font-mono font-black text-xs sm:text-sm shrink-0 transition-all",
-                    isActive
-                      ? "bg-[#6B18A8] text-[#F5D32F] shadow-md shadow-purple-950/20"
-                      : "bg-[#F5EDFB] text-[#6B18A8] group-hover:bg-[#FFF7D1] group-hover:text-[#713f12]"
+                    isDark
+                      ? isActive
+                        ? "bg-[#F5D32F] text-[#3B074A] shadow-md shadow-yellow-500/20"
+                        : "bg-white/10 text-neutral-300 group-hover:bg-[#F5D32F] group-hover:text-[#3B074A]"
+                      : isActive
+                        ? "bg-[#6B18A8] text-[#F5D32F] shadow-md shadow-purple-950/20"
+                        : "bg-[#F5EDFB] text-[#6B18A8] group-hover:bg-[#FFF7D1] group-hover:text-[#713f12]"
                   )}
                 >
                   {step.stepNumber}
@@ -202,9 +215,13 @@ export const TimelineSteps: React.FC = () => {
                 <span
                   className={cn(
                     "text-[8.5px] sm:text-[10px] font-bold px-1.5 sm:px-2.5 py-0.5 rounded-full border uppercase tracking-wider shrink-0 whitespace-nowrap leading-none",
-                    isActive
-                      ? "bg-[#FFF7D1] text-[#713f12] border-[#F5D32F]"
-                      : "bg-[#F5EDFB] text-[#756D7C] border-[#C9A5E8]/60"
+                    isDark
+                      ? isActive
+                        ? "bg-[#F5D32F]/20 text-[#F5D32F] border-[#F5D32F]/40"
+                        : "bg-white/5 text-neutral-400 border-white/10"
+                      : isActive
+                        ? "bg-[#FFF7D1] text-[#713f12] border-[#F5D32F]"
+                        : "bg-[#F5EDFB] text-[#756D7C] border-[#C9A5E8]/60"
                   )}
                 >
                   {step.badge}
@@ -214,12 +231,27 @@ export const TimelineSteps: React.FC = () => {
                 <h4
                   className={cn(
                     "font-bold text-xs sm:text-sm truncate transition-colors",
-                    isActive ? "text-[#4B0D78]" : "text-[#292333] group-hover:text-[#6B18A8]"
+                    isDark
+                      ? isActive
+                        ? "text-white"
+                        : "text-neutral-200 group-hover:text-white"
+                      : isActive
+                        ? "text-[#4B0D78]"
+                        : "text-[#292333] group-hover:text-[#6B18A8]"
                   )}
                 >
                   {step.title}
                 </h4>
-                <p className="text-[10px] sm:text-[11px] text-[#756D7C] truncate mt-0.5 font-medium">
+                <p
+                  className={cn(
+                    "text-[10px] sm:text-[11px] truncate mt-0.5 font-medium",
+                    isDark
+                      ? isActive
+                        ? "text-[#F5D32F]/90"
+                        : "text-neutral-400"
+                      : "text-[#756D7C]"
+                  )}
+                >
                   {step.subtitle}
                 </p>
               </div>
@@ -236,13 +268,18 @@ export const TimelineSteps: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -15 }}
           transition={{ duration: 0.3 }}
-          className="rounded-3xl border border-[#C9A5E8]/60 bg-white p-5 sm:p-10 shadow-xl shadow-purple-950/5 relative overflow-hidden"
+          className={cn(
+            "rounded-3xl p-5 sm:p-10 relative overflow-hidden",
+            isDark
+              ? "border border-white/15 bg-gradient-to-br from-[#180322]/90 via-[#14021C]/90 to-[#22042E]/90 backdrop-blur-2xl shadow-2xl shadow-black/60"
+              : "border border-[#C9A5E8]/60 bg-white shadow-xl shadow-purple-950/5"
+          )}
         >
           {/* Top Multi-Color Accent Bar */}
-          <div className="absolute top-0 inset-x-0 h-2 bg-gradient-to-r from-[#4B0D78] via-[#6B18A8] via-[#F5D32F] to-[#6B18A8]" />
+          <div className="absolute top-0 inset-x-0 h-2 bg-gradient-to-r from-[#6B18A8] via-[#F5D32F] via-[#A855F7] to-[#6B18A8]" />
 
           {/* Decorative Yellow Dot Grid in background */}
-          <div className="absolute top-6 right-8 opacity-30">
+          <div className={cn("absolute top-6 right-8", isDark ? "opacity-20" : "opacity-30")}>
             <YellowDotGrid rows={4} cols={5} dotColor="#F5D32F" />
           </div>
 
@@ -250,31 +287,64 @@ export const TimelineSteps: React.FC = () => {
             {/* Left Column (8 cols): Content */}
             <div className="lg:col-span-8 space-y-4">
               <div className="flex items-center gap-3">
-                <span className="font-mono text-3xl sm:text-5xl font-black text-[#6B18A8] shrink-0">
+                <span
+                  className={cn(
+                    "font-mono text-3xl sm:text-5xl font-black shrink-0",
+                    isDark ? "text-[#F5D32F]" : "text-[#6B18A8]"
+                  )}
+                >
                   {current.stepNumber}
                 </span>
                 <div className="min-w-0 flex-1">
-                  <span className="text-[10px] sm:text-[11px] font-bold px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border uppercase tracking-wider bg-[#FFF7D1] text-[#713f12] border-[#F5D32F] shrink-0 inline-block">
+                  <span
+                    className={cn(
+                      "text-[10px] sm:text-[11px] font-bold px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border uppercase tracking-wider shrink-0 inline-block",
+                      isDark
+                        ? "bg-[#F5D32F]/15 text-[#F5D32F] border-[#F5D32F]/30 backdrop-blur-md"
+                        : "bg-[#FFF7D1] text-[#713f12] border-[#F5D32F]"
+                    )}
+                  >
                     {current.badge}
                   </span>
-                  <h3 className="text-lg sm:text-2xl font-extrabold text-[#292333] mt-1.5">
+                  <h3
+                    className={cn(
+                      "text-lg sm:text-2xl font-extrabold mt-1.5",
+                      isDark ? "text-white" : "text-[#292333]"
+                    )}
+                  >
                     {current.title}
                   </h3>
                 </div>
               </div>
 
-              <p className="text-[#756D7C] text-sm sm:text-base leading-relaxed font-normal">
+              <p
+                className={cn(
+                  "text-sm sm:text-base leading-relaxed font-normal",
+                  isDark ? "text-neutral-300" : "text-[#756D7C]"
+                )}
+              >
                 {current.description}
               </p>
 
               {/* Key Bullet Points */}
               <div className="pt-2 space-y-2.5">
-                <span className="text-xs font-bold text-[#292333] uppercase tracking-wider block">
+                <span
+                  className={cn(
+                    "text-xs font-bold uppercase tracking-wider block",
+                    isDark ? "text-[#F5D32F]" : "text-[#292333]"
+                  )}
+                >
                   {isEn ? "Key Activities:" : "Aktivitas Kunci:"}
                 </span>
                 <ul className="space-y-2">
                   {current.points.map((pt, i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#292333]">
+                    <li
+                      key={i}
+                      className={cn(
+                        "flex items-start gap-2.5 text-xs sm:text-sm",
+                        isDark ? "text-neutral-200" : "text-[#292333]"
+                      )}
+                    >
                       <span className="w-2 h-2 rounded-full mt-1.5 shrink-0 bg-[#F5D32F]" />
                       <span className="font-medium">{pt}</span>
                     </li>
@@ -289,20 +359,30 @@ export const TimelineSteps: React.FC = () => {
                     <a href={current.ctaLink} target="_blank" rel="noopener noreferrer">
                       <Button
                         variant="primary"
-                        className="bg-[#6B18A8] hover:bg-[#4B0D78] text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-2xl shadow-md inline-flex items-center gap-2 cursor-pointer"
+                        className={cn(
+                          "font-bold text-xs sm:text-sm px-6 py-2.5 rounded-2xl shadow-md inline-flex items-center gap-2 cursor-pointer transition-transform hover:scale-[1.02]",
+                          isDark
+                            ? "bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold shadow-yellow-500/20"
+                            : "bg-[#6B18A8] hover:bg-[#4B0D78] text-white shadow-purple-950/20"
+                        )}
                       >
                         <span>{current.ctaText}</span>
-                        <ArrowRight className="w-4 h-4 text-[#F5D32F]" />
+                        <ArrowRight className={cn("w-4 h-4", isDark ? "text-[#3B074A]" : "text-[#F5D32F]")} />
                       </Button>
                     </a>
                   ) : (
                     <Link to={current.ctaLink || "#"}>
                       <Button
                         variant="primary"
-                        className="bg-[#6B18A8] hover:bg-[#4B0D78] text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-2xl shadow-md inline-flex items-center gap-2 cursor-pointer"
+                        className={cn(
+                          "font-bold text-xs sm:text-sm px-6 py-2.5 rounded-2xl shadow-md inline-flex items-center gap-2 cursor-pointer transition-transform hover:scale-[1.02]",
+                          isDark
+                            ? "bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold shadow-yellow-500/20"
+                            : "bg-[#6B18A8] hover:bg-[#4B0D78] text-white shadow-purple-950/20"
+                        )}
                       >
                         <span>{current.ctaText}</span>
-                        <ArrowRight className="w-4 h-4 text-[#F5D32F]" />
+                        <ArrowRight className={cn("w-4 h-4", isDark ? "text-[#3B074A]" : "text-[#F5D32F]")} />
                       </Button>
                     </Link>
                   )}
@@ -312,14 +392,38 @@ export const TimelineSteps: React.FC = () => {
 
             {/* Right Column (4 cols): Visual Card */}
             <div className="lg:col-span-4 flex justify-center">
-              <div className="relative w-48 h-48 sm:w-56 sm:h-56 rounded-3xl bg-[#F5EDFB] border border-[#C9A5E8]/60 p-6 flex flex-col items-center justify-center text-center shadow-inner group">
-                <div className="w-16 h-16 rounded-2xl bg-white shadow-md border border-[#C9A5E8]/40 flex items-center justify-center text-[#6B18A8] mb-3 group-hover:scale-110 group-hover:bg-[#FFF7D1] transition-transform duration-300">
+              <div
+                className={cn(
+                  "relative w-48 h-48 sm:w-56 sm:h-56 rounded-3xl p-6 flex flex-col items-center justify-center text-center shadow-xl group",
+                  isDark
+                    ? "bg-[#1F0429]/80 border border-white/10 backdrop-blur-md"
+                    : "bg-[#F5EDFB] border border-[#C9A5E8]/60 shadow-inner"
+                )}
+              >
+                <div
+                  className={cn(
+                    "w-16 h-16 rounded-2xl flex items-center justify-center mb-3 transition-transform duration-300 group-hover:scale-110",
+                    isDark
+                      ? "bg-white/10 border border-white/15 text-[#F5D32F] group-hover:bg-[#F5D32F] group-hover:text-[#3B074A]"
+                      : "bg-white shadow-md border border-[#C9A5E8]/40 text-[#6B18A8] group-hover:bg-[#FFF7D1]"
+                  )}
+                >
                   {current.icon}
                 </div>
-                <div className="font-mono text-2xl font-black text-[#6B18A8]">
+                <div
+                  className={cn(
+                    "font-mono text-2xl font-black",
+                    isDark ? "text-white" : "text-[#6B18A8]"
+                  )}
+                >
                   Tahap {current.stepNumber}
                 </div>
-                <div className="text-xs font-semibold text-[#756D7C] mt-1 line-clamp-2">
+                <div
+                  className={cn(
+                    "text-xs font-semibold mt-1 line-clamp-2",
+                    isDark ? "text-neutral-300" : "text-[#756D7C]"
+                  )}
+                >
                   {current.subtitle}
                 </div>
                 <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-[#F5D32F] text-[#3B074A] flex items-center justify-center font-bold text-xs shadow-md">
