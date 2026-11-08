@@ -21,20 +21,23 @@ export const HeroVideoBanner: React.FC = () => {
       'Global Standards',
     ]
     : [
-      'Halal Assurance',
+      'Jaminan Halal',
       'Integritas Syar’i',
-      'Riset Sains Presisi',
-      'Akreditasi Mutlak',
+      'Sains Presisi',
+      'Standar Mutlak',
     ];
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     const query = new URLSearchParams();
-    query.set('post_type', 'produk-halal');
-    if (productName) query.set('nama_product', productName);
-    if (producerName) query.set('nama_produsen', producerName);
-    if (certNo) query.set('certified_no', certNo);
-    window.open(`https://halalmui.org/produk-halal/?${query.toString()}`, '_blank');
+    if (productName.trim()) query.set('produk', productName.trim());
+    if (producerName.trim()) query.set('produsen', producerName.trim());
+    if (certNo.trim()) query.set('no_regis', certNo.trim());
+    const queryString = query.toString();
+    const targetUrl = queryString
+      ? `https://bpjph.halal.go.id/?${queryString}`
+      : 'https://bpjph.halal.go.id/';
+    window.open(targetUrl, '_blank');
   };
 
   const quickSearch = (term: string) => {
@@ -91,12 +94,12 @@ export const HeroVideoBanner: React.FC = () => {
           initial={{ opacity: 0, scale: 0.96, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.14] drop-shadow-2xl"
+          className="text-3xl sm:text-5xl lg:text-7xl font-black text-white tracking-tight leading-[1.2] drop-shadow-2xl"
         >
           {language === 'en' ? (
             <>
               Leading in{' '}
-              <span className="text-[#F5D32F]">
+              <span className="text-[#F5D32F] inline-block">
                 <FlipWords words={words} className="text-[#F5D32F]" />
               </span>
               <br className="hidden sm:inline" />
@@ -105,7 +108,7 @@ export const HeroVideoBanner: React.FC = () => {
           ) : (
             <>
               Pelayanan Terdepan{' '}
-              <span className="text-[#F5D32F]">
+              <span className="text-[#F5D32F] inline-block">
                 <FlipWords words={words} className="text-[#F5D32F]" />
               </span>
               <br className="hidden sm:inline" />
@@ -195,7 +198,13 @@ export const HeroVideoBanner: React.FC = () => {
               </div>
             </div>
 
-            <form onSubmit={handleSearch} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+            <form
+              onSubmit={handleSearch}
+              action="https://bpjph.halal.go.id/"
+              method="GET"
+              target="_blank"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end"
+            >
               <div className="flex flex-col gap-1.5">
                 <label className="text-[11px] sm:text-xs font-bold text-neutral-700 uppercase tracking-wide flex items-center gap-1.5">
                   <Tag className="w-3.5 h-3.5 text-[#6B18A8]" />
@@ -203,6 +212,7 @@ export const HeroVideoBanner: React.FC = () => {
                 </label>
                 <Input
                   fullWidth
+                  name="produk"
                   variant="primary"
                   placeholder={t('search_placeholder_product')}
                   value={productName}
@@ -218,6 +228,7 @@ export const HeroVideoBanner: React.FC = () => {
                 </label>
                 <Input
                   fullWidth
+                  name="produsen"
                   variant="primary"
                   placeholder={t('search_placeholder_producer')}
                   value={producerName}
@@ -233,6 +244,7 @@ export const HeroVideoBanner: React.FC = () => {
                 </label>
                 <Input
                   fullWidth
+                  name="no_regis"
                   variant="primary"
                   placeholder={t('search_placeholder_cert')}
                   value={certNo}
@@ -256,6 +268,12 @@ export const HeroVideoBanner: React.FC = () => {
                 </Button>
               </div>
             </form>
+
+            {/* Informational Guidance Tip */}
+            <div className="mt-4 flex items-center gap-2 rounded-xl bg-[#FAF7FD] border border-[#C9A5E8]/30 px-4 py-2.5 text-xs text-[#756D7C]">
+              <ShieldCheck className="w-4 h-4 text-[#6B18A8] shrink-0" />
+              <span>{language === 'en' ? 'Direct search connected with official BPJPH database. Fill one or more fields for accurate results.' : 'Pencarian langsung terhubung dengan basis data resmi BPJPH. Isi satu atau beberapa kolom untuk hasil akurat.'}</span>
+            </div>
           </div>
         </div>
       </motion.div>

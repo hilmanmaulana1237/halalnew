@@ -145,42 +145,9 @@ export const getUinServices = (isEn: boolean) => [
     description: isEn
       ? 'In-person and virtual consultation regarding ingredient eligibility, Halal Assurance Systems, and BPJPH guidelines.'
       : 'Layanan konsultasi tatap muka maupun daring mengenai kelayakan bahan baku, sistem jaminan halal, dan regulasi BPJPH.',
-    url: 'https://wa.me/6282118201232',
+    url: 'https://wa.me/6282126493700',
     icon: <Phone className="w-6 h-6 text-[#6b1282]" />,
     badge: isEn ? 'Fast Response' : 'Layanan Cepat',
-    accentColor: 'purple' as const,
-    colSpan: 'md:col-span-1',
-  },
-  {
-    title: isEn ? 'Halal Research & Publications' : 'Publikasi Artikel & Riset Halal',
-    description: isEn
-      ? 'Scientific publications in the SINTA-accredited Indonesian Journal of Halal Research (IJHR) in halal bio-science.'
-      : 'Penerbitan jurnal ilmiah berkala Indonesian Journal of Halal Research (IJHR) terakreditasi SINTA bidang kehalalan hayati.',
-    url: 'https://journal.uinsgd.ac.id/index.php/ijhar',
-    icon: <BookOpen className="w-6 h-6 text-[#6b1282]" />,
-    badge: isEn ? 'SINTA Research' : 'Riset SINTA',
-    accentColor: 'purple' as const,
-    colSpan: 'md:col-span-1',
-  },
-  {
-    title: isEn ? 'Halal Training Center (JPH)' : 'Lembaga Pelatihan JPH',
-    description: isEn
-      ? 'Official competency certification programs for Halal Supervisors, Halal Auditors, and enterprise QA management.'
-      : 'Program sertifikasi kompetensi resmi untuk Penyelia Halal, Auditor Halal, dan tim manajemen mutu perusahaan.',
-    url: 'https://halal.uinsgd.ac.id/lembaga-pelatihan-jaminan-produk-halal-jph/',
-    icon: <GraduationCap className="w-6 h-6 text-[#6b1282]" />,
-    badge: isEn ? 'Certified Training' : 'Pelatihan Resmi',
-    accentColor: 'purple' as const,
-    colSpan: 'md:col-span-1',
-  },
-  {
-    title: isEn ? 'Halal Slaughterer Academy (JULEHA)' : 'Akademi Juru Sembelih Halal (JULEHA)',
-    description: isEn
-      ? 'Education and standardization of Sharia-compliant slaughtering methods for ruminant and poultry slaughterers.'
-      : 'Pendidikan dan standarisasi teknik penyembelihan syar’i bagi juru sembelih RPH ruminansia dan unggas bersertifikat BNSP.',
-    url: 'https://halal.uinsgd.ac.id/akademi-juru-sembelih-halal-juleha/',
-    icon: <Utensils className="w-6 h-6 text-[#6b1282]" />,
-    badge: isEn ? 'Sharia Compliant' : 'Standar Syar’i',
     accentColor: 'purple' as const,
     colSpan: 'md:col-span-1',
   },
@@ -526,7 +493,7 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 5. 6 SERVICES THEME GRID (Classy Light Mesh Micro-Dots with Yellow Dot Decor) */}
+      {/* 5. FLAGSHIP SERVICES GRID (Classy Light Mesh Micro-Dots with Yellow Dot Decor) */}
       <section className="py-24 bg-[#FAF7FD] border-y border-[#C9A5E8]/30 relative overflow-hidden" id="layanan-terpadu">
         <YellowDotGrid rows={4} cols={5} className="absolute top-10 right-8 opacity-25 pointer-events-none hidden lg:grid" />
         <YellowDotGrid rows={3} cols={4} className="absolute bottom-10 left-8 opacity-20 pointer-events-none hidden md:grid" />
@@ -534,7 +501,7 @@ export const HomePage: React.FC = () => {
           <SectionHeader
             badge={isEn ? "FLAGSHIP HALAL SERVICES" : "LAYANAN HALAL UNGGULAN"}
             badgeColor="yellow"
-            title={isEn ? "6 Flagship Services of Halal Center UIN SGD" : "6 Layanan Unggulan Halal Center UIN SGD"}
+            title={isEn ? "Flagship Services of Halal Center UIN SGD" : "Layanan Unggulan Halal Center UIN SGD"}
             subtitle={isEn
               ? "Comprehensive ecosystem from regular industrial halal audit to precision molecular bio-testing."
               : "Ekosistem komprehensif mulai dari audit halal reguler industri hingga pengujian molekuler hayati tingkat lanjut."}
@@ -1356,7 +1323,7 @@ export const HomePage: React.FC = () => {
               </Button>
             </Link>
             <a
-              href="https://wa.me/6282118201232"
+              href="https://wa.me/6282126493700"
               target="_blank"
               rel="noopener noreferrer"
             >

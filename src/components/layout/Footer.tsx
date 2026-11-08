@@ -153,12 +153,12 @@ export const Footer: React.FC = () => {
                 <div>
                   <div className="text-xs text-neutral-400">WhatsApp Desk</div>
                   <a
-                    href="https://wa.me/6282118201232"
+                    href="https://wa.me/6282126493700"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-white hover:text-[#F5D32F] font-bold transition-colors"
                   >
-                    +62 821 1820 1232
+                    +62 821-2649-3700
                   </a>
                 </div>
               </li>

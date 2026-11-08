@@ -75,8 +75,8 @@ export const ContactPage: React.FC = () => {
                     <h5 className="font-bold text-neutral-900">{isEn ? 'Telephone & WhatsApp' : 'Telepon & WhatsApp'}</h5>
                     <p className="text-neutral-600 mt-1">
                       {isEn ? 'Official WhatsApp:' : 'WA Resmi:'}{' '}
-                      <a href="https://wa.me/6282118201232" className="text-[#6b1282] font-bold hover:underline">
-                        +62 821 1820 1232
+                      <a href="https://wa.me/6282126493700" className="text-[#6b1282] font-bold hover:underline">
+                        +62 821-2649-3700
                       </a>
                     </p>
                     <p className="text-neutral-600">{isEn ? 'Office Phone: (022) 7800525' : 'Telepon Kantor: (022) 7800525'}</p>
@@ -109,7 +109,7 @@ export const ContactPage: React.FC = () => {
 
               <div className="pt-4 border-t border-neutral-100">
                 <a
-                  href="https://wa.me/6282118201232"
+                  href="https://wa.me/6282126493700"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block"

@@ -372,7 +372,7 @@ export const PriceCalculatorPage: React.FC = () => {
                     {/* CTA Button in LPH Gradient */}
                     <div className="pt-2">
                       <a
-                        href="https://wa.me/6282118201232"
+                        href="https://wa.me/6282126493700"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-full block"

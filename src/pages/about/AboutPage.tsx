@@ -18,6 +18,7 @@ import { SectionHeader } from '@/components/ui/section-header';
 import { BackgroundGradient } from '@/components/ui/background-gradient';
 import { CardSpotlight } from '@/components/ui/card-spotlight';
 import { SparklesCore } from '@/components/ui/sparkles';
+import { YellowHighlight, YellowDotGrid } from '@/components/ui/decorative-shapes';
 import { getDirectors } from '../home/HomePage';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -107,8 +108,12 @@ export const AboutPage: React.FC = () => {
             <BookOpen className="w-3.5 h-3.5 text-[#eab308]" />
             {isEn ? 'Institutional Profile & History' : 'Profil & Sejarah Lembaga'}
           </div>
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight">
-            {isEn ? 'About Halal Center UIN SGD Bandung' : 'Tentang Halal Center UIN SGD Bandung'}
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white drop-shadow-2xl leading-tight">
+            {isEn ? (
+              <>About <span className="text-[#F5D32F]">Halal Center</span> UIN SGD Bandung</>
+            ) : (
+              <>Tentang <span className="text-[#F5D32F]">Halal Center</span> UIN SGD Bandung</>
+            )}
           </h1>
           <p className="mt-4 text-base sm:text-lg text-neutral-200 max-w-3xl mx-auto leading-relaxed font-normal">
             {isEn
@@ -279,40 +284,82 @@ export const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Leadership Showcase */}
-      <section className="py-20 bg-[#1b183a] text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-xs font-black uppercase tracking-wider text-purple-400">
-              {isEn ? 'EXECUTIVE BOARD' : 'DEWAN PIMPINAN'}
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-white mt-1">
-              {isEn ? 'Institutional Leadership & Guidance' : 'Pimpinan & Pengarah Lembaga'}
-            </h2>
-          </div>
+      {/* Leadership Showcase - Modern HeroUI & Aceternity Card Layout */}
+      <section className="py-24 bg-[#FAF7FD] border-t border-[#C9A5E8]/30 relative overflow-hidden" id="pimpinan-lembaga">
+        <YellowDotGrid rows={4} cols={5} className="absolute top-10 right-8 opacity-25 pointer-events-none hidden lg:grid" dotColor="#F5D32F" />
+        <YellowDotGrid rows={3} cols={4} className="absolute bottom-10 left-8 opacity-20 pointer-events-none hidden md:grid" dotColor="#F5D32F" />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <SectionHeader
+            badge={isEn ? 'EXECUTIVE BOARD & PATRON' : 'DEWAN PIMPINAN & PEMBINA'}
+            badgeColor="yellow"
+            title={isEn ? 'Institutional Leadership & Guidance' : 'Pimpinan & Pengarah Lembaga'}
+            subtitle={isEn
+              ? 'Synergy between academic excellence, sharia integrity, and halal science guiding Halal Center UIN SGD.'
+              : 'Sinergi keunggulan akademik, integritas syariah, dan sains halal dalam mengawal Halal Center UIN SGD.'}
+          />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto mt-12">
             {directors.map((dir) => (
-              <div
+              <motion.div
                 key={dir.id}
+                whileHover={{ y: -6, scale: 1.01 }}
+                transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
                 onClick={() => setSelectedDirector(dir)}
-                className="p-6 rounded-3xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all cursor-pointer flex items-center gap-5 hover:border-purple-400/50"
+                className="group relative rounded-3xl p-6 sm:p-8 bg-white border border-[#C9A5E8]/40 shadow-lg shadow-purple-950/5 hover:shadow-2xl hover:border-[#6B18A8]/50 transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer"
               >
-                <img
-                  src={dir.image}
-                  alt={dir.name}
-                  className="w-20 h-20 rounded-2xl object-cover object-top border-2 border-purple-400/50 shadow-md"
-                />
+                {/* Ambient Top Glow Accent */}
+                <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#6B18A8] via-[#F5D32F] to-[#6B18A8] opacity-75 group-hover:opacity-100 transition-opacity" />
+
                 <div>
-                  <span className="text-xs font-bold text-emerald-400 uppercase">
-                    {dir.position}
+                  <div className="flex items-start gap-4 sm:gap-5">
+                    <div className="relative shrink-0">
+                      <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-[#C9A5E8]/60 shadow-md group-hover:border-[#6B18A8] transition-colors">
+                        <img
+                          src={dir.image}
+                          alt={dir.name}
+                          className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </div>
+                      <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#FFF7D1] border border-[#F5D32F] flex items-center justify-center text-[#713f12] shadow-xs">
+                        <Sparkles className="w-2.5 h-2.5 text-[#eab308]" />
+                      </div>
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-extrabold bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] uppercase tracking-wider mb-2 shadow-2xs">
+                        <Sparkles className="w-3 h-3 text-[#eab308]" />
+                        <span className="truncate">{dir.id === 1 ? (isEn ? 'Patron & Rector' : 'Dewan Pembina / Rektor') : (isEn ? 'Head of Halal Center' : 'Kepala Halal Center')}</span>
+                      </div>
+                      <h3 className="text-lg sm:text-xl font-black text-[#292333] group-hover:text-[#6B18A8] transition-colors leading-snug">
+                        {dir.name}
+                      </h3>
+                      <p className="text-xs font-semibold text-[#756D7C] mt-1 line-clamp-2">
+                        {dir.position}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Quote Box */}
+                  <div className="mt-5 p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 shadow-xs relative">
+                    <span className="text-3xl text-[#F5D32F] font-serif absolute top-1 left-3 select-none leading-none">“</span>
+                    <p className="text-xs sm:text-sm text-neutral-700 italic leading-relaxed pl-5 font-normal line-clamp-3">
+                      "{dir.quote}"
+                    </p>
+                  </div>
+                </div>
+
+                {/* Bottom Action Strip */}
+                <div className="mt-6 pt-4 border-t border-[#C9A5E8]/25 flex items-center justify-between">
+                  <span className="text-xs font-bold text-[#6B18A8] group-hover:text-[#4B0D78] flex items-center gap-1.5 transition-colors">
+                    <span>{isEn ? 'View Profile & Track Record' : 'Buka Profil & Rekam Jejak'}</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </span>
-                  <h3 className="text-base font-extrabold text-white mt-1">{dir.name}</h3>
-                  <span className="text-xs text-purple-300 mt-2 flex items-center gap-1 hover:text-white">
-                    {isEn ? 'View Profile' : 'Buka Profil Detail'} <ArrowRight className="w-3.5 h-3.5" />
+                  <span className="text-[11px] font-semibold text-neutral-400 group-hover:text-neutral-600 transition-colors">
+                    {isEn ? 'Details' : 'Detail'}
                   </span>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -321,44 +368,61 @@ export const AboutPage: React.FC = () => {
         {selectedDirector && (
           <Modal.Backdrop isOpen={!!selectedDirector} onOpenChange={() => setSelectedDirector(null)}>
             <Modal.Container>
-              <Modal.Dialog className="sm:max-w-[600px] bg-white text-neutral-900 rounded-3xl p-6 sm:p-8">
+              <Modal.Dialog className="sm:max-w-[620px] bg-white text-neutral-900 rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#C9A5E8]/40">
                 <Modal.CloseTrigger />
-                <Modal.Header className="pb-4 border-b border-neutral-100">
-                  <span className="text-xs font-black text-[#6b1282] uppercase tracking-wider">
-                    {selectedDirector.position}
-                  </span>
-                  <Modal.Heading className="text-2xl font-black text-[#1b183a]">
+                <Modal.Header className="pb-4 border-b border-[#C9A5E8]/25">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-extrabold bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] uppercase tracking-wider mb-2">
+                    <Sparkles className="w-3 h-3 text-[#eab308]" />
+                    <span>{selectedDirector.position}</span>
+                  </div>
+                  <Modal.Heading className="text-2xl font-black text-[#292333]">
                     {selectedDirector.name}
                   </Modal.Heading>
                 </Modal.Header>
 
-                <Modal.Body className="py-6 space-y-4 max-h-[70vh] overflow-y-auto">
-                  <div className="flex gap-4 items-center bg-neutral-50 p-4 rounded-2xl border border-neutral-100">
+                <Modal.Body className="py-6 space-y-5 max-h-[70vh] overflow-y-auto">
+                  <div className="flex gap-4 items-center bg-[#FAF7FD] p-4 rounded-2xl border border-[#C9A5E8]/30">
                     <img
                       src={selectedDirector.image}
                       alt={selectedDirector.name}
-                      className="w-20 h-20 rounded-xl object-cover"
+                      className="w-20 h-20 rounded-xl object-cover border border-[#C9A5E8]/50 shadow-xs"
                     />
-                    <p className="text-xs text-neutral-600 italic">"{selectedDirector.quote}"</p>
+                    <p className="text-xs sm:text-sm text-neutral-700 italic leading-relaxed">
+                      "{selectedDirector.quote}"
+                    </p>
                   </div>
                   <div>
-                    <h5 className="font-extrabold text-xs uppercase tracking-wider text-[#6b1282] mb-2">
-                      {isEn ? 'Education & Qualifications' : 'Pendidikan & Kualifikasi'}
+                    <h5 className="font-extrabold text-xs uppercase tracking-wider text-[#6B18A8] mb-2 flex items-center gap-1.5">
+                      <GraduationCap className="w-4 h-4 text-[#6B18A8]" />
+                      <span>{isEn ? 'Education & Academic Qualifications' : 'Pendidikan & Kualifikasi Akademik'}</span>
                     </h5>
-                    <ul className="text-xs text-neutral-600 list-disc pl-4 space-y-1">
+                    <ul className="text-xs text-neutral-600 list-disc pl-5 space-y-1.5">
                       {selectedDirector.education.map((e: string, i: number) => (
                         <li key={i}>{e}</li>
                       ))}
                     </ul>
                   </div>
+                  {selectedDirector.experience && selectedDirector.experience.length > 0 && (
+                    <div>
+                      <h5 className="font-extrabold text-xs uppercase tracking-wider text-[#6B18A8] mb-2 flex items-center gap-1.5">
+                        <Award className="w-4 h-4 text-[#6B18A8]" />
+                        <span>{isEn ? 'Experience & Strategic Focus' : 'Pengalaman & Fokus Strategis'}</span>
+                      </h5>
+                      <ul className="text-xs text-neutral-600 list-disc pl-5 space-y-1.5">
+                        {selectedDirector.experience.map((exp: string, i: number) => (
+                          <li key={i}>{exp}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </Modal.Body>
-                <Modal.Footer className="pt-4 border-t border-neutral-100">
+                <Modal.Footer className="pt-4 border-t border-[#C9A5E8]/25">
                   <Button
                     variant="primary"
-                    className="w-full bg-[#6b1282] hover:bg-[#581c87] text-white font-bold rounded-xl"
+                    className="w-full bg-[#6B18A8] hover:bg-[#4B0D78] text-white font-bold rounded-xl py-2.5 cursor-pointer"
                     onPress={() => setSelectedDirector(null)}
                   >
-                    {isEn ? 'Close' : 'Tutup'}
+                    {isEn ? 'Close Profile' : 'Tutup Profil'}
                   </Button>
                 </Modal.Footer>
               </Modal.Dialog>

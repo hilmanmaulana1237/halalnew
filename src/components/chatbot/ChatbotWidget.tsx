@@ -63,7 +63,7 @@ const KNOWLEDGE_BASE: SmartAnswer[] = [
     suggestedAction: {
       labelId: 'Konsultasi Syarat via WhatsApp',
       labelEn: 'Consult Requirements via WhatsApp',
-      href: 'https://wa.me/6282118201232?text=Halo%20Admin%2C%20saya%20ingin%20konsultasi%20syarat%20Audit%20Reguler%20LPH'
+      href: 'https://wa.me/6282126493700?text=Halo%20Admin%2C%20saya%20ingin%20konsultasi%20syarat%20Audit%20Reguler%20LPH'
     }
   },
   {
@@ -93,7 +93,7 @@ const KNOWLEDGE_BASE: SmartAnswer[] = [
     suggestedAction: {
       labelId: 'Jadwal Pelatihan via WhatsApp',
       labelEn: 'Training Schedule via WhatsApp',
-      href: 'https://wa.me/6282118201232?text=Halo%20Admin%2C%20saya%20ingin%20informasi%20jadwal%20Pelatihan%20Auditor%20dan%20Penyelia%20Halal'
+      href: 'https://wa.me/6282126493700?text=Halo%20Admin%2C%20saya%20ingin%20informasi%20jadwal%20Pelatihan%20Auditor%20dan%20Penyelia%20Halal'
     }
   },
   {
@@ -108,13 +108,13 @@ const KNOWLEDGE_BASE: SmartAnswer[] = [
   },
   {
     keywords: ['kontak', 'hubungi', 'wa', 'whatsapp', 'admin', 'telepon', 'phone', 'contact', 'call', 'cs', 'customer service', 'bicara'],
-    answerId: `📞 **Kontak Layanan Resmi Halal Center UIN SGD:**\n\nAnda dapat berkonsultasi langsung dengan petugas pelayanan dan verifikator kami melalui saluran berikut:\n\n• **WhatsApp Layanan:** +62 821-1820-1232\n• **Email Resmi:** halalcenter@uinsgd.ac.id / lph@uinsgd.ac.id\n• **Website:** halal.uinsgd.ac.id\n\nKlik tombol di bawah untuk langsung terhubung ke WhatsApp Admin kami.`,
-    answerEn: `📞 **Official Support Contacts:**\n\nYou can consult directly with our verification officers and support team through:\n\n• **WhatsApp Support:** +62 821-1820-1232\n• **Email:** halalcenter@uinsgd.ac.id / lph@uinsgd.ac.id\n• **Website:** halal.uinsgd.ac.id\n\nClick the button below to connect with our official WhatsApp Admin immediately.`,
+    answerId: `📞 **Kontak Layanan Resmi Halal Center UIN SGD:**\n\nAnda dapat berkonsultasi langsung dengan petugas pelayanan dan verifikator kami melalui saluran berikut:\n\n• **WhatsApp Layanan:** +62 821-2649-3700\n• **Email Resmi:** halalcenter@uinsgd.ac.id / lph@uinsgd.ac.id\n• **Website:** halal.uinsgd.ac.id\n\nKlik tombol di bawah untuk langsung terhubung ke WhatsApp Admin kami.`,
+    answerEn: `📞 **Official Support Contacts:**\n\nYou can consult directly with our verification officers and support team through:\n\n• **WhatsApp Support:** +62 821-2649-3700\n• **Email:** halalcenter@uinsgd.ac.id / lph@uinsgd.ac.id\n• **Website:** halal.uinsgd.ac.id\n\nClick the button below to connect with our official WhatsApp Admin immediately.`,
     isFallback: true,
     suggestedAction: {
       labelId: 'Chat WhatsApp Sekarang',
       labelEn: 'Chat WhatsApp Now',
-      href: 'https://wa.me/6282118201232?text=Halo%20Admin%20Halal%20Center%20UIN%20SGD%2C%20saya%20ingin%20berkonsultasi'
+      href: 'https://wa.me/6282126493700?text=Halo%20Admin%20Halal%20Center%20UIN%20SGD%2C%20saya%20ingin%20berkonsultasi'
     }
   }
 ];
@@ -254,7 +254,7 @@ export const ChatbotWidget: React.FC = () => {
           text: answerText,
           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           isFallback: match.isFallback,
-          waUrl: 'https://wa.me/6282118201232?text=' + encodeURIComponent(`Halo Admin Halal Center UIN SGD, saya bertanya mengenai: "${userText}"`),
+          waUrl: 'https://wa.me/6282126493700?text=' + encodeURIComponent(`Halo Admin Halal Center UIN SGD, saya bertanya mengenai: "${userText}"`),
           waText: language === 'en' ? 'Consult Officer via WhatsApp' : 'Lanjutkan Chat via WhatsApp',
           suggestedAction: match.suggestedAction ? {
             label: language === 'en' ? match.suggestedAction.labelEn : match.suggestedAction.labelId,
@@ -283,7 +283,7 @@ export const ChatbotWidget: React.FC = () => {
             text: res.data.data.answer,
             time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
             isFallback: res.data.data.canContactAdmin,
-            waUrl: res.data.data.waUrl || 'https://wa.me/6282118201232?text=' + encodeURIComponent(`Halo Admin Halal Center UIN SGD, saya bertanya mengenai: "${userText}"`),
+            waUrl: res.data.data.waUrl || 'https://wa.me/6282126493700?text=' + encodeURIComponent(`Halo Admin Halal Center UIN SGD, saya bertanya mengenai: "${userText}"`),
             waText: language === 'en' ? 'Consult Officer via WhatsApp' : 'Lanjutkan Chat via WhatsApp',
           },
         ]);
@@ -305,8 +305,8 @@ export const ChatbotWidget: React.FC = () => {
           text: fallbackMsg,
           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           isFallback: true,
-          waUrl: 'https://wa.me/6282118201232?text=' + encodeURIComponent(`Halo Admin Halal Center UIN SGD, saya ingin berkonsultasi mengenai: "${userText}"`),
-          waText: language === 'en' ? 'Connect via WhatsApp (+62 821-1820-1232)' : 'Hubungi WhatsApp Resmi (+62 821-1820-1232)',
+          waUrl: 'https://wa.me/6282126493700?text=' + encodeURIComponent(`Halo Admin Halal Center UIN SGD, saya ingin berkonsultasi mengenai: "${userText}"`),
+          waText: language === 'en' ? 'Connect via WhatsApp (+62 821-2649-3700)' : 'Hubungi WhatsApp Resmi (+62 821-2649-3700)',
         },
       ]);
     } finally {
@@ -486,12 +486,12 @@ export const ChatbotWidget: React.FC = () => {
                               {language === 'en' ? 'Official WhatsApp Desk' : 'Layanan WhatsApp Resmi'}
                             </div>
                             <div className="text-[10px] text-neutral-500 font-medium">
-                              +62 821-1820-1232 (Admin LPH)
+                              +62 821-2649-3700 (Admin LPH)
                             </div>
                           </div>
                         </div>
                         <a
-                          href={m.waUrl || 'https://wa.me/6282118201232'}
+                          href={m.waUrl || 'https://wa.me/6282126493700'}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-[#25D366] hover:bg-[#1ebd5b] text-white font-bold text-xs shadow-md shadow-emerald-600/20 transition-all hover:scale-[1.02]"
@@ -571,7 +571,7 @@ export const ChatbotWidget: React.FC = () => {
               <div className="mt-2 flex items-center justify-between text-[10px] text-neutral-400 px-1">
                 <span className="truncate">{t('chatbot_disclaimer')}</span>
                 <a
-                  href="https://wa.me/6282118201232"
+                  href="https://wa.me/6282126493700"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[#6B18A8] hover:text-[#58138a] hover:underline font-bold shrink-0 ml-2"

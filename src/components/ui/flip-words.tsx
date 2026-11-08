@@ -55,10 +55,9 @@ export const FlipWords = ({
         }}
         exit={{
           opacity: 0,
-          y: -40,
-          x: 20,
+          y: -25,
           filter: "blur(6px)",
-          scale: 1.5,
+          scale: 1.05,
           position: "absolute",
         }}
         className={cn(

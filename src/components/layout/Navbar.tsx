@@ -107,9 +107,10 @@ export const Navbar: React.FC = () => {
                 <div className="w-[820px] max-w-[94vw]">
                   <div className="grid grid-cols-12 gap-3.5 items-stretch">
                     {/* Left Sub-card (7 cols): Screenshot 1 "Get started" style */}
-                    <div className="col-span-7 rounded-2xl bg-white/[0.03] border border-white/[0.08] p-4 sm:p-5 flex flex-col justify-between hover:border-white/[0.12] transition-colors">
-                      <div className="text-xs font-semibold text-neutral-400 mb-3 tracking-wide">
-                        {language === 'en' ? 'INSTITUTIONAL PROFILE' : 'PROFIL & KELEMBAGAAN LPH'}
+                    <div className="col-span-7 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 p-4 sm:p-5 flex flex-col justify-between hover:border-[#6B18A8]/40 transition-colors">
+                      <div className="text-xs font-bold text-[#6B18A8] mb-3 tracking-wide flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#F5D32F]" />
+                        <span>{language === 'en' ? 'INSTITUTIONAL PROFILE' : 'PROFIL & KELEMBAGAAN LPH'}</span>
                       </div>
                       <div className="space-y-1 flex-1 flex flex-col justify-between">
                         <MenuCardItem
@@ -147,7 +148,7 @@ export const Navbar: React.FC = () => {
                     </div>
 
                     {/* Right Sub-card (5 cols): Screenshot 2 Featured Visual Card */}
-                    <div className="col-span-5 rounded-2xl bg-white/[0.03] border border-white/[0.08] p-3.5 sm:p-4 flex flex-col justify-between hover:border-white/[0.12] transition-colors">
+                    <div className="col-span-5 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 p-3.5 sm:p-4 flex flex-col justify-between hover:border-[#6B18A8]/40 transition-colors">
                       <FeaturedPreviewCard
                         image="/assets/images/certificate.png"
                         title={language === 'en' ? 'Official LPH Accreditation' : 'Sertifikat Akreditasi LPH'}
@@ -188,9 +189,10 @@ export const Navbar: React.FC = () => {
                 <div className="w-[840px] max-w-[95vw]">
                   <div className="grid grid-cols-12 gap-3.5 items-stretch">
                     {/* Left Sub-card (7 cols): Main Services Rich Cards */}
-                    <div className="col-span-7 rounded-2xl bg-white/[0.03] border border-white/[0.08] p-4 sm:p-5 flex flex-col justify-between hover:border-white/[0.12] transition-colors">
-                      <div className="text-[11px] font-bold uppercase tracking-wider text-neutral-400 mb-3">
-                        {language === 'en' ? 'MAIN HALAL SERVICES' : 'LAYANAN UTAMA LPH'}
+                    <div className="col-span-7 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 p-4 sm:p-5 flex flex-col justify-between hover:border-[#6B18A8]/40 transition-colors">
+                      <div className="text-[11px] font-bold uppercase tracking-wider text-[#6B18A8] mb-3 flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#F5D32F]" />
+                        <span>{language === 'en' ? 'MAIN HALAL SERVICES' : 'LAYANAN UTAMA LPH'}</span>
                       </div>
                       <div className="space-y-1 flex-1 flex flex-col justify-between">
                         <MenuCardItem
@@ -240,8 +242,8 @@ export const Navbar: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Right Sub-card (5 cols): Pengaduan & Whistleblowing (Replacing old Laboratorium card) */}
-                    <div className="col-span-5 rounded-2xl bg-white/[0.03] border border-white/[0.08] p-3.5 sm:p-4 flex flex-col justify-between hover:border-white/[0.12] transition-colors">
+                    {/* Right Sub-card (5 cols): Pengaduan & Whistleblowing */}
+                    <div className="col-span-5 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 p-3.5 sm:p-4 flex flex-col justify-between hover:border-[#6B18A8]/40 transition-colors">
                       <FeaturedPreviewCard
                         image="/assets/images/value-integritas.jpg"
                         title={language === 'en' ? 'Whistleblowing & Complaints' : 'Pengaduan & Whistleblowing'}
@@ -264,7 +266,7 @@ export const Navbar: React.FC = () => {
                       { label: language === 'en' ? 'Whistleblower System' : 'Pengaduan Whistleblowing', to: '/layanan/pengaduan' },
                       { label: language === 'en' ? 'Satisfaction Index' : 'Survei Kepuasan (IKM)', to: '/layanan/kepuasan' },
                       { label: 'Portal SIHALAL BPJPH', href: 'https://ptsp.halal.go.id/' },
-                      { label: language === 'en' ? 'WhatsApp Helpdesk' : 'WhatsApp Layanan', href: 'https://wa.me/6282118201232' },
+                      { label: language === 'en' ? 'WhatsApp Helpdesk' : 'WhatsApp Layanan', href: 'https://wa.me/6282126493700' },
                     ]}
                     onClick={() => setActiveDropdown(null)}
                   />
@@ -282,9 +284,10 @@ export const Navbar: React.FC = () => {
                 <div className="w-[820px] max-w-[94vw]">
                   <div className="grid grid-cols-12 gap-3.5 items-stretch">
                     {/* Left Sub-card (7 cols): Screenshot 1 "Get started" style */}
-                    <div className="col-span-7 rounded-2xl bg-white/[0.03] border border-white/[0.08] p-4 sm:p-5 flex flex-col justify-between hover:border-white/[0.12] transition-colors">
-                      <div className="text-xs font-semibold text-neutral-400 mb-3 tracking-wide">
-                        {language === 'en' ? 'PUBLICATIONS & CIRCULARS' : 'PUBLIKASI, RISET & PENGUMUMAN'}
+                    <div className="col-span-7 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 p-4 sm:p-5 flex flex-col justify-between hover:border-[#6B18A8]/40 transition-colors">
+                      <div className="text-xs font-bold text-[#6B18A8] mb-3 tracking-wide flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#F5D32F]" />
+                        <span>{language === 'en' ? 'PUBLICATIONS & CIRCULARS' : 'PUBLIKASI & PENGUMUMAN RESMI'}</span>
                       </div>
                       <div className="space-y-1 flex-1 flex flex-col justify-between">
                         <MenuCardItem
@@ -304,27 +307,16 @@ export const Navbar: React.FC = () => {
                           description={language === 'en'
                             ? 'BPJPH circulars, fatwa session schedules, and crucial business notices.'
                             : 'Surat edaran BPJPH, jadwal sidang fatwa, dan informasi penting pelaku usaha.'}
-                          to="/pengumuman"
+                          href="https://bpjph.halal.go.id/category/pengumuman"
                           badge={language === 'en' ? 'Notice' : 'Edaran'}
                           badgeVariant="purple"
-                          onClick={() => setActiveDropdown(null)}
-                        />
-                        <MenuCardItem
-                          icon={<GraduationCap className="w-4 h-4" />}
-                          title={language === 'en' ? 'Halal Research Journal (IJHR)' : 'Jurnal Riset Halal (IJHR)'}
-                          description={language === 'en'
-                            ? 'Indonesian Journal of Halal Research nationally accredited by SINTA.'
-                            : 'Indonesian Journal of Halal Research terakreditasi SINTA 2 nasional.'}
-                          href="https://journal.uinsgd.ac.id/index.php/ijhar"
-                          badge="SINTA 2"
-                          badgeVariant="emerald"
                           onClick={() => setActiveDropdown(null)}
                         />
                       </div>
                     </div>
 
                     {/* Right Sub-card (5 cols): Screenshot 2 Featured Visual Card with Photo */}
-                    <div className="col-span-5 rounded-2xl bg-white/[0.03] border border-white/[0.08] p-3.5 sm:p-4 flex flex-col justify-between hover:border-white/[0.12] transition-colors">
+                    <div className="col-span-5 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 p-3.5 sm:p-4 flex flex-col justify-between hover:border-[#6B18A8]/40 transition-colors">
                       <FeaturedPreviewCard
                         image="/assets/images/uin_sgd/uin_07.webp"
                         title={language === 'en' ? 'World Halal Conference' : 'Konferensi Halal Dunia'}
@@ -501,8 +493,7 @@ export const Navbar: React.FC = () => {
           label={language === 'en' ? 'News & Media' : 'News & Update'}
           links={[
             { label: language === 'en' ? 'News & Activities' : 'Berita & Kegiatan LPH', to: '/berita', icon: Newspaper },
-            { label: language === 'en' ? 'Official Announcements' : 'Pengumuman Resmi BPJPH', to: '/pengumuman', icon: Bell },
-            { label: language === 'en' ? 'Research Journal (IJHR)' : 'Jurnal Riset Halal (IJHR)', href: 'https://journal.uinsgd.ac.id/index.php/ijhar', icon: GraduationCap },
+            { label: language === 'en' ? 'Official Announcements' : 'Pengumuman Resmi BPJPH', href: 'https://bpjph.halal.go.id/category/pengumuman', icon: Bell },
           ]}
           onNavigate={() => setMobileOpen(false)}
         />
@@ -520,7 +511,7 @@ export const Navbar: React.FC = () => {
 
         {/* Direct WhatsApp Consultation Button */}
         <a
-          href="https://wa.me/6282118201232"
+          href="https://wa.me/6282126493700"
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => setMobileOpen(false)}

@@ -57,11 +57,11 @@ export const MegaMenuItem: React.FC<MegaMenuItemProps> = ({
             className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 z-50 pointer-events-auto"
           >
             {/* Popover Arrow */}
-            <div className="absolute top-1 left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-[#0b0512] rotate-45 border-t border-l border-purple-500/30 rounded-xs -z-10 shadow-xs" />
+            <div className="absolute top-1 left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-white rotate-45 border-t border-l border-[#C9A5E8]/50 rounded-xs -z-10 shadow-xs" />
 
-            {/* Main Aceternity Mega Menu Obsidian Container */}
-            <div className="relative rounded-3xl p-[1px] bg-gradient-to-b from-purple-500/40 via-purple-900/15 to-purple-950/50 shadow-2xl shadow-purple-950/80 backdrop-blur-2xl">
-              <div className="rounded-[23px] bg-[#0c0514]/98 backdrop-blur-2xl border border-white/10 p-3.5 sm:p-4 text-white overflow-hidden shadow-inner">
+            {/* Main Aceternity Mega Menu Obsidian Container - Clean White Palette */}
+            <div className="relative rounded-3xl p-[1px] bg-gradient-to-b from-[#6B18A8]/25 via-[#F5D32F]/40 to-[#6B18A8]/15 shadow-2xl shadow-purple-950/15 backdrop-blur-2xl">
+              <div className="rounded-[23px] bg-white/98 backdrop-blur-2xl border border-[#C9A5E8]/30 p-3.5 sm:p-4 text-[#292333] overflow-hidden shadow-xl">
                 {children}
               </div>
             </div>
@@ -83,17 +83,17 @@ export const BlueprintBadge: React.FC<BlueprintBadgeProps> = ({
   variant = 'sky',
 }) => {
   const colorMap = {
-    sky: 'text-sky-300 border-sky-400/50 bg-sky-950/30 border-corner-sky',
-    purple: 'text-purple-300 border-purple-400/50 bg-purple-950/30 border-corner-purple',
-    emerald: 'text-emerald-300 border-emerald-400/50 bg-emerald-950/30 border-corner-emerald',
-    yellow: 'text-amber-300 border-amber-400/70 bg-amber-950/40 border-corner-yellow',
+    sky: 'text-sky-700 border-sky-300 bg-sky-50 border-corner-sky',
+    purple: 'text-[#6B18A8] border-[#C9A5E8] bg-[#F5EDFB] border-corner-purple',
+    emerald: 'text-emerald-700 border-emerald-300 bg-emerald-50 border-corner-emerald',
+    yellow: 'text-amber-800 border-[#F5D32F] bg-[#FFF7D1] border-corner-yellow',
   };
 
-  const cornerColor = variant === 'yellow' ? 'border-amber-400' : variant === 'purple' ? 'border-purple-400' : variant === 'emerald' ? 'border-emerald-400' : 'border-sky-400';
+  const cornerColor = variant === 'yellow' ? 'border-[#F5D32F]' : variant === 'purple' ? 'border-[#6B18A8]' : variant === 'emerald' ? 'border-emerald-500' : 'border-sky-500';
 
   return (
     <span className={cn(
-      "relative inline-flex items-center px-1.5 py-0.5 text-[9px] sm:text-[10px] font-mono font-medium tracking-wide rounded-xs border shadow-2xs select-none",
+      "relative inline-flex items-center px-1.5 py-0.5 text-[9px] sm:text-[10px] font-mono font-bold tracking-wide rounded-xs border shadow-2xs select-none",
       colorMap[variant]
     )}>
       {/* 4 Corner Crosshairs */}
@@ -129,18 +129,18 @@ export const MenuCardItem: React.FC<MenuCardItemProps> = ({
   onClick,
 }) => {
   const content = (
-    <div className="group flex items-start gap-3.5 p-2.5 sm:p-3 rounded-xl hover:bg-white/[0.06] border border-transparent hover:border-purple-500/25 transition-all duration-200 cursor-pointer">
-      <div className="w-10 h-10 rounded-xl bg-white/[0.05] border border-white/10 text-purple-300 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 group-hover:bg-purple-950/80 group-hover:text-purple-200 group-hover:border-purple-400/50 transition-all">
+    <div className="group flex items-start gap-3.5 p-2.5 sm:p-3 rounded-xl hover:bg-white border border-transparent hover:border-[#C9A5E8]/40 hover:shadow-xs transition-all duration-200 cursor-pointer">
+      <div className="w-10 h-10 rounded-xl bg-white border border-[#C9A5E8]/40 text-[#6B18A8] flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 group-hover:bg-[#FFF7D1] group-hover:text-[#6B18A8] group-hover:border-[#F5D32F] transition-all">
         {icon}
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <span className="text-[13px] font-bold text-white group-hover:text-purple-200 transition-colors leading-tight">
+          <span className="text-[13px] font-bold text-[#292333] group-hover:text-[#6B18A8] transition-colors leading-tight">
             {title}
           </span>
           {badge && <BlueprintBadge text={badge} variant={badgeVariant} />}
         </div>
-        <p className="text-xs text-neutral-400 group-hover:text-neutral-300 leading-relaxed mt-1 line-clamp-2">
+        <p className="text-xs text-[#756D7C] group-hover:text-[#292333] leading-relaxed mt-1 line-clamp-2">
           {description}
         </p>
       </div>
@@ -199,13 +199,14 @@ export const MenuCategoryGrid: React.FC<MenuCategoryGridProps> = ({
   return (
     <div className="flex flex-col justify-between h-full">
       <div>
-        <div className="text-[11px] font-bold uppercase tracking-wider text-neutral-400 mb-3.5">
-          {title}
+        <div className="text-[11px] font-bold uppercase tracking-wider text-[#6B18A8] mb-3.5 flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#F5D32F]" />
+          <span>{title}</span>
         </div>
         <div className="grid grid-cols-3 gap-x-5 gap-y-2.5">
           {items.map((item, idx) => {
             const itemContent = (
-              <span className="text-xs sm:text-[13px] font-medium text-neutral-300 hover:text-white transition-colors cursor-pointer py-1 block whitespace-nowrap">
+              <span className="text-xs sm:text-[13px] font-medium text-neutral-600 hover:text-[#6B18A8] transition-colors cursor-pointer py-1 block whitespace-nowrap">
                 {item.label}
               </span>
             );
@@ -238,14 +239,14 @@ export const MenuCategoryGrid: React.FC<MenuCategoryGridProps> = ({
       </div>
 
       {actionText && (
-        <div className="mt-5 pt-3.5 border-t border-white/[0.08]">
+        <div className="mt-5 pt-3.5 border-t border-[#C9A5E8]/25">
           {actionHref ? (
             <a
               href={actionHref}
               target="_blank"
               rel="noopener noreferrer"
               onClick={onClick}
-              className="inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-bold text-white hover:text-purple-200 transition-colors group"
+              className="inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-bold text-[#6B18A8] hover:text-[#4B0D78] transition-colors group"
             >
               <span>{actionText}</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -254,7 +255,7 @@ export const MenuCategoryGrid: React.FC<MenuCategoryGridProps> = ({
             <Link
               to={actionTo}
               onClick={onClick}
-              className="inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-bold text-white hover:text-purple-200 transition-colors group"
+              className="inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-bold text-[#6B18A8] hover:text-[#4B0D78] transition-colors group"
             >
               <span>{actionText}</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -293,30 +294,30 @@ export const FeaturedPreviewCard: React.FC<FeaturedPreviewCardProps> = ({
   const cardContent = (
     <div className="group flex flex-col justify-between h-full cursor-pointer">
       {/* High-res Image Preview */}
-      <div className="relative w-full aspect-[16/10] sm:h-42 rounded-xl overflow-hidden bg-black/60 border border-white/10 shrink-0">
+      <div className="relative w-full aspect-[16/10] sm:h-42 rounded-xl overflow-hidden bg-neutral-100 border border-[#C9A5E8]/30 shrink-0">
         <img
           src={image}
           alt={title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
       </div>
 
       {/* Info Details Under Photo */}
       <div className="mt-3 flex-1 flex flex-col justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <h4 className="text-sm font-bold text-white group-hover:text-purple-200 transition-colors truncate">
+            <h4 className="text-sm font-bold text-[#292333] group-hover:text-[#6B18A8] transition-colors truncate">
               {title}
             </h4>
             {badge && <BlueprintBadge text={badge} variant={badgeVariant} />}
           </div>
-          <p className="text-xs text-neutral-400 group-hover:text-neutral-300 leading-relaxed mt-1.5 line-clamp-2">
+          <p className="text-xs text-[#756D7C] group-hover:text-[#292333] leading-relaxed mt-1.5 line-clamp-2">
             {description}
           </p>
         </div>
 
-        <div className="mt-3 pt-2.5 border-t border-white/[0.08] flex items-center justify-between text-xs font-bold text-purple-300 group-hover:text-white transition-colors">
+        <div className="mt-3 pt-2.5 border-t border-[#C9A5E8]/25 flex items-center justify-between text-xs font-bold text-[#6B18A8] group-hover:text-[#4B0D78] transition-colors">
           <span>{actionText}</span>
           <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
         </div>
@@ -369,15 +370,16 @@ export const MenuFooter: React.FC<MenuFooterProps> = ({
   onClick,
 }) => {
   return (
-    <div className="pt-3 mt-3.5 border-t border-white/[0.08] flex flex-wrap items-center justify-between gap-3 text-xs">
-      <span className="font-semibold text-neutral-400 tracking-wide text-xs">
-        {label}
+    <div className="pt-3 mt-3.5 border-t border-[#C9A5E8]/25 flex flex-wrap items-center justify-between gap-3 text-xs">
+      <span className="font-semibold text-[#6B18A8] tracking-wide text-xs flex items-center gap-1.5">
+        <span className="w-1.5 h-1.5 rounded-full bg-[#F5D32F]" />
+        <span>{label}</span>
       </span>
       <div className="flex items-center gap-4 flex-wrap">
         {links.map((link, idx) => {
           const item = (
-            <span className="inline-flex items-center gap-1.5 text-neutral-400 hover:text-white transition-colors">
-              {link.icon && <span className="text-purple-400">{link.icon}</span>}
+            <span className="inline-flex items-center gap-1.5 text-neutral-600 hover:text-[#6B18A8] transition-colors">
+              {link.icon && <span className="text-[#6B18A8]">{link.icon}</span>}
               <span>{link.label}</span>
             </span>
           );
