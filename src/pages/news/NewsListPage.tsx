@@ -13,9 +13,9 @@ const INITIAL_NEWS: NewsItem[] = [
     title: 'Akselerasi Audit Sertifikasi Halal: LPH UIN SGD Perluas Jangkauan Industri Jawa Barat',
     slug: 'akselerasi-sertifikasi-halal-uin-sgd',
     excerpt:
-      'LPH UIN Sunan Gunung Djati terus memperkuat kapasitas audit kehalalan produk dan penerapan Sistem Jaminan Produk Halal (SJPH).',
+    'LPH UIN Sunan Gunung Djati terus memperkuat kapasitas audit kehalalan produk dan penerapan Sistem Jaminan Produk Halal (SJPH).',
     content:
-      'LPH UIN Sunan Gunung Djati Bandung menggelar bimbingan teknis akbar persiapan audit halal reguler dan verifikasi bahan kritis bagi pelaku usaha di Jawa Barat...',
+    'LPH UIN Sunan Gunung Djati Bandung menggelar bimbingan teknis akbar persiapan audit halal reguler dan verifikasi bahan kritis bagi pelaku usaha di Jawa Barat...',
     category: 'KEGIATAN',
     status: 'PUBLISHED',
     author: 'Humas LPH UIN SGD',

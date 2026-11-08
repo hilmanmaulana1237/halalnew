@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Card, Modal } from '@heroui/react';
-import { 
-  Award, 
-  BookOpen, 
-  CheckCircle2, 
-  GraduationCap, 
-  ShieldCheck, 
-  Sparkles, 
-  Target, 
-  Users, 
+import {
+  Award,
+  BookOpen,
+  CheckCircle2,
+  GraduationCap,
+  ShieldCheck,
+  Sparkles,
+  Target,
+  Users,
   ArrowRight,
-  ExternalLink 
+  ExternalLink
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { SectionHeader } from '@/components/ui/section-header';
@@ -30,65 +30,65 @@ export const AboutPage: React.FC = () => {
 
   const values = isEn
     ? [
-        {
-          title: 'Sharia Integrity',
-          desc: 'Upholding halal compliance standards based on MUI fatwas and halal product assurance regulations unconditionally and reliably.',
-          icon: <ShieldCheck className="w-6 h-6 text-[#6b1282]" />,
-          accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
-          spotlight: '#6b1282',
-        },
-        {
-          title: 'Scientific Excellence',
-          desc: 'Supported by modern testing laboratories (qPCR, GC-FID) accredited to ISO/IEC 17025 for molecular validation of critical ingredients.',
-          icon: <Sparkles className="w-6 h-6 text-[#6b1282]" />,
-          accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
-          spotlight: '#6b1282',
-        },
-        {
-          title: 'Professional Competence',
-          desc: 'Equipping lead auditors, halal supervisors, and slaughterers (Juleha) with certified national competencies to ensure audit excellence.',
-          icon: <GraduationCap className="w-6 h-6 text-[#6b1282]" />,
-          accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
-          spotlight: '#6b1282',
-        },
-        {
-          title: 'Collaborative Synergy',
-          desc: 'Fostering close partnerships with BPJPH, Ministry of Religious Affairs, KAN, MUI, regional agencies, and global universities.',
-          icon: <Award className="w-6 h-6 text-[#6b1282]" />,
-          accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
-          spotlight: '#6b1282',
-        },
-      ]
+      {
+        title: 'Sharia Integrity',
+        desc: 'Upholding halal compliance standards based on MUI fatwas and halal product assurance regulations unconditionally and reliably.',
+        icon: <ShieldCheck className="w-6 h-6 text-[#6b1282]" />,
+        accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
+        spotlight: '#6b1282',
+      },
+      {
+        title: 'Scientific Excellence',
+        desc: 'Supported by modern testing laboratories (qPCR, GC-FID) accredited to ISO/IEC 17025 for molecular validation of critical ingredients.',
+        icon: <Sparkles className="w-6 h-6 text-[#6b1282]" />,
+        accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
+        spotlight: '#6b1282',
+      },
+      {
+        title: 'Professional Competence',
+        desc: 'Equipping lead auditors, halal supervisors, and slaughterers (Juleha) with certified national competencies to ensure audit excellence.',
+        icon: <GraduationCap className="w-6 h-6 text-[#6b1282]" />,
+        accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
+        spotlight: '#6b1282',
+      },
+      {
+        title: 'Collaborative Synergy',
+        desc: 'Fostering close partnerships with BPJPH, Ministry of Religious Affairs, KAN, MUI, regional agencies, and global universities.',
+        icon: <Award className="w-6 h-6 text-[#6b1282]" />,
+        accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
+        spotlight: '#6b1282',
+      },
+    ]
     : [
-        {
-          title: 'Integritas Syar’i',
-          desc: 'Menegakkan standar kepatuhan halal berlandaskan fatwa MUI dan regulasi jaminan produk halal secara mutlak dan terpercaya.',
-          icon: <ShieldCheck className="w-6 h-6 text-[#6b1282]" />,
-          accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
-          spotlight: '#6b1282',
-        },
-        {
-          title: 'Keunggulan Saintifik',
-          desc: 'Didukung laboratorium pengujian modern (qPCR, GC-FID) berstandar ISO/IEC 17025 untuk validasi molekuler bahan kritis.',
-          icon: <Sparkles className="w-6 h-6 text-[#6b1282]" />,
-          accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
-          spotlight: '#6b1282',
-        },
-        {
-          title: 'Kompetensi Profesional',
-          desc: 'Membekali lead auditor, penyelia halal, dan juru sembelih (Juleha) dengan sertifikasi kompetensi nasional guna menjaga mutu audit.',
-          icon: <GraduationCap className="w-6 h-6 text-[#6b1282]" />,
-          accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
-          spotlight: '#6b1282',
-        },
-        {
-          title: 'Sinergi Kolaboratif',
-          desc: 'Menjalin kemitraan erat bersama BPJPH, Kementerian Agama RI, KAN, MUI, dinas terkait, serta perguruan tinggi global.',
-          icon: <Award className="w-6 h-6 text-[#6b1282]" />,
-          accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
-          spotlight: '#6b1282',
-        },
-      ];
+      {
+        title: 'Integritas Syar’i',
+        desc: 'Menegakkan standar kepatuhan halal berlandaskan fatwa MUI dan regulasi jaminan produk halal secara mutlak dan terpercaya.',
+        icon: <ShieldCheck className="w-6 h-6 text-[#6b1282]" />,
+        accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
+        spotlight: '#6b1282',
+      },
+      {
+        title: 'Keunggulan Saintifik',
+        desc: 'Didukung laboratorium pengujian modern (qPCR, GC-FID) berstandar ISO/IEC 17025 untuk validasi molekuler bahan kritis.',
+        icon: <Sparkles className="w-6 h-6 text-[#6b1282]" />,
+        accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
+        spotlight: '#6b1282',
+      },
+      {
+        title: 'Kompetensi Profesional',
+        desc: 'Membekali lead auditor, penyelia halal, dan juru sembelih (Juleha) dengan sertifikasi kompetensi nasional guna menjaga mutu audit.',
+        icon: <GraduationCap className="w-6 h-6 text-[#6b1282]" />,
+        accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
+        spotlight: '#6b1282',
+      },
+      {
+        title: 'Sinergi Kolaboratif',
+        desc: 'Menjalin kemitraan erat bersama BPJPH, Kementerian Agama RI, KAN, MUI, dinas terkait, serta perguruan tinggi global.',
+        icon: <Award className="w-6 h-6 text-[#6b1282]" />,
+        accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
+        spotlight: '#6b1282',
+      },
+    ];
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-white">
@@ -157,12 +157,12 @@ export const AboutPage: React.FC = () => {
               </h2>
               <p className="text-neutral-600 text-base leading-relaxed">
                 {isEn
-                  ? 'The Halal Inspection Agency (LPH) of State Islamic University Sunan Gunung Djati Bandung was founded as a concrete manifestation of higher education service to fulfill the mandate of Law No. 33 of 2014 concerning Halal Product Assurance.'
+                ? 'The Halal Inspection Agency (LPH) of State Islamic University Sunan Gunung Djati Bandung was founded as a concrete manifestation of higher education service to fulfill the mandate of Law No. 33 of 2014 concerning Halal Product Assurance.'
                   : 'Lembaga Pemeriksa Halal (LPH) Universitas Islam Negeri Sunan Gunung Djati Bandung didirikan sebagai wujud nyata pengabdian perguruan tinggi keagamaan Islam negeri dalam menjawab amanat Undang-Undang No. 33 Tahun 2014 tentang Jaminan Produk Halal.'}
               </p>
               <p className="text-neutral-600 text-base leading-relaxed">
                 {isEn
-                  ? 'Embodying the "Halalsphere University" paradigm, LPH UIN SGD is more than an administrative entity; it is a scientific inspection hub uniting molecular biology research, food technology, contemporary Islamic jurisprudence, and grassroots economic empowerment.'
+                ? 'Embodying the "Halalsphere University" paradigm, LPH UIN SGD is more than an administrative entity; it is a scientific inspection hub uniting molecular biology research, food technology, contemporary Islamic jurisprudence, and grassroots economic empowerment.'
                   : 'Dengan mengusung paradigma “Halalsphere University”, LPH UIN SGD tidak sekadar menjadi lembaga administratif, melainkan episentrum pemeriksaan dan keilmuan halal yang memadukan riset biologi molekuler, teknologi pangan, kajian fikih kontemporer, dan penguatan ekonomi kerakyatan.'}
               </p>
               <div className="pt-2 flex flex-wrap items-center gap-4">
@@ -203,7 +203,7 @@ export const AboutPage: React.FC = () => {
                 </h3>
                 <p className="text-neutral-600 leading-relaxed text-base font-normal">
                   {isEn
-                    ? '"To become an internationally reputable Halal Inspection Agency (LPH), leading in halal authentication science, sharia integrity, and MSE empowerment towards Indonesia as the Global Halal Hub."'
+                  ? '"To become an internationally reputable Halal Inspection Agency (LPH), leading in halal authentication science, sharia integrity, and MSE empowerment towards Indonesia as the Global Halal Hub."'
                     : '"Menjadi Lembaga Pemeriksa Halal (LPH) bereputasi internasional, unggul dalam sains autentikasi halal, berintegritas syar\'i, dan terdepan dalam pemberdayaan UMK menuju Indonesia Pusat Halal Dunia."'}
                 </p>
               </div>

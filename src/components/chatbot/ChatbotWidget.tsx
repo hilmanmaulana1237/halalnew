@@ -174,10 +174,148 @@ export const ChatbotWidget: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const initialWelcomeText = language === 'en'
-    ? 'Hello! I am the LPH UIN SGD AI Assistant. Ask me anything regarding halal certification, fees, document requirements, or laboratory tests. If I cannot answer your question, I will connect you directly to our official WhatsApp support!'
+    ?'Hello! I am the LPH UIN SGD AI Assistant. Ask me anything regarding halal certification, fees, document requirements, or laboratory tests. If I cannot answer your question, I will connect you directly to our official WhatsApp support!'
     : 'Halo! Saya Asisten AI LPH UIN Sunan Gunung Djati Bandung. Silakan tanyakan seputar pendaftaran sertifikasi halal, syarat dokumen, uji lab, atau tarif. Jika butuh bimbingan lebih lanjut, kami akan menghubungkan Anda langsung ke WhatsApp resmi!';
 
-  const [messages, setMessages] = useState<Message[]>([
+const [messages, setMessages] = useState<Message[]>([
+  {
+    id: 'welcome',
+    sender: 'BOT',
+    text: initialWelcomeText,
+    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+  },
+]);
+
+// Update initial welcome message if language changed and only welcome exists
+useEffect(() => {
+  setMessages((prev) => {
+    if (prev.length === 1 && prev[0].id === 'welcome') {
+      return [
+        {
+          id: 'welcome',
+          sender: 'BOT',
+          text: initialWelcomeText,
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        },
+      ];
+    }
+    return prev;
+  });
+}, [language, initialWelcomeText]);
+
+useEffect(() => {
+  if (isOpen) {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }
+}, [messages, isOpen]);
+
+// Smart natural language matching function
+const findSmartResponse = (query: string): SmartAnswer | null => {
+  const q = query.toLowerCase();
+  for (const item of KNOWLEDGE_BASE) {
+    for (const kw of item.keywords) {
+      if (q.includes(kw)) {
+        return item;
+      }
+    }
+  }
+  return null;
+};
+
+const handleSend = async (e?: React.FormEvent, customQuery?: string) => {
+  if (e) e.preventDefault();
+  const userText = (customQuery || input).trim();
+  if (!userText || loading) return;
+
+  setInput('');
+  const userMsg: Message = {
+    id: 'user_' + Date.now(),
+    sender: 'USER',
+    text: userText,
+    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+  };
+
+  setMessages((prev) => [...prev, userMsg]);
+  setLoading(true);
+
+  // Give a short realistic typing delay (Aceternity style smooth micro-interaction)
+  await new Promise((res) => setTimeout(res, 600));
+
+  // 1. Try local smart knowledge base first for instant accuracy
+  const match = findSmartResponse(userText);
+
+  if (match) {
+    const answerText = language === 'en' ? match.answerEn : match.answerId;
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: 'bot_' + Date.now(),
+        sender: 'BOT',
+        text: answerText,
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        isFallback: match.isFallback,
+        waUrl: 'https://wa.me/6282126493700?text=' + encodeURIComponent(`Halo Admin LPH UIN SGD, saya bertanya mengenai: "${userText}"`),
+        waText: language === 'en' ? 'Consult Officer via WhatsApp' : 'Lanjutkan Chat via WhatsApp',
+        suggestedAction: match.suggestedAction ? {
+          label: language === 'en' ? match.suggestedAction.labelEn : match.suggestedAction.labelId,
+          href: match.suggestedAction.href,
+          to: match.suggestedAction.to
+        } : undefined
+      },
+    ]);
+    setLoading(false);
+    return;
+  }
+
+  // 2. Try backend API if query wasn't locally matched
+  try {
+    const res = await api.post('/chat/message', {
+      message: userText,
+      history: messages.slice(-4),
+    });
+
+    if (res.data?.success && res.data.data?.answer) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: 'bot_' + Date.now(),
+          sender: 'BOT',
+          text: res.data.data.answer,
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          isFallback: res.data.data.canContactAdmin,
+          waUrl: res.data.data.waUrl || 'https://wa.me/6282126493700?text=' + encodeURIComponent(`Halo Admin LPH UIN SGD, saya bertanya mengenai: "${userText}"`),
+          waText: language === 'en' ? 'Consult Officer via WhatsApp' : 'Lanjutkan Chat via WhatsApp',
+        },
+      ]);
+      setLoading(false);
+      return;
+    }
+    throw new Error('Fallback needed');
+  } catch {
+    // 3. Fallback: The exact requested flow ("kalo misalkan ga ke jawab baru diarahin untuk chat whatsapp")
+    const fallbackMsg = language === 'en'
+        ?`I could not find a specific automated answer for your query: "${userText}".\n\nHalal certification regulations often involve specific technical nuances. Please chat directly with our official LPH UIN Sunan Gunung Djati Bandung verifiers via WhatsApp for personalized guidance.`
+        : `Maaf, saya belum menemukan jawaban otomatis yang tepat untuk pertanyaan Anda: "${userText}".\n\nKetentuan regulasi halal memiliki detail teknis spesifik. Silakan konsultasikan langsung dengan Tim Auditor & Verifikator resmi LPH UIN Sunan Gunung Djati Bandung via WhatsApp:`;
+
+setMessages((prev) => [
+  ...prev,
+  {
+    id: 'bot_' + Date.now(),
+    sender: 'BOT',
+    text: fallbackMsg,
+    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    isFallback: true,
+    waUrl: 'https://wa.me/6282126493700?text=' + encodeURIComponent(`Halo Admin LPH UIN SGD, saya ingin berkonsultasi mengenai: "${userText}"`),
+    waText: language === 'en' ? 'Connect via WhatsApp (+62 821-2649-3700)' : 'Hubungi WhatsApp Resmi (+62 821-2649-3700)',
+  },
+]);
+    } finally {
+  setLoading(false);
+}
+  };
+
+const resetChat = () => {
+  setMessages([
     {
       id: 'welcome',
       sender: 'BOT',
@@ -185,406 +323,268 @@ export const ChatbotWidget: React.FC = () => {
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
+};
 
-  // Update initial welcome message if language changed and only welcome exists
-  useEffect(() => {
-    setMessages((prev) => {
-      if (prev.length === 1 && prev[0].id === 'welcome') {
-        return [
-          {
-            id: 'welcome',
-            sender: 'BOT',
-            text: initialWelcomeText,
-            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          },
-        ];
-      }
-      return prev;
-    });
-  }, [language, initialWelcomeText]);
+const quickPromptChips = [
+  { label: t('chatbot_chip_fee'), query: language === 'en' ? 'Halal certification fee and cost' : 'Berapa biaya tarif sertifikasi halal?' },
+  { label: t('chatbot_chip_regular'), query: language === 'en' ? 'Regular halal audit requirements and documents' : 'Syarat dan dokumen audit halal reguler LPH' },
+  { label: t('chatbot_chip_lab'), query: language === 'en' ? 'Porcine DNA and alcohol lab test ISO 17025' : 'Uji laboratorium DNA babi dan alkohol ISO 17025' },
+  { label: t('chatbot_chip_sihalal'), query: language === 'en' ? 'How to register on SIHALAL BPJPH' : 'Alur dan cara daftar di SIHALAL BPJPH' },
+];
 
-  useEffect(() => {
-    if (isOpen) {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [messages, isOpen]);
-
-  // Smart natural language matching function
-  const findSmartResponse = (query: string): SmartAnswer | null => {
-    const q = query.toLowerCase();
-    for (const item of KNOWLEDGE_BASE) {
-      for (const kw of item.keywords) {
-        if (q.includes(kw)) {
-          return item;
-        }
-      }
-    }
-    return null;
-  };
-
-  const handleSend = async (e?: React.FormEvent, customQuery?: string) => {
-    if (e) e.preventDefault();
-    const userText = (customQuery || input).trim();
-    if (!userText || loading) return;
-
-    setInput('');
-    const userMsg: Message = {
-      id: 'user_' + Date.now(),
-      sender: 'USER',
-      text: userText,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-    };
-
-    setMessages((prev) => [...prev, userMsg]);
-    setLoading(true);
-
-    // Give a short realistic typing delay (Aceternity style smooth micro-interaction)
-    await new Promise((res) => setTimeout(res, 600));
-
-    // 1. Try local smart knowledge base first for instant accuracy
-    const match = findSmartResponse(userText);
-
-    if (match) {
-      const answerText = language === 'en' ? match.answerEn : match.answerId;
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: 'bot_' + Date.now(),
-          sender: 'BOT',
-          text: answerText,
-          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          isFallback: match.isFallback,
-          waUrl: 'https://wa.me/6282126493700?text=' + encodeURIComponent(`Halo Admin LPH UIN SGD, saya bertanya mengenai: "${userText}"`),
-          waText: language === 'en' ? 'Consult Officer via WhatsApp' : 'Lanjutkan Chat via WhatsApp',
-          suggestedAction: match.suggestedAction ? {
-            label: language === 'en' ? match.suggestedAction.labelEn : match.suggestedAction.labelId,
-            href: match.suggestedAction.href,
-            to: match.suggestedAction.to
-          } : undefined
-        },
-      ]);
-      setLoading(false);
-      return;
-    }
-
-    // 2. Try backend API if query wasn't locally matched
-    try {
-      const res = await api.post('/chat/message', {
-        message: userText,
-        history: messages.slice(-4),
-      });
-
-      if (res.data?.success && res.data.data?.answer) {
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: 'bot_' + Date.now(),
-            sender: 'BOT',
-            text: res.data.data.answer,
-            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-            isFallback: res.data.data.canContactAdmin,
-            waUrl: res.data.data.waUrl || 'https://wa.me/6282126493700?text=' + encodeURIComponent(`Halo Admin LPH UIN SGD, saya bertanya mengenai: "${userText}"`),
-            waText: language === 'en' ? 'Consult Officer via WhatsApp' : 'Lanjutkan Chat via WhatsApp',
-          },
-        ]);
-        setLoading(false);
-        return;
-      }
-      throw new Error('Fallback needed');
-    } catch {
-      // 3. Fallback: The exact requested flow ("kalo misalkan ga ke jawab baru diarahin untuk chat whatsapp")
-      const fallbackMsg = language === 'en'
-        ? `I could not find a specific automated answer for your query: "${userText}".\n\nHalal certification regulations often involve specific technical nuances. Please chat directly with our official LPH UIN Sunan Gunung Djati Bandung verifiers via WhatsApp for personalized guidance.`
-        : `Maaf, saya belum menemukan jawaban otomatis yang tepat untuk pertanyaan Anda: "${userText}".\n\nKetentuan regulasi halal memiliki detail teknis spesifik. Silakan konsultasikan langsung dengan Tim Auditor & Verifikator resmi LPH UIN Sunan Gunung Djati Bandung via WhatsApp:`;
-
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: 'bot_' + Date.now(),
-          sender: 'BOT',
-          text: fallbackMsg,
-          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          isFallback: true,
-          waUrl: 'https://wa.me/6282126493700?text=' + encodeURIComponent(`Halo Admin LPH UIN SGD, saya ingin berkonsultasi mengenai: "${userText}"`),
-          waText: language === 'en' ? 'Connect via WhatsApp (+62 821-2649-3700)' : 'Hubungi WhatsApp Resmi (+62 821-2649-3700)',
-        },
-      ]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const resetChat = () => {
-    setMessages([
-      {
-        id: 'welcome',
-        sender: 'BOT',
-        text: initialWelcomeText,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      },
-    ]);
-  };
-
-  const quickPromptChips = [
-    { label: t('chatbot_chip_fee'), query: language === 'en' ? 'Halal certification fee and cost' : 'Berapa biaya tarif sertifikasi halal?' },
-    { label: t('chatbot_chip_regular'), query: language === 'en' ? 'Regular halal audit requirements and documents' : 'Syarat dan dokumen audit halal reguler LPH' },
-    { label: t('chatbot_chip_lab'), query: language === 'en' ? 'Porcine DNA and alcohol lab test ISO 17025' : 'Uji laboratorium DNA babi dan alkohol ISO 17025' },
-    { label: t('chatbot_chip_sihalal'), query: language === 'en' ? 'How to register on SIHALAL BPJPH' : 'Alur dan cara daftar di SIHALAL BPJPH' },
-  ];
-
-  return (
-    <>
-      {/* Floating Trigger Button (Bottom-Right ONLY) */}
-      <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
-        {/* Subtle Interactive Prompt Pill when collapsed */}
-        {!isOpen && (
-          <div
-            onClick={() => setIsOpen(true)}
-            className="hidden md:flex items-center gap-2 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-full shadow-xl shadow-purple-950/10 border border-[#C9A5E8]/60 cursor-pointer hover:border-[#F5D32F] hover:scale-105 transition-all duration-300 group"
-          >
-            <span className="flex h-2.5 w-2.5 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#F5D32F]"></span>
-            </span>
-            <span className="text-xs font-bold text-[#292333] group-hover:text-[#6B18A8] transition-colors">
-              {language === 'en' ? 'Ask Halal AI' : 'Tanya AI Halal'}
-            </span>
-          </div>
-        )}
-
-        <Button
-          variant="primary"
-          aria-label={isOpen ? 'Tutup Chatbot' : 'Buka Asisten AI Halal'}
-          className={`w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 cursor-pointer ${isOpen
-              ? 'bg-neutral-800 hover:bg-neutral-900 text-white rotate-90 scale-95'
-              : 'bg-gradient-to-r from-[#4B0D78] via-[#6B18A8] to-[#4B0D78] hover:brightness-110 text-white ring-4 ring-[#F5D32F]/50 shadow-purple-950/30 hover:scale-110'
-            }`}
-          onPress={() => setIsOpen(!isOpen)}
+return (
+  <>
+    {/* Floating Trigger Button (Bottom-Right ONLY) */}
+    <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+      {/* Subtle Interactive Prompt Pill when collapsed */}
+      {!isOpen && (
+        <div
+          onClick={() => setIsOpen(true)}
+          className="hidden md:flex items-center gap-2 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-full shadow-xl shadow-purple-950/10 border border-[#C9A5E8]/60 cursor-pointer hover:border-[#F5D32F] hover:scale-105 transition-all duration-300 group"
         >
-          {isOpen ? (
-            <X className="w-6 h-6 text-white" />
-          ) : (
-            <div className="relative">
-              <Bot className="w-7 h-7 text-white" />
-              <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-[#F5D32F] rounded-full border-2 border-[#4B0D78]" />
-            </div>
-          )}
-        </Button>
-      </div>
-
-      {/* Floating Chat Panel (Dominantly White, Royal Purple & Yellow Accents) */}
-      {isOpen && (
-        <div className="fixed bottom-24 right-4 sm:right-6 z-50 w-[380px] sm:w-[420px] max-w-[calc(100vw-2rem)] animate-in fade-in slide-in-from-bottom-5 duration-300">
-          <Card className="rounded-[28px] border border-[#C9A5E8]/60 bg-white shadow-2xl shadow-purple-950/25 overflow-hidden flex flex-col h-[580px] max-h-[82vh] ring-1 ring-purple-100">
-            {/* Top 4-Color Gradient Strip */}
-            <div className="h-1.5 w-full bg-gradient-to-r from-[#4B0D78] via-[#6B18A8] via-[#F5D32F] to-[#6B18A8]" />
-
-            {/* Header: Pure White with Royal Purple Branding & Yellow Badge */}
-            <div className="bg-white px-3.5 sm:px-5 py-3 sm:py-3.5 border-b border-purple-100/90 flex items-center justify-between gap-2 shadow-xs">
-              <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
-                <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-[#6B18A8] to-[#4B0D78] flex items-center justify-center text-white shadow-md shadow-purple-900/20 shrink-0">
-                  <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                  <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-[#F5D32F] rounded-full border-2 border-white" />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-1.5 min-w-0">
-                    <h4 className="font-extrabold text-xs sm:text-sm text-[#292333] truncate">
-                      {t('chatbot_title')}
-                    </h4>
-                    <span className="text-[9px] sm:text-[10px] font-extrabold px-1.5 py-0.5 bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F]/50 rounded-md shrink-0 whitespace-nowrap leading-none">
-                      AI 24/7
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] text-neutral-500 font-medium truncate">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-                    <span className="truncate">{t('chatbot_subtitle')}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-0.5 sm:gap-1 shrink-0">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  aria-label="Reset Chat"
-                  className="text-neutral-400 hover:text-[#6B18A8] hover:bg-purple-50 p-1 sm:p-1.5 rounded-xl min-w-0 cursor-pointer h-8 w-8 sm:h-9 sm:w-9 flex items-center justify-center"
-                  onPress={resetChat}
-                >
-                  <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  aria-label="Tutup"
-                  className="text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 p-1 sm:p-1.5 rounded-xl min-w-0 h-8 w-8 sm:h-9 sm:w-9 flex items-center justify-center"
-                  onPress={() => setIsOpen(false)}
-                >
-                  <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5" />
-                </Button>
-              </div>
-            </div>
-
-            {/* Messages Body (Dominantly White Canvas with Subtle Lavender Touch) */}
-            <div className="flex-1 p-4 overflow-y-auto space-y-3.5 bg-[#faf8fc]/80 text-xs">
-              {messages.map((m) => {
-                const isUser = m.sender === 'USER';
-                return (
-                  <div
-                    key={m.id}
-                    className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} max-w-[88%] ${isUser ? 'ml-auto' : 'mr-auto'
-                      }`}
-                  >
-                    {/* Message Bubble */}
-                    <div
-                      className={`px-4 py-3 rounded-2xl text-xs sm:text-[13px] leading-relaxed ${isUser
-                          ? 'bg-[#6b1282] text-white rounded-tr-xs shadow-md shadow-purple-950/10'
-                          : 'bg-white text-neutral-800 border border-purple-100 rounded-tl-xs shadow-xs'
-                        }`}
-                    >
-                      {renderFormattedMessage(m.text, isUser)}
-                    </div>
-
-                    <span className="text-[10px] text-neutral-400 mt-1 px-1 flex items-center gap-1">
-                      <Clock className="w-2.5 h-2.5" />
-                      {m.time}
-                    </span>
-
-                    {/* Secondary Suggested Action Link (e.g. Open Calculator or SIHALAL) */}
-                    {m.suggestedAction && (
-                      <div className="mt-2 w-full">
-                        {m.suggestedAction.to ? (
-                          <a
-                            href={m.suggestedAction.to}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFF7D1] hover:bg-[#ffef9e] text-[#713f12] font-extrabold text-xs border border-[#F5D32F] transition-colors shadow-xs"
-                          >
-                            <span>{m.suggestedAction.label}</span>
-                            <ArrowUpRight className="w-3.5 h-3.5" />
-                          </a>
-                        ) : (
-                          <a
-                            href={m.suggestedAction.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFF7D1] hover:bg-[#ffef9e] text-[#713f12] font-extrabold text-xs border border-[#F5D32F] transition-colors shadow-xs"
-                          >
-                            <span>{m.suggestedAction.label}</span>
-                            <ArrowUpRight className="w-3.5 h-3.5" />
-                          </a>
-                        )}
-                      </div>
-                    )}
-
-                    {/* Prominent WhatsApp Escalation Card (When AI can't answer or user needs human officer) */}
-                    {m.isFallback && (
-                      <div className="mt-2.5 w-full rounded-2xl p-3 bg-gradient-to-br from-emerald-50 to-white border border-emerald-200/90 shadow-sm">
-                        <div className="flex items-center gap-2 mb-2">
-                          <div className="w-7 h-7 rounded-lg bg-[#25D366] text-white flex items-center justify-center shadow-xs">
-                            <MessageCircle className="w-4 h-4 fill-white" />
-                          </div>
-                          <div>
-                            <div className="font-bold text-xs text-[#065f46]">
-                              {language === 'en' ? 'Official WhatsApp Desk' : 'Layanan WhatsApp Resmi'}
-                            </div>
-                            <div className="text-[10px] text-neutral-500 font-medium">
-                              +62 821-2649-3700 (Admin LPH)
-                            </div>
-                          </div>
-                        </div>
-                        <a
-                          href={m.waUrl || 'https://wa.me/6282126493700'}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-[#25D366] hover:bg-[#1ebd5b] text-white font-bold text-xs shadow-md shadow-emerald-600/20 transition-all hover:scale-[1.02]"
-                        >
-                          <MessageCircle className="w-3.5 h-3.5 fill-white" />
-                          <span>{m.waText || t('chatbot_wa_button')}</span>
-                          <ArrowUpRight className="w-3 h-3" />
-                        </a>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-
-              {/* Typing indicator */}
-              {loading && (
-                <div className="flex items-center gap-2.5 text-xs text-neutral-600 bg-white p-3 rounded-2xl border border-purple-100 shadow-xs max-w-[75%]">
-                  <div className="flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-[#6b1282] animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <span className="w-2 h-2 rounded-full bg-[#86198f] animate-bounce" style={{ animationDelay: '150ms' }} />
-                    <span className="w-2 h-2 rounded-full bg-[#a21caf] animate-bounce" style={{ animationDelay: '300ms' }} />
-                  </div>
-                  <span className="font-medium text-neutral-500">
-                    {language === 'en' ? 'AI is analyzing regulations...' : 'AI sedang menganalisis regulasi...'}
-                  </span>
-                </div>
-              )}
-
-              {/* Initial Quick Prompt Chips (Shown only when chat is fresh) */}
-              {messages.length === 1 && !loading && (
-                <div className="pt-2">
-                  <p className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider mb-2">
-                    {language === 'en' ? 'Quick Inquiries:' : 'Pertanyaan Cepat:'}
-                  </p>
-                  <div className="flex flex-col gap-1.5">
-                    {quickPromptChips.map((chip, idx) => (
-                      <button
-                        key={idx}
-                        type="button"
-                        onClick={() => handleSend(undefined, chip.query)}
-                        className="text-left px-3 py-2 rounded-xl bg-white hover:bg-purple-50 text-neutral-700 hover:text-[#6b1282] border border-purple-100/90 text-xs font-medium transition-all shadow-2xs hover:border-purple-300 flex items-center justify-between group"
-                      >
-                        <span>{chip.label}</span>
-                        <ArrowUpRight className="w-3.5 h-3.5 text-neutral-300 group-hover:text-[#6b1282] transition-colors" />
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <div ref={messagesEndRef} />
-            </div>
-
-            {/* Input Form (Crisp White with Royal Purple Button) */}
-            <div className="p-3 bg-white border-t border-purple-100">
-              <form onSubmit={(e) => handleSend(e)} className="flex gap-2 items-center">
-                <Input
-                  placeholder={t('chatbot_input_placeholder')}
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  variant="secondary"
-                  className="flex-1 text-xs sm:text-[13px] bg-[#faf8fc] rounded-xl border-purple-200/80"
-                />
-                <Button
-                  type="submit"
-                  variant="primary"
-                  size="sm"
-                  isPending={loading}
-                  aria-label="Kirim Pesan"
-                  className="bg-[#6B18A8] hover:bg-[#58138a] text-white px-4 h-10 rounded-xl shadow-md transition-all shrink-0 cursor-pointer"
-                >
-                  <Send className="w-4 h-4" />
-                </Button>
-              </form>
-
-              {/* Bottom Subtle Disclaimer */}
-              <div className="mt-2 flex items-center justify-between text-[10px] text-neutral-400 px-1">
-                <span className="truncate">{t('chatbot_disclaimer')}</span>
-                <a
-                  href="https://wa.me/6282126493700"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#6B18A8] hover:text-[#58138a] hover:underline font-bold shrink-0 ml-2"
-                >
-                  WhatsApp ↗
-                </a>
-              </div>
-            </div>
-          </Card>
+          <span className="flex h-2.5 w-2.5 relative">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#F5D32F]"></span>
+          </span>
+          <span className="text-xs font-bold text-[#292333] group-hover:text-[#6B18A8] transition-colors">
+            {language === 'en' ? 'Ask Halal AI' : 'Tanya AI Halal'}
+          </span>
         </div>
       )}
-    </>
-  );
+
+      <Button
+        variant="primary"
+        aria-label={isOpen ? 'Tutup Chatbot' : 'Buka Asisten AI Halal'}
+        className={`w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 cursor-pointer ${isOpen
+          ? 'bg-neutral-800 hover:bg-neutral-900 text-white rotate-90 scale-95'
+          : 'bg-gradient-to-r from-[#4B0D78] via-[#6B18A8] to-[#4B0D78] hover:brightness-110 text-white ring-4 ring-[#F5D32F]/50 shadow-purple-950/30 hover:scale-110'
+          }`}
+        onPress={() => setIsOpen(!isOpen)}
+      >
+        {isOpen ? (
+          <X className="w-6 h-6 text-white" />
+        ) : (
+          <div className="relative">
+            <Bot className="w-7 h-7 text-white" />
+            <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-[#F5D32F] rounded-full border-2 border-[#4B0D78]" />
+          </div>
+        )}
+      </Button>
+    </div>
+
+    {/* Floating Chat Panel (Dominantly White, Royal Purple & Yellow Accents) */}
+    {isOpen && (
+      <div className="fixed bottom-24 right-4 sm:right-6 z-50 w-[380px] sm:w-[420px] max-w-[calc(100vw-2rem)] animate-in fade-in slide-in-from-bottom-5 duration-300">
+        <Card className="rounded-[28px] border border-[#C9A5E8]/60 bg-white shadow-2xl shadow-purple-950/25 overflow-hidden flex flex-col h-[580px] max-h-[82vh] ring-1 ring-purple-100">
+          {/* Top 4-Color Gradient Strip */}
+          <div className="h-1.5 w-full bg-gradient-to-r from-[#4B0D78] via-[#6B18A8] via-[#F5D32F] to-[#6B18A8]" />
+
+          {/* Header: Pure White with Royal Purple Branding & Yellow Badge */}
+          <div className="bg-white px-3.5 sm:px-5 py-3 sm:py-3.5 border-b border-purple-100/90 flex items-center justify-between gap-2 shadow-xs">
+            <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
+              <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-[#6B18A8] to-[#4B0D78] flex items-center justify-center text-white shadow-md shadow-purple-900/20 shrink-0">
+                <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-[#F5D32F] rounded-full border-2 border-white" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-1.5 min-w-0">
+                  <h4 className="font-extrabold text-xs sm:text-sm text-[#292333] truncate">
+                    {t('chatbot_title')}
+                  </h4>
+                  <span className="text-[9px] sm:text-[10px] font-extrabold px-1.5 py-0.5 bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F]/50 rounded-md shrink-0 whitespace-nowrap leading-none">
+                    AI 24/7
+                  </span>
+                </div>
+                <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] text-neutral-500 font-medium truncate">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                  <span className="truncate">{t('chatbot_subtitle')}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-0.5 sm:gap-1 shrink-0">
+              <Button
+                variant="ghost"
+                size="sm"
+                aria-label="Reset Chat"
+                className="text-neutral-400 hover:text-[#6B18A8] hover:bg-purple-50 p-1 sm:p-1.5 rounded-xl min-w-0 cursor-pointer h-8 w-8 sm:h-9 sm:w-9 flex items-center justify-center"
+                onPress={resetChat}
+              >
+                <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                aria-label="Tutup"
+                className="text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 p-1 sm:p-1.5 rounded-xl min-w-0 h-8 w-8 sm:h-9 sm:w-9 flex items-center justify-center"
+                onPress={() => setIsOpen(false)}
+              >
+                <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5" />
+              </Button>
+            </div>
+          </div>
+
+          {/* Messages Body (Dominantly White Canvas with Subtle Lavender Touch) */}
+          <div className="flex-1 p-4 overflow-y-auto space-y-3.5 bg-[#faf8fc]/80 text-xs">
+            {messages.map((m) => {
+              const isUser = m.sender === 'USER';
+              return (
+                <div
+                  key={m.id}
+                  className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} max-w-[88%] ${isUser ? 'ml-auto' : 'mr-auto'
+                    }`}
+                >
+                  {/* Message Bubble */}
+                  <div
+                    className={`px-4 py-3 rounded-2xl text-xs sm:text-[13px] leading-relaxed ${isUser
+                      ? 'bg-[#6b1282] text-white rounded-tr-xs shadow-md shadow-purple-950/10'
+                      : 'bg-white text-neutral-800 border border-purple-100 rounded-tl-xs shadow-xs'
+                      }`}
+                  >
+                    {renderFormattedMessage(m.text, isUser)}
+                  </div>
+
+                  <span className="text-[10px] text-neutral-400 mt-1 px-1 flex items-center gap-1">
+                    <Clock className="w-2.5 h-2.5" />
+                    {m.time}
+                  </span>
+
+                  {/* Secondary Suggested Action Link (e.g. Open Calculator or SIHALAL) */}
+                  {m.suggestedAction && (
+                    <div className="mt-2 w-full">
+                      {m.suggestedAction.to ? (
+                        <a
+                          href={m.suggestedAction.to}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFF7D1] hover:bg-[#ffef9e] text-[#713f12] font-extrabold text-xs border border-[#F5D32F] transition-colors shadow-xs"
+                        >
+                          <span>{m.suggestedAction.label}</span>
+                          <ArrowUpRight className="w-3.5 h-3.5" />
+                        </a>
+                      ) : (
+                        <a
+                          href={m.suggestedAction.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFF7D1] hover:bg-[#ffef9e] text-[#713f12] font-extrabold text-xs border border-[#F5D32F] transition-colors shadow-xs"
+                        >
+                          <span>{m.suggestedAction.label}</span>
+                          <ArrowUpRight className="w-3.5 h-3.5" />
+                        </a>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Prominent WhatsApp Escalation Card (When AI can't answer or user needs human officer) */}
+                  {m.isFallback && (
+                    <div className="mt-2.5 w-full rounded-2xl p-3 bg-gradient-to-br from-emerald-50 to-white border border-emerald-200/90 shadow-sm">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-7 h-7 rounded-lg bg-[#25D366] text-white flex items-center justify-center shadow-xs">
+                          <MessageCircle className="w-4 h-4 fill-white" />
+                        </div>
+                        <div>
+                          <div className="font-bold text-xs text-[#065f46]">
+                            {language === 'en' ? 'Official WhatsApp Desk' : 'Layanan WhatsApp Resmi'}
+                          </div>
+                          <div className="text-[10px] text-neutral-500 font-medium">
+                            +62 821-2649-3700 (Admin LPH)
+                          </div>
+                        </div>
+                      </div>
+                      <a
+                        href={m.waUrl || 'https://wa.me/6282126493700'}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-[#25D366] hover:bg-[#1ebd5b] text-white font-bold text-xs shadow-md shadow-emerald-600/20 transition-all hover:scale-[1.02]"
+                      >
+                        <MessageCircle className="w-3.5 h-3.5 fill-white" />
+                        <span>{m.waText || t('chatbot_wa_button')}</span>
+                        <ArrowUpRight className="w-3 h-3" />
+                      </a>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+
+            {/* Typing indicator */}
+            {loading && (
+              <div className="flex items-center gap-2.5 text-xs text-neutral-600 bg-white p-3 rounded-2xl border border-purple-100 shadow-xs max-w-[75%]">
+                <div className="flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-[#6b1282] animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="w-2 h-2 rounded-full bg-[#86198f] animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <span className="w-2 h-2 rounded-full bg-[#a21caf] animate-bounce" style={{ animationDelay: '300ms' }} />
+                </div>
+                <span className="font-medium text-neutral-500">
+                  {language === 'en' ? 'AI is analyzing regulations...' : 'AI sedang menganalisis regulasi...'}
+                </span>
+              </div>
+            )}
+
+            {/* Initial Quick Prompt Chips (Shown only when chat is fresh) */}
+            {messages.length === 1 && !loading && (
+              <div className="pt-2">
+                <p className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider mb-2">
+                  {language === 'en' ? 'Quick Inquiries:' : 'Pertanyaan Cepat:'}
+                </p>
+                <div className="flex flex-col gap-1.5">
+                  {quickPromptChips.map((chip, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => handleSend(undefined, chip.query)}
+                      className="text-left px-3 py-2 rounded-xl bg-white hover:bg-purple-50 text-neutral-700 hover:text-[#6b1282] border border-purple-100/90 text-xs font-medium transition-all shadow-2xs hover:border-purple-300 flex items-center justify-between group"
+                    >
+                      <span>{chip.label}</span>
+                      <ArrowUpRight className="w-3.5 h-3.5 text-neutral-300 group-hover:text-[#6b1282] transition-colors" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Input Form (Crisp White with Royal Purple Button) */}
+          <div className="p-3 bg-white border-t border-purple-100">
+            <form onSubmit={(e) => handleSend(e)} className="flex gap-2 items-center">
+              <Input
+                placeholder={t('chatbot_input_placeholder')}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                variant="secondary"
+                className="flex-1 text-xs sm:text-[13px] bg-[#faf8fc] rounded-xl border-purple-200/80"
+              />
+              <Button
+                type="submit"
+                variant="primary"
+                size="sm"
+                isPending={loading}
+                aria-label="Kirim Pesan"
+                className="bg-[#6B18A8] hover:bg-[#58138a] text-white px-4 h-10 rounded-xl shadow-md transition-all shrink-0 cursor-pointer"
+              >
+                <Send className="w-4 h-4" />
+              </Button>
+            </form>
+
+            {/* Bottom Subtle Disclaimer */}
+            <div className="mt-2 flex items-center justify-between text-[10px] text-neutral-400 px-1">
+              <span className="truncate">{t('chatbot_disclaimer')}</span>
+              <a
+                href="https://wa.me/6282126493700"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#6B18A8] hover:text-[#58138a] hover:underline font-bold shrink-0 ml-2"
+              >
+                WhatsApp ↗
+              </a>
+            </div>
+          </div>
+        </Card>
+      </div>
+    )}
+  </>
+);
 };
 
 export default ChatbotWidget;

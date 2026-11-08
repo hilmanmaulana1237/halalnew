@@ -159,19 +159,19 @@ export const QnaPage: React.FC = () => {
 
   const categories = isEn
     ? [
-        { id: 'ALL', label: 'All' },
-        { id: 'PROCEDURE', label: 'Procedure' },
-        { id: 'REQUIREMENTS', label: 'Requirements' },
-        { id: 'FEES', label: 'Tariff & Fees' },
-        { id: 'LABORATORY', label: 'Laboratory' },
-      ]
+      { id: 'ALL', label: 'All' },
+      { id: 'PROCEDURE', label: 'Procedure' },
+      { id: 'REQUIREMENTS', label: 'Requirements' },
+      { id: 'FEES', label: 'Tariff & Fees' },
+      { id: 'LABORATORY', label: 'Laboratory' },
+    ]
     : [
-        { id: 'ALL', label: 'Semua' },
-        { id: 'PROSEDUR', label: 'Prosedur' },
-        { id: 'SYARAT', label: 'Syarat' },
-        { id: 'TARIF', label: 'Tarif' },
-        { id: 'LABORATORIUM', label: 'Laboratorium' },
-      ];
+      { id: 'ALL', label: 'Semua' },
+      { id: 'PROSEDUR', label: 'Prosedur' },
+      { id: 'SYARAT', label: 'Syarat' },
+      { id: 'TARIF', label: 'Tarif' },
+      { id: 'LABORATORIUM', label: 'Laboratorium' },
+    ];
 
   const filteredFaqs = faqs.filter((item) => {
     const matchCat =

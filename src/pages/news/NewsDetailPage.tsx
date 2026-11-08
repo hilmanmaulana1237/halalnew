@@ -31,14 +31,14 @@ export const NewsDetailPage: React.FC = () => {
             'Akselerasi Audit Sertifikasi Halal: LPH UIN Sunan Gunung Djati Perluas Jangkauan Industri Jawa Barat',
           slug: slug || 'akselerasi-sertifikasi-halal-uin-sgd',
           excerpt:
-            'LPH UIN Sunan Gunung Djati terus memperkuat kapasitas audit kehalalan produk dan penerapan Sistem Jaminan Produk Halal (SJPH).',
+          'LPH UIN Sunan Gunung Djati terus memperkuat kapasitas audit kehalalan produk dan penerapan Sistem Jaminan Produk Halal (SJPH).',
           content: `Lembaga Pemeriksa Halal (LPH) UIN Sunan Gunung Djati Bandung terus memperkuat komitmennya sebagai motor penggerak ekosistem halal nasional melalui konsep "Halalsphere University". 
 
 Dalam kegiatan bimbingan teknis intensif yang diselenggarakan di Kampus 1 Cibiru, tim auditor halal dan pelaku usaha dibekali pemahaman mendalam tentang standar Sistem Jaminan Produk Halal (SJPH), verifikasi dokumen bahan baku, serta validasi saintifik pengujian laboratorium.
 
 Rektor UIN SGD Bandung, Prof. Dr. H. Rosihon Anwar, M.Ag., dalam sambutannya menegaskan bahwa keberadaan Lembaga Pemeriksa Halal (LPH) UIN SGD adalah bukti nyata hilirisasi riset akademik dan pengabdian masyarakat untuk memberikan rasa aman serta perlindungan konsumen muslim di seluruh penjuru Indonesia.
 
-Pimpinan Teknis LPH UIN SGD, Dr. Tri Cahyanto, M.Si., menambahkan bahwa kegiatan ini ditargetkan mampu mempercepat kepatuhan sertifikasi halal reguler bagi produk olahan makanan, minuman, dan farmasi di Jawa Barat.`,
+          Pimpinan Teknis LPH UIN SGD, Dr.Tri Cahyanto, M.Si., menambahkan bahwa kegiatan ini ditargetkan mampu mempercepat kepatuhan sertifikasi halal reguler bagi produk olahan makanan, minuman, dan farmasi di Jawa Barat.`,
           category: 'KEGIATAN',
           status: 'PUBLISHED',
           author: 'Humas LPH UIN SGD',
