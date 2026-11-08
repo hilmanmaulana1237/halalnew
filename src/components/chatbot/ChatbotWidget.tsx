@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button, Card, Input } from '@heroui/react';
-import { 
-  Bot, 
-  X, 
-  Send, 
-  Sparkles, 
-  RotateCcw, 
-  ArrowUpRight, 
-  MessageCircle, 
-  CheckCircle2, 
+import {
+  Bot,
+  X,
+  Send,
+  Sparkles,
+  RotateCcw,
+  ArrowUpRight,
+  MessageCircle,
+  CheckCircle2,
   HelpCircle,
   Clock,
   ShieldCheck,
@@ -338,7 +338,7 @@ export const ChatbotWidget: React.FC = () => {
       <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
         {/* Subtle Interactive Prompt Pill when collapsed */}
         {!isOpen && (
-          <div 
+          <div
             onClick={() => setIsOpen(true)}
             className="hidden md:flex items-center gap-2 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-full shadow-xl shadow-purple-950/10 border border-[#C9A5E8]/60 cursor-pointer hover:border-[#F5D32F] hover:scale-105 transition-all duration-300 group"
           >
@@ -349,18 +349,16 @@ export const ChatbotWidget: React.FC = () => {
             <span className="text-xs font-bold text-[#292333] group-hover:text-[#6B18A8] transition-colors">
               {language === 'en' ? 'Ask Halal AI' : 'Tanya AI Halal'}
             </span>
-            <Sparkles className="w-3.5 h-3.5 text-[#eab308]" />
           </div>
         )}
 
         <Button
           variant="primary"
           aria-label={isOpen ? 'Tutup Chatbot' : 'Buka Asisten AI Halal'}
-          className={`w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 cursor-pointer ${
-            isOpen
+          className={`w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 cursor-pointer ${isOpen
               ? 'bg-neutral-800 hover:bg-neutral-900 text-white rotate-90 scale-95'
               : 'bg-gradient-to-r from-[#4B0D78] via-[#6B18A8] to-[#4B0D78] hover:brightness-110 text-white ring-4 ring-[#F5D32F]/50 shadow-purple-950/30 hover:scale-110'
-          }`}
+            }`}
           onPress={() => setIsOpen(!isOpen)}
         >
           {isOpen ? (
@@ -433,17 +431,15 @@ export const ChatbotWidget: React.FC = () => {
                 return (
                   <div
                     key={m.id}
-                    className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} max-w-[88%] ${
-                      isUser ? 'ml-auto' : 'mr-auto'
-                    }`}
+                    className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} max-w-[88%] ${isUser ? 'ml-auto' : 'mr-auto'
+                      }`}
                   >
                     {/* Message Bubble */}
                     <div
-                      className={`px-4 py-3 rounded-2xl text-xs sm:text-[13px] leading-relaxed ${
-                        isUser
+                      className={`px-4 py-3 rounded-2xl text-xs sm:text-[13px] leading-relaxed ${isUser
                           ? 'bg-[#6b1282] text-white rounded-tr-xs shadow-md shadow-purple-950/10'
                           : 'bg-white text-neutral-800 border border-purple-100 rounded-tl-xs shadow-xs'
-                      }`}
+                        }`}
                     >
                       {renderFormattedMessage(m.text, isUser)}
                     </div>

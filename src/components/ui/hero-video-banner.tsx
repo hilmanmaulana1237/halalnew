@@ -137,7 +137,6 @@ export const HeroVideoBanner: React.FC = () => {
               variant="primary"
               className="h-12 bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold text-sm px-7 rounded-2xl shadow-xl shadow-yellow-500/25 transition-all flex items-center gap-2 hover:scale-105 active:scale-98 cursor-pointer"
             >
-              <Sparkles className="w-4 h-4 text-[#3B074A]" />
               <span>{t('hero_cta_calc')}</span>
               <ArrowRight className="w-4 h-4" />
             </Button>
