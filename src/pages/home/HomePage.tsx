@@ -1524,53 +1524,142 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 10. PRE-FOOTER CALL TO ACTION BANNER (White + Soft Purple Canvas with Yellow Sparkles) */}
-      <section className="py-16 sm:py-20 bg-gradient-to-b from-[#F7F2FB] to-[#FAF7FD] relative overflow-hidden">
-        <YellowDotGrid rows={4} cols={6} className="absolute top-6 left-8 opacity-25 pointer-events-none hidden md:grid" />
-        <YellowDotGrid rows={3} cols={5} className="absolute bottom-6 right-8 opacity-20 pointer-events-none hidden sm:grid" />
+      {/* 10. PRE-FOOTER STRATEGIC PARTNERSHIP & COLLABORATION SHOWCASE (Nurhayah Dark Photo Section Style) */}
+      <section className="py-24 md:py-32 px-4 w-full relative overflow-hidden bg-[#120117]">
+        {/* Real Photography Background with Grayscale & Low Opacity */}
+        <img
+          src="/assets/images/uji-laboratorium.jpg"
+          alt="Laboratorium & Fasilitas Riset LPH UIN SGD"
+          className="absolute inset-0 w-full h-full object-cover grayscale opacity-25 pointer-events-none"
+        />
+        {/* Deep Brand Royal Purple Dark Gradient Overlays */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#120117] via-[#190220]/95 to-[#3B074A]/80 pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(245,211,47,0.18),transparent_38%)] pointer-events-none" />
 
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] uppercase tracking-wider mb-4 shadow-xs">
-            <Sparkles className="w-3.5 h-3.5 text-[#eab308]" />
-            {isEn ? 'OFFICIAL HALAL PARTNERSHIP' : 'KEMITRAAN SERTIFIKASI HALAL'}
+        {/* Decorative Yellow Dot Grids */}
+        <YellowDotGrid rows={4} cols={5} className="absolute top-10 right-10 opacity-20 pointer-events-none hidden lg:grid" />
+        <YellowDotGrid rows={3} cols={4} className="absolute bottom-10 left-10 opacity-15 pointer-events-none hidden md:grid" />
+
+        <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-[0.9fr_1.1fr] gap-10 lg:gap-16 items-center">
+          {/* Left: Large Glassmorphism Stat Card */}
+          <div className="rounded-[2.5rem] border border-[#F5D32F]/30 bg-black/55 backdrop-blur-xl p-8 sm:p-10 shadow-2xl relative overflow-hidden group">
+            <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-[#F5D32F] to-transparent" />
+
+            <div className="flex items-center gap-3 text-[#F5D32F] mb-4">
+              <Award className="w-7 h-7 text-[#F5D32F]" />
+              <span className="text-xs sm:text-sm uppercase tracking-[0.22em] font-extrabold">
+                {isEn ? 'ACCREDITATION & INTEGRITY' : 'AKREDITASI & INTEGRITAS'}
+              </span>
+            </div>
+
+            <div className="text-5xl sm:text-7xl font-black text-white tracking-tight mb-2">
+              100%
+            </div>
+            <p className="text-[#F5D32F] text-xl sm:text-2xl font-bold mb-4">
+              {isEn ? 'Sharia & Laboratory Precision' : 'Akurasi Syar’i & Riset Laboratorium'}
+            </p>
+            <p className="text-neutral-300 text-sm sm:text-base leading-relaxed font-normal">
+              {isEn
+                ? 'Full Sharia compliance and ISO/IEC 17025 accredited scientific testing, ensuring rigorous verification across food, beverage, pharmaceutical, and cosmetic product chains.'
+                : 'Didukung integritas pengujian laboratorium terakreditasi ISO/IEC 17025 dan auditor halal berlisensi resmi BPJPH & MUI, menjamin kepatuhan syariah dan mutu ilmiah tanpa kompromi.'}
+            </p>
+
+            <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between gap-4">
+              <span className="text-xs text-neutral-400 font-mono">
+                No. Registrasi: <strong className="text-white">LPH-018-ID</strong>
+              </span>
+              <span className="text-xs font-bold text-[#F5D32F] uppercase tracking-wider">
+                BPJPH & MUI
+              </span>
+            </div>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#292333] tracking-tight leading-tight">
-            {isEn ? 'Ready to Elevate Your Products to the ' : 'Siap Membawa Produk Anda Menuju '}
-            <YellowHighlight className="text-[#6B18A8]">
-              {isEn ? 'Global Halal Market?' : 'Pasar Halal Global?'}
-            </YellowHighlight>
-          </h2>
+          {/* Right: Narrative & 4-Box Feature Grid */}
+          <div>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] text-xs font-black uppercase tracking-wider mb-6 shadow-xs">
+              <Sparkles className="w-4 h-4 text-[#eab308]" />
+              <span>{isEn ? 'Let’s Collaborate' : 'Mari Berkolaborasi'}</span>
+            </div>
 
-          <p className="mt-4 text-base sm:text-lg text-[#756D7C] max-w-2xl mx-auto leading-relaxed">
-            {isEn
-              ? 'Get swift regular halal inspection, ISO/IEC 17025 accredited laboratory testing, and professional advisory by certified lead auditors of LPH UIN SGD Bandung.'
-              : 'Dapatkan pendampingan audit halal reguler, pengujian laboratorium ISO/IEC 17025, dan sertifikasi resmi bersama tim auditor berlisensi LPH UIN Sunan Gunung Djati Bandung.'}
-          </p>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight mb-6">
+              {isEn ? (
+                <>Building Strategic Synergy for a <span className="text-[#F5D32F]">Global Halal Future</span></>
+              ) : (
+                <>Membangun Sinergi Menuju <span className="text-[#F5D32F]">Ekosistem Halal Global</span></>
+              )}
+            </h2>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <Link to="/layanan/kalkulator">
-              <Button
-                variant="primary"
-                className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-extrabold px-8 py-3.5 rounded-xl text-sm sm:text-base shadow-lg shadow-purple-950/20 inline-flex items-center gap-2 cursor-pointer hover:scale-[1.02] transition-transform"
+            <p className="text-neutral-200 text-sm sm:text-base leading-relaxed mb-8 max-w-2xl font-normal">
+              {isEn
+                ? 'LPH UIN Sunan Gunung Djati Bandung opens strategic partnerships for regular certification audits, laboratory testing, and Halal Assurance System (SJPH) development.'
+                : 'LPH UIN Sunan Gunung Djati Bandung membuka ruang kemitraan strategis bagi pelaku industri manufaktur, UMKM, dan institusi riset untuk audit sertifikasi reguler dan pengujian laboratorium terpadu.'}
+            </p>
+
+            {/* 4-Box Grid (Nurhayah Glassmorphism Style) */}
+            <div className="grid sm:grid-cols-2 gap-4 mb-8">
+              <div className="rounded-2xl border border-white/10 bg-white/[0.06] backdrop-blur-md p-5 hover:border-[#F5D32F]/40 transition-colors">
+                <p className="text-[#F5D32F] text-xs font-black uppercase tracking-[0.18em] mb-2">
+                  {isEn ? 'Secretariat & Office' : 'Alamat & Sekretariat'}
+                </p>
+                <p className="text-white text-xs sm:text-sm leading-relaxed">
+                  Gedung Lecture Hall Lt. 1, Kampus 1 UIN SGD, Jl. A.H. Nasution No. 105, Bandung.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-white/10 bg-white/[0.06] backdrop-blur-md p-5 hover:border-[#F5D32F]/40 transition-colors">
+                <p className="text-[#F5D32F] text-xs font-black uppercase tracking-[0.18em] mb-2">
+                  {isEn ? 'Integrated Lab Center' : 'Laboratorium Pengujian'}
+                </p>
+                <p className="text-white text-xs sm:text-sm leading-relaxed">
+                  Gedung Riset Terpadu Kampus 2 Gedebage, Bandung (Akreditasi ISO/IEC 17025).
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-white/10 bg-white/[0.06] backdrop-blur-md p-5 hover:border-[#F5D32F]/40 transition-colors">
+                <p className="text-[#F5D32F] text-xs font-black uppercase tracking-[0.18em] mb-2">
+                  {isEn ? 'Official License' : 'Legalitas & Lisensi'}
+                </p>
+                <p className="text-white text-xs sm:text-sm leading-relaxed">
+                  Surat Keputusan Kepala BPJPH Kemenag RI No. LPH-018-ID & Fatwa MUI.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-white/10 bg-white/[0.06] backdrop-blur-md p-5 hover:border-[#F5D32F]/40 transition-colors">
+                <p className="text-[#F5D32F] text-xs font-black uppercase tracking-[0.18em] mb-2">
+                  {isEn ? 'Core Scope' : 'Bidang Layanan'}
+                </p>
+                <p className="text-white text-xs sm:text-sm leading-relaxed">
+                  Sertifikasi Halal Reguler, Uji DNA Babi qPCR, Uji Cemaran Etanol & JPH.
+                </p>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-wrap items-center gap-4">
+              <Link to="/layanan/kalkulator">
+                <Button
+                  variant="primary"
+                  className="bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold px-8 py-3.5 rounded-xl text-sm sm:text-base shadow-lg shadow-yellow-500/25 inline-flex items-center gap-2 cursor-pointer hover:scale-[1.02] transition-transform"
+                >
+                  <Calculator className="w-5 h-5 text-[#3B074A]" />
+                  <span>{isEn ? 'Simulate Halal Fee Now' : 'Hitung Simulasi Tarif Halal'}</span>
+                  <ArrowRight className="w-4 h-4 text-[#3B074A]" />
+                </Button>
+              </Link>
+              <a
+                href="https://wa.me/6282126493700"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <Calculator className="w-5 h-5 text-purple-200" />
-                {isEn ? 'Simulate Halal Fee Now' : 'Hitung Simulasi Tarif Halal'}
-              </Button>
-            </Link>
-            <a
-              href="https://wa.me/6282126493700"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button
-                variant="primary"
-                className="bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold px-8 py-3.5 rounded-xl text-sm sm:text-base shadow-md shadow-yellow-500/20 inline-flex items-center gap-2 cursor-pointer hover:scale-[1.02] transition-transform"
-              >
-                <Phone className="w-5 h-5 text-[#3B074A]" />
-                {isEn ? 'WhatsApp Official Desk' : 'Konsultasi WhatsApp Resmi'}
-              </Button>
-            </a>
+                <Button
+                  variant="primary"
+                  className="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold px-7 py-3.5 rounded-xl text-sm sm:text-base shadow-sm inline-flex items-center gap-2 cursor-pointer hover:scale-[1.02] transition-all"
+                >
+                  <Phone className="w-4 h-4 text-[#F5D32F]" />
+                  <span>{isEn ? 'WhatsApp Official Desk' : 'Konsultasi WhatsApp'}</span>
+                </Button>
+              </a>
+            </div>
           </div>
         </div>
       </section>
