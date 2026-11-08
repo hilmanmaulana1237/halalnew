@@ -36,7 +36,6 @@ import { BackgroundGradient } from '@/components/ui/background-gradient';
 import { MovingBorderButton } from '@/components/ui/moving-border';
 import { TimelineSteps } from '@/components/ui/timeline-steps';
 import { CardSpotlight } from '@/components/ui/card-spotlight';
-import { CardContainer, CardBody, CardItem } from '@/components/ui/3d-card';
 import { useLanguage } from '@/context/LanguageContext';
 import { OrganicWave, LiquidDripWave, YellowDotGrid, YellowHighlight, OrganicBlob } from '@/components/ui/decorative-shapes';
 
@@ -546,222 +545,192 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 6. CORPORATE EXECUTIVE GOVERNANCE & LEADERSHIP (Aceternity UI Card Spotlight Enterprise Layout) */}
-      <section className="py-20 lg:py-28 bg-[#FAF7FD] border-y border-[#C9A5E8]/30 relative overflow-hidden" id="pimpinan">
+      {/* 6. DUAL LEADERSHIP SHOWCASE (Both Leaders Displayed Directly with Alternating Layout) */}
+      <section className="py-20 lg:py-28 bg-[#FAF7FD] border-y border-[#C9A5E8]/30 relative overflow-visible" id="pimpinan">
         <YellowDotGrid rows={4} cols={5} className="absolute top-10 left-10 opacity-20 pointer-events-none hidden lg:grid" />
         <YellowDotGrid rows={3} cols={4} className="absolute bottom-10 right-10 opacity-20 pointer-events-none hidden md:grid" />
-
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <SectionHeader
-            badge={isEn ? "CORPORATE GOVERNANCE & LEADERSHIP" : "TATA KELOLA & KEPEMIMPINAN"}
+            badge={isEn ? "EXECUTIVE BOARD & PATRON" : "DEWAN PIMPINAN & PEMBINA"}
             badgeColor="yellow"
-            title={isEn ? "Executive Board & Institutional Leadership" : "Dewan Pembina & Pimpinan Lembaga"}
+            title={isEn ? "Leadership with Sharia Integrity & Halal Research Excellence" : "Kepemimpinan Berintegritas Syar’i & Keunggulan Riset Halal"}
             subtitle={isEn
-              ? "Synergy between university strategic patron leadership and certified bio-science technical directors ensuring rigorous halal inspection, ISO 17025 laboratory precision, and industrial trust."
-              : "Sinergi dewan pembina universitas dan pimpinan teknis bersertifikasi BPJPH dalam menjamin integritas pemeriksaan halal, presisi laboratorium ISO 17025, dan kepatuhan syariah bagi seluruh pelaku usaha."}
+              ? "Synergy between university strategic vision and bio-science research expertise to safeguard halal audit quality, ISO 17025 laboratory accountability, and public welfare."
+              : "Sinergi visi strategis universitas dan keahlian riset sains hayati untuk mengawal mutu pemeriksaan halal, akuntabilitas laboratorium ISO 17025, dan kemaslahatan industri bagi umat."}
           />
 
-          {/* Dual Executive Corporate Grid: Symmetrical Side-by-Side on Desktop, Stacked on Mobile */}
-          <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-            {/* EXECUTIVE 1: DEWAN PEMBINA (Prof. Dr. H. Rosihon Anwar, M.Ag.) */}
-            <CardSpotlight
-              radius={400}
-              color="#6B18A8"
-              className="rounded-3xl border border-[#C9A5E8]/45 bg-white shadow-xl shadow-purple-950/5 hover:shadow-2xl hover:border-[#6B18A8]/60 transition-all duration-300 p-6 sm:p-8 flex flex-col justify-between h-full"
+          <div className="mt-16 lg:mt-24 space-y-16 lg:space-y-28">
+            {/* CARD 1: DEWAN PEMBINA (Prof. Dr. H. Rosihon Anwar) - Left: Content, Right: Portrait Pop-Out */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="group relative rounded-3xl border border-[#C9A5E8]/50 bg-white overflow-visible shadow-xl shadow-purple-950/5 hover:shadow-2xl hover:border-[#6B18A8]/60 transition-all duration-300 p-6 sm:p-10 lg:p-12 xl:p-14"
             >
-              <div className="space-y-6">
-                {/* Header Bar */}
-                <div className="flex items-center justify-between gap-2 border-b border-[#F5EDFB] pb-4">
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] text-[11px] font-extrabold uppercase tracking-wider shadow-2xs">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#eab308]" />
-                    <span>{isEn ? 'Board of Patrons' : 'Dewan Pembina'}</span>
-                  </div>
-                  <span className="text-[11px] font-mono font-bold text-[#756D7C] bg-[#FAF7FD] px-3 py-1 rounded-full border border-[#C9A5E8]/40">
-                    Rektor UIN SGD
-                  </span>
-                </div>
-
-                {/* Portrait & Bio Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-12 gap-5 items-center">
-                  {/* Left Column (5 cols): Executive Studio Portrait */}
-                  <div className="sm:col-span-5 flex justify-center">
-                    <div className="relative w-full max-w-[210px] h-[250px] sm:h-[270px] rounded-2xl overflow-hidden bg-gradient-to-b from-[#2E053D] via-[#4B0D78] to-[#1E0329] p-2 flex flex-col justify-end items-center shadow-lg shadow-purple-950/20 border border-purple-800/40 group-hover:border-[#6B18A8]/50 transition-colors shrink-0">
-                      {/* Subtle Studio Spotlight Glow */}
-                      <div className="absolute top-4 w-28 h-28 rounded-full bg-[#F5D32F]/15 blur-xl pointer-events-none" />
-
-                      {/* Cutout Portrait */}
-                      <img
-                        src={directors[0].image}
-                        alt={directors[0].name}
-                        className="relative z-10 w-auto h-full max-h-[240px] sm:max-h-[260px] object-cover object-top drop-shadow-xl group-hover:scale-105 transition-transform duration-500"
-                      />
-
-                      {/* Bottom Executive Identification Tag */}
-                      <div className="absolute bottom-2.5 inset-x-2.5 z-20 bg-white/15 backdrop-blur-md rounded-xl py-1 px-2 text-center border border-white/20 shadow-xs">
-                        <span className="text-[10px] font-black text-[#F5D32F] uppercase tracking-wider block truncate">
-                          {isEn ? 'Patron & Rector' : 'Dewan Pembina'}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Right Column (7 cols): Corporate Credentials & Titles */}
-                  <div className="sm:col-span-7 space-y-2">
-                    <h3 className="text-xl sm:text-2xl font-black text-[#292333] tracking-tight leading-snug">
-                      {directors[0].name}
-                    </h3>
-                    <p className="text-xs sm:text-sm font-bold text-[#6B18A8]">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                {/* Left (7 cols): Content & Institutional Vision */}
+                <div className="lg:col-span-7 flex flex-col justify-between">
+                  <div>
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-extrabold bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] uppercase tracking-wider mb-4 shadow-xs">
+                      <Sparkles className="w-3.5 h-3.5 text-[#eab308]" />
                       {isEn ? 'Rector of UIN SGD & Halal Center Patron' : 'Rektor UIN SGD & Dewan Pembina Halal Center'}
-                    </p>
-                    <p className="text-xs text-[#756D7C] leading-relaxed">
-                      {isEn
-                        ? 'Professor of Quranic Exegesis & Tafsir • Inception architect of the "Halalsphere University" institutional ecosystem.'
-                        : 'Guru Besar Ilmu Al-Qur\'an & Tafsir • Inisiator Paradigma "Halalsphere University" bagi penguatan ekosistem industri halal global.'}
-                    </p>
-
-                    {/* Corporate Governance Pillars (Clean, Professional Tags) */}
-                    <div className="flex flex-wrap gap-1.5 pt-2">
-                      <span className="px-2.5 py-0.5 rounded-md bg-[#FAF7FD] border border-[#C9A5E8]/60 text-[10.5px] font-bold text-[#4B0D78]">
-                        Kepemimpinan Strategis
-                      </span>
-                      <span className="px-2.5 py-0.5 rounded-md bg-[#FFF7D1] border border-[#F5D32F]/70 text-[10.5px] font-bold text-[#713f12]">
-                        Visi Halalsphere
-                      </span>
-                      <span className="px-2.5 py-0.5 rounded-md bg-[#FAF7FD] border border-[#C9A5E8]/60 text-[10.5px] font-bold text-[#4B0D78]">
-                        Integritas Syar’i
-                      </span>
                     </div>
-                  </div>
-                </div>
 
-                {/* Executive Institutional Statement */}
-                <div className="p-4 sm:p-4.5 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/35 relative">
-                  <span className="text-3xl text-[#F5D32F] font-serif absolute -top-1 left-3 select-none leading-none font-bold">“</span>
-                  <p className="text-xs sm:text-sm text-[#756D7C] italic leading-relaxed pl-5 font-normal">
-                    "{directors[0].quote}"
-                  </p>
-                </div>
-              </div>
-
-              {/* Corporate Footer with Action Trigger */}
-              <div className="pt-4 mt-6 border-t border-[#F5EDFB] flex items-center justify-between">
-                <Button
-                  variant="primary"
-                  className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md inline-flex items-center gap-2 cursor-pointer transition-transform hover:scale-[1.02]"
-                  onPress={() => setSelectedDirector(directors[0])}
-                >
-                  <span>{isEn ? "View Executive Profile" : 'Lihat Rekam Jejak Profil'}</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-[#F5D32F]" />
-                </Button>
-                <Link
-                  to="/tentang"
-                  className="text-xs font-bold text-[#756D7C] hover:text-[#6B18A8] transition-colors inline-flex items-center gap-1"
-                >
-                  <span>{isEn ? 'Institutional Vision' : 'Visi Lembaga'}</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </CardSpotlight>
-
-            {/* EXECUTIVE 2: DEWAN PIMPINAN (Dr. Tri Cahyanto, M.Si.) */}
-            <CardSpotlight
-              radius={400}
-              color="#F5D32F"
-              className="rounded-3xl border border-[#F5D32F]/50 bg-white shadow-xl shadow-purple-950/5 hover:shadow-2xl hover:border-[#F5D32F] transition-all duration-300 p-6 sm:p-8 flex flex-col justify-between h-full"
-            >
-              <div className="space-y-6">
-                {/* Header Bar */}
-                <div className="flex items-center justify-between gap-2 border-b border-[#F5EDFB] pb-4">
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F5EDFB] text-[#6B18A8] border border-[#C9A5E8] text-[11px] font-extrabold uppercase tracking-wider shadow-xs">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#6B18A8]" />
-                    <span>{isEn ? 'Executive Leadership' : 'Dewan Pimpinan'}</span>
-                  </div>
-                  <span className="text-[11px] font-mono font-bold text-[#713f12] bg-[#FFF7D1] px-3 py-1 rounded-full border border-[#F5D32F]/50">
-                    Kepala LPH UIN SGD
-                  </span>
-                </div>
-
-                {/* Portrait & Bio Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-12 gap-5 items-center">
-                  {/* Left Column (5 cols): Executive Studio Portrait */}
-                  <div className="sm:col-span-5 flex justify-center">
-                    <div className="relative w-full max-w-[210px] h-[250px] sm:h-[270px] rounded-2xl overflow-hidden bg-gradient-to-b from-[#1E0329] via-[#4B0D78] to-[#2E053D] p-2 flex flex-col justify-end items-center shadow-lg shadow-purple-950/20 border border-purple-800/40 group-hover:border-[#F5D32F]/50 transition-colors shrink-0">
-                      {/* Subtle Studio Spotlight Glow */}
-                      <div className="absolute top-4 w-28 h-28 rounded-full bg-[#F5D32F]/20 blur-xl pointer-events-none" />
-
-                      {/* Cutout Portrait */}
-                      <img
-                        src={directors[1].image}
-                        alt={directors[1].name}
-                        className="relative z-10 w-auto h-full max-h-[240px] sm:max-h-[260px] object-cover object-top drop-shadow-xl group-hover:scale-105 transition-transform duration-500"
-                      />
-
-                      {/* Bottom Executive Identification Tag */}
-                      <div className="absolute bottom-2.5 inset-x-2.5 z-20 bg-white/15 backdrop-blur-md rounded-xl py-1 px-2 text-center border border-white/20 shadow-xs">
-                        <span className="text-[10px] font-black text-[#F5D32F] uppercase tracking-wider block truncate">
-                          {isEn ? 'Technical Lead' : 'Pimpinan Teknis LPH'}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Right Column (7 cols): Corporate Credentials & Titles */}
-                  <div className="sm:col-span-7 space-y-2">
-                    <h3 className="text-xl sm:text-2xl font-black text-[#292333] tracking-tight leading-snug">
-                      {directors[1].name}
+                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#292333] tracking-tight">
+                      Prof. Dr. H. Rosihon Anwar, M.Ag.
                     </h3>
-                    <p className="text-xs sm:text-sm font-bold text-[#6B18A8]">
-                      {isEn ? 'Head of Halal Center UIN SGD & Lead Auditor' : 'Kepala Halal Center & Pimpinan Teknis LPH'}
-                    </p>
-                    <p className="text-xs text-[#756D7C] leading-relaxed">
+                    <p className="text-xs sm:text-sm font-semibold text-[#756D7C] mt-1">
                       {isEn
-                        ? 'Life Science Expert & Licensed Lead Auditor BPJPH Kemenag RI, directing ISO/IEC 17025 accredited laboratory testing.'
-                        : 'Pakar Sains Hayati & Lead Auditor Halal Berlisensi BPJPH Kemenag RI, memimpin operasional pemeriksaan dan pengujian laboratorium terakreditasi.'}
+                        ? 'Professor of Quranic Exegesis & Tafsir • Pioneer of "Halalsphere University"'
+                        : "Guru Besar Ilmu Al-Qur'an & Tafsir • Inisiator Paradigma \"Halalsphere University\""}
                     </p>
 
-                    {/* Corporate Governance Pillars (Clean, Professional Tags) */}
-                    <div className="flex flex-wrap gap-1.5 pt-2">
-                      <span className="px-2.5 py-0.5 rounded-md bg-[#FFF7D1] border border-[#F5D32F]/70 text-[10.5px] font-bold text-[#713f12]">
-                        Lead Auditor BPJPH
-                      </span>
-                      <span className="px-2.5 py-0.5 rounded-md bg-[#FAF7FD] border border-[#C9A5E8]/60 text-[10.5px] font-bold text-[#4B0D78]">
-                        Laboratorium ISO 17025
-                      </span>
-                      <span className="px-2.5 py-0.5 rounded-md bg-[#FAF7FD] border border-[#C9A5E8]/60 text-[10.5px] font-bold text-[#4B0D78]">
-                        Verifikasi Saintifik
-                      </span>
+                    {/* Institutional Quote Box */}
+                    <div className="mt-6 p-6 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 shadow-xs relative">
+                      <span className="text-4xl text-[#F5D32F] font-serif absolute top-3 left-4 select-none leading-none">“</span>
+                      <p className="text-sm sm:text-base text-neutral-700 italic leading-relaxed pl-6 relative z-10 font-normal">
+                        "{directors[0].quote}"
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="mt-8 pt-6 border-t border-purple-100 flex flex-wrap items-center gap-4">
+                    <Button
+                      variant="primary"
+                      className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-bold text-xs px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2 cursor-pointer"
+                      onPress={() => setSelectedDirector(directors[0])}
+                    >
+                      <span>{isEn ? "View Rector's Track Record & Profile" : 'Buka Profil & Rekam Jejak Rektor'}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Button>
+                    <Link
+                      to="/tentang"
+                      className="text-xs font-bold text-neutral-700 hover:text-[#6B18A8] transition-colors inline-flex items-center gap-1.5"
+                    >
+                      <span>{isEn ? 'Explore Institutional Profile & Vision' : 'Pelajari Profil Lembaga & Visi Kampus'}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Right (5 cols): Cutout Portrait with Pop-Out Head Breaking Card Top Border */}
+                <div className="lg:col-span-5 flex flex-col items-center justify-end relative pt-4 lg:pt-0 lg:-mt-24 xl:-mt-28 lg:-mb-12 xl:-mb-14 z-20">
+                  <div className="relative w-full max-w-sm flex flex-col items-center">
+                    {/* Ambient Glow Aura behind head */}
+                    <div className="absolute inset-x-4 top-2 h-72 sm:h-80 bg-gradient-to-t from-purple-200/50 via-[#F5EDFB]/40 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
+
+                    {/* Decorative yellow dot grid next to the popped-out head */}
+                    <div className="absolute -top-4 -right-2 opacity-50 pointer-events-none hidden lg:block">
+                      <YellowDotGrid rows={3} cols={3} dotColor="#F5D32F" />
+                    </div>
+
+                    <img
+                      src={directors[0].image}
+                      alt={directors[0].name}
+                      className="relative z-10 w-auto max-h-[380px] sm:max-h-[440px] lg:max-h-[480px] xl:max-h-[520px] object-contain drop-shadow-[0_25px_30px_rgba(75,13,120,0.22)] transition-transform duration-500 group-hover:scale-105"
+                    />
+
+                    {/* Floating Name Card anchored at bottom of portrait */}
+                    <div className="relative z-20 -mt-6 sm:-mt-8 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl border border-[#C9A5E8]/40 shadow-xl shadow-purple-950/10 text-center max-w-xs w-full">
+                      <h4 className="text-sm font-black text-[#292333]">
+                        {directors[0].name}
+                      </h4>
+                      <p className="text-[11px] font-bold text-[#6B18A8] mt-0.5">
+                        {isEn ? 'Rector of UIN SGD & Halal Center Patron' : 'Rektor UIN SGD & Dewan Pembina Halal Center'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* CARD 2: KEPALA HALAL CENTER (Dr. Tri Cahyanto) - Left: Portrait Pop-Out, Right: Content */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="group relative rounded-3xl border border-[#F5D32F]/60 bg-white overflow-visible shadow-xl shadow-purple-950/5 hover:shadow-2xl hover:border-[#F5D32F] transition-all duration-300 p-6 sm:p-10 lg:p-12 xl:p-14"
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                {/* Left on Desktop (5 cols): Cutout Portrait with Pop-Out Head Breaking Card Top Border */}
+                <div className="lg:col-span-5 flex flex-col items-center justify-end relative pt-4 lg:pt-0 order-2 lg:order-1 lg:-mt-24 xl:-mt-28 lg:-mb-12 xl:-mb-14 z-20">
+                  <div className="relative w-full max-w-sm flex flex-col items-center">
+                    {/* Ambient Glow Aura behind head */}
+                    <div className="absolute inset-x-4 top-2 h-72 sm:h-80 bg-gradient-to-t from-yellow-200/40 via-[#FFF7D1]/30 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
+
+                    {/* Decorative yellow dot grid next to the popped-out head */}
+                    <div className="absolute -top-4 -left-2 opacity-50 pointer-events-none hidden lg:block">
+                      <YellowDotGrid rows={3} cols={3} dotColor="#F5D32F" />
+                    </div>
+
+                    <img
+                      src={directors[1].image}
+                      alt={directors[1].name}
+                      className="relative z-10 w-auto max-h-[380px] sm:max-h-[440px] lg:max-h-[480px] xl:max-h-[520px] object-contain drop-shadow-[0_25px_30px_rgba(113,63,18,0.20)] transition-transform duration-500 group-hover:scale-105"
+                    />
+
+                    {/* Floating Name Card anchored at bottom of portrait */}
+                    <div className="relative z-20 -mt-6 sm:-mt-8 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl border border-[#F5D32F]/50 shadow-xl shadow-yellow-950/10 text-center max-w-xs w-full">
+                      <h4 className="text-sm font-black text-[#292333]">
+                        {directors[1].name}
+                      </h4>
+                      <p className="text-[11px] font-bold text-[#6B18A8] mt-0.5">
+                        {isEn ? 'Head of Halal Center UIN Sunan Gunung Djati' : 'Kepala Halal Center UIN Sunan Gunung Djati'}
+                      </p>
                     </div>
                   </div>
                 </div>
 
-                {/* Executive Institutional Statement */}
-                <div className="p-4 sm:p-4.5 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/35 relative">
-                  <span className="text-3xl text-[#F5D32F] font-serif absolute -top-1 left-3 select-none leading-none font-bold">“</span>
-                  <p className="text-xs sm:text-sm text-[#756D7C] italic leading-relaxed pl-5 font-normal">
-                    "{directors[1].quote}"
-                  </p>
+                {/* Right on Desktop (7 cols): Content & Executive Statement */}
+                <div className="lg:col-span-7 flex flex-col justify-between order-1 lg:order-2">
+                  <div>
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-bold bg-[#F5EDFB] text-[#6B18A8] border border-[#C9A5E8] uppercase tracking-wider mb-4 shadow-xs">
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#6B18A8]" />
+                      {isEn ? 'LPH Technical Lead & Head of Halal Center' : 'Pimpinan Teknis LPH & Kepala Pusat Kajian Halal'}
+                    </div>
+
+                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#292333] tracking-tight">
+                      Dr. Tri Cahyanto, M.Si.
+                    </h3>
+                    <p className="text-xs sm:text-sm font-semibold text-[#756D7C] mt-1">
+                      {isEn
+                        ? 'Life Science Expert & Licensed Lead Auditor BPJPH Kemenag RI'
+                        : 'Pakar Sains Hayati & Lead Auditor Halal Berlisensi BPJPH Kemenag RI'}
+                    </p>
+
+                    {/* Executive Quote Box */}
+                    <div className="mt-6 p-6 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 shadow-xs relative">
+                      <span className="text-4xl text-[#F5D32F] font-serif absolute top-3 left-4 select-none leading-none">“</span>
+                      <p className="text-sm sm:text-base text-neutral-700 italic leading-relaxed pl-6 relative z-10 font-normal">
+                        "{directors[1].quote}"
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="mt-8 pt-6 border-t border-purple-100 flex flex-wrap items-center gap-4">
+                    <Button
+                      variant="primary"
+                      className="bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold text-xs px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2 cursor-pointer"
+                      onPress={() => setSelectedDirector(directors[1])}
+                    >
+                      <span>{isEn ? 'View Profile & Credentials' : 'Buka Profil & Kredensial Pimpinan'}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Button>
+                    <Link
+                      to="/layanan/kalkulator"
+                      className="text-xs font-bold text-neutral-700 hover:text-[#6B18A8] transition-colors inline-flex items-center gap-1.5"
+                    >
+                      <span>{isEn ? 'Certification Flow Consultation' : 'Konsultasi Alur Sertifikasi'}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
                 </div>
               </div>
-
-              {/* Corporate Footer with Action Trigger */}
-              <div className="pt-4 mt-6 border-t border-[#F5EDFB] flex items-center justify-between">
-                <Button
-                  variant="primary"
-                  className="bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md inline-flex items-center gap-2 cursor-pointer transition-transform hover:scale-[1.02]"
-                  onPress={() => setSelectedDirector(directors[1])}
-                >
-                  <span>{isEn ? "View Executive Profile" : 'Lihat Kredensial Pimpinan'}</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-[#3B074A]" />
-                </Button>
-                <Link
-                  to="/layanan/kalkulator"
-                  className="text-xs font-bold text-[#756D7C] hover:text-[#6B18A8] transition-colors inline-flex items-center gap-1"
-                >
-                  <span>{isEn ? 'Consultation' : 'Konsultasi Alur'}</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </CardSpotlight>
+            </motion.div>
           </div>
         </div>
 
