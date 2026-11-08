@@ -5,6 +5,7 @@ import { Bell, Calendar, FileText, Download, Pin, ArrowRight } from 'lucide-reac
 import { api, formatDate } from '@/services/api';
 import { useLanguage } from '@/context/LanguageContext';
 import type { AnnouncementItem } from '@/types';
+import { SparklesCore } from '@/components/ui/sparkles';
 
 const INITIAL_ANNOUNCEMENTS: AnnouncementItem[] = [
   {
@@ -86,18 +87,30 @@ export const AnnouncementListPage: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-neutral-50 pb-20">
-      {/* Banner in Royal Purple Gradient with Yellow Accents */}
-      <section className="bg-gradient-to-r from-[#1a0726] via-[#4a0d5c] to-[#1a0726] text-white py-16 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden">
+      {/* Banner in Royal Purple Gradient with Yellow Accents & Sparkles */}
+      <section className="relative py-20 lg:py-24 bg-[#1a0726] text-white overflow-hidden text-center">
         <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[#4B0D78] via-[#6B18A8] via-[#F5D32F] to-[#6B18A8]" />
-        <div className="max-w-4xl mx-auto relative z-10">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1a0726] via-[#4a0d5c] to-[#1a0726] opacity-95" />
+        <SparklesCore
+          id="announcement-sparkles"
+          minSize={0.7}
+          maxSize={2.2}
+          particleDensity={35}
+          particleColor={['#ffffff', '#f5d0fe', '#F5D32F', '#d8b4fe']}
+        />
+        <div className="relative z-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFF7D1] text-[#713f12] text-xs font-extrabold uppercase tracking-wider mb-4 border border-[#F5D32F] shadow-xs">
             <Bell className="w-3.5 h-3.5 text-[#eab308]" />
             {isEn ? 'Official Announcements & Circulars' : 'Pengumuman & Surat Edaran Resmi'}
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white drop-shadow-2xl">
-            {isEn ? 'Official Announcements LPH UIN SGD' : 'Pengumuman Resmi LPH UIN SGD'}
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white drop-shadow-2xl leading-tight">
+            {isEn ? (
+              <>Official <span className="text-[#F5D32F]">Announcements</span> LPH UIN SGD</>
+            ) : (
+              <>Pengumuman <span className="text-[#F5D32F]">Resmi</span> LPH UIN SGD</>
+            )}
           </h1>
-          <p className="mt-3 text-neutral-200 max-w-2xl mx-auto text-sm sm:text-base font-normal">
+          <p className="mt-4 text-base sm:text-lg text-neutral-200 max-w-2xl mx-auto leading-relaxed font-normal">
             {isEn
               ? 'Official circulars, field audit schedules, fee decree determinations, and technical guidelines.'
               : 'Informasi edaran resmi, jadwal audit lapangan, keputusan penetapan tarif, dan dokumen pedoman teknis.'}
