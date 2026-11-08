@@ -137,7 +137,7 @@ export const PriceCalculatorPage: React.FC = () => {
             <Calculator className="w-3.5 h-3.5 text-[#eab308]" />
             {t('calc_badge')}
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white drop-shadow-2xl">
             {t('calc_title')}
           </h1>
           <p className="mt-3 text-neutral-200 max-w-2xl mx-auto text-sm sm:text-base font-normal leading-relaxed">

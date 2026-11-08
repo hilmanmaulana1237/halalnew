@@ -113,7 +113,7 @@ export const SatisfactionPage: React.FC = () => {
             <Smile className="w-3.5 h-3.5 text-[#eab308]" />
             {isEn ? 'Community Satisfaction Index (CSI)' : 'Indeks Kepuasan Masyarakat (IKM)'}
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white drop-shadow-2xl">
             {isEn ? 'Customer Satisfaction Survey' : 'Survei Kepuasan Pelanggan'}
           </h1>
           <p className="mt-3 text-neutral-200 max-w-2xl mx-auto text-sm sm:text-base font-normal">
