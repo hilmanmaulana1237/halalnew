@@ -115,27 +115,6 @@ export const Footer: React.FC = () => {
                   {isEn ? 'Testing & Calibration Laboratory' : 'Laboratorium Pengujian & Kalibrasi'}
                 </Link>
               </li>
-              <li>
-                <Link to="/tentang" className="text-neutral-300 hover:text-[#F5D32F] transition-colors">
-                  {isEn ? 'Halal Training Center (LPJPH)' : 'Lembaga Pelatihan JPH (LPJPH)'}
-                </Link>
-              </li>
-              <li>
-                <Link to="/tentang" className="text-neutral-300 hover:text-[#F5D32F] transition-colors">
-                  {isEn ? 'Halal Slaughter Academy (JULEHA)' : 'Akademi Juru Sembelih Halal (JULEHA)'}
-                </Link>
-              </li>
-              <li>
-                <a
-                  href="https://journal.uinsgd.ac.id/index.php/ijhar"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-neutral-300 hover:text-[#F5D32F] transition-colors inline-flex items-center gap-1.5"
-                >
-                  Indonesian Journal of Halal Research
-                  <ExternalLink className="w-3.5 h-3.5 text-neutral-400" />
-                </a>
-              </li>
             </ul>
           </div>
 
