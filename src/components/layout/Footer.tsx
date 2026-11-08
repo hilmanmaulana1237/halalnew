@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@heroui/react';
-import { Phone, Mail, MapPin, Calculator, ExternalLink } from 'lucide-react';
+import { Phone, Mail, MapPin, Calculator, ExternalLink, ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { OrganicWave, YellowDotGrid } from '@/components/ui/decorative-shapes';
 
@@ -26,8 +26,8 @@ export const Footer: React.FC = () => {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
-          {/* Column 1: Info & Call to Action (Col 4) */}
-          <div className="lg:col-span-4 space-y-4">
+          {/* Column 1: Info & Call to Action (Col 3) */}
+          <div className="lg:col-span-3 space-y-4">
             <Link to="/" className="inline-block">
               <div className="p-2.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 inline-block shadow-lg hover:border-[#F5D32F]/50 transition-colors">
                 <img
@@ -93,50 +93,93 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Column 3: Unit Layanan (Col 3) */}
-          <div className="lg:col-span-3 space-y-4">
+          {/* Column 3: Unit Layanan (Col 4) */}
+          <div className="lg:col-span-4 space-y-4">
             <h4 className="text-sm font-extrabold uppercase tracking-wider text-white flex items-center gap-2">
               <span className="w-1.5 h-3.5 bg-[#F5D32F] rounded-full inline-block" />
               {t('footer_col_units')}
             </h4>
-            <ul className="space-y-2.5 text-sm">
-              <li>
-                <Link to="/tentang" className="text-neutral-300 hover:text-[#F5D32F] transition-colors">
-                  {isEn ? 'Halal Inspection Agency (LPH)' : 'Lembaga Pemeriksa Halal (LPH)'}
-                </Link>
-              </li>
-              <li>
-                <Link to="/layanan/kalkulator" className="text-neutral-300 hover:text-[#F5D32F] transition-colors">
+            <div className="space-y-3">
+              {/* Layanan 1: Sertifikasi Halal Reguler */}
+              <div className="p-3.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#F5D32F]/40 transition-all group">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="inline-block px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F]">
+                    {isEn ? 'Accredited LPH' : 'LPH Terakreditasi'}
+                  </span>
+                </div>
+                <h5 className="text-xs sm:text-sm font-bold text-white group-hover:text-[#F5D32F] transition-colors">
                   {isEn ? 'Regular Halal Certification' : 'Sertifikasi Halal Reguler'}
-                </Link>
-              </li>
-              <li>
-                <Link to="/tentang" className="text-neutral-300 hover:text-[#F5D32F] transition-colors">
-                  {isEn ? 'Testing & Calibration Laboratory' : 'Laboratorium Pengujian & Kalibrasi'}
-                </Link>
-              </li>
-              <li>
-                <Link to="/tentang" className="text-neutral-300 hover:text-[#F5D32F] transition-colors">
-                  {isEn ? 'Halal Training Center (LPJPH)' : 'Lembaga Pelatihan JPH (LPJPH)'}
-                </Link>
-              </li>
-              <li>
-                <Link to="/tentang" className="text-neutral-300 hover:text-[#F5D32F] transition-colors">
-                  {isEn ? 'Halal Slaughter Academy (JULEHA)' : 'Akademi Juru Sembelih Halal (JULEHA)'}
-                </Link>
-              </li>
-              <li>
-                <a
-                  href="https://journal.uinsgd.ac.id/index.php/ijhar"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-neutral-300 hover:text-[#F5D32F] transition-colors inline-flex items-center gap-1.5"
-                >
-                  Indonesian Journal of Halal Research
-                  <ExternalLink className="w-3.5 h-3.5 text-neutral-400" />
-                </a>
-              </li>
-            </ul>
+                </h5>
+                <p className="text-[11px] text-neutral-300 mt-1 leading-relaxed">
+                  {isEn
+                    ? 'Comprehensive scientific inspection and audit for medium and large industries by certified halal auditors (BPJPH & MUI).'
+                    : 'Pemeriksaan dan audit saintifik komprehensif bagi industri menengah dan besar oleh auditor halal bersertifikasi nasional BPJPH & MUI.'}
+                </p>
+                <div className="mt-2.5">
+                  <Link
+                    to="/layanan/kalkulator"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#F5D32F] hover:underline"
+                  >
+                    <span>{isEn ? 'Visit Service' : 'Kunjungi Layanan'}</span>
+                    <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+                  </Link>
+                </div>
+              </div>
+
+              {/* Layanan 2: Konsultasi Sertifikasi & Regulasi */}
+              <div className="p-3.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#F5D32F]/40 transition-all group">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="inline-block px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-[#EBF7EE] text-[#1E5D38] border border-[#A7E5B5]">
+                    {isEn ? 'Fast Service' : 'Layanan Cepat'}
+                  </span>
+                </div>
+                <h5 className="text-xs sm:text-sm font-bold text-white group-hover:text-[#F5D32F] transition-colors">
+                  {isEn ? 'Certification & Regulatory Consultation' : 'Konsultasi Sertifikasi & Regulasi'}
+                </h5>
+                <p className="text-[11px] text-neutral-300 mt-1 leading-relaxed">
+                  {isEn
+                    ? 'In-person and online consultation on ingredient eligibility, halal assurance systems, and BPJPH regulations.'
+                    : 'Layanan konsultasi tatap muka maupun daring mengenai kelayakan bahan baku, sistem jaminan halal, dan regulasi BPJPH.'}
+                </p>
+                <div className="mt-2.5">
+                  <Link
+                    to="/kontak"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#F5D32F] hover:underline"
+                  >
+                    <span>{isEn ? 'Visit Service' : 'Kunjungi Layanan'}</span>
+                    <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+                  </Link>
+                </div>
+              </div>
+
+              {/* Layanan 3: Laboratorium Pengujian Halal Terpadu */}
+              <div className="p-3.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#F5D32F]/40 transition-all group">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="inline-block px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-[#FAF7FD] text-[#6B18A8] border border-[#C9A5E8]">
+                    ISO/IEC 17025
+                  </span>
+                </div>
+                <h5 className="text-xs sm:text-sm font-bold text-white group-hover:text-[#F5D32F] transition-colors">
+                  {isEn ? 'Integrated Halal Testing Laboratory' : 'Laboratorium Pengujian Halal Terpadu'}
+                </h5>
+                <p className="text-[11px] text-neutral-300 mt-1 leading-relaxed">
+                  {isEn
+                    ? 'High-precision scientific testing: Porcine qPCR DNA detection, Ethanol GC-FID testing, gelatin and fatty acid analysis.'
+                    : 'Uji saintifik presisi tinggi: Deteksi DNA Babi qPCR, Uji Cemaran Etanol (GC-FID), serta analisa gelatin dan profil asam lemak.'}
+                </p>
+                <div className="mt-2.5">
+                  <a
+                    href="https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#F5D32F] hover:underline"
+                  >
+                    <span>{isEn ? 'Visit Service' : 'Kunjungi Layanan'}</span>
+                    <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Column 4: Kontak Resmi (Col 3) */}

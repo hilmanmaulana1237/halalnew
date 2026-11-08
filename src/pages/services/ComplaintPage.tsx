@@ -152,9 +152,23 @@ export const ComplaintPage: React.FC = () => {
               className="w-full"
             >
               <Tabs.ListContainer>
-                <Tabs.List aria-label="Menu Pengaduan">
-                  <Tabs.Tab id="FORM">{isEn ? 'Submit Complaint Report' : 'Kirim Laporan Pengaduan'}</Tabs.Tab>
-                  <Tabs.Tab id="TRACK">{isEn ? 'Track Ticket Status' : 'Lacak Status Tiket'}</Tabs.Tab>
+                <Tabs.List aria-label={isEn ? "Complaint Menu" : "Menu Pengaduan"} className="flex flex-wrap gap-2">
+                  <Tabs.Tab
+                    id="FORM"
+                    className="data-[selected=true]:text-white font-bold transition-colors text-xs sm:text-sm px-5 py-2.5 rounded-2xl flex items-center gap-2 cursor-pointer"
+                  >
+                    <FileText className="w-4 h-4" />
+                    <span>{isEn ? 'Submit Complaint Report' : 'Kirim Laporan Pengaduan'}</span>
+                    <Tabs.Indicator className="bg-[#6B18A8] rounded-2xl shadow-md shadow-purple-950/20" />
+                  </Tabs.Tab>
+                  <Tabs.Tab
+                    id="TRACK"
+                    className="data-[selected=true]:text-white font-bold transition-colors text-xs sm:text-sm px-5 py-2.5 rounded-2xl flex items-center gap-2 cursor-pointer"
+                  >
+                    <Search className="w-4 h-4" />
+                    <span>{isEn ? 'Track Ticket Status' : 'Lacak Status Tiket'}</span>
+                    <Tabs.Indicator className="bg-[#6B18A8] rounded-2xl shadow-md shadow-purple-950/20" />
+                  </Tabs.Tab>
                 </Tabs.List>
               </Tabs.ListContainer>
             </Tabs>
