@@ -1202,15 +1202,15 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* 8. MITRA & AKREDITASI MARQUEE (Classy Soft Pearl Ivory) */}
-      <section className="py-16 bg-[#faf8fc] border-t border-purple-100/70">
+      <section className="py-16 bg-[#faf8fc] border-t border-purple-100/70 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-6">
-          <p className="text-xs font-bold uppercase tracking-widest text-[#6b1282]">
+          <p className="text-xs font-bold uppercase tracking-widest text-[#6B18A8]">
             {isEn
               ? 'Affiliate Networks, Advisory Council & Official Accreditation Bodies'
               : 'Jaringan Afiliasi, Pembina & Lembaga Akreditasi Resmi'}
           </p>
         </div>
-        <InfiniteMovingCards items={PARTNER_ITEMS} direction="left" speed="normal" />
+        <InfiniteMovingCards items={[...PARTNER_ITEMS, ...PARTNER_ITEMS]} direction="right" speed="normal" />
       </section>
 
       {/* 9. MAP LOCATION SECTION (Clean White & Lavender with Yellow Accents) */}
