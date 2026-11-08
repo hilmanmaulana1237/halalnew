@@ -19,7 +19,9 @@ import {
   Microscope,
   Newspaper,
   Phone,
+  ShieldAlert,
   ShieldCheck,
+  Smile,
   Sparkles,
   Users,
   Utensils,
@@ -36,6 +38,7 @@ import { BackgroundGradient } from '@/components/ui/background-gradient';
 import { MovingBorderButton } from '@/components/ui/moving-border';
 import { TimelineSteps } from '@/components/ui/timeline-steps';
 import { CardSpotlight } from '@/components/ui/card-spotlight';
+import { CardContainer, CardBody, CardItem } from '@/components/ui/3d-card';
 import { useLanguage } from '@/context/LanguageContext';
 import { OrganicWave, LiquidDripWave, YellowDotGrid, YellowHighlight, OrganicBlob } from '@/components/ui/decorative-shapes';
 
@@ -540,6 +543,223 @@ export const HomePage: React.FC = () => {
           />
 
           <TimelineSteps />
+        </div>
+      </section>
+
+      {/* 5C. THREE INTERACTIVE DIGITAL SERVICES (Aceternity UI 3D Cards) */}
+      <section className="py-20 lg:py-28 bg-gradient-to-b from-white via-[#FAF7FD]/60 to-[#FAF7FD] border-t border-[#C9A5E8]/30 relative overflow-hidden" id="layanan-digital">
+        <YellowDotGrid rows={4} cols={5} className="absolute top-10 right-10 opacity-20 pointer-events-none hidden lg:grid" />
+        <YellowDotGrid rows={3} cols={4} className="absolute bottom-10 left-10 opacity-20 pointer-events-none hidden md:grid" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <SectionHeader
+            badge={isEn ? "CORE DIGITAL PORTAL" : "LAYANAN DIGITAL UTAMA"}
+            badgeColor="yellow"
+            title={isEn ? "3 Interactive Public Services of LPH UIN SGD" : "3 Layanan Digital Interaktif Utama LPH UIN SGD"}
+            subtitle={isEn
+              ? "Access transparent regular halal fee simulation, submit confidential whistleblowing reports, and evaluate satisfaction ratings directly through our digital ecosystem."
+              : "Akses kalkulasi simulasi tarif halal transparan, sampaikan laporan pengaduan whistleblowing terpercaya, dan berikan evaluasi kepuasan layanan publik secara mudah dan terintegrasi."}
+          />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mt-14 items-stretch">
+            {/* Card 1: Kalkulator Tarif Halal */}
+            <CardContainer className="inter-var w-full h-full" containerClassName="py-0 h-full w-full">
+              <CardBody className="bg-white relative group/card hover:shadow-2xl hover:shadow-purple-950/10 border border-[#C9A5E8]/40 hover:border-[#6B18A8]/60 w-full h-full rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300">
+                <div>
+                  <div className="flex items-center justify-between mb-5">
+                    <CardItem
+                      translateZ="40"
+                      className="w-13 h-13 rounded-2xl bg-[#F5EDFB] text-[#6B18A8] border border-[#C9A5E8]/60 flex items-center justify-center shadow-xs"
+                    >
+                      <Calculator className="w-6 h-6 text-[#6B18A8]" />
+                    </CardItem>
+                    <CardItem
+                      translateZ="30"
+                      className="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] shadow-2xs"
+                    >
+                      {isEn ? 'KMA 784 Standard' : 'Simulasi KMA 784'}
+                    </CardItem>
+                  </div>
+
+                  <CardItem
+                    as="h3"
+                    translateZ="50"
+                    className="text-lg sm:text-xl font-black text-[#292333] group-hover/card:text-[#6B18A8] transition-colors leading-snug"
+                  >
+                    {isEn ? 'Halal Tariff Calculator' : 'Kalkulator Tarif Halal'}
+                  </CardItem>
+
+                  <CardItem
+                    as="p"
+                    translateZ="35"
+                    className="text-xs sm:text-sm text-[#756D7C] leading-relaxed mt-2.5 font-normal"
+                  >
+                    {isEn
+                      ? 'Simulate transparent estimated audit fees according to official BPJPH decrees, product counts, and enterprise scale.'
+                      : 'Simulasi transparan estimasi rincian biaya audit halal reguler sesuai regulasi resmi KMA BPJPH, skala usaha, dan jumlah produk.'}
+                  </CardItem>
+
+                  <CardItem translateZ="45" className="mt-6 space-y-2.5">
+                    {[
+                      isEn ? 'On-site Facility & RPH Audit Cost' : 'Audit Lapangan Fasilitas & RPH',
+                      isEn ? 'ISO 17025 qPCR Lab Testing Estimation' : 'Estimasi Pengujian Lab qPCR ISO 17025',
+                      isEn ? 'Download Formal Breakdown PDF' : 'Unduh Rincian Estimasi Dokumen PDF',
+                    ].map((feat, fIdx) => (
+                      <div key={fIdx} className="flex items-center gap-2 text-xs font-semibold text-neutral-700 bg-[#FAF7FD] px-3.5 py-2 rounded-xl border border-[#C9A5E8]/30">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                        <span className="truncate">{feat}</span>
+                      </div>
+                    ))}
+                  </CardItem>
+                </div>
+
+                <CardItem translateZ="50" className="mt-8 pt-4 border-t border-[#C9A5E8]/25 w-full">
+                  <Link to="/layanan/kalkulator" className="w-full block">
+                    <Button
+                      variant="primary"
+                      fullWidth
+                      className="w-full bg-[#6B18A8] hover:bg-[#58138a] text-white font-extrabold text-xs py-3 rounded-xl shadow-md shadow-purple-950/15 flex items-center justify-center gap-2 group/btn cursor-pointer transition-all duration-200"
+                    >
+                      <span>{isEn ? 'Calculate Estimated Fee' : 'Hitung Estimasi Biaya'}</span>
+                      <ArrowRight className="w-4 h-4 text-[#F5D32F] group-hover/btn:translate-x-1 transition-transform" />
+                    </Button>
+                  </Link>
+                </CardItem>
+              </CardBody>
+            </CardContainer>
+
+            {/* Card 2: Pengaduan & Whistleblowing */}
+            <CardContainer className="inter-var w-full h-full" containerClassName="py-0 h-full w-full">
+              <CardBody className="bg-white relative group/card hover:shadow-2xl hover:shadow-purple-950/10 border border-[#C9A5E8]/40 hover:border-[#6B18A8]/60 w-full h-full rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300">
+                <div>
+                  <div className="flex items-center justify-between mb-5">
+                    <CardItem
+                      translateZ="40"
+                      className="w-13 h-13 rounded-2xl bg-[#F5EDFB] text-[#6B18A8] border border-[#C9A5E8]/60 flex items-center justify-center shadow-xs"
+                    >
+                      <ShieldAlert className="w-6 h-6 text-[#6B18A8]" />
+                    </CardItem>
+                    <CardItem
+                      translateZ="30"
+                      className="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] shadow-2xs"
+                    >
+                      {isEn ? '100% Confidential' : 'WBS Rahasia 100%'}
+                    </CardItem>
+                  </div>
+
+                  <CardItem
+                    as="h3"
+                    translateZ="50"
+                    className="text-lg sm:text-xl font-black text-[#292333] group-hover/card:text-[#6B18A8] transition-colors leading-snug"
+                  >
+                    {isEn ? 'Complaints & Whistleblowing' : 'Pengaduan & Whistleblowing'}
+                  </CardItem>
+
+                  <CardItem
+                    as="p"
+                    translateZ="35"
+                    className="text-xs sm:text-sm text-[#756D7C] leading-relaxed mt-2.5 font-normal"
+                  >
+                    {isEn
+                      ? 'Protected whistleblowing channel to report violations, audit ethics deviations, and protect sharia compliance integrity.'
+                      : 'Kanal pengaduan resmi dan terlindungi untuk melaporkan indikasi pelanggaran, kode etik auditor, dan menjaga integritas kepatuhan syar’i.'}
+                  </CardItem>
+
+                  <CardItem translateZ="45" className="mt-6 space-y-2.5">
+                    {[
+                      isEn ? 'Whistleblower Identity Guaranteed' : 'Kerahasiaan Identitas Pelapor Terjamin',
+                      isEn ? 'Independent Ethics Committee Audit' : 'Verifikasi Tim Etik & Pengawasan Independen',
+                      isEn ? 'Structured & Timely Investigation' : 'Tindak Lanjut & Investigasi Terukur',
+                    ].map((feat, fIdx) => (
+                      <div key={fIdx} className="flex items-center gap-2 text-xs font-semibold text-neutral-700 bg-[#FAF7FD] px-3.5 py-2 rounded-xl border border-[#C9A5E8]/30">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                        <span className="truncate">{feat}</span>
+                      </div>
+                    ))}
+                  </CardItem>
+                </div>
+
+                <CardItem translateZ="50" className="mt-8 pt-4 border-t border-[#C9A5E8]/25 w-full">
+                  <Link to="/layanan/pengaduan" className="w-full block">
+                    <Button
+                      variant="primary"
+                      fullWidth
+                      className="w-full bg-[#6B18A8] hover:bg-[#58138a] text-white font-extrabold text-xs py-3 rounded-xl shadow-md shadow-purple-950/15 flex items-center justify-center gap-2 group/btn cursor-pointer transition-all duration-200"
+                    >
+                      <span>{isEn ? 'Submit Formal Report' : 'Sampaikan Pengaduan'}</span>
+                      <ArrowRight className="w-4 h-4 text-[#F5D32F] group-hover/btn:translate-x-1 transition-transform" />
+                    </Button>
+                  </Link>
+                </CardItem>
+              </CardBody>
+            </CardContainer>
+
+            {/* Card 3: Survei Kepuasan (IKM) */}
+            <CardContainer className="inter-var w-full h-full" containerClassName="py-0 h-full w-full">
+              <CardBody className="bg-white relative group/card hover:shadow-2xl hover:shadow-purple-950/10 border border-[#C9A5E8]/40 hover:border-[#6B18A8]/60 w-full h-full rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300">
+                <div>
+                  <div className="flex items-center justify-between mb-5">
+                    <CardItem
+                      translateZ="40"
+                      className="w-13 h-13 rounded-2xl bg-[#F5EDFB] text-[#6B18A8] border border-[#C9A5E8]/60 flex items-center justify-center shadow-xs"
+                    >
+                      <Smile className="w-6 h-6 text-[#6B18A8]" />
+                    </CardItem>
+                    <CardItem
+                      translateZ="30"
+                      className="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] shadow-2xs"
+                    >
+                      {isEn ? 'Satisfaction Index' : 'Indeks Kepuasan (IKM)'}
+                    </CardItem>
+                  </div>
+
+                  <CardItem
+                    as="h3"
+                    translateZ="50"
+                    className="text-lg sm:text-xl font-black text-[#292333] group-hover/card:text-[#6B18A8] transition-colors leading-snug"
+                  >
+                    {isEn ? 'Satisfaction Survey (IKM)' : 'Survei Kepuasan (IKM)'}
+                  </CardItem>
+
+                  <CardItem
+                    as="p"
+                    translateZ="35"
+                    className="text-xs sm:text-sm text-[#756D7C] leading-relaxed mt-2.5 font-normal"
+                  >
+                    {isEn
+                      ? 'Provide your valuable feedback and ratings to help LPH UIN SGD enhance service standards and inspection speed.'
+                      : 'Berikan evaluasi dan masukan Anda untuk membantu LPH UIN SGD terus meningkatkan kualitas pelayanan, keramahan, dan kecepatan audit.'}
+                  </CardItem>
+
+                  <CardItem translateZ="45" className="mt-6 space-y-2.5">
+                    {[
+                      isEn ? 'Standardized Service Quality' : 'Penilaian Mutu & Pelayanan Terstandar',
+                      isEn ? 'Speed & Transparency Feedback' : 'Evaluasi Kecepatan & Transparansi Biaya',
+                      isEn ? 'Continuous Public Improvement' : 'Dorong Peningkatan Mutu Berkelanjutan',
+                    ].map((feat, fIdx) => (
+                      <div key={fIdx} className="flex items-center gap-2 text-xs font-semibold text-neutral-700 bg-[#FAF7FD] px-3.5 py-2 rounded-xl border border-[#C9A5E8]/30">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                        <span className="truncate">{feat}</span>
+                      </div>
+                    ))}
+                  </CardItem>
+                </div>
+
+                <CardItem translateZ="50" className="mt-8 pt-4 border-t border-[#C9A5E8]/25 w-full">
+                  <Link to="/layanan/kepuasan" className="w-full block">
+                    <Button
+                      variant="primary"
+                      fullWidth
+                      className="w-full bg-[#6B18A8] hover:bg-[#58138a] text-white font-extrabold text-xs py-3 rounded-xl shadow-md shadow-purple-950/15 flex items-center justify-center gap-2 group/btn cursor-pointer transition-all duration-200"
+                    >
+                      <span>{isEn ? 'Take Satisfaction Survey' : 'Isi Survei Kepuasan'}</span>
+                      <ArrowRight className="w-4 h-4 text-[#F5D32F] group-hover/btn:translate-x-1 transition-transform" />
+                    </Button>
+                  </Link>
+                </CardItem>
+              </CardBody>
+            </CardContainer>
+          </div>
         </div>
       </section>
 
