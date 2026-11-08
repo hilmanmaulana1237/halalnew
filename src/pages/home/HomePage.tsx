@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Button, Card, Modal, Tabs, Pagination } from '@heroui/react';
+import { Button, Card, Modal, Tabs } from '@heroui/react';
 import {
   ArrowRight,
   Award,
@@ -180,7 +180,6 @@ export const HomePage: React.FC = () => {
   const directors = getDirectors(isEn);
   const uinServices = getUinServices(isEn);
   const [activeTab, setActiveTab] = useState<string>('artikel');
-  const [articlePage, setArticlePage] = useState<number>(1);
   const [selectedDirector, setSelectedDirector] = useState<Director | null>(null);
   const [selectedBranch, setSelectedBranch] = useState(0);
 
@@ -1041,10 +1040,7 @@ export const HomePage: React.FC = () => {
           <div className="mb-8 overflow-x-auto max-w-full pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
             <Tabs
               selectedKey={activeTab}
-              onSelectionChange={(key) => {
-                setActiveTab(key as string);
-                setArticlePage(1);
-              }}
+              onSelectionChange={(key) => setActiveTab(key as string)}
               className="w-full min-w-max sm:min-w-0"
             >
               <Tabs.ListContainer>
@@ -1137,51 +1133,13 @@ export const HomePage: React.FC = () => {
                         : 'Kupas tuntas standar baku mutu kesehatan lingkungan dan persyaratan pengolahan higienis yang sejalan dengan Sistem Jaminan Produk Halal (SJPH).',
                       link: '/berita/kewajiban-sertifikasi-halal-bertahap',
                     },
-                    {
-                      img: '/assets/images/img_011.jpg',
-                      cat: isEn ? 'STANDARDIZATION' : 'STANDARISASI PANGAN',
-                      catColor: 'text-[#6b1282]',
-                      title: isEn
-                        ? 'Evaluation of Microbial Critical Points in Industrial Fermentation'
-                        : 'Evaluasi Titik Kritis Mikrobial pada Fermentasi Skala Industri',
-                      desc: isEn
-                        ? 'Detailed breakdown of microbial media sources and carbon origins required for compliance with halal product standards.'
-                        : 'Ulasan mendalam mengenai sumber media pertumbuhan mikrobial dan asal karbon demi kepatuhan standar produk halal.',
-                      link: '/berita/fatwa-standar-kehalalan-rekayasa-genetika',
-                    },
-                    {
-                      img: '/assets/images/img_012.jpg',
-                      cat: isEn ? 'TRACEABILITY' : 'KETERTELUSURAN BAHAN',
-                      catColor: 'text-[#0284c7]',
-                      title: isEn
-                        ? 'Supply Chain Halal Integrity: From Raw Material to Consumer Goods'
-                        : 'Integritas Rantai Pasok Halal: Dari Bahan Baku hingga Produk Jadi',
-                      desc: isEn
-                        ? 'Crucial checkpoints in transportation, storage separation, and warehouse sanitation to prevent cross-contamination.'
-                        : 'Titik kendali penting dalam pengangkutan, pemisahan gudang penyimpanan, dan sanitasi demi mencegah kontaminasi silang.',
-                      link: '/berita/workshop-standarisasi-laboratorium-iso-17025',
-                    },
-                    {
-                      img: '/assets/images/img_013.jpg',
-                      cat: isEn ? 'AUDIT PROTOCOL' : 'PROTOKOL AUDIT',
-                      catColor: 'text-[#6b1282]',
-                      title: isEn
-                        ? 'Preparation Checklist for On-Site Halal Audit Verification'
-                        : 'Daftar Periksa Persiapan Audit Lapangan Pemeriksaan Halal',
-                      desc: isEn
-                        ? 'Step-by-step documentation readiness and technical facility inspection criteria required by LPH auditors.'
-                        : 'Kesiapan dokumen bukti telusur dan kriteria pemeriksaan teknis fasilitas produksi yang diuji auditor LPH.',
-                      link: '/berita/sosialisasi-sertifikasi-halal-reguler-umkm',
-                    },
-                  ]
-                    .slice((articlePage - 1) * 3, articlePage * 3)
-                    .map((article, i) => (
-                      <motion.div
-                        key={i}
-                        whileHover={{ y: -6 }}
-                        transition={{ duration: 0.25 }}
-                        className="rounded-3xl border border-neutral-200/80 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all flex flex-col justify-between"
-                      >
+                  ].map((article, i) => (
+                    <motion.div
+                      key={i}
+                      whileHover={{ y: -6 }}
+                      transition={{ duration: 0.25 }}
+                      className="rounded-3xl border border-neutral-200/80 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all flex flex-col justify-between"
+                    >
                         <img src={article.img} alt={article.title} className="w-full h-48 object-cover" />
                         <div className="p-6">
                           <span className={`text-[11px] font-black uppercase tracking-wider ${article.catColor}`}>
@@ -1239,48 +1197,13 @@ export const HomePage: React.FC = () => {
                         : 'Langkah mudah pembuatan NIB berbasis risiko dan pengisian data bahan baku di portal SiHalal dengan memilih LPH UIN SGD.',
                       link: '/berita/kewajiban-sertifikasi-halal-bertahap',
                     },
-                    {
-                      img: '/assets/images/img_014.jpg',
-                      cat: 'LABORATORIUM LPH',
-                      title: isEn
-                        ? 'LPH UIN SGD Upgrades GC-FID Precision for Alcohol Residual Testing'
-                        : 'LPH UIN SGD Tingkatkan Presisi Instrumen GC-FID Uji Etanol',
-                      desc: isEn
-                        ? 'High-sensitivity testing capable of detecting traces of alcohol well below the official 0.5% threshold.'
-                        : 'Pengujian bersensitivitas tinggi untuk menjamin kadar alkohol berada di bawah ambang batas ketetapan fatwa MUI.',
-                      link: '/berita/workshop-standarisasi-laboratorium-iso-17025',
-                    },
-                    {
-                      img: '/assets/images/img_015.jpg',
-                      cat: 'KONSULTASI SJPH',
-                      title: isEn
-                        ? 'Free Coaching Clinic for MSMEs Preparing Halal Assurance Manuals'
-                        : 'Klinik Konsultasi Pendampingan Manual SJPH bagi Pelaku Usaha',
-                      desc: isEn
-                        ? 'Interactive workshops guiding small businesses through ingredient screening and standard operating procedures.'
-                        : 'Workshop interaktif mendampingi pelaku usaha dalam penapisan bahan dan perumusan prosedur operasional standar halal.',
-                      link: '/berita/sosialisasi-sertifikasi-halal-reguler-umkm',
-                    },
-                    {
-                      img: '/assets/images/uin_sgd/uin_13.webp',
-                      cat: 'AGENDA LPH',
-                      title: isEn
-                        ? 'National Coordination Meeting of Indonesian Halal Inspection Agencies'
-                        : 'Rakornas Lembaga Pemeriksa Halal Indonesia Perkuat Kolaborasi',
-                      desc: isEn
-                        ? 'Strengthening digital inter-connectivity and audit consistency between academic inspection agencies.'
-                        : 'Memperkuat interkonektivitas sistem audit digital dan standarisasi integritas antar LPH perguruan tinggi nasional.',
-                      link: '/berita/pelatihan-kompetensi-calon-auditor-halal-vi',
-                    },
-                  ]
-                    .slice((articlePage - 1) * 3, articlePage * 3)
-                    .map((article, i) => (
-                      <motion.div
-                        key={i}
-                        whileHover={{ y: -6 }}
-                        transition={{ duration: 0.25 }}
-                        className="rounded-3xl border border-neutral-200/80 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all"
-                      >
+                  ].map((article, i) => (
+                    <motion.div
+                      key={i}
+                      whileHover={{ y: -6 }}
+                      transition={{ duration: 0.25 }}
+                      className="rounded-3xl border border-neutral-200/80 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all"
+                    >
                         <img src={article.img} alt={article.title} className="w-full h-48 object-cover" />
                         <div className="p-6">
                           <span className="text-[11px] font-black text-[#6b1282] uppercase tracking-wider">
@@ -1493,54 +1416,6 @@ export const HomePage: React.FC = () => {
               )}
             </motion.div>
           </AnimatePresence>
-
-          {/* Official HeroUI Pagination for News Section */}
-          <div className="mt-12 pt-6 border-t border-purple-100/80">
-            <Pagination className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 shadow-xs">
-              <Pagination.Summary className="text-xs sm:text-sm text-neutral-600 font-semibold">
-                {isEn ? `Showing page ${articlePage} of 2` : `Menampilkan halaman ${articlePage} dari 2`}
-              </Pagination.Summary>
-
-              <Pagination.Content className="flex items-center gap-1.5 flex-wrap justify-center">
-                <Pagination.Item>
-                  <Pagination.Previous
-                    isDisabled={articlePage === 1}
-                    onPress={() => setArticlePage((p) => Math.max(1, p - 1))}
-                    className="cursor-pointer px-3.5 py-1.5 text-xs font-bold rounded-xl border border-neutral-200 bg-white hover:bg-[#FAF7FD] hover:text-[#6B18A8] hover:border-[#C9A5E8] transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1 shadow-2xs"
-                  >
-                    <Pagination.PreviousIcon />
-                    <span>{isEn ? 'Previous' : 'Sebelumnya'}</span>
-                  </Pagination.Previous>
-                </Pagination.Item>
-
-                {[1, 2].map((p) => (
-                  <Pagination.Item key={p}>
-                    <Pagination.Link
-                      isActive={p === articlePage}
-                      onPress={() => setArticlePage(p)}
-                      className={`cursor-pointer w-9 h-9 flex items-center justify-center text-xs font-bold rounded-xl transition-all ${p === articlePage
-                        ? 'bg-[#6B18A8] text-white shadow-md shadow-purple-950/25 font-black border border-[#6B18A8]'
-                        : 'bg-white border border-neutral-200 text-neutral-700 hover:bg-[#FAF7FD] hover:text-[#6B18A8] hover:border-[#C9A5E8]'
-                        }`}
-                    >
-                      {p}
-                    </Pagination.Link>
-                  </Pagination.Item>
-                ))}
-
-                <Pagination.Item>
-                  <Pagination.Next
-                    isDisabled={articlePage === 2}
-                    onPress={() => setArticlePage((p) => Math.min(2, p + 1))}
-                    className="cursor-pointer px-3.5 py-1.5 text-xs font-bold rounded-xl border border-neutral-200 bg-white hover:bg-[#FAF7FD] hover:text-[#6B18A8] hover:border-[#C9A5E8] transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1 shadow-2xs"
-                  >
-                    <span>{isEn ? 'Next' : 'Selanjutnya'}</span>
-                    <Pagination.NextIcon />
-                  </Pagination.Next>
-                </Pagination.Item>
-              </Pagination.Content>
-            </Pagination>
-          </div>
         </div>
       </section>
 
