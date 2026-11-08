@@ -449,6 +449,7 @@ export const Navbar: React.FC = () => {
 
         <MobileGroup
           label={language === 'en' ? 'About Us' : 'Tentang Kami'}
+          defaultOpen={true}
           links={[
             { label: language === 'en' ? 'Profile & History' : 'Profil & Sejarah LPH', to: '/tentang', icon: BookOpen },
             { label: language === 'en' ? 'Accreditation & Legality' : 'Akreditasi & Legalitas Resmi', to: '/tentang', icon: ShieldCheck },
@@ -561,13 +562,21 @@ function MobileGroup({
   label,
   links,
   onNavigate,
+  defaultOpen = false,
 }: {
   label: string;
   links: Array<{ label: string; href?: string; to?: string; icon: IconType }>;
   onNavigate: () => void;
+  defaultOpen?: boolean;
 }) {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+
   return (
-    <details className="group mb-2">
+    <details
+      className="group mb-2"
+      open={isOpen}
+      onToggle={(e) => setIsOpen(e.currentTarget.open)}
+    >
       <summary className="flex cursor-pointer list-none items-center justify-between rounded-2xl bg-purple-50/70 px-4 py-3.5 text-sm font-black text-[#1a0726] border border-purple-100/60 transition hover:bg-purple-100/70">
         <span>{label}</span>
         <ChevronDown className="h-4 w-4 text-[#6b1282] transition-transform duration-200 group-open:rotate-180" />
