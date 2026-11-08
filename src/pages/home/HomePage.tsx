@@ -7,7 +7,6 @@ import {
   ArrowRight,
   Award,
   BookOpen,
-  Building,
   Calculator,
   CheckCircle2,
   FileCheck,
@@ -59,72 +58,72 @@ export const getDirectors = (isEn: boolean): Director[] => [
     name: 'Prof. Dr. H. Rosihon Anwar, M.Ag.',
     position: isEn
       ? 'Rector of UIN SGD Bandung / LPH Advisory Board'
-    : 'Rektor UIN SGD Bandung / Dewan Pembina LPH',
-  image: '/assets/images/uin_sgd/director_rosihon.webp',
-  quote: isEn
-    ? 'UIN Sunan Gunung Djati Bandung dedicates its entire academic potential, halal science research, and accredited laboratories to accelerate a credible and high-integrity global halal industry ecosystem.'
-    : 'UIN Sunan Gunung Djati Bandung mendedikasikan seluruh potensi akademik, riset sains halal, dan laboratorium untuk mengakselerasi ekosistem industri halal global yang kredibel dan maslahat.',
-  education: isEn
-    ? [
-      'Professor of Quranic Exegesis & Tafsir, UIN Sunan Gunung Djati Bandung',
-      'Doctor (Ph.D) in Islamic Studies / Tafsir Hadith Postgraduate School UIN SGD Bandung',
-      'Master of Arts (M.Ag) in Islamic Thought, UIN SGD Bandung',
-      'Bachelor of Theology & Islamic Studies (S.Ag), Faculty of Ushuluddin UIN SGD Bandung',
-    ]
-    : [
-      "Guru Besar Ilmu Al-Qur'an dan Tafsir UIN Sunan Gunung Djati Bandung",
-      'Doktor (S3) Studi Islam / Tafsir Hadis Pascasarjana UIN SGD Bandung',
-      'Magister Agama (S2) Pemikiran Islam UIN SGD Bandung',
-      'Sarjana Agama (S1) Fakultas Ushuluddin UIN SGD Bandung',
-    ],
-  experience: isEn
-    ? [
-      'Rector of UIN Sunan Gunung Djati Bandung (2023 - Present)',
-      'Main Pioneer & Institutional Architect of the "Halalsphere University" Paradigm',
-      'Advisory Board Member of LPH UIN Sunan Gunung Djati',
-      'Vice Rector for Academic Affairs, UIN Sunan Gunung Djati Bandung (2019 - 2023)',
-    ]
-    : [
-      'Rektor UIN Sunan Gunung Djati Bandung (2023 - Sekarang)',
-      'Inisiator & Pengarah Utama Paradigma "Halalsphere University"',
-      'Dewan Pembina LPH UIN Sunan Gunung Djati',
-      'Wakil Rektor Bidang Akademik UIN Sunan Gunung Djati Bandung (2019 - 2023)',
-    ],
+      : 'Rektor UIN SGD Bandung / Dewan Pembina LPH',
+    image: '/assets/images/uin_sgd/director_rosihon.webp',
+    quote: isEn
+      ? 'UIN Sunan Gunung Djati Bandung dedicates its entire academic potential, halal science research, and accredited laboratories to accelerate a credible and high-integrity global halal industry ecosystem.'
+      : 'UIN Sunan Gunung Djati Bandung mendedikasikan seluruh potensi akademik, riset sains halal, dan laboratorium untuk mengakselerasi ekosistem industri halal global yang kredibel dan maslahat.',
+    education: isEn
+      ? [
+        'Professor of Quranic Exegesis & Tafsir, UIN Sunan Gunung Djati Bandung',
+        'Doctor (Ph.D) in Islamic Studies / Tafsir Hadith Postgraduate School UIN SGD Bandung',
+        'Master of Arts (M.Ag) in Islamic Thought, UIN SGD Bandung',
+        'Bachelor of Theology & Islamic Studies (S.Ag), Faculty of Ushuluddin UIN SGD Bandung',
+      ]
+      : [
+        "Guru Besar Ilmu Al-Qur'an dan Tafsir UIN Sunan Gunung Djati Bandung",
+        'Doktor (S3) Studi Islam / Tafsir Hadis Pascasarjana UIN SGD Bandung',
+        'Magister Agama (S2) Pemikiran Islam UIN SGD Bandung',
+        'Sarjana Agama (S1) Fakultas Ushuluddin UIN SGD Bandung',
+      ],
+    experience: isEn
+      ? [
+        'Rector of UIN Sunan Gunung Djati Bandung (2023 - Present)',
+        'Main Pioneer & Institutional Architect of the "Halalsphere University" Paradigm',
+        'Advisory Board Member of LPH UIN Sunan Gunung Djati',
+        'Vice Rector for Academic Affairs, UIN Sunan Gunung Djati Bandung (2019 - 2023)',
+      ]
+      : [
+        'Rektor UIN Sunan Gunung Djati Bandung (2023 - Sekarang)',
+        'Inisiator & Pengarah Utama Paradigma "Halalsphere University"',
+        'Dewan Pembina LPH UIN Sunan Gunung Djati',
+        'Wakil Rektor Bidang Akademik UIN Sunan Gunung Djati Bandung (2019 - 2023)',
+      ],
   },
-{
-  id: 2,
+  {
+    id: 2,
     name: 'Dr. Tri Cahyanto, M.Si.',
-      position: isEn
+    position: isEn
       ? 'Technical Lead of LPH UIN SGD'
-          : 'Pimpinan Teknis LPH UIN SGD',
-        image: '/assets/images/uin_sgd/director_tri.webp',
-          quote: isEn
+      : 'Pimpinan Teknis LPH UIN SGD',
+    image: '/assets/images/uin_sgd/director_tri.webp',
+    quote: isEn
       ? "LPH UIN SGD is committed to delivering swift, transparent, and accountable inspection grounded in Sharia compliance and ISO/IEC 17025 laboratory precision."
-              : "LPH UIN SGD berkomitmen memberikan pelayanan prima, cepat, akuntabel, dan berbasis integritas syar'i serta pengujian laboratorium yang presisi demi melindungi hak konsumen muslim.",
-            education: isEn
-              ? [
-                'Doctor (Ph.D) in Biological Sciences & Applied Life Sciences',
-                'Master of Science (M.Si) in Conservation Biology & Molecular Authentication',
-                'Certified Lead Halal Auditor Licensed by BPJPH Ministry of Religious Affairs & MUI',
-                'Certified Competency Assessor for Halal Product Assurance (JPH)',
-              ]
-              : [
-                'Doktor (S3) Ilmu Biologi & Sains Hayati Terapan',
-                'Magister Sains (S2) Biologi Konservasi & Autentikasi Produk',
-                'Pelatihan & Sertifikasi Lead Auditor Halal Berlisensi BPJPH & MUI',
-                'Sertifikasi Kompetensi Asesor Pengawas Jaminan Produk Halal',
-              ],
-              experience: isEn
-                ? [
-                  'Operational & Technical Lead of LPH UIN Sunan Gunung Djati Bandung',
-                  'Lead Halal Auditor & Assessor Licensed by BPJPH & MUI',
-                  'Senior Lecturer & Researcher in Halal Molecular Bio-Testing',
-                ]
-                : [
-                  'Pimpinan Teknis Operasional LPH UIN Sunan Gunung Djati Bandung',
-                  'Lead Auditor & Asesor Halal Berlisensi Resmi BPJPH & MUI',
-                  'Dosen & Peneliti Laboratorium Pengujian Autentikasi Kehalalan Hayati',
-                ],
+      : "LPH UIN SGD berkomitmen memberikan pelayanan prima, cepat, akuntabel, dan berbasis integritas syar'i serta pengujian laboratorium yang presisi demi melindungi hak konsumen muslim.",
+    education: isEn
+      ? [
+        'Doctor (Ph.D) in Biological Sciences & Applied Life Sciences',
+        'Master of Science (M.Si) in Conservation Biology & Molecular Authentication',
+        'Certified Lead Halal Auditor Licensed by BPJPH Ministry of Religious Affairs & MUI',
+        'Certified Competency Assessor for Halal Product Assurance (JPH)',
+      ]
+      : [
+        'Doktor (S3) Ilmu Biologi & Sains Hayati Terapan',
+        'Magister Sains (S2) Biologi Konservasi & Autentikasi Produk',
+        'Pelatihan & Sertifikasi Lead Auditor Halal Berlisensi BPJPH & MUI',
+        'Sertifikasi Kompetensi Asesor Pengawas Jaminan Produk Halal',
+      ],
+    experience: isEn
+      ? [
+        'Operational & Technical Lead of LPH UIN Sunan Gunung Djati Bandung',
+        'Lead Halal Auditor & Assessor Licensed by BPJPH & MUI',
+        'Senior Lecturer & Researcher in Halal Molecular Bio-Testing',
+      ]
+      : [
+        'Pimpinan Teknis Operasional LPH UIN Sunan Gunung Djati Bandung',
+        'Lead Auditor & Asesor Halal Berlisensi Resmi BPJPH & MUI',
+        'Dosen & Peneliti Laboratorium Pengujian Autentikasi Kehalalan Hayati',
+      ],
   },
 ];
 
@@ -334,7 +333,7 @@ export const HomePage: React.FC = () => {
 
               <p className="text-base sm:text-lg text-[#756D7C] leading-relaxed font-normal">
                 {isEn
-                ? 'Halal Inspection Agency (LPH) UIN Sunan Gunung Djati Bandung is committed to becoming a leading institution in developing national and global halal ecosystems. Accredited by BPJPH Ministry of Religious Affairs, we uphold strict audit standards, precision scientific laboratory testing, and premium services for all business enterprises.'
+                  ? 'Halal Inspection Agency (LPH) UIN Sunan Gunung Djati Bandung is committed to becoming a leading institution in developing national and global halal ecosystems. Accredited by BPJPH Ministry of Religious Affairs, we uphold strict audit standards, precision scientific laboratory testing, and premium services for all business enterprises.'
                   : 'Lembaga Pemeriksa Halal (LPH) UIN Sunan Gunung Djati Bandung berkomitmen untuk menjadi lembaga terdepan dalam pengembangan ekosistem halal nasional dan global. Terakreditasi resmi BPJPH Kementerian Agama RI, kami senantiasa menjaga standar mutu pemeriksaan, pengujian laboratorium saintifik presisi, dan pelayanan prima bagi seluruh pelaku usaha.'}
               </p>
 
@@ -765,225 +764,6 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 5D. PHOTO FEATURE SHOWCASE (Nurhayah-Inspired Real Photography Section) */}
-      <section className="py-20 lg:py-28 bg-white relative overflow-hidden" id="fasilitas-riset">
-        <YellowDotGrid rows={4} cols={5} className="absolute top-10 right-10 opacity-20 pointer-events-none hidden lg:grid" />
-        <YellowDotGrid rows={3} cols={4} className="absolute bottom-10 left-10 opacity-20 pointer-events-none hidden md:grid" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          {/* Part 1: Split Feature with High-Impact Photo Card & Checklist (Nurhayah Style) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center mb-20">
-            {/* Left: Large Photo Feature Card */}
-            <div className="lg:col-span-6 relative min-h-[460px] sm:min-h-[500px] lg:min-h-[540px] rounded-[2.5rem] overflow-hidden border border-[#C9A5E8]/40 shadow-2xl group">
-              <img
-                src="/assets/images/uji-laboratorium.jpg"
-                alt="Laboratorium Pengujian Halal Terpadu LPH UIN SGD"
-                className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700 absolute inset-0"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#190220]/95 via-[#190220]/40 to-transparent" />
-              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#F5D32F] to-transparent" />
-
-              <div className="absolute bottom-6 left-6 right-6 rounded-2xl border border-white/20 bg-black/60 backdrop-blur-xl p-5 sm:p-6 text-white shadow-xl">
-                <p className="text-[#F5D32F] text-[11px] sm:text-xs uppercase tracking-[0.22em] font-black mb-1.5 flex items-center gap-2">
-                  <Sparkles className="w-3.5 h-3.5 text-[#F5D32F]" />
-                  <span>{isEn ? 'ISO/IEC 17025 ACCREDITED' : 'AKREDITASI ISO/IEC 17025 & BPJPH'}</span>
-                </p>
-                <h4 className="text-white text-lg sm:text-2xl font-black leading-tight">
-                  {isEn
-                    ? 'High-Precision Scientific Testing & Molecular Authentication'
-                    : 'Pengujian Saintifik Presisi Tinggi & Autentikasi Hayati'}
-                </h4>
-                <p className="text-neutral-300 text-xs sm:text-sm mt-2 leading-relaxed font-normal">
-                  {isEn
-                    ? 'Real-Time qPCR instrumentation for porcine DNA detection and GC-FID for micro-level ethanol residue verification.'
-                    : 'Instrumen qPCR Real-Time untuk deteksi DNA porcine dan GC-FID guna verifikasi residu etanol berkadar mikro.'}
-                </p>
-              </div>
-            </div>
-
-            {/* Right: Narrative & 2x2 Feature Checklist Grid */}
-            <div className="lg:col-span-6">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] text-xs font-black uppercase tracking-wider mb-6 shadow-xs">
-                <Microscope className="w-4 h-4 text-[#eab308]" />
-                <span>{isEn ? 'Scientific Facilities & Research' : 'Fasilitas & Keunggulan Saintifik'}</span>
-              </div>
-
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#292333] tracking-tight leading-tight mb-6">
-                {isEn ? (
-                  <>Sharia Integrity Backed by <span className="text-[#6B18A8]">Modern Science Precision</span></>
-                ) : (
-                  <>Integritas Syar’i Didukung <span className="text-[#6B18A8]">Akurasi Sains Modern</span></>
-                )}
-              </h2>
-
-              <p className="text-[#756D7C] text-sm sm:text-base leading-relaxed mb-8">
-                {isEn
-                  ? 'LPH UIN Sunan Gunung Djati Bandung integrates religious rulings with state-of-the-art bio-molecular research at our Campus 2 Gedebage facility. Designed to provide unequivocal assurance, our accredited laboratories safeguard consumers and elevate industrial compliance across food, pharmaceuticals, and cosmetics.'
-                  : 'LPH UIN Sunan Gunung Djati Bandung memadukan ketetapan syariah dengan riset bio-molekuler mutakhir di Kampus 2 Gedebage. Laboratorium terakreditasi kami memberikan kepastian hukum yang kokoh, melindungi hak konsumen muslim, serta memperkuat kepatuhan regulasi industri pangan, farmasi, dan kosmetik secara komprehensif.'}
-              </p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {[
-                  {
-                    icon: Microscope,
-                    title: isEn ? 'Real-Time qPCR Porcine DNA' : 'Deteksi Real-Time qPCR DNA Babi',
-                    desc: isEn
-                      ? 'High sensitivity detection identifying specific porcine DNA targets in processed meat and gelatin.'
-                      : 'Sensitivitas tinggi mengidentifikasi fragmen DNA spesifik babi pada olahan daging dan pangan.',
-                  },
-                  {
-                    icon: FlaskConical,
-                    title: isEn ? 'Ethanol & Alcohol GC-FID' : 'Uji Cemaran Etanol (GC-FID)',
-                    desc: isEn
-                      ? 'Gas chromatography verifying alcohol concentration remains safely below the 0.5% fatwa threshold.'
-                      : 'Kromatografi gas memastikan kadar alkohol pelarut berada di bawah batas toleransi fatwa 0,5%.',
-                  },
-                  {
-                    icon: ShieldCheck,
-                    title: isEn ? 'Fatty Acid & Gelatin Analysis' : 'Analisis Lemak & Profil Gelatin',
-                    desc: isEn
-                      ? 'Advanced spectroscopic and chromatographic differentiation of animal fat origins and capsule sources.'
-                      : 'Diferensiasi spektroskopi presisi membedakan asal lemak hewani dan sumber gelatin cangkang kapsul.',
-                  },
-                  {
-                    icon: Users,
-                    title: isEn ? 'Licensed Senior Halal Auditors' : 'Tim Saintis & Auditor Berlisensi',
-                    desc: isEn
-                      ? 'Collaborative synergy between senior bio-molecular researchers and certified BPJPH & MUI auditors.'
-                      : 'Kolaborasi saintis hayati bergelar doktor dan auditor halal bersertifikasi nasional BPJPH & MUI.',
-                  },
-                ].map((item, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-start gap-3.5 rounded-2xl border border-[#C9A5E8]/35 bg-[#FAF7FD] p-4 sm:p-5 shadow-xs hover:border-[#6B18A8]/60 hover:shadow-md transition-all group"
-                  >
-                    <div className="w-10 h-10 rounded-xl bg-white text-[#6B18A8] border border-[#C9A5E8]/40 flex items-center justify-center shrink-0 group-hover:bg-[#6B18A8] group-hover:text-white transition-colors shadow-2xs">
-                      <item.icon className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h4 className="font-extrabold text-[#292333] text-sm leading-snug">
-                        {item.title}
-                      </h4>
-                      <p className="text-xs text-[#756D7C] mt-1 leading-relaxed">
-                        {item.desc}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-8 flex flex-wrap gap-4 pt-2">
-                <Link to="/layanan/kalkulator">
-                  <Button
-                    variant="primary"
-                    className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-extrabold text-xs sm:text-sm px-6 py-3 rounded-xl shadow-md shadow-purple-950/15 inline-flex items-center gap-2 cursor-pointer transition-all hover:scale-[1.02]"
-                  >
-                    <span>{isEn ? 'Calculate Certification Cost' : 'Simulasi Biaya Sertifikasi'}</span>
-                    <ArrowRight className="w-4 h-4 text-[#F5D32F]" />
-                  </Button>
-                </Link>
-                <Link to="/tentang">
-                  <Button
-                    variant="secondary"
-                    className="border border-[#C9A5E8]/60 bg-white hover:bg-[#FAF7FD] text-[#292333] hover:text-[#6B18A8] font-bold text-xs sm:text-sm px-6 py-3 rounded-xl shadow-xs inline-flex items-center gap-2 cursor-pointer transition-colors"
-                  >
-                    <span>{isEn ? 'Explore Lab Credentials' : 'Pelajari Akreditasi Lab'}</span>
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* Part 2: 3-Card Photo Showcase Grid (Nurhayah Card Grid Style) */}
-          <div className="pt-6 border-t border-purple-100">
-            <div className="text-center max-w-2xl mx-auto mb-10">
-              <span className="inline-block px-3.5 py-1 rounded-full text-xs font-bold bg-[#F5EDFB] text-[#6B18A8] border border-[#C9A5E8]/40 uppercase tracking-wider mb-2">
-                {isEn ? 'AUTHENTIC DOCUMENTATION' : 'DOKUMENTASI & KIPRAH LAPANGAN'}
-              </span>
-              <h3 className="text-2xl sm:text-3xl font-black text-[#292333] tracking-tight">
-                {isEn
-                  ? 'Field Audit Operations & Excellence Facilities'
-                  : 'Aktivitas Audit Saintifik & Pusat Keunggulan Halal'}
-              </h3>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-              {[
-                {
-                  img: '/assets/images/pemeriksaaan-kehalalan-produk.jpg',
-                  icon: ShieldCheck,
-                  badge: isEn ? 'ON-SITE AUDIT' : 'AUDIT LAPANGAN REGULER',
-                  title: isEn ? 'Industrial Facility & Production Audit' : 'Pemeriksaan Fasilitas & Proses Produksi',
-                  desc: isEn
-                    ? 'Direct on-site evaluations at manufacturing plants verifying ingredient traceability and Halal Assurance Systems (SJPH).'
-                    : 'Evaluasi langsung di lini manufaktur memastikan pemenuhan kriteria SJPH, ketertelusuran bahan, dan bebas kontaminasi.',
-                  link: '/layanan/kalkulator',
-                },
-                {
-                  img: '/assets/images/hero_tentang.jpg',
-                  icon: Building,
-                  badge: isEn ? 'CAMPUS 2 HUB' : 'SENTRA RISET KAMPUS 2',
-                  title: isEn ? 'Integrated Research Lab (Gedebage)' : 'Gedung Riset & Laboratorium Terpadu',
-                  desc: isEn
-                    ? 'State-of-the-art campus testing hub in Gedebage Bandung featuring high throughput capacity for thousands of monthly industrial samples.'
-                    : 'Sentra riset kehalalan tingkat lanjut di Gedebage Bandung dengan kapasitas pengujian ribuan sampel industri per bulan.',
-                  link: '/tentang',
-                },
-                {
-                  img: '/assets/images/beranda_004.jpg',
-                  icon: GraduationCap,
-                  badge: isEn ? 'HUMAN CAPITAL' : 'KOMPETENSI AUDITOR & SDM',
-                  title: isEn ? 'Auditor & Supervisor Competence Training' : 'Penguatan Kapasitas Auditor & Penyelia',
-                  desc: isEn
-                    ? 'Structured national competency coaching for halal auditors, Sharia compliance assessors, and professional halal slaughterers (JULEHA).'
-                    : 'Pendidikan dan pembinaan berkelanjutan bagi auditor halal, asesor kepatuhan syariah, dan juru sembelih halal bersertifikat.',
-                  link: '/layanan',
-                },
-              ].map((card, i) => (
-                <div
-                  key={i}
-                  className="group relative min-h-[420px] rounded-[2rem] overflow-hidden border border-[#C9A5E8]/40 bg-[#190220] shadow-xl flex flex-col justify-end"
-                >
-                  <img
-                    src={card.img}
-                    alt={card.title}
-                    className="absolute inset-0 w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#190220] via-[#190220]/60 to-black/10" />
-                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#F5D32F] to-transparent" />
-
-                  <div className="relative z-10 p-7 sm:p-8 flex flex-col justify-end">
-                    <div className="w-12 h-12 rounded-2xl bg-[#6B18A8]/90 text-white border border-[#F5D32F]/50 flex items-center justify-center mb-4 shadow-lg shadow-purple-950/40">
-                      <card.icon className="w-6 h-6 text-[#F5D32F]" />
-                    </div>
-
-                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#F5D32F] mb-1">
-                      {card.badge}
-                    </span>
-
-                    <h4 className="text-xl font-bold text-white mb-2 leading-snug">
-                      {card.title}
-                    </h4>
-
-                    <p className="text-neutral-300 text-xs sm:text-sm leading-relaxed line-clamp-3 mb-4 font-normal">
-                      {card.desc}
-                    </p>
-
-                    <Link
-                      to={card.link}
-                      className="text-xs font-bold text-[#F5D32F] hover:underline inline-flex items-center gap-1.5"
-                    >
-                      <span>{isEn ? 'Explore Details' : 'Pelajari Selengkapnya'}</span>
-                      <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* 6. DUAL LEADERSHIP SHOWCASE (Both Leaders Displayed Directly with Alternating Layout) */}
       <section className="py-20 lg:py-28 bg-[#FAF7FD] border-y border-[#C9A5E8]/30 relative overflow-visible" id="pimpinan">
         <YellowDotGrid rows={4} cols={5} className="absolute top-10 left-10 opacity-20 pointer-events-none hidden lg:grid" />
@@ -1396,29 +1176,29 @@ export const HomePage: React.FC = () => {
                   ]
                     .slice((articlePage - 1) * 3, articlePage * 3)
                     .map((article, i) => (
-                    <motion.div
-                      key={i}
-                      whileHover={{ y: -6 }}
-                      transition={{ duration: 0.25 }}
-                      className="rounded-3xl border border-neutral-200/80 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all flex flex-col justify-between"
-                    >
-                      <img src={article.img} alt={article.title} className="w-full h-48 object-cover" />
-                      <div className="p-6">
-                        <span className={`text-[11px] font-black uppercase tracking-wider ${article.catColor}`}>
-                          {article.cat}
-                        </span>
-                        <h3 className="font-extrabold text-lg text-neutral-900 mt-2 mb-2 line-clamp-2">
-                          {article.title}
-                        </h3>
-                        <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed mb-4">
-                          {article.desc}
-                        </p>
-                        <Link to={article.link} className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
-                          {isEn ? 'Read Now' : 'Baca Sekarang'} <ArrowRight className="w-3.5 h-3.5" />
-                        </Link>
-                      </div>
-                    </motion.div>
-                  ))}
+                      <motion.div
+                        key={i}
+                        whileHover={{ y: -6 }}
+                        transition={{ duration: 0.25 }}
+                        className="rounded-3xl border border-neutral-200/80 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all flex flex-col justify-between"
+                      >
+                        <img src={article.img} alt={article.title} className="w-full h-48 object-cover" />
+                        <div className="p-6">
+                          <span className={`text-[11px] font-black uppercase tracking-wider ${article.catColor}`}>
+                            {article.cat}
+                          </span>
+                          <h3 className="font-extrabold text-lg text-neutral-900 mt-2 mb-2 line-clamp-2">
+                            {article.title}
+                          </h3>
+                          <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed mb-4">
+                            {article.desc}
+                          </p>
+                          <Link to={article.link} className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
+                            {isEn ? 'Read Now' : 'Baca Sekarang'} <ArrowRight className="w-3.5 h-3.5" />
+                          </Link>
+                        </div>
+                      </motion.div>
+                    ))}
                 </div>
               )}
 
@@ -1495,29 +1275,29 @@ export const HomePage: React.FC = () => {
                   ]
                     .slice((articlePage - 1) * 3, articlePage * 3)
                     .map((article, i) => (
-                    <motion.div
-                      key={i}
-                      whileHover={{ y: -6 }}
-                      transition={{ duration: 0.25 }}
-                      className="rounded-3xl border border-neutral-200/80 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all"
-                    >
-                      <img src={article.img} alt={article.title} className="w-full h-48 object-cover" />
-                      <div className="p-6">
-                        <span className="text-[11px] font-black text-[#6b1282] uppercase tracking-wider">
-                          {article.cat}
-                        </span>
-                        <h3 className="font-extrabold text-lg text-neutral-900 mt-2 mb-2 line-clamp-2">
-                          {article.title}
-                        </h3>
-                        <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed mb-4">
-                          {article.desc}
-                        </p>
-                        <Link to={article.link} className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
-                          {isEn ? 'Read Now' : 'Baca Sekarang'} <ArrowRight className="w-3.5 h-3.5" />
-                        </Link>
-                      </div>
-                    </motion.div>
-                  ))}
+                      <motion.div
+                        key={i}
+                        whileHover={{ y: -6 }}
+                        transition={{ duration: 0.25 }}
+                        className="rounded-3xl border border-neutral-200/80 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all"
+                      >
+                        <img src={article.img} alt={article.title} className="w-full h-48 object-cover" />
+                        <div className="p-6">
+                          <span className="text-[11px] font-black text-[#6b1282] uppercase tracking-wider">
+                            {article.cat}
+                          </span>
+                          <h3 className="font-extrabold text-lg text-neutral-900 mt-2 mb-2 line-clamp-2">
+                            {article.title}
+                          </h3>
+                          <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed mb-4">
+                            {article.desc}
+                          </p>
+                          <Link to={article.link} className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
+                            {isEn ? 'Read Now' : 'Baca Sekarang'} <ArrowRight className="w-3.5 h-3.5" />
+                          </Link>
+                        </div>
+                      </motion.div>
+                    ))}
                 </div>
               )}
 
@@ -1738,11 +1518,10 @@ export const HomePage: React.FC = () => {
                     <Pagination.Link
                       isActive={p === articlePage}
                       onPress={() => setArticlePage(p)}
-                      className={`cursor-pointer w-9 h-9 flex items-center justify-center text-xs font-bold rounded-xl transition-all ${
-                        p === articlePage
-                          ? 'bg-[#6B18A8] text-white shadow-md shadow-purple-950/25 font-black border border-[#6B18A8]'
-                          : 'bg-white border border-neutral-200 text-neutral-700 hover:bg-[#FAF7FD] hover:text-[#6B18A8] hover:border-[#C9A5E8]'
-                      }`}
+                      className={`cursor-pointer w-9 h-9 flex items-center justify-center text-xs font-bold rounded-xl transition-all ${p === articlePage
+                        ? 'bg-[#6B18A8] text-white shadow-md shadow-purple-950/25 font-black border border-[#6B18A8]'
+                        : 'bg-white border border-neutral-200 text-neutral-700 hover:bg-[#FAF7FD] hover:text-[#6B18A8] hover:border-[#C9A5E8]'
+                        }`}
                     >
                       {p}
                     </Pagination.Link>
@@ -1798,8 +1577,8 @@ export const HomePage: React.FC = () => {
                 type="button"
                 onClick={() => setSelectedBranch(idx)}
                 className={`px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${selectedBranch === idx
-                    ? 'bg-[#6B18A8] text-white shadow-sm ring-2 ring-[#F5D32F]'
-                    : 'bg-white text-neutral-600 hover:text-[#6B18A8] border border-neutral-200 hover:border-[#C9A5E8] shadow-2xs'
+                  ? 'bg-[#6B18A8] text-white shadow-sm ring-2 ring-[#F5D32F]'
+                  : 'bg-white text-neutral-600 hover:text-[#6B18A8] border border-neutral-200 hover:border-[#C9A5E8] shadow-2xs'
                   }`}
               >
                 {branch.shortName}
