@@ -549,7 +549,7 @@ export const HomePage: React.FC = () => {
       <section className="py-20 lg:py-28 bg-[#FAF7FD] border-y border-[#C9A5E8]/30 relative overflow-visible" id="pimpinan">
         <YellowDotGrid rows={4} cols={5} className="absolute top-10 left-10 opacity-20 pointer-events-none hidden lg:grid" />
         <YellowDotGrid rows={3} cols={4} className="absolute bottom-10 right-10 opacity-20 pointer-events-none hidden md:grid" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="w-full max-w-[1440px] xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-10 relative z-10">
           <SectionHeader
             badge={isEn ? "EXECUTIVE BOARD & PATRON" : "DEWAN PIMPINAN & PEMBINA"}
             badgeColor="yellow"
@@ -559,14 +559,14 @@ export const HomePage: React.FC = () => {
               : "Sinergi visi strategis universitas dan keahlian riset sains hayati untuk mengawal mutu pemeriksaan halal, akuntabilitas laboratorium ISO 17025, dan kemaslahatan industri bagi umat."}
           />
 
-          <div className="mt-16 lg:mt-24 space-y-16 lg:space-y-28">
+          <div className="mt-24 lg:mt-36 space-y-28 lg:space-y-48">
             {/* CARD 1: DEWAN PEMBINA (Prof. Dr. H. Rosihon Anwar) - Left: Content, Right: Portrait Pop-Out */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="group relative rounded-3xl border border-[#C9A5E8]/50 bg-white overflow-visible shadow-xl shadow-purple-950/5 hover:shadow-2xl hover:border-[#6B18A8]/60 transition-all duration-300 p-6 sm:p-10 lg:p-12 xl:p-14"
+              className="group relative rounded-3xl border border-[#C9A5E8]/50 bg-white overflow-visible shadow-xl shadow-purple-950/5 hover:shadow-2xl hover:border-[#6B18A8]/60 transition-all duration-300 p-6 sm:p-10 lg:p-12 xl:p-14 w-full"
             >
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                 {/* Left (7 cols): Content & Institutional Vision */}
@@ -615,21 +615,21 @@ export const HomePage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Right (5 cols): Cutout Portrait with Pop-Out Head Breaking Card Top Border */}
-                <div className="lg:col-span-5 flex flex-col items-center justify-end relative pt-4 lg:pt-0 lg:-mt-24 xl:-mt-28 lg:-mb-12 xl:-mb-14 z-20">
-                  <div className="relative w-full max-w-sm flex flex-col items-center">
+                {/* Right (5 cols): Cutout Portrait with Bold Pop-Out Head Breaking Card Top Border */}
+                <div className="lg:col-span-5 flex flex-col items-center justify-end relative pt-6 lg:pt-0 lg:-mt-44 xl:-mt-52 lg:-mb-12 xl:-mb-14 z-20">
+                  <div className="relative w-full max-w-[340px] sm:max-w-md lg:max-w-[420px] flex flex-col items-center">
                     {/* Ambient Glow Aura behind head */}
-                    <div className="absolute inset-x-4 top-2 h-72 sm:h-80 bg-gradient-to-t from-purple-200/50 via-[#F5EDFB]/40 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
+                    <div className="absolute inset-x-4 top-0 h-72 sm:h-84 bg-gradient-to-t from-purple-200/50 via-[#F5EDFB]/40 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
 
                     {/* Decorative yellow dot grid next to the popped-out head */}
-                    <div className="absolute -top-4 -right-2 opacity-50 pointer-events-none hidden lg:block">
+                    <div className="absolute -top-6 -right-2 opacity-50 pointer-events-none hidden lg:block">
                       <YellowDotGrid rows={3} cols={3} dotColor="#F5D32F" />
                     </div>
 
                     <img
                       src={directors[0].image}
                       alt={directors[0].name}
-                      className="relative z-10 w-auto max-h-[380px] sm:max-h-[440px] lg:max-h-[480px] xl:max-h-[520px] object-contain drop-shadow-[0_25px_30px_rgba(75,13,120,0.22)] transition-transform duration-500 group-hover:scale-105"
+                      className="relative z-10 w-auto max-h-[420px] sm:max-h-[480px] lg:max-h-[520px] xl:max-h-[560px] object-contain drop-shadow-[0_25px_35px_rgba(75,13,120,0.25)] transition-transform duration-500 group-hover:scale-105"
                     />
 
                     {/* Floating Name Card anchored at bottom of portrait */}
@@ -652,24 +652,24 @@ export const HomePage: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="group relative rounded-3xl border border-[#F5D32F]/60 bg-white overflow-visible shadow-xl shadow-purple-950/5 hover:shadow-2xl hover:border-[#F5D32F] transition-all duration-300 p-6 sm:p-10 lg:p-12 xl:p-14"
+              className="group relative rounded-3xl border border-[#F5D32F]/60 bg-white overflow-visible shadow-xl shadow-purple-950/5 hover:shadow-2xl hover:border-[#F5D32F] transition-all duration-300 p-6 sm:p-10 lg:p-12 xl:p-14 w-full"
             >
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-                {/* Left on Desktop (5 cols): Cutout Portrait with Pop-Out Head Breaking Card Top Border */}
-                <div className="lg:col-span-5 flex flex-col items-center justify-end relative pt-4 lg:pt-0 order-2 lg:order-1 lg:-mt-24 xl:-mt-28 lg:-mb-12 xl:-mb-14 z-20">
-                  <div className="relative w-full max-w-sm flex flex-col items-center">
+                {/* Left on Desktop (5 cols): Cutout Portrait with Bold Pop-Out Head Breaking Card Top Border */}
+                <div className="lg:col-span-5 flex flex-col items-center justify-end relative pt-6 lg:pt-0 order-2 lg:order-1 lg:-mt-36 xl:-mt-44 lg:-mb-12 xl:-mb-14 z-20">
+                  <div className="relative w-full max-w-[340px] sm:max-w-md lg:max-w-[420px] flex flex-col items-center">
                     {/* Ambient Glow Aura behind head */}
-                    <div className="absolute inset-x-4 top-2 h-72 sm:h-80 bg-gradient-to-t from-yellow-200/40 via-[#FFF7D1]/30 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
+                    <div className="absolute inset-x-4 top-0 h-72 sm:h-84 bg-gradient-to-t from-yellow-200/40 via-[#FFF7D1]/30 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
 
                     {/* Decorative yellow dot grid next to the popped-out head */}
-                    <div className="absolute -top-4 -left-2 opacity-50 pointer-events-none hidden lg:block">
+                    <div className="absolute -top-6 -left-2 opacity-50 pointer-events-none hidden lg:block">
                       <YellowDotGrid rows={3} cols={3} dotColor="#F5D32F" />
                     </div>
 
                     <img
                       src={directors[1].image}
                       alt={directors[1].name}
-                      className="relative z-10 w-auto max-h-[380px] sm:max-h-[440px] lg:max-h-[480px] xl:max-h-[520px] object-contain drop-shadow-[0_25px_30px_rgba(113,63,18,0.20)] transition-transform duration-500 group-hover:scale-105"
+                      className="relative z-10 w-auto max-h-[420px] sm:max-h-[480px] lg:max-h-[520px] xl:max-h-[560px] object-contain drop-shadow-[0_25px_35px_rgba(113,63,18,0.22)] transition-transform duration-500 group-hover:scale-105"
                     />
 
                     {/* Floating Name Card anchored at bottom of portrait */}
