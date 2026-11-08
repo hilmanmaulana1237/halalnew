@@ -530,35 +530,19 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 5B. CERTIFICATION JOURNEY TIMELINE (Full-Section Background Image with Dark Overlay) */}
-      <section className="py-24 relative overflow-hidden bg-[#0F0214]" id="alur-sertifikasi">
-        {/* Real Photography Background with Grayscale & Low Opacity */}
-        <img
-          src="/assets/images/pemeriksaaan-kehalalan-produk.jpg"
-          alt="Alur Sertifikasi Halal LPH UIN SGD"
-          className="absolute inset-0 w-full h-full object-cover grayscale opacity-25 pointer-events-none"
-        />
-
-        {/* Deep Royal Purple Dark Gradient Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0F0214] via-[#16031F]/95 to-[#240430]/90 pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(245,211,47,0.16),transparent_42%)] pointer-events-none" />
-
-        {/* Decorative Yellow Dot Grids */}
-        <YellowDotGrid rows={4} cols={5} className="absolute top-10 right-10 opacity-20 pointer-events-none hidden lg:grid" />
-        <YellowDotGrid rows={3} cols={4} className="absolute bottom-10 left-10 opacity-15 pointer-events-none hidden md:grid" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* 5B. CERTIFICATION JOURNEY TIMELINE (Crisp Pure White) */}
+      <section className="py-24 bg-white" id="alur-sertifikasi">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             badge={isEn ? "OFFICIAL PROCEDURAL FLOW" : "ALUR PROSEDUR RESMI"}
-            badgeColor="yellow"
-            theme="dark"
+            badgeColor="amber"
             title={isEn ? "4 Easy Steps to Halal Certification at LPH UIN SGD" : "Alur 4 Langkah Mudah Sertifikasi Halal di LPH UIN SGD"}
             subtitle={isEn
               ? "Transparent, swift, and accountable guidance from SIHALAL registration, document audit, and laboratory testing to official BPJPH certificate issuance."
               : "Panduan transparan, cepat, dan akuntabel dari pengajuan SIHALAL, verifikasi berkas, audit lapangan & laboratorium, hingga terbit sertifikat halal resmi BPJPH."}
           />
 
-          <TimelineSteps theme="dark" />
+          <TimelineSteps />
         </div>
       </section>
 
