@@ -323,12 +323,12 @@ export const PriceCalculatorPage: React.FC = () => {
                         </span>
                       </div>
 
-                      <div className="p-5 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/40 shadow-sm">
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs font-bold text-[#6B18A8] uppercase">
+                      <div className="p-4 sm:p-5 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/40 shadow-sm">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-xs font-bold text-[#6B18A8] uppercase truncate">
                             {t('calc_uin_estimate')}
                           </span>
-                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-[#F5D32F] text-[#3B074A] shadow-xs">
+                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-[#F5D32F] text-[#3B074A] shadow-xs shrink-0 whitespace-nowrap">
                             {t('calc_save')} {result.savingsPercent}%
                           </span>
                         </div>

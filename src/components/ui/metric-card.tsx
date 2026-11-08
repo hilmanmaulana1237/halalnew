@@ -57,7 +57,7 @@ export const MetricCard: React.FC<MetricCardProps> = ({
       whileHover={{ y: -6, scale: 1.015 }}
       transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
-        "relative flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-white border border-[#C9A5E8]/50 hover:border-[#6B18A8] shadow-md shadow-purple-950/5 hover:shadow-xl hover:shadow-purple-950/10 transition-all duration-300 min-h-[225px] sm:min-h-[235px] overflow-hidden group",
+        "relative flex flex-col justify-between p-4.5 sm:p-7 rounded-3xl bg-white border border-[#C9A5E8]/50 hover:border-[#6B18A8] shadow-md shadow-purple-950/5 hover:shadow-xl hover:shadow-purple-950/10 transition-all duration-300 min-h-[210px] sm:min-h-[235px] overflow-hidden group",
         className
       )}
     >
@@ -67,13 +67,13 @@ export const MetricCard: React.FC<MetricCardProps> = ({
       </div>
 
       {/* Top Bar: Icon and Change Badge */}
-      <div className="flex items-center justify-between mb-4">
-        <div className="w-12 h-12 rounded-2xl bg-[#F5EDFB] text-[#6B18A8] border border-[#C9A5E8]/60 flex items-center justify-center shadow-xs group-hover:scale-110 group-hover:bg-[#FFF7D1] group-hover:text-[#6B18A8] transition-all duration-300">
+      <div className="flex items-center justify-between gap-2 mb-4">
+        <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#F5EDFB] text-[#6B18A8] border border-[#C9A5E8]/60 flex items-center justify-center shadow-xs shrink-0 group-hover:scale-110 group-hover:bg-[#FFF7D1] group-hover:text-[#6B18A8] transition-all duration-300">
           {icon}
         </div>
 
         {change && (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] shadow-2xs">
+          <span className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full text-[11px] sm:text-xs font-bold bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] shadow-2xs shrink-0 whitespace-nowrap">
             <span className="w-1.5 h-1.5 rounded-full bg-[#F5D32F]" />
             {change}
           </span>

@@ -48,7 +48,7 @@ export const BentoGridItem = ({
       transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
       onClick={onClick}
       className={cn(
-        "relative rounded-3xl p-6 sm:p-7 bg-white border border-[#C9A5E8]/40 hover:border-[#6B18A8] shadow-sm hover:shadow-xl shadow-purple-950/5 hover:shadow-purple-950/10 transition-all duration-300 justify-between flex flex-col space-y-4 cursor-pointer overflow-hidden backdrop-blur-sm group/bento",
+        "relative rounded-3xl p-5 sm:p-7 bg-white border border-[#C9A5E8]/40 hover:border-[#6B18A8] shadow-sm hover:shadow-xl shadow-purple-950/5 hover:shadow-purple-950/10 transition-all duration-300 justify-between flex flex-col space-y-4 cursor-pointer overflow-hidden backdrop-blur-sm group/bento",
         className
       )}
     >
@@ -58,11 +58,11 @@ export const BentoGridItem = ({
       </div>
 
       <div>
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between gap-2 mb-4">
           {badge && (
             <span
               className={cn(
-                "px-3.5 py-1 rounded-full text-xs font-bold border tracking-wide uppercase shadow-2xs",
+                "px-2.5 sm:px-3.5 py-1 rounded-full text-[11px] sm:text-xs font-bold border tracking-wide uppercase shadow-2xs shrink-0 whitespace-nowrap",
                 badgeColor === "yellow"
                   ? "bg-[#FFF7D1] text-[#713f12] border-[#F5D32F]"
                   : "bg-[#F5EDFB] text-[#6B18A8] border-[#C9A5E8]/80"
@@ -75,7 +75,7 @@ export const BentoGridItem = ({
         </div>
 
         <div className="mb-3.5">
-          <div className="w-12 h-12 rounded-2xl bg-[#F5EDFB] group-hover/bento:bg-[#FFF7D1] shadow-xs border border-[#C9A5E8]/60 flex items-center justify-center text-[#6B18A8] group-hover/bento:scale-110 group-hover/bento:rotate-2 transition-all duration-300">
+          <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#F5EDFB] group-hover/bento:bg-[#FFF7D1] shadow-xs border border-[#C9A5E8]/60 flex items-center justify-center text-[#6B18A8] group-hover/bento:scale-110 group-hover/bento:rotate-2 transition-all duration-300 shrink-0">
             {icon}
           </div>
         </div>

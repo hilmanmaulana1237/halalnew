@@ -78,9 +78,9 @@ export const HeroVideoBanner: React.FC = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs sm:text-sm font-bold mb-6 shadow-xl"
+          className="inline-flex items-center justify-center flex-wrap gap-1.5 sm:gap-2.5 px-3.5 sm:px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-[11px] sm:text-sm font-bold mb-6 shadow-xl max-w-full"
         >
-          <span className="flex h-2.5 w-2.5 relative">
+          <span className="flex h-2.5 w-2.5 relative shrink-0">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F5D32F] opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#F5D32F]"></span>
           </span>
@@ -132,13 +132,13 @@ export const HeroVideoBanner: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-8 flex flex-wrap items-center justify-center gap-4"
+          className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4"
         >
           {/* Primary CTA (Vibrant Yellow) */}
           <Link to="/layanan/kalkulator">
             <Button
               variant="primary"
-              className="h-12 bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold text-sm px-7 rounded-2xl shadow-xl shadow-yellow-500/25 transition-all flex items-center gap-2 hover:scale-105 active:scale-98 cursor-pointer"
+              className="h-11 sm:h-12 bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold text-xs sm:text-sm px-5 sm:px-7 rounded-2xl shadow-xl shadow-yellow-500/25 transition-all flex items-center gap-2 hover:scale-105 active:scale-98 cursor-pointer"
             >
               <span>{t('hero_cta_calc')}</span>
               <ArrowRight className="w-4 h-4" />
@@ -149,7 +149,7 @@ export const HeroVideoBanner: React.FC = () => {
           <Link to="/tentang">
             <Button
               variant="primary"
-              className="h-12 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 font-bold text-sm px-7 rounded-2xl shadow-md transition-all flex items-center gap-2 hover:scale-105 active:scale-98 cursor-pointer"
+              className="h-11 sm:h-12 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 font-bold text-xs sm:text-sm px-5 sm:px-7 rounded-2xl shadow-md transition-all flex items-center gap-2 hover:scale-105 active:scale-98 cursor-pointer"
             >
               <ShieldCheck className="w-4 h-4 text-[#F5D32F]" />
               <span>{t('hero_cta_profile')}</span>
@@ -166,31 +166,31 @@ export const HeroVideoBanner: React.FC = () => {
         className="relative z-20 max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-6 sm:pb-8"
       >
         <div className="relative rounded-3xl p-[1.5px] bg-gradient-to-r from-[#6B18A8]/40 via-[#F5D32F]/70 to-[#6B18A8]/40 shadow-2xl shadow-purple-950/25">
-          <div className="bg-white rounded-[22px] p-5 sm:p-7 shadow-lg border border-[#C9A5E8]/30">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
-              <div className="flex items-center gap-3">
-                <div className="w-11 h-11 rounded-2xl bg-[#F5EDFB] text-[#6B18A8] border border-[#C9A5E8]/60 flex items-center justify-center shadow-xs">
+          <div className="bg-white rounded-[22px] p-4 sm:p-7 shadow-lg border border-[#C9A5E8]/30">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 mb-5">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-[#F5EDFB] text-[#6B18A8] border border-[#C9A5E8]/60 flex items-center justify-center shadow-xs shrink-0">
                   <Search className="w-5 h-5 text-[#6B18A8]" />
                 </div>
-                <div>
-                  <h3 className="text-base sm:text-lg font-extrabold text-[#292333]">
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-sm sm:text-base lg:text-lg font-extrabold text-[#292333] leading-snug">
                     {t('search_title')}
                   </h3>
-                  <span className="text-xs font-medium text-[#756D7C]">
+                  <span className="text-xs font-medium text-[#756D7C] block mt-0.5">
                     {t('search_subtitle')}
                   </span>
                 </div>
               </div>
 
               {/* Quick tags in Yellow & Purple */}
-              <div className="flex items-center gap-1.5 flex-wrap">
-                <span className="text-xs font-semibold text-neutral-400">{t('search_popular')}</span>
+              <div className="flex items-center gap-1.5 flex-wrap pt-2.5 sm:pt-0 border-t sm:border-t-0 border-[#C9A5E8]/20">
+                <span className="text-xs font-semibold text-neutral-400 shrink-0">{t('search_popular')}</span>
                 {(language === 'en' ? ['Coffee', 'Bread', 'Cosmetics', 'Meat'] : ['Kopi', 'Roti', 'Kosmetik', 'Daging']).map((tag) => (
                   <button
                     key={tag}
                     type="button"
                     onClick={() => quickSearch(tag)}
-                    className="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-[#FAF7FD] hover:bg-[#FFF7D1] text-[#6B18A8] hover:text-[#713f12] border border-[#C9A5E8]/40 hover:border-[#F5D32F] transition-colors cursor-pointer"
+                    className="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-[#FAF7FD] hover:bg-[#FFF7D1] text-[#6B18A8] hover:text-[#713f12] border border-[#C9A5E8]/40 hover:border-[#F5D32F] transition-colors cursor-pointer shrink-0"
                   >
                     #{tag}
                   </button>

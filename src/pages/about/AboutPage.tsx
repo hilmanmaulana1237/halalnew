@@ -381,11 +381,11 @@ export const AboutPage: React.FC = () => {
                 </Modal.Header>
 
                 <Modal.Body className="py-6 space-y-5 max-h-[70vh] overflow-y-auto">
-                  <div className="flex gap-4 items-center bg-[#FAF7FD] p-4 rounded-2xl border border-[#C9A5E8]/30">
+                  <div className="flex flex-col sm:flex-row gap-4 items-center sm:items-start bg-[#FAF7FD] p-4 rounded-2xl border border-[#C9A5E8]/30">
                     <img
                       src={selectedDirector.image}
                       alt={selectedDirector.name}
-                      className="w-20 h-20 rounded-xl object-cover border border-[#C9A5E8]/50 shadow-xs"
+                      className="w-20 h-20 rounded-xl object-cover border border-[#C9A5E8]/50 shadow-xs shrink-0"
                     />
                     <p className="text-xs sm:text-sm text-neutral-700 italic leading-relaxed">
                       "{selectedDirector.quote}"

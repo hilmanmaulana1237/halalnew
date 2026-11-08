@@ -380,46 +380,46 @@ export const ChatbotWidget: React.FC = () => {
             <div className="h-1.5 w-full bg-gradient-to-r from-[#4B0D78] via-[#6B18A8] via-[#F5D32F] to-[#6B18A8]" />
 
             {/* Header: Pure White with Royal Purple Branding & Yellow Badge */}
-            <div className="bg-white px-5 py-3.5 border-b border-purple-100/90 flex items-center justify-between shadow-xs">
-              <div className="flex items-center gap-3">
-                <div className="relative w-10 h-10 rounded-2xl bg-gradient-to-br from-[#6B18A8] to-[#4B0D78] flex items-center justify-center text-white shadow-md shadow-purple-900/20">
-                  <Bot className="w-5 h-5 text-white" />
-                  <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-[#F5D32F] rounded-full border-2 border-white" />
+            <div className="bg-white px-3.5 sm:px-5 py-3 sm:py-3.5 border-b border-purple-100/90 flex items-center justify-between gap-2 shadow-xs">
+              <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
+                <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-[#6B18A8] to-[#4B0D78] flex items-center justify-center text-white shadow-md shadow-purple-900/20 shrink-0">
+                  <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                  <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-[#F5D32F] rounded-full border-2 border-white" />
                 </div>
-                <div>
-                  <div className="flex items-center gap-1.5">
-                    <h4 className="font-extrabold text-sm text-[#292333]">
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-1.5 min-w-0">
+                    <h4 className="font-extrabold text-xs sm:text-sm text-[#292333] truncate">
                       {t('chatbot_title')}
                     </h4>
-                    <span className="text-[10px] font-extrabold px-1.5 py-0.5 bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F]/50 rounded-md">
+                    <span className="text-[9px] sm:text-[10px] font-extrabold px-1.5 py-0.5 bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F]/50 rounded-md shrink-0 whitespace-nowrap leading-none">
                       AI 24/7
                     </span>
                   </div>
-                  <div className="flex items-center gap-1.5 text-[11px] text-neutral-500 font-medium">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    <span>{t('chatbot_subtitle')}</span>
+                  <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] text-neutral-500 font-medium truncate">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                    <span className="truncate">{t('chatbot_subtitle')}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-0.5 sm:gap-1 shrink-0">
                 <Button
                   variant="ghost"
                   size="sm"
                   aria-label="Reset Chat"
-                  className="text-neutral-400 hover:text-[#6B18A8] hover:bg-purple-50 p-1.5 rounded-xl min-w-0 cursor-pointer"
+                  className="text-neutral-400 hover:text-[#6B18A8] hover:bg-purple-50 p-1 sm:p-1.5 rounded-xl min-w-0 cursor-pointer h-8 w-8 sm:h-9 sm:w-9 flex items-center justify-center"
                   onPress={resetChat}
                 >
-                  <RotateCcw className="w-4 h-4" />
+                  <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </Button>
                 <Button
                   variant="ghost"
                   size="sm"
                   aria-label="Tutup"
-                  className="text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 p-1.5 rounded-xl min-w-0"
+                  className="text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 p-1 sm:p-1.5 rounded-xl min-w-0 h-8 w-8 sm:h-9 sm:w-9 flex items-center justify-center"
                   onPress={() => setIsOpen(false)}
                 >
-                  <ChevronDown className="w-5 h-5" />
+                  <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5" />
                 </Button>
               </div>
             </div>

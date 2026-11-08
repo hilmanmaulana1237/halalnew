@@ -342,17 +342,17 @@ export const ComplaintPage: React.FC = () => {
               )}
 
               {trackResult && (
-                <div className="p-6 rounded-2xl bg-neutral-50 border border-neutral-200 space-y-4">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-neutral-200 pb-4 gap-2">
+                <div className="p-4 sm:p-6 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/40 space-y-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#C9A5E8]/30 pb-4 gap-2">
                     <div>
-                      <span className="text-xs text-neutral-400 font-semibold uppercase">
+                      <span className="text-xs text-[#756D7C] font-semibold uppercase">
                         {isEn ? 'Ticket Code' : 'Kode Tiket'}
                       </span>
-                      <h4 className="text-xl font-mono font-bold text-[#6b1282]">
+                      <h4 className="text-xl font-mono font-bold text-[#6B18A8]">
                         {trackResult.ticketCode}
                       </h4>
                     </div>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-purple-100 text-[#6b1282] border border-purple-200 self-start sm:self-auto">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] self-start sm:self-auto shrink-0 whitespace-nowrap">
                       <Clock className="w-3.5 h-3.5" />
                       {isEn ? 'Under Review' : 'Dalam Penanganan'}
                     </span>
