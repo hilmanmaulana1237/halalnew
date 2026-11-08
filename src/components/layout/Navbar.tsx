@@ -318,7 +318,6 @@ export const Navbar: React.FC = () => {
                     label={language === 'en' ? 'Official Documents & Research' : 'Dokumen & Riset Resmi'}
                     links={[
                       { label: language === 'en' ? 'Download SJPH Manual' : 'Unduh Pedoman SJPH', to: '/berita' },
-                      { label: language === 'en' ? 'SINTA Journal Archive' : 'Arsip Publikasi SINTA', href: 'https://journal.uinsgd.ac.id/index.php/ijhar' },
                       { label: language === 'en' ? 'Activity Gallery' : 'Galeri Foto Kegiatan', to: '/berita' },
                     ]}
                     onClick={() => setActiveDropdown(null)}

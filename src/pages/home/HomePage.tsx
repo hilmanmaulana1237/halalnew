@@ -135,7 +135,7 @@ export const getUinServices = (isEn: boolean) => [
       ? 'Comprehensive scientific inspection and audit for medium and large industries by certified BPJPH & MUI auditors.'
       : 'Pemeriksaan dan audit saintifik komprehensif bagi industri menengah dan besar oleh auditor halal bersertifikasi nasional BPJPH & MUI.',
     url: 'https://lph.uinsgd.ac.id/',
-    icon: <ShieldCheck className="w-6 h-6 text-[#6b1282]" />,
+    icon: <ShieldCheck className="w-6 h-6 text-[#6B18A8]" />,
     badge: isEn ? 'Accredited LPH' : 'LPH Terakreditasi',
     accentColor: 'purple' as const,
     colSpan: 'md:col-span-1',
@@ -146,7 +146,7 @@ export const getUinServices = (isEn: boolean) => [
       ? 'In-person and virtual consultation regarding ingredient eligibility, Halal Assurance Systems, and BPJPH guidelines.'
       : 'Layanan konsultasi tatap muka maupun daring mengenai kelayakan bahan baku, sistem jaminan halal, dan regulasi BPJPH.',
     url: 'https://wa.me/6282126493700',
-    icon: <Phone className="w-6 h-6 text-[#6b1282]" />,
+    icon: <Phone className="w-6 h-6 text-[#6B18A8]" />,
     badge: isEn ? 'Fast Response' : 'Layanan Cepat',
     accentColor: 'purple' as const,
     colSpan: 'md:col-span-1',
@@ -157,7 +157,7 @@ export const getUinServices = (isEn: boolean) => [
       ? 'High-precision scientific testing: Porcine DNA qPCR detection, ethanol residuals (GC-FID), and gelatin analysis.'
       : 'Uji saintifik presisi tinggi: Deteksi DNA Babi qPCR, Uji Cemaran Etanol (GC-FID), serta analisa gelatin dan profil asam lemak.',
     url: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/',
-    icon: <FlaskConical className="w-6 h-6 text-[#6b1282]" />,
+    icon: <FlaskConical className="w-6 h-6 text-[#6B18A8]" />,
     badge: 'ISO/IEC 17025',
     accentColor: 'purple' as const,
     colSpan: 'md:col-span-1',
@@ -994,13 +994,13 @@ export const HomePage: React.FC = () => {
                     {[
                       {
                         img: '/assets/images/Screenshot-2026-09-11-at-15-16-41-Jurnal-Halal-180.pdf-1.png',
-                        cat: 'IJHR SINTA',
+                        cat: isEn ? 'IJHR JOURNAL' : 'JURNAL IJHR',
                         title: isEn
                           ? 'Indonesian Journal of Halal Research (IJHR) Vol. 6 No. 2'
                           : 'Indonesian Journal of Halal Research (IJHR) Vol. 6 No. 2',
                         desc: isEn
-                          ? 'SINTA-accredited scientific periodical discussing innovations in bio-molecular halal authentication and global policy.'
-                          : 'Publikasi jurnal ilmiah berkala terakreditasi SINTA yang membahas inovasi riset autentikasi halal hayati dan kebijakan halal global.',
+                          ? 'Peer-reviewed scientific periodical discussing innovations in bio-molecular halal authentication and global policy.'
+                          : 'Publikasi jurnal ilmiah berkala yang membahas inovasi riset autentikasi halal hayati dan kebijakan halal global.',
                         url: 'https://journal.uinsgd.ac.id/index.php/ijhr',
                       },
                       {

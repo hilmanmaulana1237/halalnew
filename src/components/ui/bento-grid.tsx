@@ -13,7 +13,7 @@ export const BentoGrid = ({
   return (
     <div
       className={cn(
-        "grid md:auto-rows-[20rem] grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto",
+        "grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto items-stretch",
         className
       )}
     >
@@ -48,7 +48,7 @@ export const BentoGridItem = ({
       transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
       onClick={onClick}
       className={cn(
-        "relative rounded-3xl p-5 sm:p-7 bg-white border border-[#C9A5E8]/40 hover:border-[#6B18A8] shadow-sm hover:shadow-xl shadow-purple-950/5 hover:shadow-purple-950/10 transition-all duration-300 justify-between flex flex-col space-y-4 cursor-pointer overflow-hidden backdrop-blur-sm group/bento",
+        "relative rounded-3xl p-6 sm:p-7 bg-white border border-[#C9A5E8]/40 hover:border-[#6B18A8] shadow-sm hover:shadow-xl shadow-purple-950/5 hover:shadow-purple-950/10 transition-all duration-300 justify-between flex flex-col h-full cursor-pointer overflow-hidden backdrop-blur-sm group/bento",
         className
       )}
     >
@@ -57,7 +57,9 @@ export const BentoGridItem = ({
         <YellowDotGrid rows={3} cols={3} dotColor="#F5D32F" />
       </div>
 
-      <div>
+      {/* Symmetrical Content Wrapper */}
+      <div className="flex-1 flex flex-col">
+        {/* Top Bar: Badge and Action Header */}
         <div className="flex items-center justify-between gap-2 mb-4">
           {badge && (
             <span
@@ -74,24 +76,28 @@ export const BentoGridItem = ({
           {header}
         </div>
 
-        <div className="mb-3.5">
+        {/* Icon Container */}
+        <div className="mb-4">
           <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#F5EDFB] group-hover/bento:bg-[#FFF7D1] shadow-xs border border-[#C9A5E8]/60 flex items-center justify-center text-[#6B18A8] group-hover/bento:scale-110 group-hover/bento:rotate-2 transition-all duration-300 shrink-0">
             {icon}
           </div>
         </div>
 
-        <div className="font-sans font-extrabold text-[#292333] text-lg sm:text-xl tracking-tight leading-snug group-hover/bento:text-[#6B18A8] transition-colors">
+        {/* Title: min-h ensures 2-line height reservation across all cards */}
+        <div className="font-sans font-extrabold text-[#292333] text-lg sm:text-xl tracking-tight leading-snug group-hover/bento:text-[#6B18A8] transition-colors min-h-[3.25rem] sm:min-h-[3.5rem] flex items-start">
           {title}
         </div>
 
-        <div className="font-sans font-medium text-[#756D7C] text-xs sm:text-sm leading-relaxed mt-2 line-clamp-3">
+        {/* Description: min-h ensures harmonious height before the footer */}
+        <div className="font-sans font-medium text-[#756D7C] text-xs sm:text-sm leading-relaxed mt-2 min-h-[4rem] sm:min-h-[4.5rem] flex-1">
           {description}
         </div>
       </div>
 
-      <div className="flex items-center justify-between text-xs font-bold text-[#6B18A8] pt-3 border-t border-[#F5EDFB]">
+      {/* Pinned Bottom Footer Bar */}
+      <div className="mt-6 pt-3.5 border-t border-[#F5EDFB] flex items-center justify-between text-xs font-bold text-[#6B18A8]">
         <span className="group-hover/bento:text-[#4B0D78] transition-colors">Kunjungi Layanan</span>
-        <div className="w-6 h-6 rounded-full bg-[#F5EDFB] group-hover/bento:bg-[#F5D32F] text-[#6B18A8] group-hover/bento:text-[#3B074A] flex items-center justify-center transition-all duration-200 group-hover/bento:translate-x-1">
+        <div className="w-6 h-6 rounded-full bg-[#F5EDFB] group-hover/bento:bg-[#F5D32F] text-[#6B18A8] group-hover/bento:text-[#3B074A] flex items-center justify-center transition-all duration-200 group-hover/bento:translate-x-1 shrink-0">
           <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
