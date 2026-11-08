@@ -35,13 +35,16 @@ export const HeroVideoBanner: React.FC = () => {
     if (certNo.trim()) query.set('no_regis', certNo.trim());
     const queryString = query.toString();
     const targetUrl = queryString
-      ? `https://bpjph.halal.go.id/?${queryString}`
-      : 'https://bpjph.halal.go.id/';
+      ? `https://bpjph.halal.go.id/cari/sertifikat?${queryString}`
+      : 'https://bpjph.halal.go.id/cari/sertifikat';
     window.open(targetUrl, '_blank');
   };
 
   const quickSearch = (term: string) => {
     setProductName(term);
+    const query = new URLSearchParams();
+    query.set('produk', term.trim());
+    window.open(`https://bpjph.halal.go.id/cari/sertifikat?${query.toString()}`, '_blank');
   };
 
   return (
@@ -200,7 +203,7 @@ export const HeroVideoBanner: React.FC = () => {
 
             <form
               onSubmit={handleSearch}
-              action="https://bpjph.halal.go.id/"
+              action="https://bpjph.halal.go.id/cari/sertifikat"
               method="GET"
               target="_blank"
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end"
