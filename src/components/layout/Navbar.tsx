@@ -281,52 +281,33 @@ export const Navbar: React.FC = () => {
                 onMouseLeave={handleMouseLeave}
                 onClick={() => toggleDropdown('news')}
               >
-                <div className="w-[820px] max-w-[94vw]">
-                  <div className="grid grid-cols-12 gap-3.5 items-stretch">
-                    {/* Left Sub-card (7 cols): Screenshot 1 "Get started" style */}
-                    <div className="col-span-7 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 p-4 sm:p-5 flex flex-col justify-between hover:border-[#6B18A8]/40 transition-colors">
-                      <div className="text-xs font-bold text-[#6B18A8] mb-3 tracking-wide flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#F5D32F]" />
-                        <span>{language === 'en' ? 'PUBLICATIONS & CIRCULARS' : 'PUBLIKASI & PENGUMUMAN RESMI'}</span>
-                      </div>
-                      <div className="space-y-1 flex-1 flex flex-col justify-between">
-                        <MenuCardItem
-                          icon={<Newspaper className="w-4 h-4" />}
-                          title={language === 'en' ? 'LPH News & Activities' : 'Berita & Kegiatan LPH'}
-                          description={language === 'en'
-                            ? 'Field audit coverage, scientific seminars, workshops, and official press releases.'
-                            : 'Liputan audit lapangan, seminar ilmiah, workshop, dan siaran pers resmi.'}
-                          to="/berita"
-                          badge={language === 'en' ? 'Latest' : 'Terbaru'}
-                          badgeVariant="sky"
-                          onClick={() => setActiveDropdown(null)}
-                        />
-                        <MenuCardItem
-                          icon={<Bell className="w-4 h-4" />}
-                          title={language === 'en' ? 'Official Announcements' : 'Pengumuman Resmi BPJPH'}
-                          description={language === 'en'
-                            ? 'BPJPH circulars, fatwa session schedules, and crucial business notices.'
-                            : 'Surat edaran BPJPH, jadwal sidang fatwa, dan informasi penting pelaku usaha.'}
-                          href="https://bpjph.halal.go.id/category/pengumuman"
-                          badge={language === 'en' ? 'Notice' : 'Edaran'}
-                          badgeVariant="purple"
-                          onClick={() => setActiveDropdown(null)}
-                        />
-                      </div>
+                <div className="w-[520px] max-w-[94vw]">
+                  <div className="rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 p-4 sm:p-5 flex flex-col justify-between hover:border-[#6B18A8]/40 transition-colors">
+                    <div className="text-xs font-bold text-[#6B18A8] mb-3 tracking-wide flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#F5D32F]" />
+                      <span>{language === 'en' ? 'PUBLICATIONS & CIRCULARS' : 'PUBLIKASI & PENGUMUMAN RESMI'}</span>
                     </div>
-
-                    {/* Right Sub-card (5 cols): Screenshot 2 Featured Visual Card with Photo */}
-                    <div className="col-span-5 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 p-3.5 sm:p-4 flex flex-col justify-between hover:border-[#6B18A8]/40 transition-colors">
-                      <FeaturedPreviewCard
-                        image="/assets/images/uin_sgd/uin_07.webp"
-                        title={language === 'en' ? 'World Halal Conference' : 'Konferensi Halal Dunia'}
-                        badge={language === 'en' ? 'Global Agenda' : 'Agenda Global'}
-                        badgeVariant="sky"
+                    <div className="space-y-1.5">
+                      <MenuCardItem
+                        icon={<Newspaper className="w-4 h-4" />}
+                        title={language === 'en' ? 'LPH News & Activities' : 'Berita & Kegiatan LPH'}
                         description={language === 'en'
-                          ? 'Strengthening global halal industry ecosystem through scientific research and sharia compliance.'
-                          : 'Penguatan ekosistem industri halal dunia melalui kolaborasi saintifik dan kepatuhan syariah.'}
+                          ? 'Field audit coverage, scientific seminars, workshops, and official press releases.'
+                          : 'Liputan audit lapangan, seminar ilmiah, workshop, dan siaran pers resmi.'}
                         to="/berita"
-                        actionText={language === 'en' ? 'Read Full Story' : 'Baca Kabar Selengkapnya'}
+                        badge={language === 'en' ? 'Latest' : 'Terbaru'}
+                        badgeVariant="sky"
+                        onClick={() => setActiveDropdown(null)}
+                      />
+                      <MenuCardItem
+                        icon={<Bell className="w-4 h-4" />}
+                        title={language === 'en' ? 'Official Announcements' : 'Pengumuman Resmi BPJPH'}
+                        description={language === 'en'
+                          ? 'BPJPH circulars, fatwa session schedules, and crucial business notices.'
+                          : 'Surat edaran BPJPH, jadwal sidang fatwa, dan informasi penting pelaku usaha.'}
+                        href="https://bpjph.halal.go.id/category/pengumuman"
+                        badge={language === 'en' ? 'Notice' : 'Edaran'}
+                        badgeVariant="purple"
                         onClick={() => setActiveDropdown(null)}
                       />
                     </div>
