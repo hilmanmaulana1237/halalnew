@@ -284,83 +284,192 @@ export const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Leadership Showcase - Modern HeroUI & Aceternity Card Layout */}
-      <section className="py-24 bg-[#FAF7FD] border-t border-[#C9A5E8]/30 relative overflow-hidden" id="pimpinan-lembaga">
-        <YellowDotGrid rows={4} cols={5} className="absolute top-10 right-8 opacity-25 pointer-events-none hidden lg:grid" dotColor="#F5D32F" />
-        <YellowDotGrid rows={3} cols={4} className="absolute bottom-10 left-8 opacity-20 pointer-events-none hidden md:grid" dotColor="#F5D32F" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* Leadership Showcase - Matching Homepage Grand Alternating Layout */}
+      <section className="py-20 lg:py-28 bg-[#FAF7FD] border-t border-[#C9A5E8]/30 relative overflow-visible" id="pimpinan-lembaga">
+        <YellowDotGrid rows={4} cols={5} className="absolute top-10 left-10 opacity-20 pointer-events-none hidden lg:grid" dotColor="#F5D32F" />
+        <YellowDotGrid rows={3} cols={4} className="absolute bottom-10 right-10 opacity-20 pointer-events-none hidden md:grid" dotColor="#F5D32F" />
+        <div className="w-full max-w-[1440px] xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-10 relative z-10">
           <SectionHeader
-            badge={isEn ? 'EXECUTIVE BOARD & PATRON' : 'DEWAN PIMPINAN & PEMBINA'}
+            badge={isEn ? "EXECUTIVE BOARD & PATRON" : "DEWAN PIMPINAN & PEMBINA"}
             badgeColor="yellow"
-            title={isEn ? 'Institutional Leadership & Guidance' : 'Pimpinan & Pengarah Lembaga'}
+            title={isEn ? "Leadership with Sharia Integrity & Halal Research Excellence" : "Kepemimpinan Berintegritas Syar’i & Keunggulan Riset Halal"}
             subtitle={isEn
-              ? 'Synergy between academic excellence, sharia integrity, and halal science guiding Halal Center UIN SGD.'
-              : 'Sinergi keunggulan akademik, integritas syariah, dan sains halal dalam mengawal Halal Center UIN SGD.'}
+              ? "Synergy between university strategic vision and bio-science research expertise to safeguard halal audit quality, ISO 17025 laboratory accountability, and public welfare."
+              : "Sinergi visi strategis universitas dan keahlian riset sains hayati untuk mengawal mutu pemeriksaan halal, akuntabilitas laboratorium ISO 17025, dan kemaslahatan industri bagi umat."}
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto mt-12">
-            {directors.map((dir) => (
-              <motion.div
-                key={dir.id}
-                whileHover={{ y: -6, scale: 1.01 }}
-                transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                onClick={() => setSelectedDirector(dir)}
-                className="group relative rounded-3xl p-6 sm:p-8 bg-white border border-[#C9A5E8]/40 shadow-lg shadow-purple-950/5 hover:shadow-2xl hover:border-[#6B18A8]/50 transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer"
-              >
-                {/* Ambient Top Glow Accent */}
-                <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#6B18A8] via-[#F5D32F] to-[#6B18A8] opacity-75 group-hover:opacity-100 transition-opacity" />
-
-                <div>
-                  <div className="flex items-start gap-4 sm:gap-5">
-                    <div className="relative shrink-0">
-                      <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-[#C9A5E8]/60 shadow-md group-hover:border-[#6B18A8] transition-colors">
-                        <img
-                          src={dir.image}
-                          alt={dir.name}
-                          className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                        />
-                      </div>
-                      <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#FFF7D1] border border-[#F5D32F] flex items-center justify-center text-[#713f12] shadow-xs">
-                        <Sparkles className="w-2.5 h-2.5 text-[#eab308]" />
-                      </div>
+          <div className="mt-24 lg:mt-36 space-y-28 lg:space-y-48">
+            {/* CARD 1: DEWAN PEMBINA (Prof. Dr. H. Rosihon Anwar) - Left: Content, Right: Portrait Pop-Out */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="group relative rounded-3xl border border-[#C9A5E8]/50 bg-white overflow-visible shadow-xl shadow-purple-950/5 hover:shadow-2xl hover:border-[#6B18A8]/60 transition-all duration-300 p-6 sm:p-10 lg:p-12 xl:p-14 w-full"
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                {/* Left (7 cols): Content & Institutional Vision */}
+                <div className="lg:col-span-7 flex flex-col justify-between">
+                  <div>
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-extrabold bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] uppercase tracking-wider mb-4 shadow-xs">
+                      <Sparkles className="w-3.5 h-3.5 text-[#eab308]" />
+                      {isEn ? 'Rector of UIN SGD & Halal Center Patron' : 'Rektor UIN SGD & Dewan Pembina Halal Center'}
                     </div>
 
-                    <div className="flex-1 min-w-0">
-                      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-extrabold bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] uppercase tracking-wider mb-2 shadow-2xs">
-                        <Sparkles className="w-3 h-3 text-[#eab308]" />
-                        <span className="truncate">{dir.id === 1 ? (isEn ? 'Patron & Rector' : 'Dewan Pembina / Rektor') : (isEn ? 'Head of Halal Center' : 'Kepala Halal Center')}</span>
-                      </div>
-                      <h3 className="text-lg sm:text-xl font-black text-[#292333] group-hover:text-[#6B18A8] transition-colors leading-snug">
-                        {dir.name}
-                      </h3>
-                      <p className="text-xs font-semibold text-[#756D7C] mt-1 line-clamp-2">
-                        {dir.position}
+                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#292333] tracking-tight">
+                      Prof. Dr. H. Rosihon Anwar, M.Ag.
+                    </h3>
+                    <p className="text-xs sm:text-sm font-semibold text-[#756D7C] mt-1">
+                      {isEn
+                        ? 'Professor of Quranic Exegesis & Tafsir • Pioneer of "Halalsphere University"'
+                        : "Guru Besar Ilmu Al-Qur'an & Tafsir • Inisiator Paradigma \"Halalsphere University\""}
+                    </p>
+
+                    {/* Institutional Quote Box */}
+                    <div className="mt-6 p-6 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 shadow-xs relative">
+                      <span className="text-4xl text-[#F5D32F] font-serif absolute top-3 left-4 select-none leading-none">“</span>
+                      <p className="text-sm sm:text-base text-neutral-700 italic leading-relaxed pl-6 relative z-10 font-normal">
+                        "{directors[0].quote}"
                       </p>
                     </div>
                   </div>
 
-                  {/* Quote Box */}
-                  <div className="mt-5 p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 shadow-xs relative">
-                    <span className="text-3xl text-[#F5D32F] font-serif absolute top-1 left-3 select-none leading-none">“</span>
-                    <p className="text-xs sm:text-sm text-neutral-700 italic leading-relaxed pl-5 font-normal line-clamp-3">
-                      "{dir.quote}"
-                    </p>
+                  {/* Actions */}
+                  <div className="mt-8 pt-6 border-t border-purple-100 flex flex-wrap items-center gap-4">
+                    <Button
+                      variant="primary"
+                      className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-bold text-xs px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2 cursor-pointer"
+                      onPress={() => setSelectedDirector(directors[0])}
+                    >
+                      <span>{isEn ? "View Rector's Track Record & Profile" : 'Buka Profil & Rekam Jejak Rektor'}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Button>
+                    <Link
+                      to="/kontak"
+                      className="text-xs font-bold text-neutral-700 hover:text-[#6B18A8] transition-colors inline-flex items-center gap-1.5"
+                    >
+                      <span>{isEn ? 'Contact Secretariat & Campus Vision' : 'Hubungi Sekretariat & Konsultasi'}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
                   </div>
                 </div>
 
-                {/* Bottom Action Strip */}
-                <div className="mt-6 pt-4 border-t border-[#C9A5E8]/25 flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#6B18A8] group-hover:text-[#4B0D78] flex items-center gap-1.5 transition-colors">
-                    <span>{isEn ? 'View Profile & Track Record' : 'Buka Profil & Rekam Jejak'}</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                  </span>
-                  <span className="text-[11px] font-semibold text-neutral-400 group-hover:text-neutral-600 transition-colors">
-                    {isEn ? 'Details' : 'Detail'}
-                  </span>
+                {/* Right (5 cols): Cutout Portrait with Bold Pop-Out Head Breaking Card Top Border */}
+                <div className="lg:col-span-5 flex flex-col items-center justify-end relative pt-6 lg:pt-0 lg:-mt-44 xl:-mt-52 lg:-mb-12 xl:-mb-14 z-20">
+                  <div className="relative w-full max-w-[340px] sm:max-w-md lg:max-w-[420px] flex flex-col items-center">
+                    {/* Ambient Glow Aura behind head */}
+                    <div className="absolute inset-x-4 top-0 h-72 sm:h-84 bg-gradient-to-t from-purple-200/50 via-[#F5EDFB]/40 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
+
+                    {/* Decorative yellow dot grid next to the popped-out head */}
+                    <div className="absolute -top-6 -right-2 opacity-50 pointer-events-none hidden lg:block">
+                      <YellowDotGrid rows={3} cols={3} dotColor="#F5D32F" />
+                    </div>
+
+                    <img
+                      src={directors[0].image}
+                      alt={directors[0].name}
+                      className="relative z-10 w-auto max-h-[420px] sm:max-h-[480px] lg:max-h-[520px] xl:max-h-[560px] object-contain drop-shadow-[0_25px_35px_rgba(75,13,120,0.25)] transition-transform duration-500 group-hover:scale-105"
+                    />
+
+                    {/* Floating Name Card anchored at bottom of portrait */}
+                    <div className="relative z-20 -mt-6 sm:-mt-8 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl border border-[#C9A5E8]/40 shadow-xl shadow-purple-950/10 text-center max-w-xs w-full">
+                      <h4 className="text-sm font-black text-[#292333]">
+                        {directors[0].name}
+                      </h4>
+                      <p className="text-[11px] font-bold text-[#6B18A8] mt-0.5">
+                        {isEn ? 'Rector of UIN SGD & Halal Center Patron' : 'Rektor UIN SGD & Dewan Pembina Halal Center'}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </motion.div>
-            ))}
+              </div>
+            </motion.div>
+
+            {/* CARD 2: KEPALA HALAL CENTER (Dr. Tri Cahyanto) - Left: Portrait Pop-Out, Right: Content */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="group relative rounded-3xl border border-[#F5D32F]/60 bg-white overflow-visible shadow-xl shadow-purple-950/5 hover:shadow-2xl hover:border-[#F5D32F] transition-all duration-300 p-6 sm:p-10 lg:p-12 xl:p-14 w-full"
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                {/* Left on Desktop (5 cols): Cutout Portrait with Bold Pop-Out Head Breaking Card Top Border */}
+                <div className="lg:col-span-5 flex flex-col items-center justify-end relative pt-6 lg:pt-0 order-2 lg:order-1 lg:-mt-36 xl:-mt-44 lg:-mb-12 xl:-mb-14 z-20">
+                  <div className="relative w-full max-w-[340px] sm:max-w-md lg:max-w-[420px] flex flex-col items-center">
+                    {/* Ambient Glow Aura behind head */}
+                    <div className="absolute inset-x-4 top-0 h-72 sm:h-84 bg-gradient-to-t from-yellow-200/40 via-[#FFF7D1]/30 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
+
+                    {/* Decorative yellow dot grid next to the popped-out head */}
+                    <div className="absolute -top-6 -left-2 opacity-50 pointer-events-none hidden lg:block">
+                      <YellowDotGrid rows={3} cols={3} dotColor="#F5D32F" />
+                    </div>
+
+                    <img
+                      src={directors[1].image}
+                      alt={directors[1].name}
+                      className="relative z-10 w-auto max-h-[420px] sm:max-h-[480px] lg:max-h-[520px] xl:max-h-[560px] object-contain drop-shadow-[0_25px_35px_rgba(113,63,18,0.22)] transition-transform duration-500 group-hover:scale-105"
+                    />
+
+                    {/* Floating Name Card anchored at bottom of portrait */}
+                    <div className="relative z-20 -mt-6 sm:-mt-8 bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl border border-[#F5D32F]/50 shadow-xl shadow-yellow-950/10 text-center max-w-xs w-full">
+                      <h4 className="text-sm font-black text-[#292333]">
+                        {directors[1].name}
+                      </h4>
+                      <p className="text-[11px] font-bold text-[#6B18A8] mt-0.5">
+                        {isEn ? 'Head of Halal Center UIN Sunan Gunung Djati' : 'Kepala Halal Center UIN Sunan Gunung Djati'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right on Desktop (7 cols): Content & Executive Statement */}
+                <div className="lg:col-span-7 flex flex-col justify-between order-1 lg:order-2">
+                  <div>
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-bold bg-[#F5EDFB] text-[#6B18A8] border border-[#C9A5E8] uppercase tracking-wider mb-4 shadow-xs">
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#6B18A8]" />
+                      {isEn ? 'LPH Technical Lead & Head of Halal Center' : 'Pimpinan Teknis LPH & Kepala Pusat Kajian Halal'}
+                    </div>
+
+                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#292333] tracking-tight">
+                      Dr. Tri Cahyanto, M.Si.
+                    </h3>
+                    <p className="text-xs sm:text-sm font-semibold text-[#756D7C] mt-1">
+                      {isEn
+                        ? 'Life Science Expert & Licensed Lead Auditor BPJPH Kemenag RI'
+                        : 'Pakar Sains Hayati & Lead Auditor Halal Berlisensi BPJPH Kemenag RI'}
+                    </p>
+
+                    {/* Executive Quote Box */}
+                    <div className="mt-6 p-6 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 shadow-xs relative">
+                      <span className="text-4xl text-[#F5D32F] font-serif absolute top-3 left-4 select-none leading-none">“</span>
+                      <p className="text-sm sm:text-base text-neutral-700 italic leading-relaxed pl-6 relative z-10 font-normal">
+                        "{directors[1].quote}"
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="mt-8 pt-6 border-t border-purple-100 flex flex-wrap items-center gap-4">
+                    <Button
+                      variant="primary"
+                      className="bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold text-xs px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2 cursor-pointer"
+                      onPress={() => setSelectedDirector(directors[1])}
+                    >
+                      <span>{isEn ? 'View Profile & Credentials' : 'Buka Profil & Kredensial Pimpinan'}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Button>
+                    <Link
+                      to="/layanan/kalkulator"
+                      className="text-xs font-bold text-neutral-700 hover:text-[#6B18A8] transition-colors inline-flex items-center gap-1.5"
+                    >
+                      <span>{isEn ? 'Certification Flow Consultation' : 'Konsultasi Alur Sertifikasi'}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
 
@@ -368,58 +477,60 @@ export const AboutPage: React.FC = () => {
         {selectedDirector && (
           <Modal.Backdrop isOpen={!!selectedDirector} onOpenChange={() => setSelectedDirector(null)}>
             <Modal.Container>
-              <Modal.Dialog className="sm:max-w-[620px] bg-white text-neutral-900 rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#C9A5E8]/40">
+              <Modal.Dialog className="sm:max-w-[640px] bg-white text-neutral-900 rounded-3xl p-6 sm:p-8">
                 <Modal.CloseTrigger />
-                <Modal.Header className="pb-4 border-b border-[#C9A5E8]/25">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-extrabold bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] uppercase tracking-wider mb-2">
-                    <Sparkles className="w-3 h-3 text-[#eab308]" />
-                    <span>{selectedDirector.position}</span>
-                  </div>
-                  <Modal.Heading className="text-2xl font-black text-[#292333]">
+                <Modal.Header className="flex flex-col items-start gap-1 pb-4 border-b border-neutral-100">
+                  <span className="text-xs font-black text-[#6b1282] uppercase tracking-wider">
+                    {selectedDirector.position}
+                  </span>
+                  <Modal.Heading className="text-2xl font-black text-[#1b183a]">
                     {selectedDirector.name}
                   </Modal.Heading>
                 </Modal.Header>
 
-                <Modal.Body className="py-6 space-y-5 max-h-[70vh] overflow-y-auto">
-                  <div className="flex flex-col sm:flex-row gap-4 items-center sm:items-start bg-[#FAF7FD] p-4 rounded-2xl border border-[#C9A5E8]/30">
+                <Modal.Body className="py-6 space-y-6 max-h-[70vh] overflow-y-auto">
+                  <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start bg-neutral-50 p-4 rounded-2xl border border-neutral-100">
                     <img
                       src={selectedDirector.image}
                       alt={selectedDirector.name}
-                      className="w-20 h-20 rounded-xl object-cover border border-[#C9A5E8]/50 shadow-xs shrink-0"
+                      className="w-24 h-24 rounded-2xl object-cover object-top border-2 border-purple-200 shadow-sm shrink-0"
                     />
-                    <p className="text-xs sm:text-sm text-neutral-700 italic leading-relaxed">
+                    <blockquote className="text-xs text-neutral-600 italic leading-relaxed border-l-2 border-[#6b1282] pl-3">
                       "{selectedDirector.quote}"
-                    </p>
+                    </blockquote>
                   </div>
+
                   <div>
-                    <h5 className="font-extrabold text-xs uppercase tracking-wider text-[#6B18A8] mb-2 flex items-center gap-1.5">
-                      <GraduationCap className="w-4 h-4 text-[#6B18A8]" />
-                      <span>{isEn ? 'Education & Academic Qualifications' : 'Pendidikan & Kualifikasi Akademik'}</span>
-                    </h5>
-                    <ul className="text-xs text-neutral-600 list-disc pl-5 space-y-1.5">
-                      {selectedDirector.education.map((e: string, i: number) => (
-                        <li key={i}>{e}</li>
+                    <h4 className="text-sm font-bold text-neutral-900 uppercase tracking-wider mb-3 flex items-center gap-2 text-[#6b1282]">
+                      <GraduationCap className="w-4 h-4" />
+                      {isEn ? 'Education & Academic Qualifications' : 'Edukasi & Kualifikasi Akademik'}
+                    </h4>
+                    <ul className="space-y-2 text-xs sm:text-sm text-neutral-600 pl-4 list-disc">
+                      {selectedDirector.education.map((edu: string, idx: number) => (
+                        <li key={idx}>{edu}</li>
                       ))}
                     </ul>
                   </div>
+
                   {selectedDirector.experience && selectedDirector.experience.length > 0 && (
                     <div>
-                      <h5 className="font-extrabold text-xs uppercase tracking-wider text-[#6B18A8] mb-2 flex items-center gap-1.5">
-                        <Award className="w-4 h-4 text-[#6B18A8]" />
-                        <span>{isEn ? 'Experience & Strategic Focus' : 'Pengalaman & Fokus Strategis'}</span>
-                      </h5>
-                      <ul className="text-xs text-neutral-600 list-disc pl-5 space-y-1.5">
-                        {selectedDirector.experience.map((exp: string, i: number) => (
-                          <li key={i}>{exp}</li>
+                      <h4 className="text-sm font-bold text-neutral-900 uppercase tracking-wider mb-3 flex items-center gap-2 text-[#6b1282]">
+                        <Award className="w-4 h-4" />
+                        {isEn ? 'Experience & Strategic Focus' : 'Pengalaman & Fokus Strategis'}
+                      </h4>
+                      <ul className="space-y-2 text-xs sm:text-sm text-neutral-600 pl-4 list-disc">
+                        {selectedDirector.experience.map((exp: string, idx: number) => (
+                          <li key={idx}>{exp}</li>
                         ))}
                       </ul>
                     </div>
                   )}
                 </Modal.Body>
-                <Modal.Footer className="pt-4 border-t border-[#C9A5E8]/25">
+
+                <Modal.Footer className="border-t border-neutral-100 pt-4">
                   <Button
                     variant="primary"
-                    className="w-full bg-[#6B18A8] hover:bg-[#4B0D78] text-white font-bold rounded-xl py-2.5 cursor-pointer"
+                    className="w-full bg-[#6b1282] hover:bg-[#581c87] text-white font-bold rounded-xl py-2.5 cursor-pointer"
                     onPress={() => setSelectedDirector(null)}
                   >
                     {isEn ? 'Close Profile' : 'Tutup Profil'}
