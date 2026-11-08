@@ -13,12 +13,12 @@ const INITIAL_NEWS: NewsItem[] = [
     title: 'Akselerasi Audit Sertifikasi Halal: LPH UIN SGD Perluas Jangkauan Industri Jawa Barat',
     slug: 'akselerasi-sertifikasi-halal-uin-sgd',
     excerpt:
-      'LPH Halal Center UIN Sunan Gunung Djati terus memperkuat kapasitas audit kehalalan produk dan penerapan Sistem Jaminan Produk Halal (SJPH).',
+      'LPH UIN Sunan Gunung Djati terus memperkuat kapasitas audit kehalalan produk dan penerapan Sistem Jaminan Produk Halal (SJPH).',
     content:
-      'LPH Halal Center UIN Sunan Gunung Djati Bandung menggelar bimbingan teknis akbar persiapan audit halal reguler dan verifikasi bahan kritis bagi pelaku usaha di Jawa Barat...',
+      'LPH UIN Sunan Gunung Djati Bandung menggelar bimbingan teknis akbar persiapan audit halal reguler dan verifikasi bahan kritis bagi pelaku usaha di Jawa Barat...',
     category: 'KEGIATAN',
     status: 'PUBLISHED',
-    author: 'Humas Halal Center',
+    author: 'Humas LPH UIN SGD',
     image: '/assets/images/img_011.jpg',
     eventDate: '2026-11-10',
     eventLocation: 'Aula Gedung Rektorat Lt. 2 Kampus 1 UIN SGD',
@@ -155,9 +155,9 @@ export const NewsListPage: React.FC = () => {
           </div>
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white drop-shadow-2xl leading-tight">
             {isEn ? (
-              <>Halal Center <span className="text-[#F5D32F]">News & Media</span></>
+              <>LPH UIN SGD <span className="text-[#F5D32F]">News & Media</span></>
             ) : (
-              <>Warta & Berita <span className="text-[#F5D32F]">Halal Center</span></>
+              <>Warta & Berita <span className="text-[#F5D32F]">LPH UIN SGD</span></>
             )}
           </h1>
           <p className="mt-4 text-base sm:text-lg text-neutral-200 max-w-2xl mx-auto leading-relaxed font-normal">

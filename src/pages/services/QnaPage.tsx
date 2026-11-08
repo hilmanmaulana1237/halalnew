@@ -223,7 +223,7 @@ export const QnaPage: React.FC = () => {
           <div className="flex items-center gap-2.5 text-[#1a0726]">
             <Sparkles className="w-5 h-5 text-purple-600" />
             <h3 className="text-lg font-bold">
-              {isEn ? 'Ask Halal Center AI Assistant' : 'Tanya Asisten AI Halal Center'}
+              {isEn ? 'Ask LPH UIN SGD AI Assistant' : 'Tanya Asisten AI LPH UIN SGD'}
             </h3>
           </div>
           <p className="text-xs text-neutral-500 leading-relaxed">

@@ -88,8 +88,10 @@ export const HeroVideoBanner: React.FC = () => {
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#F5D32F]"></span>
           </span>
           <span className="tracking-wide text-white font-bold">{t('hero_badge_lph')}</span>
-          <span className="text-purple-300">•</span>
-          <span className="text-purple-200 font-semibold">{t('hero_badge_univ')}</span>
+          <span className="flex h-2.5 w-2.5 relative shrink-0">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F5D32F] opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#F5D32F]"></span>
+          </span>
         </motion.div>
 
         {/* Main Heading with Crisp White & Yellow Highlight */}

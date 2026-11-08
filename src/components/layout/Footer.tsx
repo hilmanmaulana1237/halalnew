@@ -202,7 +202,7 @@ export const Footer: React.FC = () => {
       <div className="border-t border-[#6B18A8]/30 bg-[#190220] py-6 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-400">
           <p>
-            &copy; {new Date().getFullYear()} {isEn ? 'Halal Center & Halal Inspection Agency (LPH) UIN Sunan Gunung Djati Bandung.' : 'Halal Center & Lembaga Pemeriksa Halal (LPH) UIN Sunan Gunung Djati Bandung.'}
+            &copy; {new Date().getFullYear()} {isEn ? 'Halal Inspection Agency (LPH) UIN Sunan Gunung Djati Bandung.' : 'Lembaga Pemeriksa Halal (LPH) UIN Sunan Gunung Djati Bandung.'}
           </p>
           <div className="flex items-center gap-3 flex-wrap">
             <span className="text-[#F5D32F] font-bold">{t('footer_accreditation')}</span>

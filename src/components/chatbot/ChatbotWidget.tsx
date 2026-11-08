@@ -88,8 +88,8 @@ const KNOWLEDGE_BASE: SmartAnswer[] = [
   },
   {
     keywords: ['pelatihan', 'auditor', 'penyelia', 'training', 'kursus', 'bnsp', 'skkni', 'juleha', 'kompetensi'],
-    answerId: `🎓 **Pelatihan & Sertifikasi Kompetensi Halal:**\n\nHalal Center UIN SGD menyelenggarakan bimbingan teknis dan uji kompetensi berkala:\n\n• **Pelatihan Auditor Halal:** Berlisensi BPJPH & BNSP.\n• **Pelatihan Penyelia Halal (Internal Halal Officer):** Berbasis SKKNI untuk perusahaan & industri.\n• **Bimtek Juru Sembelih Halal (JULEHA):** Standarisasi kehalalan RPH dan unggas.\n\nSertifikat pelatihan diakui secara nasional untuk syarat akreditasi perusahaan.`,
-    answerEn: `🎓 **Halal Competency Training & Certification:**\n\nHalal Center UIN SGD holds regular professional workshops and competency assessments:\n\n• **Halal Auditor Training:** Licensed by BPJPH & BNSP.\n• **Halal Supervisor Training:** SKKNI-based curriculum for internal company halal officers.\n• **Halal Slaughterer (JULEHA) Training:** Sharia-compliant slaughterhouse standardization.\n\nTraining certificates are recognized nationwide for corporate compliance.`,
+    answerId: `🎓 **Pelatihan & Sertifikasi Kompetensi Halal:**\n\nLPH UIN SGD menyelenggarakan bimbingan teknis dan uji kompetensi berkala:\n\n• **Pelatihan Auditor Halal:** Berlisensi BPJPH & BNSP.\n• **Pelatihan Penyelia Halal (Internal Halal Officer):** Berbasis SKKNI untuk perusahaan & industri.\n• **Bimtek Juru Sembelih Halal (JULEHA):** Standarisasi kehalalan RPH dan unggas.\n\nSertifikat pelatihan diakui secara nasional untuk syarat akreditasi perusahaan.`,
+    answerEn: `🎓 **Halal Competency Training & Certification:**\n\nLPH UIN SGD holds regular professional workshops and competency assessments:\n\n• **Halal Auditor Training:** Licensed by BPJPH & BNSP.\n• **Halal Supervisor Training:** SKKNI-based curriculum for internal company halal officers.\n• **Halal Slaughterer (JULEHA) Training:** Sharia-compliant slaughterhouse standardization.\n\nTraining certificates are recognized nationwide for corporate compliance.`,
     suggestedAction: {
       labelId: 'Jadwal Pelatihan via WhatsApp',
       labelEn: 'Training Schedule via WhatsApp',
@@ -98,8 +98,8 @@ const KNOWLEDGE_BASE: SmartAnswer[] = [
   },
   {
     keywords: ['lokasi', 'alamat', 'kantor', 'gedung', 'kampus', 'dimana', 'location', 'address', 'office'],
-    answerId: `📍 **Alamat & Kantor Halal Center UIN SGD:**\n\n• **Kampus 1:** Gedung Lecture Hall / Halal Center, Jl. A.H. Nasution No. 105, Cipadung, Kec. Cibiru, Kota Bandung, Jawa Barat 40614.\n• **Kampus 2 (Laboratorium Terpadu ISO 17025):** Jl. Cimencrang, Kec. Gedebage, Kota Bandung (dekat Masjid Raya Al-Jabbar).\n\nJam Operasional Layanan:\nSenin – Jumat: 08.00 – 16.00 WIB.`,
-    answerEn: `📍 **Office Locations of Halal Center UIN SGD:**\n\n• **Campus 1:** Halal Center Building, Jl. A.H. Nasution No. 105, Cibiru, Bandung, West Java 40614.\n• **Campus 2 (Integrated ISO 17025 Lab):** Jl. Cimencrang, Gedebage, Bandung (near Al-Jabbar Grand Mosque).\n\nOffice Hours:\nMonday – Friday: 08:00 AM – 04:00 PM WIB.`,
+    answerId: `📍 **Alamat & Kantor LPH UIN SGD:**\n\n• **Kampus 1:** Gedung Lecture Hall / Kantor LPH, Jl. A.H. Nasution No. 105, Cipadung, Kec. Cibiru, Kota Bandung, Jawa Barat 40614.\n• **Kampus 2 (Laboratorium Terpadu ISO 17025):** Jl. Cimencrang, Kec. Gedebage, Kota Bandung (dekat Masjid Raya Al-Jabbar).\n\nJam Operasional Layanan:\nSenin – Jumat: 08.00 – 16.00 WIB.`,
+    answerEn: `📍 **Office Locations of LPH UIN SGD:**\n\n• **Campus 1:** LPH Office Building, Jl. A.H. Nasution No. 105, Cibiru, Bandung, West Java 40614.\n• **Campus 2 (Integrated ISO 17025 Lab):** Jl. Cimencrang, Gedebage, Bandung (near Al-Jabbar Grand Mosque).\n\nOffice Hours:\nMonday – Friday: 08:00 AM – 04:00 PM WIB.`,
     suggestedAction: {
       labelId: 'Buka Google Maps',
       labelEn: 'Open Google Maps',
@@ -108,13 +108,13 @@ const KNOWLEDGE_BASE: SmartAnswer[] = [
   },
   {
     keywords: ['kontak', 'hubungi', 'wa', 'whatsapp', 'admin', 'telepon', 'phone', 'contact', 'call', 'cs', 'customer service', 'bicara'],
-    answerId: `📞 **Kontak Layanan Resmi Halal Center UIN SGD:**\n\nAnda dapat berkonsultasi langsung dengan petugas pelayanan dan verifikator kami melalui saluran berikut:\n\n• **WhatsApp Layanan:** +62 821-2649-3700\n• **Email Resmi:** halalcenter@uinsgd.ac.id / lph@uinsgd.ac.id\n• **Website:** halal.uinsgd.ac.id\n\nKlik tombol di bawah untuk langsung terhubung ke WhatsApp Admin kami.`,
-    answerEn: `📞 **Official Support Contacts:**\n\nYou can consult directly with our verification officers and support team through:\n\n• **WhatsApp Support:** +62 821-2649-3700\n• **Email:** halalcenter@uinsgd.ac.id / lph@uinsgd.ac.id\n• **Website:** halal.uinsgd.ac.id\n\nClick the button below to connect with our official WhatsApp Admin immediately.`,
+    answerId: `📞 **Kontak Layanan Resmi LPH UIN SGD:**\n\nAnda dapat berkonsultasi langsung dengan petugas pelayanan dan verifikator kami melalui saluran berikut:\n\n• **WhatsApp Layanan:** +62 821-2649-3700\n• **Email Resmi:** lph@uinsgd.ac.id\n• **Website:** halal.uinsgd.ac.id\n\nKlik tombol di bawah untuk langsung terhubung ke WhatsApp Admin kami.`,
+    answerEn: `📞 **Official Support Contacts:**\n\nYou can consult directly with our verification officers and support team through:\n\n• **WhatsApp Support:** +62 821-2649-3700\n• **Email:** lph@uinsgd.ac.id\n• **Website:** halal.uinsgd.ac.id\n\nClick the button below to connect with our official WhatsApp Admin immediately.`,
     isFallback: true,
     suggestedAction: {
       labelId: 'Chat WhatsApp Sekarang',
       labelEn: 'Chat WhatsApp Now',
-      href: 'https://wa.me/6282126493700?text=Halo%20Admin%20Halal%20Center%20UIN%20SGD%2C%20saya%20ingin%20berkonsultasi'
+      href: 'https://wa.me/6282126493700?text=Halo%20Admin%20LPH%20UIN%20SGD%2C%20saya%20ingin%20berkonsultasi'
     }
   }
 ];
@@ -174,8 +174,8 @@ export const ChatbotWidget: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const initialWelcomeText = language === 'en'
-    ? 'Hello! I am the Halal Center UIN SGD AI Assistant. Ask me anything regarding halal certification, fees, document requirements, or laboratory tests. If I cannot answer your question, I will connect you directly to our official WhatsApp support!'
-    : 'Halo! Saya Asisten AI Halal Center UIN Sunan Gunung Djati Bandung. Silakan tanyakan seputar pendaftaran sertifikasi halal, syarat dokumen, uji lab, atau tarif. Jika butuh bimbingan lebih lanjut, kami akan menghubungkan Anda langsung ke WhatsApp resmi!';
+    ? 'Hello! I am the LPH UIN SGD AI Assistant. Ask me anything regarding halal certification, fees, document requirements, or laboratory tests. If I cannot answer your question, I will connect you directly to our official WhatsApp support!'
+    : 'Halo! Saya Asisten AI LPH UIN Sunan Gunung Djati Bandung. Silakan tanyakan seputar pendaftaran sertifikasi halal, syarat dokumen, uji lab, atau tarif. Jika butuh bimbingan lebih lanjut, kami akan menghubungkan Anda langsung ke WhatsApp resmi!';
 
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -254,7 +254,7 @@ export const ChatbotWidget: React.FC = () => {
           text: answerText,
           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           isFallback: match.isFallback,
-          waUrl: 'https://wa.me/6282126493700?text=' + encodeURIComponent(`Halo Admin Halal Center UIN SGD, saya bertanya mengenai: "${userText}"`),
+          waUrl: 'https://wa.me/6282126493700?text=' + encodeURIComponent(`Halo Admin LPH UIN SGD, saya bertanya mengenai: "${userText}"`),
           waText: language === 'en' ? 'Consult Officer via WhatsApp' : 'Lanjutkan Chat via WhatsApp',
           suggestedAction: match.suggestedAction ? {
             label: language === 'en' ? match.suggestedAction.labelEn : match.suggestedAction.labelId,
@@ -283,7 +283,7 @@ export const ChatbotWidget: React.FC = () => {
             text: res.data.data.answer,
             time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
             isFallback: res.data.data.canContactAdmin,
-            waUrl: res.data.data.waUrl || 'https://wa.me/6282126493700?text=' + encodeURIComponent(`Halo Admin Halal Center UIN SGD, saya bertanya mengenai: "${userText}"`),
+            waUrl: res.data.data.waUrl || 'https://wa.me/6282126493700?text=' + encodeURIComponent(`Halo Admin LPH UIN SGD, saya bertanya mengenai: "${userText}"`),
             waText: language === 'en' ? 'Consult Officer via WhatsApp' : 'Lanjutkan Chat via WhatsApp',
           },
         ]);
@@ -294,8 +294,8 @@ export const ChatbotWidget: React.FC = () => {
     } catch {
       // 3. Fallback: The exact requested flow ("kalo misalkan ga ke jawab baru diarahin untuk chat whatsapp")
       const fallbackMsg = language === 'en'
-        ? `I could not find a specific automated answer for your query: "${userText}".\n\nHalal certification regulations often involve specific technical nuances. Please chat directly with our official Halal Center UIN Sunan Gunung Djati Bandung verifiers via WhatsApp for personalized guidance.`
-        : `Maaf, saya belum menemukan jawaban otomatis yang tepat untuk pertanyaan Anda: "${userText}".\n\nKetentuan regulasi halal memiliki detail teknis spesifik. Silakan konsultasikan langsung dengan Tim Auditor & Verifikator resmi Halal Center UIN Sunan Gunung Djati Bandung via WhatsApp:`;
+        ? `I could not find a specific automated answer for your query: "${userText}".\n\nHalal certification regulations often involve specific technical nuances. Please chat directly with our official LPH UIN Sunan Gunung Djati Bandung verifiers via WhatsApp for personalized guidance.`
+        : `Maaf, saya belum menemukan jawaban otomatis yang tepat untuk pertanyaan Anda: "${userText}".\n\nKetentuan regulasi halal memiliki detail teknis spesifik. Silakan konsultasikan langsung dengan Tim Auditor & Verifikator resmi LPH UIN Sunan Gunung Djati Bandung via WhatsApp:`;
 
       setMessages((prev) => [
         ...prev,
@@ -305,7 +305,7 @@ export const ChatbotWidget: React.FC = () => {
           text: fallbackMsg,
           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           isFallback: true,
-          waUrl: 'https://wa.me/6282126493700?text=' + encodeURIComponent(`Halo Admin Halal Center UIN SGD, saya ingin berkonsultasi mengenai: "${userText}"`),
+          waUrl: 'https://wa.me/6282126493700?text=' + encodeURIComponent(`Halo Admin LPH UIN SGD, saya ingin berkonsultasi mengenai: "${userText}"`),
           waText: language === 'en' ? 'Connect via WhatsApp (+62 821-2649-3700)' : 'Hubungi WhatsApp Resmi (+62 821-2649-3700)',
         },
       ]);

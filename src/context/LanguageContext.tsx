@@ -22,7 +22,7 @@ export const translations: Translations = {
 
   // Mega Menu Profile
   menu_about_title: { id: 'Tentang Kami', en: 'About Us' },
-  menu_about_desc: { id: 'Profil kelembagaan, sejarah, dan dedikasi Halal Center UIN SGD.', en: 'Institutional profile, history, and Halal Center UIN SGD dedication.' },
+  menu_about_desc: { id: 'Profil kelembagaan, sejarah, dan dedikasi LPH UIN SGD.', en: 'Institutional profile, history, and LPH UIN SGD dedication.' },
   menu_vision_title: { id: 'Visi & Tata Nilai', en: 'Vision & Core Values' },
   menu_vision_desc: { id: 'Integritas syar’i, keunggulan saintifik, dan pelayanan ramah pelaku usaha.', en: 'Sharia integrity, scientific excellence, and business-friendly service.' },
   menu_structure_title: { id: 'Struktur Organisasi', en: 'Organizational Structure' },
@@ -79,17 +79,17 @@ export const translations: Translations = {
   metric_lab_desc: { id: 'Pengujian saintifik presisi tinggi: Deteksi qPCR DNA Babi, GC-FID Etanol, & Gelatin.', en: 'High-precision scientific testing: Porcine DNA qPCR, GC-FID Ethanol, & Gelatin.' },
 
   // Chatbot
-  chatbot_title: { id: 'Asisten AI Halal Center', en: 'Halal Center AI Assistant' },
+  chatbot_title: { id: 'Asisten AI LPH UIN SGD', en: 'LPH UIN SGD AI Assistant' },
   chatbot_subtitle: { id: 'Aktif 24/7 • Terhubung SIHALAL', en: 'Online 24/7 • SIHALAL Integrated' },
   chatbot_welcome: {
-    id: 'Halo! Selamat datang di layanan cerdas Halal Center UIN Sunan Gunung Djati Bandung. Ada yang bisa kami bantu seputar sertifikasi halal, syarat dokumen, uji lab, atau tarif?',
-    en: 'Hello! Welcome to Halal Center UIN Sunan Gunung Djati Bandung smart assistant. How can we assist you with halal certification, document requirements, lab testing, or fees?'
+    id: 'Halo! Selamat datang di layanan cerdas Lembaga Pemeriksa Halal (LPH) UIN Sunan Gunung Djati Bandung. Ada yang bisa kami bantu seputar sertifikasi halal, syarat dokumen, uji lab, atau tarif?',
+    en: 'Hello! Welcome to the Halal Inspection Agency (LPH) UIN Sunan Gunung Djati Bandung smart assistant. How can we assist you with halal certification, document requirements, lab testing, or fees?'
   },
   chatbot_input_placeholder: { id: 'Tanyakan sesuatu tentang sertifikasi halal...', en: 'Ask anything about halal certification...' },
-  chatbot_disclaimer: { id: 'Didukung oleh Halal Center UIN Sunan Gunung Djati Bandung', en: 'Powered by Halal Center UIN Sunan Gunung Djati Bandung' },
+  chatbot_disclaimer: { id: 'Didukung oleh Lembaga Pemeriksa Halal (LPH) UIN Sunan Gunung Djati Bandung', en: 'Powered by Lembaga Pemeriksa Halal (LPH) UIN Sunan Gunung Djati Bandung' },
   chatbot_fallback_message: {
-    id: 'Pertanyaan Anda memerlukan verifikasi teknis lebih lanjut oleh Auditor / Petugas Halal Center UIN Sunan Gunung Djati Bandung. Silakan lanjutkan komunikasi langsung dengan tim kami via WhatsApp resmi:',
-    en: 'Your inquiry requires further technical verification by our Halal Center Auditors / Officers. Please proceed with our team via our official WhatsApp:'
+    id: 'Pertanyaan Anda memerlukan verifikasi teknis lebih lanjut oleh Auditor / Petugas LPH UIN Sunan Gunung Djati Bandung. Silakan lanjutkan komunikasi langsung dengan tim kami via WhatsApp resmi:',
+    en: 'Your inquiry requires further technical verification by our LPH UIN Sunan Gunung Djati Bandung Auditors / Officers. Please proceed with our team via our official WhatsApp:'
   },
   chatbot_wa_button: { id: 'Chat Tim via WhatsApp', en: 'Chat Support via WhatsApp' },
   chatbot_chip_fee: { id: '💰 Biaya Sertifikasi Halal', en: '💰 Halal Certification Fee' },
@@ -137,8 +137,8 @@ export const translations: Translations = {
 
   // Footer
   footer_desc: {
-    id: 'Pusat Halal (Halal Center) UIN Sunan Gunung Djati Bandung melalui visi "Halalsphere University" mengintegrasikan riset multidisiplin, pemeriksaan halal reguler (LPH), laboratorium terpadu, dan pelatihan kompetensi SDM halal.',
-    en: 'Halal Center UIN Sunan Gunung Djati Bandung through the "Halalsphere University" vision integrates multidisciplinary research, regular halal audits (LPH), integrated laboratories, and professional halal training.'
+    id: 'Lembaga Pemeriksa Halal (LPH) UIN Sunan Gunung Djati Bandung melalui visi "Halalsphere University" mengintegrasikan riset multidisiplin, pemeriksaan halal reguler, laboratorium terpadu, dan pelatihan kompetensi SDM halal.',
+    en: 'Halal Inspection Agency (LPH) UIN Sunan Gunung Djati Bandung through the "Halalsphere University" vision integrates multidisciplinary research, regular halal audits, integrated laboratories, and professional halal training.'
   },
   footer_cta_calc: { id: 'Hitung Estimasi Tarif LPH', en: 'Calculate LPH Fee' },
   footer_col_explore: { id: 'Jelajahi', en: 'Explore' },

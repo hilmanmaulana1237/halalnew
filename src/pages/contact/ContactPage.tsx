@@ -40,9 +40,9 @@ export const ContactPage: React.FC = () => {
           </div>
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white drop-shadow-2xl leading-tight">
             {isEn ? (
-              <>Contact <span className="text-[#F5D32F]">Halal Center</span> UIN SGD</>
+              <>Contact <span className="text-[#F5D32F]">LPH</span> UIN SGD</>
             ) : (
-              <>Hubungi <span className="text-[#F5D32F]">Halal Center</span> UIN SGD</>
+              <>Hubungi <span className="text-[#F5D32F]">LPH</span> UIN SGD</>
             )}
           </h1>
           <p className="mt-4 text-base sm:text-lg text-neutral-200 max-w-2xl mx-auto leading-relaxed font-normal">

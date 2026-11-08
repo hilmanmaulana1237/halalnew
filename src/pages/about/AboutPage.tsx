@@ -110,9 +110,9 @@ export const AboutPage: React.FC = () => {
           </div>
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white drop-shadow-2xl leading-tight">
             {isEn ? (
-              <>About <span className="text-[#F5D32F]">Halal Center</span> UIN SGD Bandung</>
+              <>About <span className="text-[#F5D32F]">LPH</span> UIN SGD Bandung</>
             ) : (
-              <>Tentang <span className="text-[#F5D32F]">Halal Center</span> UIN SGD Bandung</>
+              <>Tentang <span className="text-[#F5D32F]">LPH</span> UIN SGD Bandung</>
             )}
           </h1>
           <p className="mt-4 text-base sm:text-lg text-neutral-200 max-w-3xl mx-auto leading-relaxed font-normal">
@@ -157,13 +157,13 @@ export const AboutPage: React.FC = () => {
               </h2>
               <p className="text-neutral-600 text-base leading-relaxed">
                 {isEn
-                  ? 'The Halal Center of State Islamic University Sunan Gunung Djati Bandung was founded as a concrete manifestation of higher education service to fulfill the mandate of Law No. 33 of 2014 concerning Halal Product Assurance.'
-                  : 'Pusat Halal (Halal Center) Universitas Islam Negeri Sunan Gunung Djati Bandung didirikan sebagai wujud nyata pengabdian perguruan tinggi keagamaan Islam negeri dalam menjawab amanat Undang-Undang No. 33 Tahun 2014 tentang Jaminan Produk Halal.'}
+                  ? 'The Halal Inspection Agency (LPH) of State Islamic University Sunan Gunung Djati Bandung was founded as a concrete manifestation of higher education service to fulfill the mandate of Law No. 33 of 2014 concerning Halal Product Assurance.'
+                  : 'Lembaga Pemeriksa Halal (LPH) Universitas Islam Negeri Sunan Gunung Djati Bandung didirikan sebagai wujud nyata pengabdian perguruan tinggi keagamaan Islam negeri dalam menjawab amanat Undang-Undang No. 33 Tahun 2014 tentang Jaminan Produk Halal.'}
               </p>
               <p className="text-neutral-600 text-base leading-relaxed">
                 {isEn
-                  ? 'Embodying the "Halalsphere University" paradigm, Halal Center UIN SGD is more than an administrative entity; it is a scientific hub uniting molecular biology research, food technology, contemporary Islamic jurisprudence, and grassroots economic empowerment.'
-                  : 'Dengan mengusung paradigma “Halalsphere University”, Halal Center UIN SGD tidak sekadar menjadi lembaga administratif, melainkan episentrum keilmuan halal yang memadukan riset biologi molekuler, teknologi pangan, kajian fikih kontemporer, dan penguatan ekonomi kerakyatan.'}
+                  ? 'Embodying the "Halalsphere University" paradigm, LPH UIN SGD is more than an administrative entity; it is a scientific inspection hub uniting molecular biology research, food technology, contemporary Islamic jurisprudence, and grassroots economic empowerment.'
+                  : 'Dengan mengusung paradigma “Halalsphere University”, LPH UIN SGD tidak sekadar menjadi lembaga administratif, melainkan episentrum pemeriksaan dan keilmuan halal yang memadukan riset biologi molekuler, teknologi pangan, kajian fikih kontemporer, dan penguatan ekonomi kerakyatan.'}
               </p>
               <div className="pt-2 flex flex-wrap items-center gap-4">
                 <Link to="/layanan/kalkulator">
@@ -188,7 +188,7 @@ export const AboutPage: React.FC = () => {
           <SectionHeader
             badge={isEn ? 'STRATEGIC DIRECTION' : 'ARAH STRATEGIS'}
             badgeColor="emerald"
-            title={isEn ? 'Vision & Mission of Halal Center UIN SGD' : 'Visi & Misi Halal Center UIN SGD'}
+            title={isEn ? 'Vision & Mission of LPH UIN SGD' : 'Visi & Misi LPH UIN SGD'}
             subtitle={isEn ? 'Noble foundation and purpose in serving the nation and global Muslim community.' : 'Landasan dan tujuan mulia dalam mengabdi kepada bangsa dan umat muslim dunia.'}
           />
 
@@ -203,8 +203,8 @@ export const AboutPage: React.FC = () => {
                 </h3>
                 <p className="text-neutral-600 leading-relaxed text-base font-normal">
                   {isEn
-                    ? '"To become an internationally reputable Halal Inspection Agency (LPH) and Halal Study Center, leading in halal authentication science, sharia integrity, and MSE empowerment towards Indonesia as the Global Halal Hub."'
-                    : '"Menjadi Lembaga Pemeriksa Halal (LPH) dan Pusat Kajian Halal bereputasi internasional, unggul dalam sains autentikasi halal, berintegritas syar\'i, dan terdepan dalam pemberdayaan UMK menuju Indonesia Pusat Halal Dunia."'}
+                    ? '"To become an internationally reputable Halal Inspection Agency (LPH), leading in halal authentication science, sharia integrity, and MSE empowerment towards Indonesia as the Global Halal Hub."'
+                    : '"Menjadi Lembaga Pemeriksa Halal (LPH) bereputasi internasional, unggul dalam sains autentikasi halal, berintegritas syar\'i, dan terdepan dalam pemberdayaan UMK menuju Indonesia Pusat Halal Dunia."'}
                 </p>
               </div>
             </Card>
@@ -313,7 +313,7 @@ export const AboutPage: React.FC = () => {
                   <div>
                     <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-extrabold bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] uppercase tracking-wider mb-4 shadow-xs">
                       <Sparkles className="w-3.5 h-3.5 text-[#eab308]" />
-                      {isEn ? 'Rector of UIN SGD & Halal Center Patron' : 'Rektor UIN SGD & Dewan Pembina Halal Center'}
+                      {isEn ? 'Rector of UIN SGD & LPH Patron' : 'Rektor UIN SGD & Dewan Pembina LPH'}
                     </div>
 
                     <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#292333] tracking-tight">
@@ -377,7 +377,7 @@ export const AboutPage: React.FC = () => {
                         {directors[0].name}
                       </h4>
                       <p className="text-[11px] font-bold text-[#6B18A8] mt-0.5">
-                        {isEn ? 'Rector of UIN SGD & Halal Center Patron' : 'Rektor UIN SGD & Dewan Pembina Halal Center'}
+                        {isEn ? 'Rector of UIN SGD & LPH Patron' : 'Rektor UIN SGD & Dewan Pembina LPH'}
                       </p>
                     </div>
                   </div>
@@ -385,7 +385,7 @@ export const AboutPage: React.FC = () => {
               </div>
             </motion.div>
 
-            {/* CARD 2: KEPALA HALAL CENTER (Dr. Tri Cahyanto) - Left: Portrait Pop-Out, Right: Content */}
+            {/* CARD 2: PIMPINAN TEKNIS LPH (Dr. Tri Cahyanto) - Left: Portrait Pop-Out, Right: Content */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -417,7 +417,7 @@ export const AboutPage: React.FC = () => {
                         {directors[1].name}
                       </h4>
                       <p className="text-[11px] font-bold text-[#6B18A8] mt-0.5">
-                        {isEn ? 'Head of Halal Center UIN Sunan Gunung Djati' : 'Kepala Halal Center UIN Sunan Gunung Djati'}
+                        {isEn ? 'Technical Lead of LPH UIN Sunan Gunung Djati' : 'Pimpinan Teknis LPH UIN Sunan Gunung Djati'}
                       </p>
                     </div>
                   </div>
@@ -428,7 +428,7 @@ export const AboutPage: React.FC = () => {
                   <div>
                     <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-bold bg-[#F5EDFB] text-[#6B18A8] border border-[#C9A5E8] uppercase tracking-wider mb-4 shadow-xs">
                       <ShieldCheck className="w-3.5 h-3.5 text-[#6B18A8]" />
-                      {isEn ? 'LPH Technical Lead & Head of Halal Center' : 'Pimpinan Teknis LPH & Kepala Pusat Kajian Halal'}
+                      {isEn ? 'Operational & Technical Lead of LPH UIN SGD' : 'Pimpinan Teknis & Operasional LPH UIN SGD'}
                     </div>
 
                     <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#292333] tracking-tight">
