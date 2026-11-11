@@ -50,10 +50,12 @@ import {
   Settings,
   Filter,
 } from 'lucide-react';
-import { RichTextEditor } from '@/components/admin/RichTextEditor';
 import { api, formatDate, formatRupiah } from '@/services/api';
 import { cn } from '@/lib/utils';
 import type { NewsItem, AnnouncementItem, Complaint, SatisfactionSurvey, KnowledgeBaseItem } from '@/types';
+
+// Lazy-load TinyMCE editor for performance & smooth Vite bundling
+const RichTextEditor = React.lazy(() => import('@/components/admin/RichTextEditor'));
 
 type AdminTab =
   | 'OVERVIEW'
@@ -1398,11 +1400,21 @@ export const AdminDashboard: React.FC = () => {
                           </span>
                         </div>
 
-                        <RichTextEditor
-                          value={postForm.content}
-                          onChange={(val) => setPostForm({ ...postForm, content: val })}
-                          height={520}
-                        />
+                        <React.Suspense
+                          fallback={
+                            <div className="h-[520px] w-full rounded-2xl bg-[#FAF7FD]/50 border border-dashed border-[#C9A5E8] flex flex-col items-center justify-center p-6 text-neutral-500">
+                              <div className="w-8 h-8 border-3 border-[#6B18A8]/20 border-t-[#6B18A8] rounded-full animate-spin mb-3" />
+                              <span className="text-xs font-bold text-[#6B18A8]">Memuat Editor Visual TinyMCE...</span>
+                              <span className="text-[11px] text-neutral-500 mt-1">Menginisialisasi plugin dan toolbar offline</span>
+                            </div>
+                          }
+                        >
+                          <RichTextEditor
+                            value={postForm.content}
+                            onChange={(val) => setPostForm({ ...postForm, content: val })}
+                            height={520}
+                          />
+                        </React.Suspense>
                       </Card>
                     </div>
 
