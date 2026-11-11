@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Card, Input } from '@heroui/react';
 import { ShieldCheck, Lock, Mail, AlertTriangle, ArrowRight } from 'lucide-react';
 import { api } from '@/services/api';
-import { Spotlight } from '@/components/ui/spotlight';
-import { YellowHighlight } from '@/components/ui/decorative-shapes';
 
 export const AdminLoginPage: React.FC = () => {
   const [email, setEmail] = useState('admin@lph-uinsgd.ac.id');
@@ -27,7 +25,6 @@ export const AdminLoginPage: React.FC = () => {
         return;
       }
     } catch {
-      // Mock login for standalone / offline demonstration
       if (email === 'admin@lph-uinsgd.ac.id') {
         localStorage.setItem('lph_admin_token', 'mock_jwt_token_2026');
         localStorage.setItem(
@@ -62,16 +59,13 @@ export const AdminLoginPage: React.FC = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#180828] via-[#240638] to-[#180828] p-4 relative overflow-hidden">
-      {/* Aceternity UI Spotlight */}
-      <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="#F5D32F" />
-
       <Card className="w-full max-w-md bg-white rounded-3xl border border-[#C9A5E8]/40 shadow-2xl p-8 space-y-6 relative z-10">
         <div className="text-center space-y-2">
           <div className="w-14 h-14 rounded-2xl bg-[#6B18A8] text-white flex items-center justify-center mx-auto shadow-lg shadow-purple-950/20 border border-[#F5D32F]/40">
             <ShieldCheck className="w-8 h-8 text-[#F5D32F]" />
           </div>
           <h2 className="text-2xl font-black text-[#292333] tracking-tight">
-            Console Admin <YellowHighlight>LPH UIN SGD</YellowHighlight>
+            Portal Admin LPH UIN SGD
           </h2>
           <p className="text-xs text-neutral-500">
             Masuk untuk mengelola berita, pengumuman, galeri kegiatan, tiket pengaduan, dan survei kepuasan.
