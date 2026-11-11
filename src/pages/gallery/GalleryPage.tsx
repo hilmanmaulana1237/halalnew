@@ -36,7 +36,7 @@ export interface GalleryItem extends FocusCardItem {
   facility: string;
   standard: string;
   fullStory: string;
-  categoryKey: 'audit' | 'lab' | 'training' | 'partnership';
+  categoryKey: 'audit' | 'lab' | 'training' | 'partnership' | string;
 }
 
 const GALLERY_DATA: GalleryItem[] = [
@@ -288,6 +288,59 @@ export const GalleryPage: React.FC = () => {
   const { language } = useLanguage();
   const isEn = language === 'en';
 
+  // Dynamic Gallery items initialized from localStorage with fallback
+  const [galleryItems] = useState<GalleryItem[]>(() => {
+    try {
+      const raw = localStorage.getItem('lph_gallery_list');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed.map((item: any) => ({
+            id: item.id || Date.now(),
+            title: item.title,
+            category: item.category,
+            categoryKey: item.categoryKey || item.category,
+            src: item.src,
+            date: item.date || 'Terbaru',
+            location: item.location || 'Bandung, Jawa Barat',
+            description: item.description || item.fullStory || item.title,
+            auditorLead: item.auditorLead || 'Tim Auditor Halal LPH UIN SGD',
+            facility: item.facility || 'Fasilitas Terverifikasi Halal',
+            standard: item.standard || 'KMA 784 / ISO 17025',
+            fullStory: item.fullStory || item.description || item.title,
+            tags: item.tags || [item.category, 'LPH UIN SGD'],
+          }));
+        }
+      }
+    } catch {}
+    return GALLERY_DATA;
+  });
+
+  // Dynamic categories list
+  const dynamicCategories = useMemo(() => {
+    let cats: string[] = [
+      'Audit Lapangan',
+      'Laboratorium ISO 17025',
+      'Pelatihan & JULEHA',
+      'Kunjungan & MoA',
+    ];
+    try {
+      const raw = localStorage.getItem('lph_gallery_categories');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          cats = parsed;
+        }
+      }
+    } catch {}
+    galleryItems.forEach((item) => {
+      if (item.category && !cats.includes(item.category)) {
+        cats.push(item.category);
+      }
+    });
+    return Array.from(new Set(cats));
+  }, [galleryItems]);
+
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -295,9 +348,11 @@ export const GalleryPage: React.FC = () => {
 
   // Filtered gallery items based on category tabs and search keyword
   const filteredItems = useMemo(() => {
-    return GALLERY_DATA.filter((item) => {
+    return galleryItems.filter((item) => {
       const matchCategory =
-        activeCategory === 'all' || item.categoryKey === activeCategory;
+        activeCategory === 'all' ||
+        item.categoryKey === activeCategory ||
+        item.category === activeCategory;
       const q = searchQuery.toLowerCase().trim();
       const matchQuery =
         !q ||
@@ -310,7 +365,7 @@ export const GalleryPage: React.FC = () => {
 
       return matchCategory && matchQuery;
     });
-  }, [activeCategory, searchQuery]);
+  }, [galleryItems, activeCategory, searchQuery]);
 
   // Pagination calculation
   const totalPages = Math.max(1, Math.ceil(filteredItems.length / ITEMS_PER_PAGE));
@@ -449,56 +504,28 @@ export const GalleryPage: React.FC = () => {
                         : 'text-neutral-700 hover:text-[#6B18A8] hover:bg-[#F5EDFB]'
                     )}
                   >
-                    {isEn ? 'All Photos' : 'Semua Kegiatan'} ({GALLERY_DATA.length})
+                    {isEn ? 'All Photos' : 'Semua Kegiatan'} ({galleryItems.length})
                   </Tabs.Tab>
 
-                  <Tabs.Tab
-                    id="audit"
-                    className={cn(
-                      'px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all cursor-pointer whitespace-nowrap',
-                      activeCategory === 'audit'
-                        ? 'bg-[#6B18A8] text-white shadow-xs'
-                        : 'text-neutral-700 hover:text-[#6B18A8] hover:bg-[#F5EDFB]'
-                    )}
-                  >
-                    {isEn ? 'Field Audits' : 'Audit Lapangan'} (4)
-                  </Tabs.Tab>
-
-                  <Tabs.Tab
-                    id="lab"
-                    className={cn(
-                      'px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all cursor-pointer whitespace-nowrap',
-                      activeCategory === 'lab'
-                        ? 'bg-[#6B18A8] text-white shadow-xs'
-                        : 'text-neutral-700 hover:text-[#6B18A8] hover:bg-[#F5EDFB]'
-                    )}
-                  >
-                    {isEn ? 'ISO 17025 Labs' : 'Laboratorium ISO 17025'} (4)
-                  </Tabs.Tab>
-
-                  <Tabs.Tab
-                    id="training"
-                    className={cn(
-                      'px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all cursor-pointer whitespace-nowrap',
-                      activeCategory === 'training'
-                        ? 'bg-[#6B18A8] text-white shadow-xs'
-                        : 'text-neutral-700 hover:text-[#6B18A8] hover:bg-[#F5EDFB]'
-                    )}
-                  >
-                    {isEn ? 'Training & JULEHA' : 'Pelatihan & JULEHA'} (4)
-                  </Tabs.Tab>
-
-                  <Tabs.Tab
-                    id="partnership"
-                    className={cn(
-                      'px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all cursor-pointer whitespace-nowrap',
-                      activeCategory === 'partnership'
-                        ? 'bg-[#6B18A8] text-white shadow-xs'
-                        : 'text-neutral-700 hover:text-[#6B18A8] hover:bg-[#F5EDFB]'
-                    )}
-                  >
-                    {isEn ? 'MoA & Institutional Visits' : 'Kunjungan & MoA'} (4)
-                  </Tabs.Tab>
+                  {dynamicCategories.map((cat) => {
+                    const count = galleryItems.filter(
+                      (item) => item.category === cat || item.categoryKey === cat
+                    ).length;
+                    return (
+                      <Tabs.Tab
+                        key={cat}
+                        id={cat}
+                        className={cn(
+                          'px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all cursor-pointer whitespace-nowrap',
+                          activeCategory === cat
+                            ? 'bg-[#6B18A8] text-white shadow-xs'
+                            : 'text-neutral-700 hover:text-[#6B18A8] hover:bg-[#F5EDFB]'
+                        )}
+                      >
+                        {cat} ({count})
+                      </Tabs.Tab>
+                    );
+                  })}
                 </Tabs.List>
               </Tabs>
             </div>

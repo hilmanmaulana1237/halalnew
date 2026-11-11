@@ -50,3 +50,4 @@ Options -Indexes
     # Jika tidak ada, arahkan ke index.html untuk ditangani React Router
     RewriteRule ^ index.html [L]
 </IfModule>
+

@@ -64,6 +64,7 @@ import {
   Crop,
   Info,
   Layers,
+  Tag,
 } from 'lucide-react';
 import { api, formatDate, formatRupiah } from '@/services/api';
 import { cn } from '@/lib/utils';
@@ -463,6 +464,39 @@ export const AdminDashboard: React.FC = () => {
     { id: 4, name: 'Administrator Portal LPH', role: 'OPERATOR_CMS', email: 'admin@lph-uinsgd.ac.id', status: 'AKTIF', lastLogin: 'Baru saja' },
   ]);
 
+  // Dynamic Categories with LocalStorage persistence
+  const [newsCategories, setNewsCategories] = useState<string[]>(() => {
+    try {
+      const raw = localStorage.getItem('lph_news_categories');
+      if (raw) return JSON.parse(raw);
+    } catch {}
+    return ['KEGIATAN', 'ACARA', 'AGENDA', 'EDUKASI', 'PUBLIKASI', 'KERJASAMA'];
+  });
+
+  const [galleryCategories, setGalleryCategories] = useState<string[]>(() => {
+    try {
+      const raw = localStorage.getItem('lph_gallery_categories');
+      if (raw) return JSON.parse(raw);
+    } catch {}
+    return [
+      'Audit Lapangan',
+      'Laboratorium ISO 17025',
+      'Pelatihan & JULEHA',
+      'Kunjungan & MoA',
+      'Sosialisasi & Edukasi',
+    ];
+  });
+
+  // Inline category states for Post Form & Gallery Form
+  const [isAddingNewsCatInline, setIsAddingNewsCatInline] = useState(false);
+  const [inlineNewsCatInput, setInlineNewsCatInput] = useState('');
+  const [isAddingGalleryCatInline, setIsAddingGalleryCatInline] = useState(false);
+  const [inlineGalleryCatInput, setInlineGalleryCatInput] = useState('');
+
+  // Category Manager Modal state
+  const [categoryModalTab, setCategoryModalTab] = useState<'NEWS' | 'GALLERY'>('NEWS');
+  const [categoryModalInput, setCategoryModalInput] = useState('');
+
   // Form state for TinyMCE Post Editor
   const [postForm, setPostForm] = useState({
     title: '',
@@ -528,7 +562,14 @@ export const AdminDashboard: React.FC = () => {
   // EDIT & MODAL STATES
   // -------------------------------------------------------------
   const [modalType, setModalType] = useState<
-    'ADD_ANNOUNCEMENT' | 'EDIT_ANNOUNCEMENT' | 'ADD_GALLERY' | 'EDIT_GALLERY' | 'EDIT_COMPLAINT' | 'ADD_KB' | null
+    | 'ADD_ANNOUNCEMENT'
+    | 'EDIT_ANNOUNCEMENT'
+    | 'ADD_GALLERY'
+    | 'EDIT_GALLERY'
+    | 'EDIT_COMPLAINT'
+    | 'ADD_KB'
+    | 'MANAGE_CATEGORIES'
+    | null
   >(null);
 
   const [editingAnnouncementId, setEditingAnnouncementId] = useState<number | null>(null);
@@ -755,6 +796,13 @@ export const AdminDashboard: React.FC = () => {
 
   const handleOpenEditPost = (post: NewsItem) => {
     setEditingPostId(post.id);
+    if (post.category && !newsCategories.includes(post.category)) {
+      const updated = [...newsCategories, post.category];
+      setNewsCategories(updated);
+      try {
+        localStorage.setItem('lph_news_categories', JSON.stringify(updated));
+      } catch {}
+    }
     setPostForm({
       title: post.title,
       slug: post.slug,
@@ -994,6 +1042,13 @@ export const AdminDashboard: React.FC = () => {
 
   const handleOpenEditGallery = (item: AdminGalleryItem) => {
     setEditingGalleryId(item.id);
+    if (item.category && !galleryCategories.includes(item.category)) {
+      const updated = [...galleryCategories, item.category];
+      setGalleryCategories(updated);
+      try {
+        localStorage.setItem('lph_gallery_categories', JSON.stringify(updated));
+      } catch {}
+    }
     setGalleryForm({
       title: item.title,
       category: item.category,
@@ -1134,6 +1189,139 @@ export const AdminDashboard: React.FC = () => {
     setTimeout(() => setCopiedUrl(null), 2000);
   };
 
+  // -------------------------------------------------------------
+  // DYNAMIC CATEGORY ACTIONS (NEWS & GALLERY)
+  // -------------------------------------------------------------
+  const handleAddNewsCategory = (name: string): string | null => {
+    const trimmed = name.trim().toUpperCase();
+    if (!trimmed) {
+      alert('Nama kategori berita tidak boleh kosong!');
+      return null;
+    }
+    if (newsCategories.includes(trimmed)) {
+      alert(`Kategori "${trimmed}" sudah terdaftar!`);
+      return trimmed;
+    }
+    const updated = [...newsCategories, trimmed];
+    setNewsCategories(updated);
+    try {
+      localStorage.setItem('lph_news_categories', JSON.stringify(updated));
+    } catch {}
+    addAuditLog('Menambahkan kategori berita baru', trimmed, 'CREATE');
+    return trimmed;
+  };
+
+  const handleDeleteNewsCategory = (catToDelete: string) => {
+    if (newsCategories.length <= 1) {
+      alert('Minimal harus tersisa 1 kategori berita!');
+      return;
+    }
+    const inUseCount = newsList.filter((n) => n.category === catToDelete).length;
+    const fallbackCat = newsCategories.find((c) => c !== catToDelete) || 'KEGIATAN';
+    const confirmMsg = inUseCount > 0
+      ? `Kategori "${catToDelete}" saat ini digunakan oleh ${inUseCount} artikel berita.\n\nJika dihapus, seluruh artikel terkait akan dialihkan ke kategori "${fallbackCat}".\nLanjutkan penghapusan kategori ini?`
+      : `Hapus kategori berita "${catToDelete}"?`;
+
+    if (window.confirm(confirmMsg)) {
+      if (inUseCount > 0) {
+        const updatedNews = newsList.map((n) =>
+          n.category === catToDelete ? { ...n, category: fallbackCat } : n
+        );
+        setNewsList(updatedNews);
+        try {
+          localStorage.setItem('lph_news_list', JSON.stringify(updatedNews));
+        } catch {}
+      }
+      const updatedCats = newsCategories.filter((c) => c !== catToDelete);
+      setNewsCategories(updatedCats);
+      try {
+        localStorage.setItem('lph_news_categories', JSON.stringify(updatedCats));
+      } catch {}
+      if (newsCategory === catToDelete) {
+        setNewsCategory('ALL');
+      }
+      if (postForm.category === catToDelete) {
+        setPostForm((prev) => ({ ...prev, category: fallbackCat }));
+      }
+      addAuditLog('Menghapus kategori berita', catToDelete, 'DELETE');
+    }
+  };
+
+  const handleAddGalleryCategory = (name: string): string | null => {
+    const trimmed = name.trim();
+    if (!trimmed) {
+      alert('Nama kategori galeri tidak boleh kosong!');
+      return null;
+    }
+    if (galleryCategories.some((c) => c.toLowerCase() === trimmed.toLowerCase())) {
+      alert(`Kategori "${trimmed}" sudah terdaftar!`);
+      return trimmed;
+    }
+    const updated = [...galleryCategories, trimmed];
+    setGalleryCategories(updated);
+    try {
+      localStorage.setItem('lph_gallery_categories', JSON.stringify(updated));
+    } catch {}
+    addAuditLog('Menambahkan kategori galeri baru', trimmed, 'CREATE');
+    return trimmed;
+  };
+
+  const handleDeleteGalleryCategory = (catToDelete: string) => {
+    if (galleryCategories.length <= 1) {
+      alert('Minimal harus tersisa 1 kategori galeri!');
+      return;
+    }
+    const inUseCount = galleryList.filter((g) => g.category === catToDelete).length;
+    const fallbackCat = galleryCategories.find((c) => c !== catToDelete) || 'Audit Lapangan';
+    const confirmMsg = inUseCount > 0
+      ? `Kategori "${catToDelete}" saat ini digunakan oleh ${inUseCount} foto dokumentasi.\n\nJika dihapus, seluruh foto terkait akan dialihkan ke kategori "${fallbackCat}".\nLanjutkan penghapusan kategori ini?`
+      : `Hapus kategori galeri "${catToDelete}"?`;
+
+    if (window.confirm(confirmMsg)) {
+      if (inUseCount > 0) {
+        const updatedGallery = galleryList.map((g) =>
+          g.category === catToDelete ? { ...g, category: fallbackCat } : g
+        );
+        setGalleryList(updatedGallery);
+        try {
+          localStorage.setItem('lph_gallery_list', JSON.stringify(updatedGallery));
+        } catch {}
+      }
+      const updatedCats = galleryCategories.filter((c) => c !== catToDelete);
+      setGalleryCategories(updatedCats);
+      try {
+        localStorage.setItem('lph_gallery_categories', JSON.stringify(updatedCats));
+      } catch {}
+      if (galleryCategory === catToDelete) {
+        setGalleryCategory('ALL');
+      }
+      if (galleryForm.category === catToDelete) {
+        setGalleryForm((prev) => ({ ...prev, category: fallbackCat }));
+      }
+      addAuditLog('Menghapus kategori galeri', catToDelete, 'DELETE');
+    }
+  };
+
+  const handleSaveInlineNewsCategory = () => {
+    if (!inlineNewsCatInput.trim()) return;
+    const added = handleAddNewsCategory(inlineNewsCatInput);
+    if (added) {
+      setPostForm((prev) => ({ ...prev, category: added }));
+      setInlineNewsCatInput('');
+      setIsAddingNewsCatInline(false);
+    }
+  };
+
+  const handleSaveInlineGalleryCategory = () => {
+    if (!inlineGalleryCatInput.trim()) return;
+    const added = handleAddGalleryCategory(inlineGalleryCatInput);
+    if (added) {
+      setGalleryForm((prev) => ({ ...prev, category: added }));
+      setInlineGalleryCatInput('');
+      setIsAddingGalleryCatInline(false);
+    }
+  };
+
   // Restore database callback
   const handleRestoreData = (restored: any) => {
     if (restored.newsList) {
@@ -1159,6 +1347,14 @@ export const AdminDashboard: React.FC = () => {
     if (restored.knowledgeBase) {
       setKnowledgeBase(restored.knowledgeBase);
       localStorage.setItem('lph_kb_list', JSON.stringify(restored.knowledgeBase));
+    }
+    if (restored.newsCategories && Array.isArray(restored.newsCategories)) {
+      setNewsCategories(restored.newsCategories);
+      localStorage.setItem('lph_news_categories', JSON.stringify(restored.newsCategories));
+    }
+    if (restored.galleryCategories && Array.isArray(restored.galleryCategories)) {
+      setGalleryCategories(restored.galleryCategories);
+      localStorage.setItem('lph_gallery_categories', JSON.stringify(restored.galleryCategories));
     }
   };
 
@@ -1940,6 +2136,18 @@ export const AdminDashboard: React.FC = () => {
                     <div className="flex items-center gap-2 flex-wrap">
                       <Button
                         variant="outline"
+                        onPress={() => {
+                          setCategoryModalTab('NEWS');
+                          setCategoryModalInput('');
+                          setModalType('MANAGE_CATEGORIES');
+                        }}
+                        className="border-[#C9A5E8] text-[#6B18A8] bg-[#FAF7FD] hover:bg-[#F3EBF9] text-xs font-bold rounded-xl px-3.5 py-2 flex items-center gap-1.5 cursor-pointer"
+                      >
+                        <Tag className="w-3.5 h-3.5 text-[#6B18A8]" />
+                        <span>Kelola Kategori ({newsCategories.length})</span>
+                      </Button>
+                      <Button
+                        variant="outline"
                         onPress={handleExportNewsExcel}
                         className="border-emerald-300 text-emerald-800 bg-emerald-50/50 hover:bg-emerald-100 text-xs font-bold rounded-xl px-3.5 py-2 flex items-center gap-1.5"
                       >
@@ -1980,11 +2188,12 @@ export const AdminDashboard: React.FC = () => {
                         }}
                         className="w-full p-2 rounded-xl border border-neutral-300 text-xs bg-white font-bold"
                       >
-                        <option value="ALL">Semua Kategori</option>
-                        <option value="KEGIATAN">KEGIATAN (Audit &amp; Sertifikasi)</option>
-                        <option value="ACARA">ACARA (Seminar &amp; Workshop)</option>
-                        <option value="AGENDA">AGENDA (Jadwal &amp; Pengumuman)</option>
-                        <option value="EDUKASI">EDUKASI (Tips &amp; Regulasi)</option>
+                        <option value="ALL">Semua Kategori ({newsCategories.length})</option>
+                        {newsCategories.map((cat) => (
+                          <option key={cat} value={cat}>
+                            {cat}
+                          </option>
+                        ))}
                       </select>
                     </div>
                     <div>
@@ -2259,18 +2468,60 @@ export const AdminDashboard: React.FC = () => {
                         </div>
 
                         <div>
-                          <label className="block text-xs font-bold text-neutral-700 mb-1">
-                            Kategori Berita
-                          </label>
+                          <div className="flex items-center justify-between mb-1">
+                            <label className="text-xs font-bold text-neutral-700">
+                              Kategori Berita
+                            </label>
+                            <button
+                              type="button"
+                              onClick={() => setIsAddingNewsCatInline(!isAddingNewsCatInline)}
+                              className="text-[11px] font-bold text-[#6B18A8] hover:underline flex items-center gap-1 cursor-pointer"
+                            >
+                              <Plus className="w-3 h-3" />
+                              <span>{isAddingNewsCatInline ? 'Tutup' : '+ Kategori Baru'}</span>
+                            </button>
+                          </div>
+
+                          {isAddingNewsCatInline && (
+                            <div className="mb-2 p-2.5 rounded-xl bg-[#FAF7FD] border border-[#C9A5E8]/60 space-y-2">
+                              <div className="flex items-center gap-2">
+                                <Input
+                                  placeholder="Nama kategori baru (misal: RISET)..."
+                                  value={inlineNewsCatInput}
+                                  onChange={(e) => setInlineNewsCatInput(e.target.value)}
+                                  onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                      e.preventDefault();
+                                      handleSaveInlineNewsCategory();
+                                    }
+                                  }}
+                                  className="text-xs bg-white flex-1"
+                                />
+                                <Button
+                                  size="sm"
+                                  variant="primary"
+                                  className="bg-[#6B18A8] text-white text-xs font-bold shrink-0 cursor-pointer"
+                                  onPress={handleSaveInlineNewsCategory}
+                                >
+                                  Simpan
+                                </Button>
+                              </div>
+                              <p className="text-[10px] text-neutral-500">
+                                Kategori baru akan otomatis terpilih dan langsung tersimpan.
+                              </p>
+                            </div>
+                          )}
+
                           <select
                             value={postForm.category}
                             onChange={(e) => setPostForm({ ...postForm, category: e.target.value })}
                             className="w-full p-2.5 rounded-xl border border-neutral-300 text-xs bg-white font-bold"
                           >
-                            <option value="KEGIATAN">KEGIATAN (Audit &amp; Sertifikasi)</option>
-                            <option value="ACARA">ACARA (Seminar &amp; Workshop)</option>
-                            <option value="AGENDA">AGENDA (Jadwal &amp; Pengumuman)</option>
-                            <option value="EDUKASI">EDUKASI (Tips &amp; Regulasi Halal)</option>
+                            {newsCategories.map((cat) => (
+                              <option key={cat} value={cat}>
+                                {cat}
+                              </option>
+                            ))}
                           </select>
                         </div>
 
@@ -2588,6 +2839,18 @@ export const AdminDashboard: React.FC = () => {
                     <span>Export ke Excel (.xlsx)</span>
                   </Button>
                   <Button
+                    variant="outline"
+                    onPress={() => {
+                      setCategoryModalTab('GALLERY');
+                      setCategoryModalInput('');
+                      setModalType('MANAGE_CATEGORIES');
+                    }}
+                    className="border-[#C9A5E8] text-[#6B18A8] bg-[#FAF7FD] hover:bg-[#F3EBF9] text-xs font-bold rounded-xl px-3.5 py-2 flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <Tag className="w-3.5 h-3.5 text-[#6B18A8]" />
+                    <span>Kelola Kategori ({galleryCategories.length})</span>
+                  </Button>
+                  <Button
                     variant="primary"
                     onPress={handleOpenNewGallery}
                     className="bg-[#6B18A8] text-white text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5"
@@ -2621,11 +2884,12 @@ export const AdminDashboard: React.FC = () => {
                     }}
                     className="w-full p-2 rounded-xl border border-neutral-300 text-xs bg-white font-bold"
                   >
-                    <option value="ALL">Semua Kategori Galeri</option>
-                    <option value="Audit Lapangan">Audit Lapangan</option>
-                    <option value="Laboratorium ISO 17025">Laboratorium ISO 17025</option>
-                    <option value="Pelatihan & JULEHA">Pelatihan &amp; JULEHA</option>
-                    <option value="Kunjungan & MoA">Kunjungan &amp; MoA</option>
+                    <option value="ALL">Semua Kategori Galeri ({galleryCategories.length})</option>
+                    {galleryCategories.map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -3743,18 +4007,60 @@ export const AdminDashboard: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
-                    Kategori Galeri
-                  </label>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-xs font-bold text-neutral-700 uppercase">
+                      Kategori Galeri
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => setIsAddingGalleryCatInline(!isAddingGalleryCatInline)}
+                      className="text-[11px] font-bold text-[#6B18A8] hover:underline flex items-center gap-1 cursor-pointer"
+                    >
+                      <Plus className="w-3 h-3" />
+                      <span>{isAddingGalleryCatInline ? 'Tutup' : '+ Kategori Baru'}</span>
+                    </button>
+                  </div>
+
+                  {isAddingGalleryCatInline && (
+                    <div className="mb-2 p-2.5 rounded-xl bg-[#FAF7FD] border border-[#C9A5E8]/60 space-y-2">
+                      <div className="flex items-center gap-2">
+                        <Input
+                          placeholder="Nama kategori galeri baru..."
+                          value={inlineGalleryCatInput}
+                          onChange={(e) => setInlineGalleryCatInput(e.target.value)}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                              e.preventDefault();
+                              handleSaveInlineGalleryCategory();
+                            }
+                          }}
+                          className="text-xs bg-white flex-1"
+                        />
+                        <Button
+                          size="sm"
+                          variant="primary"
+                          className="bg-[#6B18A8] text-white text-xs font-bold shrink-0 cursor-pointer"
+                          onPress={handleSaveInlineGalleryCategory}
+                        >
+                          Simpan
+                        </Button>
+                      </div>
+                      <p className="text-[10px] text-neutral-500">
+                        Kategori galeri baru akan otomatis terpilih dan langsung tersimpan.
+                      </p>
+                    </div>
+                  )}
+
                   <select
                     value={galleryForm.category}
                     onChange={(e) => setGalleryForm({ ...galleryForm, category: e.target.value })}
                     className="w-full p-2.5 rounded-xl border border-neutral-300 text-xs bg-white font-bold"
                   >
-                    <option value="Audit Lapangan">Audit Lapangan</option>
-                    <option value="Laboratorium ISO 17025">Laboratorium ISO 17025</option>
-                    <option value="Pelatihan & JULEHA">Pelatihan &amp; JULEHA</option>
-                    <option value="Kunjungan & MoA">Kunjungan &amp; MoA</option>
+                    {galleryCategories.map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
@@ -3952,6 +4258,187 @@ export const AdminDashboard: React.FC = () => {
                 </Button>
               </Modal.Footer>
             </form>
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
+
+      {/* MODAL: KELOLA KATEGORI DINAMIS (BERITA & GALERI) */}
+      <Modal.Backdrop
+        isOpen={modalType === 'MANAGE_CATEGORIES'}
+        onOpenChange={(open) => {
+          if (!open) {
+            setModalType(null);
+            setCategoryModalInput('');
+          }
+        }}
+      >
+        <Modal.Container placement="center">
+          <Modal.Dialog className="w-[95vw] sm:max-w-xl max-h-[90vh] flex flex-col p-0 overflow-hidden rounded-3xl bg-white border border-[#C9A5E8]/40 shadow-2xl">
+            <Modal.CloseTrigger />
+            <Modal.Header className="p-4 sm:p-6 bg-gradient-to-r from-[#FAF7FD] to-white border-b border-[#C9A5E8]/30 shrink-0">
+              <div className="flex items-center gap-2 mb-1.5">
+                <Tag className="w-5 h-5 text-[#6B18A8]" />
+                <Modal.Heading className="text-base sm:text-lg font-black text-[#292333]">
+                  Kelola Kategori Dinamis
+                </Modal.Heading>
+              </div>
+              <p className="text-xs text-neutral-500">
+                Atur kategori untuk berita &amp; galeri. Kategori baru akan langsung aktif di formulir dan filter publik.
+              </p>
+
+              {/* Tabs for News / Gallery Category */}
+              <div className="flex gap-2 mt-4">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCategoryModalTab('NEWS');
+                    setCategoryModalInput('');
+                  }}
+                  className={cn(
+                    'px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5',
+                    categoryModalTab === 'NEWS'
+                      ? 'bg-[#6B18A8] text-white shadow-xs'
+                      : 'bg-white border border-neutral-200 text-neutral-600 hover:bg-neutral-50'
+                  )}
+                >
+                  <Newspaper className="w-3.5 h-3.5" />
+                  <span>Kategori Berita ({newsCategories.length})</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCategoryModalTab('GALLERY');
+                    setCategoryModalInput('');
+                  }}
+                  className={cn(
+                    'px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5',
+                    categoryModalTab === 'GALLERY'
+                      ? 'bg-[#6B18A8] text-white shadow-xs'
+                      : 'bg-white border border-neutral-200 text-neutral-600 hover:bg-neutral-50'
+                  )}
+                >
+                  <ImageIcon className="w-3.5 h-3.5" />
+                  <span>Kategori Galeri ({galleryCategories.length})</span>
+                </button>
+              </div>
+            </Modal.Header>
+
+            <Modal.Body className="p-4 sm:p-6 space-y-4 overflow-y-auto">
+              {/* Add New Category Input */}
+              <div className="p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/40 space-y-2">
+                <label className="block text-xs font-bold text-neutral-800">
+                  {categoryModalTab === 'NEWS' ? 'Tambah Kategori Berita Baru' : 'Tambah Kategori Galeri Baru'}
+                </label>
+                <div className="flex items-center gap-2">
+                  <Input
+                    placeholder={
+                      categoryModalTab === 'NEWS'
+                        ? 'Contoh: EDUKASI, PUBLIKASI, KERJASAMA...'
+                        : 'Contoh: Sertifikasi Kantin, MoU Industri...'
+                    }
+                    value={categoryModalInput}
+                    onChange={(e) => setCategoryModalInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        if (categoryModalTab === 'NEWS') {
+                          if (handleAddNewsCategory(categoryModalInput)) {
+                            setCategoryModalInput('');
+                          }
+                        } else {
+                          if (handleAddGalleryCategory(categoryModalInput)) {
+                            setCategoryModalInput('');
+                          }
+                        }
+                      }
+                    }}
+                    className="text-xs bg-white flex-1"
+                  />
+                  <Button
+                    size="sm"
+                    variant="primary"
+                    className="bg-[#6B18A8] text-white text-xs font-bold px-4 py-2 shrink-0 cursor-pointer"
+                    onPress={() => {
+                      if (categoryModalTab === 'NEWS') {
+                        if (handleAddNewsCategory(categoryModalInput)) {
+                          setCategoryModalInput('');
+                        }
+                      } else {
+                        if (handleAddGalleryCategory(categoryModalInput)) {
+                          setCategoryModalInput('');
+                        }
+                      }
+                    }}
+                  >
+                    <Plus className="w-3.5 h-3.5 mr-1" />
+                    Tambah
+                  </Button>
+                </div>
+              </div>
+
+              {/* List of Existing Categories */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-xs font-bold text-neutral-600 px-1">
+                  <span>Daftar Kategori Terdaftar</span>
+                  <span>Penggunaan</span>
+                </div>
+
+                <div className="divide-y divide-neutral-100 border border-neutral-200/80 rounded-2xl overflow-hidden bg-white">
+                  {(categoryModalTab === 'NEWS' ? newsCategories : galleryCategories).map((cat) => {
+                    const count = categoryModalTab === 'NEWS'
+                      ? newsList.filter((n) => n.category === cat).length
+                      : galleryList.filter((g) => g.category === cat).length;
+
+                    return (
+                      <div
+                        key={cat}
+                        className="p-3 flex items-center justify-between gap-3 hover:bg-[#FAF7FD]/50 transition-colors"
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <Chip
+                            size="sm"
+                            className="bg-[#FAF7FD] text-[#6B18A8] border border-[#C9A5E8]/60 font-bold text-xs"
+                          >
+                            {cat}
+                          </Chip>
+                        </div>
+
+                        <div className="flex items-center gap-3">
+                          <span className="text-[11px] font-medium text-neutral-500">
+                            {count} {categoryModalTab === 'NEWS' ? 'artikel' : 'foto'}
+                          </span>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className="text-red-500 hover:text-red-700 hover:bg-red-50 p-1.5 rounded-lg h-auto min-w-0 cursor-pointer"
+                            aria-label="Hapus Kategori"
+                            onPress={() => {
+                              if (categoryModalTab === 'NEWS') {
+                                handleDeleteNewsCategory(cat);
+                              } else {
+                                handleDeleteGalleryCategory(cat);
+                              }
+                            }}
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </Button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </Modal.Body>
+
+            <Modal.Footer className="p-4 sm:p-6 bg-[#FAF7FD] border-t border-[#C9A5E8]/30 flex justify-end shrink-0">
+              <Button
+                variant="secondary"
+                slot="close"
+                className="text-xs font-bold rounded-xl px-5 py-2 cursor-pointer"
+              >
+                Selesai
+              </Button>
+            </Modal.Footer>
           </Modal.Dialog>
         </Modal.Container>
       </Modal.Backdrop>

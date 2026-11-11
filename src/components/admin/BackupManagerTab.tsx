@@ -40,6 +40,8 @@ interface BackupManagerTabProps {
     ratesMatrix: any;
     auditLogs: any[];
     usersList: any[];
+    newsCategories?: string[];
+    galleryCategories?: string[];
   };
   onRestoreData?: (restoredData: any) => void;
   onLogAudit?: (action: string, target: string) => void;

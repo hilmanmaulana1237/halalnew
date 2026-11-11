@@ -25,6 +25,20 @@ export const NewsDetailPage: React.FC = () => {
           throw new Error('Not found');
         }
       } catch {
+        // Check localStorage first
+        try {
+          const raw = localStorage.getItem('lph_news_list');
+          if (raw) {
+            const list = JSON.parse(raw);
+            const found = list.find((item: any) => item.slug === slug || String(item.id) === slug);
+            if (found) {
+              setNews(found);
+              setLoading(false);
+              return;
+            }
+          }
+        } catch {}
+
         // Fallback for static mock
         setNews({
           id: 1,

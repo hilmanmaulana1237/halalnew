@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Button, Card, Input, Skeleton, Pagination } from '@heroui/react';
 import { Newspaper, Calendar, ArrowRight, Search } from 'lucide-react';
@@ -200,12 +200,38 @@ export const NewsListPage: React.FC = () => {
   const { language } = useLanguage();
   const isEn = language === 'en';
   const [searchParams, setSearchParams] = useSearchParams();
-  const [news, setNews] = useState<NewsItem[]>(INITIAL_NEWS);
+  const [news, setNews] = useState<NewsItem[]>(() => {
+    try {
+      const raw = localStorage.getItem('lph_news_list');
+      if (raw) return JSON.parse(raw);
+    } catch {}
+    return INITIAL_NEWS;
+  });
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const category = searchParams.get('category') || 'ALL';
   const query = searchParams.get('q') || '';
+
+  // Dynamic Categories from LocalStorage and active items
+  const categoriesList = useMemo(() => {
+    let cats: string[] = ['ALL', 'KEGIATAN', 'ACARA', 'AGENDA', 'EDUKASI', 'PUBLIKASI'];
+    try {
+      const raw = localStorage.getItem('lph_news_categories');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          cats = ['ALL', ...parsed];
+        }
+      }
+    } catch {}
+    news.forEach((item) => {
+      if (item.category && !cats.includes(item.category)) {
+        cats.push(item.category);
+      }
+    });
+    return Array.from(new Set(cats));
+  }, [news]);
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -258,6 +284,12 @@ export const NewsListPage: React.FC = () => {
         return 'EVENTS';
       case 'AGENDA':
         return 'AGENDA';
+      case 'EDUKASI':
+        return 'EDUCATION';
+      case 'PUBLIKASI':
+        return 'PUBLICATIONS';
+      case 'KERJASAMA':
+        return 'PARTNERSHIP';
       default:
         return cat;
     }
@@ -351,7 +383,7 @@ export const NewsListPage: React.FC = () => {
         {/* Filter Card */}
         <Card className="bg-white rounded-2xl border border-neutral-200/80 shadow-md p-4 sm:p-6 flex flex-col sm:flex-row gap-4 items-center justify-between">
           <div className="flex flex-wrap gap-2 w-full sm:w-auto">
-            {['ALL', 'KEGIATAN', 'ACARA', 'AGENDA'].map((cat) => (
+            {categoriesList.map((cat: string) => (
               <Button
                 key={cat}
                 size="sm"
