@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Card, Input, TextArea } from '@heroui/react';
 import { Smile, CheckCircle2, Star, ThumbsUp, ArrowRight } from 'lucide-react';
 import { api } from '@/services/api';
+import { scanForThreats } from '@/lib/security';
 import { useLanguage } from '@/context/LanguageContext';
 import { SparklesCore } from '@/components/ui/sparkles';
 
@@ -25,6 +26,18 @@ export const SatisfactionPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Anti-Judol & Anti-Spam Threat Filter
+    const threat = scanForThreats(comment, name);
+    if (!threat.isClean) {
+      alert(
+        isEn
+          ? 'Submission blocked: Your review contains forbidden spam keywords or prohibited links.'
+          : 'Pengiriman ulasan ditolak: Ulasan Anda terdeteksi mengandung kata kunci spam atau tautan terlarang.'
+      );
+      return;
+    }
+
     setLoading(true);
     try {
       await api.post('/satisfaction', {

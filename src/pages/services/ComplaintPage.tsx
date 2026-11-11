@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Card, Input, TextArea, Tabs } from '@heroui/react';
 import { ShieldAlert, Search, CheckCircle2, Clock, AlertTriangle, FileText, ArrowRight } from 'lucide-react';
 import { api } from '@/services/api';
+import { scanForThreats } from '@/lib/security';
 import type { Complaint } from '@/types';
 import { useLanguage } from '@/context/LanguageContext';
 import { SparklesCore } from '@/components/ui/sparkles';
@@ -29,6 +30,18 @@ export const ComplaintPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Anti-Judol & Anti-Spam Threat Filter
+    const threat = scanForThreats(description, reporterName);
+    if (!threat.isClean) {
+      alert(
+        isEn
+          ? 'Submission blocked: Your message contains forbidden spam keywords or prohibited links.'
+          : 'Pengiriman ditolak: Pesan Anda terdeteksi mengandung kata kunci spam atau tautan terlarang.'
+      );
+      return;
+    }
+
     setLoading(true);
     setSubmittedTicket(null);
 

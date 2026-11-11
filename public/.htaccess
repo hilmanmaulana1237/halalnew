@@ -1,0 +1,52 @@
+# ==============================================================================
+# LPH UIN SUNAN GUNUNG DJATI BANDUNG - HARDENED PRODUCTION .HTACCESS
+# Kebijakan Keamanan Server Web Apache & cPanel Anti-Judol & Anti-Defacement
+# ==============================================================================
+
+# 1. BLOKIR PENJELAJAHAN DIREKTORI (Prevent Directory Listing & Exposure)
+Options -Indexes
+
+# 2. BLOKIR EKSEKUSI SKRIP BERBAHAYA (PHP / SHELL / CGI / PYTHON / PERL)
+# Mencegah eksekusi file PHP berbahaya jika ada penyusup yang mencoba upload webshell
+<FilesMatch "(?i)\.(php|phtml|php3|php4|php5|php7|php8|phar|phps|cgi|pl|py|sh|bash|exe|bat|cmd|vbs)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# 3. BLOKIR AKSES KE BERKAS SENSITIF (.env, .git, .sql, .bak, log, config)
+<FilesMatch "(?i)(^\.|\.(env|git|sql|bak|config|json|sh|log|ini|yml|yaml|md))$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# 4. HTTP SECURITY HEADERS (Perlindungan Terhadap Clickjacking, XSS, MIME Sniffing)
+<IfModule mod_headers.c>
+    # Mencegah website di-embed ke dalam iframe situs judi / phishing (Anti-Clickjacking)
+    Header always set X-Frame-Options "SAMEORIGIN"
+    
+    # Mencegah browser menebak MIME-type berkas gambar yang disusupi skrip (Anti-MIME Sniffing)
+    Header always set X-Content-Type-Options "nosniff"
+    
+    # Proteksi XSS bawaan browser modern
+    Header always set X-XSS-Protection "1; mode=block"
+    
+    # Batasi kebocoran URL referrer ke pihak ketiga
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # Nonaktifkan fitur perangkat yang tidak diperlukan
+    Header always set Permissions-Policy "geolocation=(), camera=(), microphone=()"
+</IfModule>
+
+# 5. SPA ROUTING ENGINE (Mencegah 404 saat refresh URL React Router)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    
+    # Jika berkas atau direktori fisik ada, layani langsung
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+    
+    # Jika tidak ada, arahkan ke index.html untuk ditangani React Router
+    RewriteRule ^ index.html [L]
+</IfModule>

@@ -4,6 +4,7 @@ import { Button, Card, Skeleton } from '@heroui/react';
 import { Calendar, MapPin, ArrowLeft, Share2 } from 'lucide-react';
 import { api, formatDate } from '@/services/api';
 import { useLanguage } from '@/context/LanguageContext';
+import { sanitizeHtml } from '@/lib/security';
 import type { NewsItem } from '@/types';
 
 export const NewsDetailPage: React.FC = () => {
@@ -128,10 +129,17 @@ Rektor UIN SGD Bandung, Prof. Dr. H. Rosihon Anwar, M.Ag., dalam sambutannya men
             </div>
           )}
 
-          {/* Body Content */}
-          <div className="prose max-w-none text-neutral-700 text-sm sm:text-base leading-relaxed space-y-4 whitespace-pre-line">
-            {news.content}
-          </div>
+          {/* Body Content with Anti-XSS Sanitization */}
+          {news.content.includes('<') ? (
+            <div
+              className="prose max-w-none text-neutral-700 text-sm sm:text-base leading-relaxed space-y-4"
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(news.content) }}
+            />
+          ) : (
+            <div className="prose max-w-none text-neutral-700 text-sm sm:text-base leading-relaxed space-y-4 whitespace-pre-line">
+              {news.content}
+            </div>
+          )}
         </Card>
       </div>
     </div>
