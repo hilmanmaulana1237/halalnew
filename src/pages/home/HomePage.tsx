@@ -1059,41 +1059,36 @@ export const HomePage: React.FC = () => {
               className="w-full min-w-max sm:min-w-0"
             >
               <Tabs.ListContainer>
-                <Tabs.List aria-label={isEn ? "Article Categories" : "Kategori Artikel"} className="flex-nowrap whitespace-nowrap">
+                <Tabs.List aria-label={isEn ? "Article Categories" : "Kategori Artikel"} className="flex-nowrap whitespace-nowrap gap-1">
                   <Tabs.Tab
                     id="artikel"
-                    className="data-[selected=true]:text-white font-semibold transition-colors"
+                    className="data-[selected=true]:bg-[#6b1282] data-[selected=true]:text-white text-neutral-700 hover:text-[#6b1282] px-4 py-2 rounded-full font-semibold transition-all"
                   >
                     {isEn ? 'Key Articles & Regulations' : 'Artikel & Regulasi Utama'}
-                    <Tabs.Indicator className="bg-[#6b1282] rounded-3xl shadow-xs" />
                   </Tabs.Tab>
                   <Tabs.Tab
                     id="uin_berita"
-                    className="data-[selected=true]:text-white font-semibold transition-colors"
+                    className="data-[selected=true]:bg-[#6b1282] data-[selected=true]:text-white text-neutral-700 hover:text-[#6b1282] px-4 py-2 rounded-full font-semibold transition-all"
                   >
                     {isEn ? 'LPH News & Activities' : 'Berita & Kegiatan LPH'}
-                    <Tabs.Indicator className="bg-[#6b1282] rounded-3xl shadow-xs" />
                   </Tabs.Tab>
                   <Tabs.Tab
                     id="jurnal"
-                    className="data-[selected=true]:text-white font-semibold transition-colors"
+                    className="data-[selected=true]:bg-[#6b1282] data-[selected=true]:text-white text-neutral-700 hover:text-[#6b1282] px-4 py-2 rounded-full font-semibold transition-all"
                   >
                     {isEn ? 'Journal & Research (IJHR)' : 'Jurnal & Riset (IJHR)'}
-                    <Tabs.Indicator className="bg-[#6b1282] rounded-3xl shadow-xs" />
                   </Tabs.Tab>
                   <Tabs.Tab
                     id="pelatihan"
-                    className="data-[selected=true]:text-white font-semibold transition-colors"
+                    className="data-[selected=true]:bg-[#6b1282] data-[selected=true]:text-white text-neutral-700 hover:text-[#6b1282] px-4 py-2 rounded-full font-semibold transition-all"
                   >
                     {isEn ? 'Training & Competence' : 'Pelatihan & Kompetensi'}
-                    <Tabs.Indicator className="bg-[#6b1282] rounded-3xl shadow-xs" />
                   </Tabs.Tab>
                   <Tabs.Tab
                     id="fatwa"
-                    className="data-[selected=true]:text-white font-semibold transition-colors"
+                    className="data-[selected=true]:bg-[#6b1282] data-[selected=true]:text-white text-neutral-700 hover:text-[#6b1282] px-4 py-2 rounded-full font-semibold transition-all"
                   >
                     {isEn ? 'Fatwa & BPJPH Regulations' : 'Fatwa & Regulasi BPJPH'}
-                    <Tabs.Indicator className="bg-[#6b1282] rounded-3xl shadow-xs" />
                   </Tabs.Tab>
                 </Tabs.List>
               </Tabs.ListContainer>

@@ -301,6 +301,17 @@ export const Navbar: React.FC = () => {
                         onClick={() => setActiveDropdown(null)}
                       />
                       <MenuCardItem
+                        icon={<ImageIcon className="w-4 h-4" />}
+                        title={language === 'en' ? 'Activity & Documentation Gallery' : 'Galeri Kegiatan & Dokumentasi'}
+                        description={language === 'en'
+                          ? 'Visual documentation of on-site audits, ISO 17025 lab testing, and JULEHA training.'
+                          : 'Dokumentasi visual audit lapangan industri, pengujian lab ISO 17025, dan bimbingan JULEHA.'}
+                        to="/galeri"
+                        badge={language === 'en' ? 'Gallery' : 'Galeri'}
+                        badgeVariant="yellow"
+                        onClick={() => setActiveDropdown(null)}
+                      />
+                      <MenuCardItem
                         icon={<Bell className="w-4 h-4" />}
                         title={language === 'en' ? 'Official Announcements' : 'Pengumuman Resmi BPJPH'}
                         description={language === 'en'

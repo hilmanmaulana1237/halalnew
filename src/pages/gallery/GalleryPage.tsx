@@ -499,7 +499,6 @@ export const GalleryPage: React.FC = () => {
                   >
                     {isEn ? 'MoA & Institutional Visits' : 'Kunjungan & MoA'} (4)
                   </Tabs.Tab>
-                  <Tabs.Indicator className="bg-[#6B18A8] rounded-xl shadow-xs" />
                 </Tabs.List>
               </Tabs>
             </div>
