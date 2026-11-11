@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Card, Input, Chip, Table } from '@heroui/react';
+import { Button, Card, Input, Chip, Table, Pagination } from '@heroui/react';
 import {
   Database,
   Download,
@@ -16,6 +16,7 @@ import {
   FileCode,
   ShieldCheck,
   Server,
+  Search,
 } from 'lucide-react';
 
 export interface BackupItem {
@@ -87,6 +88,27 @@ export const BackupManagerTab: React.FC<BackupManagerTabProps> = ({
       recordCount: 1235,
     },
   ]);
+
+  // Pagination & Filtering for Backup Archives
+  const [backupSearch, setBackupSearch] = useState('');
+  const [backupTypeFilter, setBackupTypeFilter] = useState<'ALL' | 'SQL' | 'JSON'>('ALL');
+  const [backupPage, setBackupPage] = useState(1);
+  const backupPerPage = 5;
+
+  const filteredBackups = backupList.filter((item) => {
+    const matchSearch =
+      !backupSearch ||
+      item.fileName.toLowerCase().includes(backupSearch.toLowerCase()) ||
+      item.createdAt.toLowerCase().includes(backupSearch.toLowerCase());
+    const matchType = backupTypeFilter === 'ALL' || item.type === backupTypeFilter;
+    return matchSearch && matchType;
+  });
+
+  const backupTotalPages = Math.max(1, Math.ceil(filteredBackups.length / backupPerPage));
+  const paginatedBackups = filteredBackups.slice(
+    (backupPage - 1) * backupPerPage,
+    backupPage * backupPerPage
+  );
 
   // Load auto backup config from localStorage
   useEffect(() => {
@@ -575,6 +597,35 @@ echo "Backup harian selesai: {$backupFile}";
           </Button>
         </div>
 
+        {/* Search & Format Filter */}
+        <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 p-3.5 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30">
+          <div className="sm:col-span-8 relative">
+            <Input
+              placeholder="Cari nama berkas arsip atau tanggal..."
+              value={backupSearch}
+              onChange={(e) => {
+                setBackupSearch(e.target.value);
+                setBackupPage(1);
+              }}
+              className="w-full text-xs"
+            />
+          </div>
+          <div className="sm:col-span-4">
+            <select
+              value={backupTypeFilter}
+              onChange={(e) => {
+                setBackupTypeFilter(e.target.value as any);
+                setBackupPage(1);
+              }}
+              className="w-full h-10 px-3 text-xs bg-white border border-neutral-300 rounded-xl focus:outline-hidden focus:border-[#6B18A8] text-neutral-700 font-medium"
+            >
+              <option value="ALL">Semua Format (SQL &amp; JSON)</option>
+              <option value="SQL">Format SQL (.sql)</option>
+              <option value="JSON">Format JSON (.json)</option>
+            </select>
+          </div>
+        </div>
+
         <Table variant="secondary" className="w-full">
           <Table.ScrollContainer className="w-full overflow-x-auto">
             <Table.Content aria-label="Riwayat Arsip Backup">
@@ -587,55 +638,115 @@ echo "Backup harian selesai: {$backupFile}";
                 <Table.Column className="text-right">Aksi</Table.Column>
               </Table.Header>
               <Table.Body>
-                {backupList.map((item) => (
-                  <Table.Row key={item.id} className="border-b border-neutral-100 hover:bg-[#FAF7FD]/50">
-                    <Table.Cell className="font-mono text-xs font-bold text-neutral-800">
-                      {item.fileName}
+                {paginatedBackups.length === 0 ? (
+                  <Table.Row>
+                    <Table.Cell className="text-center py-8 text-xs text-neutral-500 font-medium">
+                      Tidak ada arsip backup yang sesuai dengan filter pencarian.
                     </Table.Cell>
-                    <Table.Cell>
-                      <Chip size="sm" className="bg-[#FAF7FD] text-[#6B18A8] font-bold text-[10px]">
-                        {item.type}
-                      </Chip>
-                    </Table.Cell>
-                    <Table.Cell className="text-xs text-neutral-600 font-mono">
-                      {item.fileSize}
-                    </Table.Cell>
-                    <Table.Cell className="text-xs text-neutral-600">
-                      {item.createdAt}
-                    </Table.Cell>
-                    <Table.Cell>
-                      <Chip size="sm" className="bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold text-[10px]">
-                        {item.status}
-                      </Chip>
-                    </Table.Cell>
-                    <Table.Cell className="text-right">
-                      <div className="flex items-center justify-end gap-1.5">
-                        <Button
-                          variant="outline"
-                          onPress={() => handlePerformManualBackup(item.type)}
-                          className="px-2.5 py-1 text-[11px] font-bold rounded-lg border-neutral-300 text-neutral-700"
-                        >
-                          <Download className="w-3.5 h-3.5 mr-1" /> Unduh
-                        </Button>
-                        <button
-                          onClick={() => {
-                            if (window.confirm(`Hapus arsip backup ${item.fileName}?`)) {
-                              setBackupList(backupList.filter((b) => b.id !== item.id));
-                            }
-                          }}
-                          className="p-1.5 rounded-lg text-neutral-400 hover:text-red-600 hover:bg-red-50 transition-colors"
-                          title="Hapus Arsip"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                    </Table.Cell>
+                    <Table.Cell>{''}</Table.Cell>
+                    <Table.Cell>{''}</Table.Cell>
+                    <Table.Cell>{''}</Table.Cell>
+                    <Table.Cell>{''}</Table.Cell>
+                    <Table.Cell>{''}</Table.Cell>
                   </Table.Row>
-                ))}
+                ) : (
+                  paginatedBackups.map((item) => (
+                    <Table.Row key={item.id} className="border-b border-neutral-100 hover:bg-[#FAF7FD]/50">
+                      <Table.Cell className="font-mono text-xs font-bold text-neutral-800">
+                        {item.fileName}
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Chip size="sm" className="bg-[#FAF7FD] text-[#6B18A8] font-bold text-[10px]">
+                          {item.type}
+                        </Chip>
+                      </Table.Cell>
+                      <Table.Cell className="text-xs text-neutral-600 font-mono">
+                        {item.fileSize}
+                      </Table.Cell>
+                      <Table.Cell className="text-xs text-neutral-600">
+                        {item.createdAt}
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Chip size="sm" className="bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold text-[10px]">
+                          {item.status}
+                        </Chip>
+                      </Table.Cell>
+                      <Table.Cell className="text-right">
+                        <div className="flex items-center justify-end gap-1.5">
+                          <Button
+                            variant="outline"
+                            onPress={() => handlePerformManualBackup(item.type)}
+                            className="px-2.5 py-1 text-[11px] font-bold rounded-lg border-neutral-300 text-neutral-700 cursor-pointer"
+                          >
+                            <Download className="w-3.5 h-3.5 mr-1" /> Unduh
+                          </Button>
+                          <button
+                            onClick={() => {
+                              if (window.confirm(`Hapus arsip backup ${item.fileName}?`)) {
+                                setBackupList(backupList.filter((b) => b.id !== item.id));
+                              }
+                            }}
+                            className="p-1.5 rounded-lg text-neutral-400 hover:text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
+                            title="Hapus Arsip"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </Table.Cell>
+                    </Table.Row>
+                  ))
+                )}
               </Table.Body>
             </Table.Content>
           </Table.ScrollContainer>
         </Table>
+
+        {/* HeroUI Pagination */}
+        <div className="pt-4 border-t border-neutral-100">
+          <Pagination className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 p-3 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30">
+            <Pagination.Summary className="text-xs text-neutral-600 font-semibold">
+              Halaman {backupPage} dari {backupTotalPages} ({filteredBackups.length} total arsip backup)
+            </Pagination.Summary>
+            <Pagination.Content className="flex items-center gap-1.5 flex-wrap justify-center">
+              <Pagination.Item>
+                <Pagination.Previous
+                  onPress={() => setBackupPage(Math.max(1, backupPage - 1))}
+                  isDisabled={backupPage <= 1}
+                  className="cursor-pointer px-3 py-1.5 text-xs font-bold rounded-xl border border-neutral-200 bg-white hover:bg-[#FAF7FD] hover:text-[#6B18A8] disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  Sebelumnya
+                </Pagination.Previous>
+              </Pagination.Item>
+              {Array.from({ length: backupTotalPages }).map((_, idx) => {
+                const pageNum = idx + 1;
+                return (
+                  <Pagination.Item key={pageNum}>
+                    <Pagination.Link
+                      isActive={backupPage === pageNum}
+                      onPress={() => setBackupPage(pageNum)}
+                      className={`cursor-pointer w-8 h-8 flex items-center justify-center text-xs font-bold rounded-xl transition-all ${
+                        backupPage === pageNum
+                          ? 'bg-[#6B18A8] text-white font-black shadow-xs'
+                          : 'bg-white border border-neutral-200 text-neutral-700 hover:bg-[#FAF7FD]'
+                      }`}
+                    >
+                      {pageNum}
+                    </Pagination.Link>
+                  </Pagination.Item>
+                );
+              })}
+              <Pagination.Item>
+                <Pagination.Next
+                  onPress={() => setBackupPage(Math.min(backupTotalPages, backupPage + 1))}
+                  isDisabled={backupPage >= backupTotalPages}
+                  className="cursor-pointer px-3 py-1.5 text-xs font-bold rounded-xl border border-neutral-200 bg-white hover:bg-[#FAF7FD] hover:text-[#6B18A8] disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  Selanjutnya
+                </Pagination.Next>
+              </Pagination.Item>
+            </Pagination.Content>
+          </Pagination>
+        </div>
       </Card>
 
       {/* cPanel & Cron Job Integration Guide Card */}

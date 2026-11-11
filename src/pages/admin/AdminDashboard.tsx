@@ -510,6 +510,13 @@ export const AdminDashboard: React.FC = () => {
   const [auditLogPage, setAuditLogPage] = useState(1);
   const auditLogPerPage = 6;
 
+  // Users (Petugas & Auditor)
+  const [usersSearch, setUsersSearch] = useState('');
+  const [usersRole, setUsersRole] = useState('ALL');
+  const [usersStatus, setUsersStatus] = useState('ALL');
+  const [usersPage, setUsersPage] = useState(1);
+  const usersPerPage = 5;
+
   // -------------------------------------------------------------
   // EDIT & MODAL STATES
   // -------------------------------------------------------------
@@ -1209,6 +1216,25 @@ export const AdminDashboard: React.FC = () => {
     return filteredAuditLogs.slice(start, start + auditLogPerPage);
   }, [filteredAuditLogs, auditLogPage]);
 
+  // Users Filter & Pagination
+  const filteredUsers = useMemo(() => {
+    return usersList.filter((u) => {
+      const matchSearch =
+        !usersSearch ||
+        u.name.toLowerCase().includes(usersSearch.toLowerCase()) ||
+        u.email.toLowerCase().includes(usersSearch.toLowerCase());
+      const matchRole = usersRole === 'ALL' || u.role === usersRole;
+      const matchStatus = usersStatus === 'ALL' || u.status === usersStatus;
+      return matchSearch && matchRole && matchStatus;
+    });
+  }, [usersList, usersSearch, usersRole, usersStatus]);
+
+  const usersTotalPages = Math.max(1, Math.ceil(filteredUsers.length / usersPerPage));
+  const paginatedUsers = useMemo(() => {
+    const start = (usersPage - 1) * usersPerPage;
+    return filteredUsers.slice(start, start + usersPerPage);
+  }, [filteredUsers, usersPage]);
+
   // -------------------------------------------------------------
   // EXCEL EXPORT HANDLERS
   // -------------------------------------------------------------
@@ -1301,6 +1327,19 @@ export const AdminDashboard: React.FC = () => {
     exportToExcel(rows, 'Riwayat_Log_Aktivitas_LPH_UIN_SGD', 'Audit Trail');
   };
 
+  const handleExportUsersExcel = () => {
+    const rows = filteredUsers.map((u) => ({
+      ID: u.id,
+      'Nama Lengkap': u.name,
+      'Alamat Email': u.email,
+      'Peran Sistem': u.role,
+      Status: u.status,
+      'Aktivitas Terakhir': u.lastLogin,
+    }));
+    exportToExcel(rows, 'Daftar_Akun_Petugas_Auditor_LPH_UIN_SGD', 'Petugas & Auditor');
+    addAuditLog('Export daftar akun petugas ke Excel (.xlsx)', 'Semua Akun Petugas', 'UPDATE');
+  };
+
   // Helper Pagination Renderer
   const renderPaginationControls = (
     currentPage: number,
@@ -1309,24 +1348,24 @@ export const AdminDashboard: React.FC = () => {
     itemLabel: string,
     onPageChange: (p: number) => void
   ) => {
-    if (totalPages <= 1) return null;
+    const safeTotalPages = Math.max(1, totalPages);
     return (
       <div className="pt-4 border-t border-neutral-100">
         <Pagination className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 p-3 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30">
           <Pagination.Summary className="text-xs text-neutral-600 font-semibold">
-            Halaman {currentPage} dari {totalPages} ({totalItems} total {itemLabel})
+            Halaman {currentPage} dari {safeTotalPages} ({totalItems} total {itemLabel})
           </Pagination.Summary>
           <Pagination.Content className="flex items-center gap-1.5 flex-wrap justify-center">
             <Pagination.Item>
               <Pagination.Previous
                 onPress={() => onPageChange(Math.max(1, currentPage - 1))}
-                isDisabled={currentPage === 1}
-                className="cursor-pointer px-3 py-1.5 text-xs font-bold rounded-xl border border-neutral-200 bg-white hover:bg-[#FAF7FD] hover:text-[#6B18A8] disabled:opacity-40"
+                isDisabled={currentPage <= 1}
+                className="cursor-pointer px-3 py-1.5 text-xs font-bold rounded-xl border border-neutral-200 bg-white hover:bg-[#FAF7FD] hover:text-[#6B18A8] disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 Sebelumnya
               </Pagination.Previous>
             </Pagination.Item>
-            {Array.from({ length: totalPages }).map((_, idx) => {
+            {Array.from({ length: safeTotalPages }).map((_, idx) => {
               const pageNum = idx + 1;
               return (
                 <Pagination.Item key={pageNum}>
@@ -1346,9 +1385,9 @@ export const AdminDashboard: React.FC = () => {
             })}
             <Pagination.Item>
               <Pagination.Next
-                onPress={() => onPageChange(Math.min(totalPages, currentPage + 1))}
-                isDisabled={currentPage === totalPages}
-                className="cursor-pointer px-3 py-1.5 text-xs font-bold rounded-xl border border-neutral-200 bg-white hover:bg-[#FAF7FD] hover:text-[#6B18A8] disabled:opacity-40"
+                onPress={() => onPageChange(Math.min(safeTotalPages, currentPage + 1))}
+                isDisabled={currentPage >= safeTotalPages}
+                className="cursor-pointer px-3 py-1.5 text-xs font-bold rounded-xl border border-neutral-200 bg-white hover:bg-[#FAF7FD] hover:text-[#6B18A8] disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 Selanjutnya
               </Pagination.Next>
@@ -3288,14 +3327,69 @@ export const AdminDashboard: React.FC = () => {
           ------------------------------------------------------------- */}
           {activeTab === 'USERS' && (
             <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 space-y-6">
-              <div>
-                <h3 className="text-base font-bold text-[#292333] flex items-center gap-2">
-                  <Users className="w-4 h-4 text-[#6B18A8]" />
-                  <span>Manajemen Akun Petugas &amp; Auditor Halal</span>
-                </h3>
-                <p className="text-xs text-neutral-500">
-                  Daftar akun berwenang untuk melakukan verifikasi berkas, audit lapangan, dan manajemen CMS.
-                </p>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <h3 className="text-base font-bold text-[#292333] flex items-center gap-2">
+                    <Users className="w-4 h-4 text-[#6B18A8]" />
+                    <span>Manajemen Akun Petugas &amp; Auditor Halal</span>
+                  </h3>
+                  <p className="text-xs text-neutral-500">
+                    Daftar akun berwenang untuk melakukan verifikasi berkas, audit lapangan, dan manajemen CMS.
+                  </p>
+                </div>
+                <Button
+                  variant="outline"
+                  onPress={handleExportUsersExcel}
+                  className="px-4 py-2 text-xs font-bold rounded-xl border-emerald-300 text-emerald-700 hover:bg-emerald-50 flex items-center gap-1.5 self-start sm:self-auto cursor-pointer"
+                >
+                  <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
+                  <span>Export Excel (.xlsx)</span>
+                </Button>
+              </div>
+
+              {/* Filter & Search Bar */}
+              <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30">
+                <div className="sm:col-span-6 relative">
+                  <Input
+                    placeholder="Cari nama atau email petugas..."
+                    value={usersSearch}
+                    onChange={(e) => {
+                      setUsersSearch(e.target.value);
+                      setUsersPage(1);
+                    }}
+                    className="w-full text-xs"
+                  />
+                </div>
+                <div className="sm:col-span-3">
+                  <select
+                    value={usersRole}
+                    onChange={(e) => {
+                      setUsersRole(e.target.value);
+                      setUsersPage(1);
+                    }}
+                    className="w-full h-10 px-3 text-xs bg-white border border-neutral-300 rounded-xl focus:outline-hidden focus:border-[#6B18A8] text-neutral-700 font-medium"
+                  >
+                    <option value="ALL">Semua Peran</option>
+                    <option value="SUPER_ADMIN">SUPER_ADMIN</option>
+                    <option value="DIREKTUR_LPH">DIREKTUR_LPH</option>
+                    <option value="AUDITOR_LEAD">AUDITOR_LEAD</option>
+                    <option value="OPERATOR_CMS">OPERATOR_CMS</option>
+                  </select>
+                </div>
+                <div className="sm:col-span-3">
+                  <select
+                    value={usersStatus}
+                    onChange={(e) => {
+                      setUsersStatus(e.target.value);
+                      setUsersPage(1);
+                    }}
+                    className="w-full h-10 px-3 text-xs bg-white border border-neutral-300 rounded-xl focus:outline-hidden focus:border-[#6B18A8] text-neutral-700 font-medium"
+                  >
+                    <option value="ALL">Semua Status</option>
+                    <option value="AKTIF">AKTIF</option>
+                    <option value="NONAKTIF">NONAKTIF</option>
+                  </select>
+                </div>
               </div>
 
               <Table variant="secondary" className="w-full">
@@ -3309,27 +3403,48 @@ export const AdminDashboard: React.FC = () => {
                       <Table.Column>Aktivitas Terakhir</Table.Column>
                     </Table.Header>
                     <Table.Body>
-                      {usersList.map((u) => (
-                        <Table.Row key={u.id} className="border-b border-neutral-100 hover:bg-[#FAF7FD]/50">
-                          <Table.Cell className="font-bold text-xs text-neutral-800">{u.name}</Table.Cell>
-                          <Table.Cell className="text-xs font-mono text-neutral-600">{u.email}</Table.Cell>
-                          <Table.Cell>
-                            <Chip size="sm" className="bg-[#FAF7FD] text-[#6B18A8] border border-[#C9A5E8]/60 font-bold text-[10px]">
-                              {u.role}
-                            </Chip>
+                      {paginatedUsers.length === 0 ? (
+                        <Table.Row>
+                          <Table.Cell className="text-center py-8 text-xs text-neutral-500 font-medium">
+                            Tidak ada data akun petugas yang sesuai filter pencarian.
                           </Table.Cell>
-                          <Table.Cell>
-                            <Chip size="sm" className="bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold text-[10px]">
-                              {u.status}
-                            </Chip>
-                          </Table.Cell>
-                          <Table.Cell className="text-xs text-neutral-500 font-mono">{u.lastLogin}</Table.Cell>
+                          <Table.Cell>{''}</Table.Cell>
+                          <Table.Cell>{''}</Table.Cell>
+                          <Table.Cell>{''}</Table.Cell>
+                          <Table.Cell>{''}</Table.Cell>
                         </Table.Row>
-                      ))}
+                      ) : (
+                        paginatedUsers.map((u) => (
+                          <Table.Row key={u.id} className="border-b border-neutral-100 hover:bg-[#FAF7FD]/50">
+                            <Table.Cell className="font-bold text-xs text-neutral-800">{u.name}</Table.Cell>
+                            <Table.Cell className="text-xs font-mono text-neutral-600">{u.email}</Table.Cell>
+                            <Table.Cell>
+                              <Chip size="sm" className="bg-[#FAF7FD] text-[#6B18A8] border border-[#C9A5E8]/60 font-bold text-[10px]">
+                                {u.role}
+                              </Chip>
+                            </Table.Cell>
+                            <Table.Cell>
+                              <Chip size="sm" className="bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold text-[10px]">
+                                {u.status}
+                              </Chip>
+                            </Table.Cell>
+                            <Table.Cell className="text-xs text-neutral-500 font-mono">{u.lastLogin}</Table.Cell>
+                          </Table.Row>
+                        ))
+                      )}
                     </Table.Body>
                   </Table.Content>
                 </Table.ScrollContainer>
               </Table>
+
+              {/* HeroUI Pagination */}
+              {renderPaginationControls(
+                usersPage,
+                usersTotalPages,
+                filteredUsers.length,
+                'petugas & auditor',
+                setUsersPage
+              )}
             </Card>
           )}
         </div>

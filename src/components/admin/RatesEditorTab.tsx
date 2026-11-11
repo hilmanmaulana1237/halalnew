@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Card, Input, Chip, Table, Modal } from '@heroui/react';
+import { Button, Card, Input, Chip, Table, Modal, Pagination } from '@heroui/react';
 import {
   Calculator,
   Edit3,
@@ -50,6 +50,16 @@ export const RatesEditorTab: React.FC<RatesEditorTabProps> = ({ onLogAudit }) =>
 
   const [showAddCustomModal, setShowAddCustomModal] = useState<boolean>(false);
   const [saveSuccessMsg, setSaveSuccessMsg] = useState<string | null>(null);
+
+  // Pagination for Base Rates Scale
+  const [scalePage, setScalePage] = useState<number>(1);
+  const scalePerPage = 4;
+  const scaleEntries = Object.entries(rates.baseRates);
+  const scaleTotalPages = Math.max(1, Math.ceil(scaleEntries.length / scalePerPage));
+  const paginatedScales = scaleEntries.slice(
+    (scalePage - 1) * scalePerPage,
+    scalePage * scalePerPage
+  );
 
   // Open Edit Base Scale Modal
   const handleOpenEditScale = (scaleKey: string) => {
@@ -260,7 +270,7 @@ export const RatesEditorTab: React.FC<RatesEditorTabProps> = ({ onLogAudit }) =>
                 <Table.Column className="text-right">Aksi</Table.Column>
               </Table.Header>
               <Table.Body>
-                {Object.entries(rates.baseRates).map(([scaleKey, item]) => {
+                {paginatedScales.map(([scaleKey, item]) => {
                   const total = item.bpjph + item.lph;
                   return (
                     <Table.Row key={scaleKey} className="border-b border-neutral-100 hover:bg-[#FAF7FD]/50">
@@ -286,7 +296,7 @@ export const RatesEditorTab: React.FC<RatesEditorTabProps> = ({ onLogAudit }) =>
                         <Button
                           variant="outline"
                           onPress={() => handleOpenEditScale(scaleKey)}
-                          className="px-3 py-1 text-xs font-bold rounded-xl border-[#C9A5E8] text-[#6B18A8] hover:bg-[#FAF7FD]"
+                          className="px-3 py-1 text-xs font-bold rounded-xl border-[#C9A5E8] text-[#6B18A8] hover:bg-[#FAF7FD] cursor-pointer"
                         >
                           <Edit3 className="w-3 h-3 mr-1" />
                           Edit Tarif
@@ -299,6 +309,53 @@ export const RatesEditorTab: React.FC<RatesEditorTabProps> = ({ onLogAudit }) =>
             </Table.Content>
           </Table.ScrollContainer>
         </Table>
+
+        {/* HeroUI Pagination */}
+        <div className="pt-4 border-t border-neutral-100">
+          <Pagination className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 p-3 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30">
+            <Pagination.Summary className="text-xs text-neutral-600 font-semibold">
+              Halaman {scalePage} dari {scaleTotalPages} ({scaleEntries.length} skala usaha KMA 784/2021)
+            </Pagination.Summary>
+            <Pagination.Content className="flex items-center gap-1.5 flex-wrap justify-center">
+              <Pagination.Item>
+                <Pagination.Previous
+                  onPress={() => setScalePage(Math.max(1, scalePage - 1))}
+                  isDisabled={scalePage <= 1}
+                  className="cursor-pointer px-3 py-1.5 text-xs font-bold rounded-xl border border-neutral-200 bg-white hover:bg-[#FAF7FD] hover:text-[#6B18A8] disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  Sebelumnya
+                </Pagination.Previous>
+              </Pagination.Item>
+              {Array.from({ length: scaleTotalPages }).map((_, idx) => {
+                const pageNum = idx + 1;
+                return (
+                  <Pagination.Item key={pageNum}>
+                    <Pagination.Link
+                      isActive={scalePage === pageNum}
+                      onPress={() => setScalePage(pageNum)}
+                      className={`cursor-pointer w-8 h-8 flex items-center justify-center text-xs font-bold rounded-xl transition-all ${
+                        scalePage === pageNum
+                          ? 'bg-[#6B18A8] text-white font-black shadow-xs'
+                          : 'bg-white border border-neutral-200 text-neutral-700 hover:bg-[#FAF7FD]'
+                      }`}
+                    >
+                      {pageNum}
+                    </Pagination.Link>
+                  </Pagination.Item>
+                );
+              })}
+              <Pagination.Item>
+                <Pagination.Next
+                  onPress={() => setScalePage(Math.min(scaleTotalPages, scalePage + 1))}
+                  isDisabled={scalePage >= scaleTotalPages}
+                  className="cursor-pointer px-3 py-1.5 text-xs font-bold rounded-xl border border-neutral-200 bg-white hover:bg-[#FAF7FD] hover:text-[#6B18A8] disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  Selanjutnya
+                </Pagination.Next>
+              </Pagination.Item>
+            </Pagination.Content>
+          </Pagination>
+        </div>
       </Card>
 
       {/* 2. Add-ons & Laboratory Testing Cost Parameters */}
