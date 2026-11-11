@@ -3441,6 +3441,27 @@ export const AdminDashboard: React.FC = () => {
                 </Button>
               </div>
 
+              {/* AI Engine Status Banner */}
+              <div className="p-3.5 rounded-2xl bg-gradient-to-r from-purple-50 via-[#FAF7FD] to-emerald-50/50 border border-[#C9A5E8]/40 flex items-center justify-between gap-3 flex-wrap">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                  <div>
+                    <div className="text-xs font-bold text-neutral-800 flex items-center gap-1.5">
+                      <span>AI Engine: OpenRouter (Google Gemini 2.5 Flash Lite)</span>
+                      <Chip size="sm" className="bg-emerald-100 text-emerald-800 font-bold text-[10px]">
+                        Aktif &amp; Terhubung
+                      </Chip>
+                    </div>
+                    <p className="text-[11px] text-neutral-500">
+                      Chatbot website otomatis membaca seluruh FAQ di bawah sebagai basis pengetahuan resmi (*grounding data*).
+                    </p>
+                  </div>
+                </div>
+                <div className="text-[11px] font-mono font-medium text-neutral-500">
+                  Model: <span className="font-bold text-[#6B18A8]">google/gemini-2.5-flash-lite</span>
+                </div>
+              </div>
+
               <div className="space-y-4">
                 {knowledgeBase.map((kb) => (
                   <div

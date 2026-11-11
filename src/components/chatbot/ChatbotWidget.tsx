@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { api } from '@/services/api';
+import { askOpenRouterAI } from '@/services/openRouterService';
 
 interface Message {
   id: string;
@@ -238,81 +239,71 @@ const handleSend = async (e?: React.FormEvent, customQuery?: string) => {
   setMessages((prev) => [...prev, userMsg]);
   setLoading(true);
 
-  // Give a short realistic typing delay (Aceternity style smooth micro-interaction)
-  await new Promise((res) => setTimeout(res, 600));
+  try {
+    // 1. Primary AI Engine: OpenRouter (Google Gemini 2.5 Flash Lite)
+    const historyPayload = messages.map((m) => ({ sender: m.sender, text: m.text }));
+    const aiResult = await askOpenRouterAI(userText, historyPayload, language);
 
-  // 1. Try local smart knowledge base first for instant accuracy
-  const match = findSmartResponse(userText);
-
-  if (match) {
-    const answerText = language === 'en' ? match.answerEn : match.answerId;
     setMessages((prev) => [
       ...prev,
       {
         id: 'bot_' + Date.now(),
         sender: 'BOT',
-        text: answerText,
+        text: aiResult.answer,
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        isFallback: match.isFallback,
-        waUrl: 'https://wa.me/6282126493700?text=' + encodeURIComponent(`Halo Admin LPH UIN SGD, saya bertanya mengenai: "${userText}"`),
-        waText: language === 'en' ? 'Consult Officer via WhatsApp' : 'Lanjutkan Chat via WhatsApp',
-        suggestedAction: match.suggestedAction ? {
-          label: language === 'en' ? match.suggestedAction.labelEn : match.suggestedAction.labelId,
-          href: match.suggestedAction.href,
-          to: match.suggestedAction.to
-        } : undefined
+        isFallback: false,
+        waUrl: aiResult.waUrl,
+        waText: aiResult.waText,
+        suggestedAction: aiResult.suggestedAction,
       },
     ]);
-    setLoading(false);
-    return;
-  }
+  } catch (aiErr) {
+    console.warn('OpenRouter Gemini call failed, falling back to local KB/WhatsApp:', aiErr);
 
-  // 2. Try backend API if query wasn't locally matched
-  try {
-    const res = await api.post('/chat/message', {
-      message: userText,
-      history: messages.slice(-4),
-    });
-
-    if (res.data?.success && res.data.data?.answer) {
+    // 2. Fallback: Local knowledge base keyword match
+    const match = findSmartResponse(userText);
+    if (match) {
+      const answerText = language === 'en' ? match.answerEn : match.answerId;
       setMessages((prev) => [
         ...prev,
         {
           id: 'bot_' + Date.now(),
           sender: 'BOT',
-          text: res.data.data.answer,
+          text: answerText,
           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          isFallback: res.data.data.canContactAdmin,
-          waUrl: res.data.data.waUrl || 'https://wa.me/6282126493700?text=' + encodeURIComponent(`Halo Admin LPH UIN SGD, saya bertanya mengenai: "${userText}"`),
+          isFallback: match.isFallback,
+          waUrl: 'https://wa.me/6282126493700?text=' + encodeURIComponent(`Halo Admin LPH UIN SGD, saya bertanya mengenai: "${userText}"`),
           waText: language === 'en' ? 'Consult Officer via WhatsApp' : 'Lanjutkan Chat via WhatsApp',
+          suggestedAction: match.suggestedAction ? {
+            label: language === 'en' ? match.suggestedAction.labelEn : match.suggestedAction.labelId,
+            href: match.suggestedAction.href,
+            to: match.suggestedAction.to,
+          } : undefined,
         },
       ]);
-      setLoading(false);
-      return;
-    }
-    throw new Error('Fallback needed');
-  } catch {
-    // 3. Fallback: The exact requested flow ("kalo misalkan ga ke jawab baru diarahin untuk chat whatsapp")
-    const fallbackMsg = language === 'en'
-        ?`I could not find a specific automated answer for your query: "${userText}".\n\nHalal certification regulations often involve specific technical nuances. Please chat directly with our official LPH UIN Sunan Gunung Djati Bandung verifiers via WhatsApp for personalized guidance.`
-        : `Maaf, saya belum menemukan jawaban otomatis yang tepat untuk pertanyaan Anda: "${userText}".\n\nKetentuan regulasi halal memiliki detail teknis spesifik. Silakan konsultasikan langsung dengan Tim Auditor & Verifikator resmi LPH UIN Sunan Gunung Djati Bandung via WhatsApp:`;
+    } else {
+      // 3. Fallback: Direct WhatsApp escalation
+      const fallbackMsg = language === 'en'
+        ? `I am temporarily experiencing network difficulty connecting to the AI model. Please chat directly with our official LPH UIN Sunan Gunung Djati Bandung verifiers via WhatsApp for prompt guidance:`
+        : `Jaringan asisten AI sedang mengalami sedikit kendala koneksi. Silakan konsultasikan langsung dengan Tim Auditor & Verifikator resmi LPH UIN Sunan Gunung Djati Bandung via WhatsApp resmi:`;
 
-setMessages((prev) => [
-  ...prev,
-  {
-    id: 'bot_' + Date.now(),
-    sender: 'BOT',
-    text: fallbackMsg,
-    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-    isFallback: true,
-    waUrl: 'https://wa.me/6282126493700?text=' + encodeURIComponent(`Halo Admin LPH UIN SGD, saya ingin berkonsultasi mengenai: "${userText}"`),
-    waText: language === 'en' ? 'Connect via WhatsApp (+62 821-2649-3700)' : 'Hubungi WhatsApp Resmi (+62 821-2649-3700)',
-  },
-]);
-    } finally {
-  setLoading(false);
-}
-  };
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: 'bot_' + Date.now(),
+          sender: 'BOT',
+          text: fallbackMsg,
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          isFallback: true,
+          waUrl: 'https://wa.me/6282126493700?text=' + encodeURIComponent(`Halo Admin LPH UIN SGD, saya ingin berkonsultasi mengenai: "${userText}"`),
+          waText: language === 'en' ? 'Connect via WhatsApp (+62 821-2649-3700)' : 'Hubungi WhatsApp Resmi (+62 821-2649-3700)',
+        },
+      ]);
+    }
+  } finally {
+    setLoading(false);
+  }
+};
 
 const resetChat = () => {
   setMessages([
@@ -391,8 +382,9 @@ return (
                   <h4 className="font-extrabold text-xs sm:text-sm text-[#292333] truncate">
                     {t('chatbot_title')}
                   </h4>
-                  <span className="text-[9px] sm:text-[10px] font-extrabold px-1.5 py-0.5 bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F]/50 rounded-md shrink-0 whitespace-nowrap leading-none">
-                    AI 24/7
+                  <span className="text-[9px] sm:text-[10px] font-extrabold px-1.5 py-0.5 bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F]/50 rounded-md shrink-0 whitespace-nowrap leading-none flex items-center gap-1">
+                    <Sparkles className="w-2.5 h-2.5 text-[#6B18A8]" />
+                    <span>Gemini 2.5 Flash Lite</span>
                   </span>
                 </div>
                 <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] text-neutral-500 font-medium truncate">
