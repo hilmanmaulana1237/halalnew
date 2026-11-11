@@ -530,9 +530,24 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 5B. CERTIFICATION JOURNEY TIMELINE (Crisp Pure White) */}
-      <section className="py-24 bg-white" id="alur-sertifikasi">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 5B. CERTIFICATION JOURNEY TIMELINE with Background Image Overlay */}
+      <section className="py-24 relative overflow-hidden bg-[#FAF7FD]" id="alur-sertifikasi">
+        {/* Background Image & Texture Overlay */}
+        <div className="absolute inset-0 pointer-events-none z-0">
+          <img
+            src="/assets/images/alur-sertifikasi-bg.jpg"
+            alt="Alur Sertifikasi Halal Background"
+            className="w-full h-full object-cover object-center opacity-25 filter contrast-125"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#FAF7FD]/90 via-white/85 to-[#FAF7FD]/95" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(107,24,168,0.08),transparent_50%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(245,211,47,0.08),transparent_50%)]" />
+        </div>
+
+        <YellowDotGrid rows={4} cols={5} className="absolute top-10 right-10 opacity-20 pointer-events-none hidden lg:grid z-0" />
+        <YellowDotGrid rows={3} cols={4} className="absolute bottom-10 left-10 opacity-20 pointer-events-none hidden md:grid z-0" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <SectionHeader
             badge={isEn ? "OFFICIAL PROCEDURAL FLOW" : "ALUR PROSEDUR RESMI"}
             badgeColor="amber"

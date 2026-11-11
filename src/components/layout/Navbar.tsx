@@ -21,7 +21,8 @@ import {
   GraduationCap,
   Award,
   MapPin,
-  Building2
+  Building2,
+  Image as ImageIcon
 } from 'lucide-react';
 import {
   MegaMenuItem,
@@ -318,7 +319,7 @@ export const Navbar: React.FC = () => {
                     label={language === 'en' ? 'Official Documents & Research' : 'Dokumen & Riset Resmi'}
                     links={[
                       { label: language === 'en' ? 'Download SJPH Manual' : 'Unduh Pedoman SJPH', to: '/berita' },
-                      { label: language === 'en' ? 'Activity Gallery' : 'Galeri Foto Kegiatan', to: '/berita' },
+                      { label: language === 'en' ? 'Activity Gallery' : 'Galeri Foto Kegiatan', to: '/galeri' },
                     ]}
                     onClick={() => setActiveDropdown(null)}
                   />
@@ -474,6 +475,7 @@ export const Navbar: React.FC = () => {
           label={language === 'en' ? 'News & Media' : 'News & Update'}
           links={[
             { label: language === 'en' ? 'News & Activities' : 'Berita & Kegiatan LPH', to: '/berita', icon: Newspaper },
+            { label: language === 'en' ? 'Activity Gallery' : 'Galeri Kegiatan LPH', to: '/galeri', icon: ImageIcon },
             { label: language === 'en' ? 'Official Announcements' : 'Pengumuman Resmi BPJPH', href: 'https://bpjph.halal.go.id/category/pengumuman', icon: Bell },
           ]}
           onNavigate={() => setMobileOpen(false)}

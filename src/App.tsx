@@ -13,6 +13,7 @@ import { PriceCalculatorPage } from './pages/services/PriceCalculatorPage';
 import { SatisfactionPage } from './pages/services/SatisfactionPage';
 import { ComplaintPage } from './pages/services/ComplaintPage';
 import { ContactPage } from './pages/contact/ContactPage';
+import { GalleryPage } from './pages/gallery/GalleryPage';
 import { AdminLoginPage } from './pages/admin/AdminLoginPage';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
 import { Button } from '@heroui/react';
@@ -33,6 +34,8 @@ export const App: React.FC = () => {
           <Route path="/artikel/:slug" element={<NewsDetailPage />} />
           <Route path="/pengumuman" element={<AnnouncementListPage />} />
           <Route path="/pengumuman/:slug" element={<AnnouncementDetailPage />} />
+          <Route path="/galeri" element={<GalleryPage />} />
+          <Route path="/gallery" element={<Navigate to="/galeri" replace />} />
 
           {/* Layanan */}
           <Route path="/layanan" element={<Navigate to="/tentang#layanan" replace />} />

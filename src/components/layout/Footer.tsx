@@ -81,6 +81,11 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/galeri" className="text-neutral-300 hover:text-[#F5D32F] transition-colors">
+                  {isEn ? 'Activity Gallery' : 'Galeri Kegiatan'}
+                </Link>
+              </li>
+              <li>
                 <Link to="/layanan/qna" className="text-neutral-300 hover:text-[#F5D32F] transition-colors">
                   {t('footer_faq')}
                 </Link>
