@@ -96,11 +96,18 @@ Rektor UIN SGD Bandung, Prof. Dr. H. Rosihon Anwar, M.Ag., dalam sambutannya men
         {/* Article Card */}
         <Card className="bg-white rounded-3xl border border-neutral-200/80 shadow-md p-6 sm:p-10 space-y-6">
           <div>
-            <span className="inline-block px-3 py-1 rounded-md text-xs font-bold bg-[#6b1282] text-white mb-3">
-              {news.category}
-            </span>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="inline-block px-3 py-1 rounded-md text-xs font-bold bg-[#6b1282] text-white">
+                {news.category}
+              </span>
+              {isEn && news.titleEn && (
+                <span className="inline-block px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  🇬🇧 English Translation
+                </span>
+              )}
+            </div>
             <h1 className="text-2xl sm:text-4xl font-extrabold text-[#1a0726] tracking-tight leading-snug">
-              {news.title}
+              {isEn && news.titleEn ? news.titleEn : news.title}
             </h1>
             <div className="flex flex-wrap items-center gap-4 text-xs text-neutral-400 mt-4 pb-4 border-b border-neutral-100">
               <span className="flex items-center gap-1.5 text-neutral-600 font-medium">
@@ -116,7 +123,7 @@ Rektor UIN SGD Bandung, Prof. Dr. H. Rosihon Anwar, M.Ag., dalam sambutannya men
           <div className="rounded-2xl overflow-hidden border border-neutral-100">
             <img
               src={news.image || '/assets/images/img_011.jpg'}
-              alt={news.title}
+              alt={isEn && news.titleEn ? news.titleEn : news.title}
               className="w-full max-h-[450px] object-cover"
             />
           </div>
@@ -144,16 +151,19 @@ Rektor UIN SGD Bandung, Prof. Dr. H. Rosihon Anwar, M.Ag., dalam sambutannya men
           )}
 
           {/* Body Content with Anti-XSS Sanitization */}
-          {news.content.includes('<') ? (
-            <div
-              className="prose max-w-none text-neutral-700 text-sm sm:text-base leading-relaxed space-y-4"
-              dangerouslySetInnerHTML={{ __html: sanitizeHtml(news.content) }}
-            />
-          ) : (
-            <div className="prose max-w-none text-neutral-700 text-sm sm:text-base leading-relaxed space-y-4 whitespace-pre-line">
-              {news.content}
-            </div>
-          )}
+          {(() => {
+            const displayContent = isEn && news.contentEn ? news.contentEn : news.content;
+            return displayContent.includes('<') ? (
+              <div
+                className="prose max-w-none text-neutral-700 text-sm sm:text-base leading-relaxed space-y-4"
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(displayContent) }}
+              />
+            ) : (
+              <div className="prose max-w-none text-neutral-700 text-sm sm:text-base leading-relaxed space-y-4 whitespace-pre-line">
+                {displayContent}
+              </div>
+            );
+          })()}
         </Card>
       </div>
     </div>

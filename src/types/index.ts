@@ -22,6 +22,9 @@ export interface NewsItem {
   eventTime?: string;
   eventLocation?: string;
   author?: any;
+  titleEn?: string;
+  excerptEn?: string;
+  contentEn?: string;
 }
 
 export interface AnnouncementItem {

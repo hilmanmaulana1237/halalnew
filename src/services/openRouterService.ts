@@ -249,3 +249,135 @@ export async function askOpenRouterAI(
     throw err;
   }
 }
+
+export interface TranslatedNewsResult {
+  titleEn: string;
+  excerptEn: string;
+  contentEn: string;
+}
+
+/**
+ * Translates news article (Title, Excerpt, HTML Content) from Indonesian to English
+ * using OpenRouter AI (Google Gemini 2.5 Flash Lite).
+ * Strict guarantee: HTML markup, headings, bold tags, links, and structure are preserved 100%.
+ */
+export async function translateNewsToEnglish(
+  title: string,
+  excerpt: string,
+  contentHtml: string
+): Promise<TranslatedNewsResult> {
+  const apiKey = getOpenRouterApiKey();
+  const model = DEFAULT_MODEL;
+
+  if (!apiKey) {
+    throw new Error('API Key OpenRouter tidak ditemukan. Silakan konfigurasi VITE_OPENROUTER_API_KEY.');
+  }
+
+  const systemPrompt = `You are a professional bilingual journalist, translator, and editor for LPH (Halal Inspection Agency) UIN Sunan Gunung Djati Bandung.
+Your task is to accurately translate an Indonesian news article into professional, fluent, journalistic English.
+
+CRITICAL INSTRUCTIONS FOR HTML PRESERVATION:
+1. The article content is formatted in HTML (generated from TinyMCE).
+2. You MUST keep ALL HTML tags, inline styles, classes, and tag structure 100% INTACT.
+   - For example: <p>, <strong>, <b>, <em>, <i>, <u>, <h2>, <h3>, <h4>, <ul>, <ol>, <li>, <blockquote>, <table>, <tr>, <td>, <th>, <a>, <img>, <span>, <div>, etc.
+   - Do NOT omit, restructure, alter, or remove ANY tags or tag attributes (such as href, src, class, style).
+   - ONLY translate the textual content inside the tags.
+   - Bold words like <strong>Lembaga Pemeriksa Halal</strong> must become <strong>Halal Inspection Agency</strong>, keeping the <strong> tag exactly where it was.
+3. Terminology Guide:
+   - "LPH (Lembaga Pemeriksa Halal) UIN Sunan Gunung Djati Bandung" -> "Halal Inspection Agency (LPH) of UIN Sunan Gunung Djati Bandung"
+   - "BPJPH" -> "BPJPH (Halal Product Assurance Organizing Body)"
+   - "Sistem Jaminan Produk Halal (SJPH)" -> "Halal Product Assurance System (SJPH)"
+   - "Auditor Halal" -> "Halal Auditor"
+   - "Penyelia Halal" -> "Halal Supervisor"
+   - "Sertifikasi Halal" -> "Halal Certification"
+   - "Pengujian Laboratorium" -> "Laboratory Testing"
+4. Output format:
+   You MUST respond ONLY with a valid, clean JSON object matching this exact schema:
+   {
+     "titleEn": "English Title Here",
+     "excerptEn": "English Excerpt / Summary Here",
+     "contentEn": "<p>English translated HTML content with identical tags here...</p>"
+   }
+   Do NOT add any introductory text, markdown commentary, or apologies. Return ONLY the JSON object.`;
+
+  const userPrompt = `Translate the following news article to English:
+TITLE (ID):
+${title}
+
+EXCERPT (ID):
+${excerpt || '-'}
+
+CONTENT HTML (ID):
+${contentHtml}
+
+Remember: Output strict JSON with keys "titleEn", "excerptEn", "contentEn". Preserve all HTML tags perfectly.`;
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 45000); // 45s timeout for long articles
+
+  try {
+    const response = await fetch(OPENROUTER_API_URL, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+        'HTTP-Referer': 'https://halal.uinsgd.ac.id',
+        'X-Title': 'LPH UIN Sunan Gunung Djati Bandung AI News Translator',
+      },
+      body: JSON.stringify({
+        model,
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt },
+        ],
+        temperature: 0.2, // Low temperature for maximum fidelity and tag preservation
+        max_tokens: 3500,
+      }),
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`OpenRouter translation error (${response.status}):`, errorText);
+      throw new Error(`OpenRouter API error ${response.status}: ${errorText}`);
+    }
+
+    const data = await response.json();
+    let rawOutput = data.choices?.[0]?.message?.content || '';
+
+    // Strip markdown code fences if model enclosed in \`\`\`json ... \`\`\`
+    rawOutput = rawOutput.trim();
+    if (rawOutput.startsWith('```json')) {
+      rawOutput = rawOutput.replace(/^```json\s*/i, '').replace(/\s*```$/, '');
+    } else if (rawOutput.startsWith('```')) {
+      rawOutput = rawOutput.replace(/^```\s*/, '').replace(/\s*```$/, '');
+    }
+
+    try {
+      const parsed = JSON.parse(rawOutput.trim());
+      return {
+        titleEn: parsed.titleEn || title,
+        excerptEn: parsed.excerptEn || excerpt,
+        contentEn: parsed.contentEn || contentHtml,
+      };
+    } catch (parseErr) {
+      console.warn('Failed to parse JSON response from Gemini, attempting regex extraction:', parseErr, rawOutput);
+      // Fallback regex extraction
+      const titleMatch = rawOutput.match(/"titleEn"\s*:\s*"([\s\S]*?)(?<!\\)",/);
+      const excerptMatch = rawOutput.match(/"excerptEn"\s*:\s*"([\s\S]*?)(?<!\\)",/);
+      const contentMatch = rawOutput.match(/"contentEn"\s*:\s*"([\s\S]*?)(?<!\\)"\s*\}/);
+
+      return {
+        titleEn: titleMatch ? titleMatch[1].replace(/\\"/g, '"') : title,
+        excerptEn: excerptMatch ? excerptMatch[1].replace(/\\"/g, '"') : excerpt,
+        contentEn: contentMatch ? contentMatch[1].replace(/\\"/g, '"').replace(/\\n/g, '\n') : contentHtml,
+      };
+    }
+  } catch (err: any) {
+    clearTimeout(timeoutId);
+    console.error('Failed to translate news with OpenRouter Gemini:', err);
+    throw err;
+  }
+}

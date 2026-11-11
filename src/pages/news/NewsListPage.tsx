@@ -298,11 +298,14 @@ export const NewsListPage: React.FC = () => {
   // Filtered and paginated news
   const filteredNews = news.filter((item) => {
     const matchesCategory = category === 'ALL' || item.category === category;
+    const q = query.toLowerCase();
     const matchesQuery =
       !query ||
-      item.title.toLowerCase().includes(query.toLowerCase()) ||
-      (item.excerpt && item.excerpt.toLowerCase().includes(query.toLowerCase())) ||
-      (item.author && item.author.toLowerCase().includes(query.toLowerCase()));
+      item.title.toLowerCase().includes(q) ||
+      (item.titleEn && item.titleEn.toLowerCase().includes(q)) ||
+      (item.excerpt && item.excerpt.toLowerCase().includes(q)) ||
+      (item.excerptEn && item.excerptEn.toLowerCase().includes(q)) ||
+      (item.author && item.author.toLowerCase().includes(q));
     return matchesCategory && matchesQuery;
   });
 
@@ -440,51 +443,63 @@ export const NewsListPage: React.FC = () => {
         ) : (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {paginatedNews.map((item) => (
-                <Card
-                  key={item.id}
-                  className="rounded-2xl border border-neutral-200 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="relative h-52 overflow-hidden bg-neutral-100">
-                      <img
-                        src={item.image || '/assets/images/img_011.jpg'}
-                        alt={item.title}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                      />
-                      <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md text-[10px] font-bold bg-[#6B18A8] text-white shadow-md">
-                        {item.category}
-                      </span>
-                    </div>
+              {paginatedNews.map((item) => {
+                const itemTitle = isEn && item.titleEn ? item.titleEn : item.title;
+                const itemExcerpt = isEn && item.excerptEn ? item.excerptEn : item.excerpt;
 
-                    <div className="p-6">
-                      <div className="flex items-center gap-2 text-xs text-neutral-400 mb-2">
-                        <Calendar className="w-3.5 h-3.5 text-neutral-400" />
-                        <span>{formatDate(item.createdAt)}</span>
-                        <span>•</span>
-                        <span>{item.author}</span>
+                return (
+                  <Card
+                    key={item.id}
+                    className="rounded-2xl border border-neutral-200 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="relative h-52 overflow-hidden bg-neutral-100">
+                        <img
+                          src={item.image || '/assets/images/img_011.jpg'}
+                          alt={itemTitle}
+                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute top-3 left-3 flex items-center gap-1.5">
+                          <span className="px-2.5 py-1 rounded-md text-[10px] font-bold bg-[#6B18A8] text-white shadow-md">
+                            {item.category}
+                          </span>
+                          {isEn && item.titleEn && (
+                            <span className="px-2 py-1 rounded-md text-[9px] font-bold bg-emerald-600 text-white shadow-md">
+                              EN
+                            </span>
+                          )}
+                        </div>
                       </div>
 
-                      <h3 className="font-bold text-lg text-neutral-900 leading-snug line-clamp-2 hover:text-[#6B18A8] transition-colors">
-                        <Link to={`/berita/${item.slug || item.id}`}>{item.title}</Link>
-                      </h3>
+                      <div className="p-6">
+                        <div className="flex items-center gap-2 text-xs text-neutral-400 mb-2">
+                          <Calendar className="w-3.5 h-3.5 text-neutral-400" />
+                          <span>{formatDate(item.createdAt)}</span>
+                          <span>•</span>
+                          <span>{item.author}</span>
+                        </div>
 
-                      <p className="text-xs text-neutral-500 mt-2 line-clamp-3 leading-relaxed">
-                        {item.excerpt}
-                      </p>
+                        <h3 className="font-bold text-lg text-neutral-900 leading-snug line-clamp-2 hover:text-[#6B18A8] transition-colors">
+                          <Link to={`/berita/${item.slug || item.id}`}>{itemTitle}</Link>
+                        </h3>
+
+                        <p className="text-xs text-neutral-500 mt-2 line-clamp-3 leading-relaxed">
+                          {itemExcerpt}
+                        </p>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="p-6 pt-0 border-t border-neutral-100 mt-2">
-                    <Link
-                      to={`/berita/${item.slug || item.id}`}
-                      className="text-xs font-bold text-[#6B18A8] hover:underline flex items-center gap-1 pt-3"
-                    >
-                      {isEn ? 'Read More' : 'Baca Selengkapnya'} <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
-                </Card>
-              ))}
+                    <div className="p-6 pt-0 border-t border-neutral-100 mt-2">
+                      <Link
+                        to={`/berita/${item.slug || item.id}`}
+                        className="text-xs font-bold text-[#6B18A8] hover:underline flex items-center gap-1 pt-3"
+                      >
+                        {isEn ? 'Read More' : 'Baca Selengkapnya'} <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+                    </div>
+                  </Card>
+                );
+              })}
             </div>
 
             {/* Official HeroUI Pagination */}

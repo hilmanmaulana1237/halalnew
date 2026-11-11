@@ -65,6 +65,7 @@ import {
   Info,
   Layers,
   Tag,
+  Languages,
 } from 'lucide-react';
 import { api, formatDate, formatRupiah } from '@/services/api';
 import { cn } from '@/lib/utils';
@@ -74,6 +75,7 @@ import { RatesEditorTab } from '@/components/admin/RatesEditorTab';
 import { BackupManagerTab } from '@/components/admin/BackupManagerTab';
 import { ImageCropperModal } from '@/components/admin/ImageCropperModal';
 import { getRatesMatrix } from '@/services/ratesService';
+import { translateNewsToEnglish } from '@/services/openRouterService';
 import {
   scanForThreats,
   sanitizeHtml,
@@ -509,7 +511,15 @@ export const AdminDashboard: React.FC = () => {
     image: '/assets/images/pemeriksaaan-kehalalan-produk.jpg',
     metaTitle: '',
     metaDescription: '',
+    titleEn: '',
+    excerptEn: '',
+    contentEn: '',
   });
+
+  // Active language version in TinyMCE editor: 'ID' (Indonesia) or 'EN' (English)
+  const [activeEditorLang, setActiveEditorLang] = useState<'ID' | 'EN'>('ID');
+  const [isTranslatingNews, setIsTranslatingNews] = useState(false);
+  const [translationError, setTranslationError] = useState<string | null>(null);
 
   // -------------------------------------------------------------
   // PAGINATION & FILTER STATES
@@ -775,7 +785,7 @@ export const AdminDashboard: React.FC = () => {
   };
 
   // -------------------------------------------------------------
-  // POST ACTIONS (TINYMCE)
+  // POST ACTIONS (TINYMCE & AI TRANSLATION)
   // -------------------------------------------------------------
   const handleOpenNewPost = () => {
     setEditingPostId(null);
@@ -790,7 +800,12 @@ export const AdminDashboard: React.FC = () => {
       image: '/assets/images/pemeriksaaan-kehalalan-produk.jpg',
       metaTitle: '',
       metaDescription: '',
+      titleEn: '',
+      excerptEn: '',
+      contentEn: '',
     });
+    setActiveEditorLang('ID');
+    setTranslationError(null);
     setPostViewMode('EDITOR');
   };
 
@@ -814,8 +829,56 @@ export const AdminDashboard: React.FC = () => {
       image: post.image || '/assets/images/beranda_004.jpg',
       metaTitle: `${post.title} | LPH UIN SGD`,
       metaDescription: post.excerpt || '',
+      titleEn: post.titleEn || '',
+      excerptEn: post.excerptEn || '',
+      contentEn: post.contentEn || '',
     });
+    setActiveEditorLang('ID');
+    setTranslationError(null);
     setPostViewMode('EDITOR');
+  };
+
+  const handleAutoTranslateNews = async () => {
+    if (!postForm.title.trim()) {
+      alert('Mohon tuliskan Judul Berita Bahasa Indonesia terlebih dahulu sebelum menerjemahkan.');
+      return;
+    }
+    if (!postForm.content.trim() || postForm.content === '<p></p>') {
+      alert('Mohon tuliskan Naskah Konten Berita di TinyMCE terlebih dahulu sebelum menerjemahkan.');
+      return;
+    }
+
+    setIsTranslatingNews(true);
+    setTranslationError(null);
+    try {
+      const result = await translateNewsToEnglish(
+        postForm.title,
+        postForm.excerpt,
+        postForm.content
+      );
+
+      setPostForm((prev) => ({
+        ...prev,
+        titleEn: result.titleEn,
+        excerptEn: result.excerptEn,
+        contentEn: result.contentEn,
+      }));
+
+      // Automatically switch to English tab so admin can review and verify
+      setActiveEditorLang('EN');
+      addAuditLog(
+        'Menerjemahkan artikel berita ke Bahasa Inggris via AI Gemini',
+        postForm.title,
+        'UPDATE'
+      );
+    } catch (err: any) {
+      console.error('Translation error:', err);
+      const errMsg = err?.message || 'Gagal menerjemahkan dengan AI. Periksa koneksi internet atau kuota API.';
+      setTranslationError(errMsg);
+      alert(`Gagal menerjemahkan: ${errMsg}`);
+    } finally {
+      setIsTranslatingNews(false);
+    }
   };
 
   const handleSavePost = (forcedStatus?: 'PUBLISHED' | 'DRAFT') => {
@@ -824,7 +887,7 @@ export const AdminDashboard: React.FC = () => {
       return;
     }
 
-    // Active Anti-Judol & Anti-Malware Threat Scan
+    // Active Anti-Judol & Anti-Malware Threat Scan on Indonesian content
     const threatScan = scanForThreats(postForm.content, postForm.title);
     if (!threatScan.isClean) {
       alert(
@@ -838,7 +901,19 @@ export const AdminDashboard: React.FC = () => {
       return;
     }
 
+    // Also scan English content if present
+    if (postForm.contentEn && postForm.contentEn.trim()) {
+      const threatScanEn = scanForThreats(postForm.contentEn, postForm.titleEn || '');
+      if (!threatScanEn.isClean) {
+        alert(
+          `🚨 PERINGATAN KEAMANAN SIBER!\nNaskah artikel versi Bahasa Inggris ditolak oleh sistem keamanan LPH UIN SGD.\n${threatScanEn.summary}`
+        );
+        return;
+      }
+    }
+
     const cleanContent = sanitizeHtml(postForm.content);
+    const cleanContentEn = postForm.contentEn && postForm.contentEn.trim() ? sanitizeHtml(postForm.contentEn) : undefined;
     const currentStatus = forcedStatus || postForm.status;
 
     if (editingPostId) {
@@ -854,6 +929,9 @@ export const AdminDashboard: React.FC = () => {
               excerpt: postForm.excerpt,
               content: cleanContent,
               image: postForm.image,
+              titleEn: postForm.titleEn || undefined,
+              excerptEn: postForm.excerptEn || undefined,
+              contentEn: cleanContentEn,
             }
           : p
       );
@@ -861,7 +939,7 @@ export const AdminDashboard: React.FC = () => {
       try {
         localStorage.setItem('lph_news_list', JSON.stringify(updated));
       } catch {}
-      addAuditLog('Memperbarui artikel berita (TinyMCE - Sanitized)', postForm.title, 'UPDATE');
+      addAuditLog('Memperbarui artikel berita (Bilingual TinyMCE - Sanitized)', postForm.title, 'UPDATE');
     } else {
       const newPost: NewsItem = {
         id: Date.now(),
@@ -873,13 +951,16 @@ export const AdminDashboard: React.FC = () => {
         excerpt: postForm.excerpt,
         content: cleanContent,
         image: postForm.image,
+        titleEn: postForm.titleEn || undefined,
+        excerptEn: postForm.excerptEn || undefined,
+        contentEn: cleanContentEn,
       };
       const updated = [newPost, ...newsList];
       setNewsList(updated);
       try {
         localStorage.setItem('lph_news_list', JSON.stringify(updated));
       } catch {}
-      addAuditLog('Menerbitkan berita baru (TinyMCE - Sanitized)', postForm.title, 'CREATE');
+      addAuditLog('Menerbitkan berita baru (Bilingual TinyMCE - Sanitized)', postForm.title, 'CREATE');
     }
     setPostViewMode('LIST');
   };
@@ -1477,12 +1558,15 @@ export const AdminDashboard: React.FC = () => {
   const handleExportNewsExcel = () => {
     const rows = filteredNews.map((n) => ({
       ID: n.id,
-      'Judul Artikel': n.title,
+      'Judul Artikel (ID)': n.title,
+      'Judul Artikel (EN)': n.titleEn || '-',
+      'Status Terjemahan EN': n.titleEn ? 'Tersedia (AI/Editor)' : 'Belum Ada',
       Kategori: n.category,
       Status: n.status,
       'Tanggal Terbit': n.publishedAt || '-',
       Slug: n.slug,
-      Ringkasan: n.excerpt || '',
+      'Ringkasan (ID)': n.excerpt || '',
+      'Ringkasan (EN)': n.excerptEn || '',
     }));
     exportToExcel(rows, 'Daftar_Berita_Artikel_LPH_UIN_SGD', 'Berita & Artikel');
     addAuditLog('Export daftar berita ke Excel (.xlsx)', 'Semua Data Berita', 'UPDATE');
@@ -2239,9 +2323,16 @@ export const AdminDashboard: React.FC = () => {
                                     <span className="font-bold text-neutral-800 text-xs block truncate">
                                       {news.title}
                                     </span>
-                                    <span className="text-[11px] text-neutral-400 block truncate mt-0.5">
-                                      {news.excerpt}
-                                    </span>
+                                    <div className="flex items-center gap-1.5 mt-0.5">
+                                      <span className="text-[11px] text-neutral-400 block truncate">
+                                        {news.excerpt}
+                                      </span>
+                                      {news.titleEn && (
+                                        <span className="shrink-0 text-[9px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.2 rounded">
+                                          🇬🇧 EN
+                                        </span>
+                                      )}
+                                    </div>
                                   </div>
                                 </div>
                               </Table.Cell>
@@ -2358,29 +2449,123 @@ export const AdminDashboard: React.FC = () => {
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                     {/* Left Column: Title, Excerpt, TinyMCE Editor (8 Cols) */}
                     <div className="lg:col-span-8 space-y-5">
+                      {/* Bilingual Language Selector & AI Auto-Translate Bar */}
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-2xl bg-gradient-to-r from-[#FAF7FD] via-purple-50/60 to-white border border-[#C9A5E8]/40 shadow-2xs">
+                        <div className="flex items-center gap-2">
+                          <div className="flex bg-neutral-200/70 p-1 rounded-xl">
+                            <button
+                              type="button"
+                              onClick={() => setActiveEditorLang('ID')}
+                              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                                activeEditorLang === 'ID'
+                                  ? 'bg-[#6B18A8] text-white shadow-xs'
+                                  : 'text-neutral-600 hover:text-neutral-900'
+                              }`}
+                            >
+                              <span>🇮🇩 Versi Indonesia</span>
+                              <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-white/20 font-medium">
+                                Utama
+                              </span>
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => setActiveEditorLang('EN')}
+                              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                                activeEditorLang === 'EN'
+                                  ? 'bg-[#6B18A8] text-white shadow-xs'
+                                  : 'text-neutral-600 hover:text-neutral-900'
+                              }`}
+                            >
+                              <span>🇬🇧 Versi English</span>
+                              {postForm.titleEn ? (
+                                <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-emerald-500 text-white font-bold flex items-center gap-0.5">
+                                  <Check className="w-2.5 h-2.5" /> Tersedia
+                                </span>
+                              ) : (
+                                <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-neutral-300 text-neutral-600 font-semibold">
+                                  Belum Ada
+                                </span>
+                              )}
+                            </button>
+                          </div>
+                        </div>
+
+                        <Button
+                          variant="secondary"
+                          onPress={handleAutoTranslateNews}
+                          isDisabled={isTranslatingNews}
+                          className="text-xs font-bold rounded-xl border border-purple-300 bg-white hover:bg-purple-50 text-[#6B18A8] px-3.5 py-2 flex items-center gap-2 shadow-2xs cursor-pointer shrink-0"
+                        >
+                          {isTranslatingNews ? (
+                            <>
+                              <RefreshCw className="w-3.5 h-3.5 animate-spin text-[#6B18A8]" />
+                              <span>Menerjemahkan AI Gemini...</span>
+                            </>
+                          ) : (
+                            <>
+                              <Sparkles className="w-3.5 h-3.5 text-[#F5D32F] fill-[#F5D32F]" />
+                              <span>Terjemahkan ke English (AI Gemini)</span>
+                            </>
+                          )}
+                        </Button>
+                      </div>
+
+                      {/* Info banner for English Mode */}
+                      {activeEditorLang === 'EN' && (
+                        <div className="flex items-start gap-2.5 p-3.5 rounded-xl bg-amber-50/90 border border-amber-200 text-amber-900 text-xs leading-relaxed">
+                          <Sparkles className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                          <div>
+                            <span className="font-bold">Mode Editor Versi Bahasa Inggris (EN): </span>
+                            Naskah ini akan ditampilkan saat pengunjung memilih opsi Bahasa Inggris (EN) di website. Anda dapat menerjemahkan otomatis dari naskah Indonesia via tombol AI di atas. Seluruh tag format TinyMCE (tebal/bold, headings, bullet list, link, dsb) dipertahankan 100%. Anda juga bebas menyunting teks terjemahan secara manual di bawah.
+                          </div>
+                        </div>
+                      )}
+
                       <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 space-y-4">
                         <div>
-                          <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wider mb-1.5">
-                            Judul Artikel Berita
-                          </label>
-                          <Input
-                            value={postForm.title}
-                            onChange={(e) => {
-                              const t = e.target.value;
-                              setPostForm({
-                                ...postForm,
-                                title: t,
-                                slug: t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
-                              });
-                            }}
-                            placeholder="Contoh: Akselerasi Audit Sertifikasi Halal di Jawa Barat..."
-                            className="w-full text-sm font-bold rounded-xl"
-                          />
+                          <div className="flex items-center justify-between mb-1.5">
+                            <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wider">
+                              {activeEditorLang === 'ID'
+                                ? 'Judul Artikel Berita (Bahasa Indonesia)'
+                                : 'Article Headline / Judul (Bahasa Inggris)'}
+                            </label>
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-neutral-100 text-neutral-600">
+                              {activeEditorLang === 'ID' ? '🇮🇩 ID' : '🇬🇧 EN'}
+                            </span>
+                          </div>
+                          {activeEditorLang === 'ID' ? (
+                            <Input
+                              value={postForm.title}
+                              onChange={(e) => {
+                                const t = e.target.value;
+                                setPostForm({
+                                  ...postForm,
+                                  title: t,
+                                  slug: t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+                                });
+                              }}
+                              placeholder="Contoh: Akselerasi Audit Sertifikasi Halal di Jawa Barat..."
+                              className="w-full text-sm font-bold rounded-xl"
+                            />
+                          ) : (
+                            <Input
+                              value={postForm.titleEn}
+                              onChange={(e) => {
+                                setPostForm({
+                                  ...postForm,
+                                  titleEn: e.target.value,
+                                });
+                              }}
+                              placeholder="e.g. Acceleration of Halal Certification Audits in West Java..."
+                              className="w-full text-sm font-bold rounded-xl"
+                            />
+                          )}
                         </div>
 
                         <div>
                           <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wider mb-1.5">
-                            Permalink / URL Slug
+                            Permalink / URL Slug (Global)
                           </label>
                           <div className="flex items-center gap-2 p-2 rounded-xl bg-[#FAF7FD] border border-[#C9A5E8]/30">
                             <span className="text-[11px] font-mono text-neutral-400 pl-2">
@@ -2397,16 +2582,33 @@ export const AdminDashboard: React.FC = () => {
                         </div>
 
                         <div>
-                          <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wider mb-1.5">
-                            Ringkasan Singkat (Excerpt)
-                          </label>
-                          <TextArea
-                            value={postForm.excerpt}
-                            onChange={(e) => setPostForm({ ...postForm, excerpt: e.target.value })}
-                            rows={3}
-                            placeholder="Ringkasan 2-3 kalimat untuk kartu preview di beranda dan hasil pencarian Google..."
-                            className="w-full text-xs rounded-xl"
-                          />
+                          <div className="flex items-center justify-between mb-1.5">
+                            <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wider">
+                              {activeEditorLang === 'ID'
+                                ? 'Ringkasan Singkat (Excerpt - Indonesia)'
+                                : 'Article Summary / Ringkasan (English)'}
+                            </label>
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-neutral-100 text-neutral-600">
+                              {activeEditorLang === 'ID' ? '🇮🇩 ID' : '🇬🇧 EN'}
+                            </span>
+                          </div>
+                          {activeEditorLang === 'ID' ? (
+                            <TextArea
+                              value={postForm.excerpt}
+                              onChange={(e) => setPostForm({ ...postForm, excerpt: e.target.value })}
+                              rows={3}
+                              placeholder="Ringkasan 2-3 kalimat untuk kartu preview di beranda dan hasil pencarian Google..."
+                              className="w-full text-xs rounded-xl"
+                            />
+                          ) : (
+                            <TextArea
+                              value={postForm.excerptEn}
+                              onChange={(e) => setPostForm({ ...postForm, excerptEn: e.target.value })}
+                              rows={3}
+                              placeholder="2-3 sentence overview for preview cards and search engines in English..."
+                              className="w-full text-xs rounded-xl"
+                            />
+                          )}
                         </div>
                       </Card>
 
@@ -2414,11 +2616,20 @@ export const AdminDashboard: React.FC = () => {
                       <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 space-y-3">
                         <div className="flex items-center justify-between pb-2 border-b border-neutral-100">
                           <div>
-                            <h4 className="text-xs font-bold text-neutral-800 uppercase tracking-wider">
-                              Isi Konten Artikel (Visual Editor)
+                            <h4 className="text-xs font-bold text-neutral-800 uppercase tracking-wider flex items-center gap-2">
+                              <span>
+                                {activeEditorLang === 'ID'
+                                  ? 'Isi Konten Artikel (Versi Indonesia)'
+                                  : 'Article Content (English Version - TinyMCE)'}
+                              </span>
+                              <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#FAF7FD] text-[#6B18A8] border border-[#C9A5E8]/60 font-bold">
+                                {activeEditorLang === 'ID' ? '🇮🇩 Naskah ID' : '🇬🇧 Terjemahan EN'}
+                              </span>
                             </h4>
                             <p className="text-[11px] text-neutral-400">
-                              Format artikel lengkap dengan heading, bullet point, tabel, kutipan, dan gambar.
+                              {activeEditorLang === 'ID'
+                                ? 'Format artikel lengkap dengan heading, bullet point, tabel, kutipan, dan gambar.'
+                                : 'Struktur HTML, heading, penekanan bold, dan gambar dipertahankan persis dengan teks berbahasa Inggris.'}
                             </p>
                           </div>
                           <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold">
@@ -2436,8 +2647,15 @@ export const AdminDashboard: React.FC = () => {
                           }
                         >
                           <RichTextEditor
-                            value={postForm.content}
-                            onChange={(val) => setPostForm({ ...postForm, content: val })}
+                            key={`tinymce-editor-${activeEditorLang}`}
+                            value={activeEditorLang === 'ID' ? postForm.content : postForm.contentEn}
+                            onChange={(val) => {
+                              if (activeEditorLang === 'ID') {
+                                setPostForm((prev) => ({ ...prev, content: val }));
+                              } else {
+                                setPostForm((prev) => ({ ...prev, contentEn: val }));
+                              }
+                            }}
                             height={520}
                           />
                         </React.Suspense>
