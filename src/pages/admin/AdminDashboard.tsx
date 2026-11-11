@@ -79,7 +79,6 @@ import {
   validateUploadedFile,
   verifyAdminSession,
   destroyAdminSession,
-  JUDOL_BLACKLIST_KEYWORDS,
 } from '@/lib/security';
 
 // Lazy-load TinyMCE editor for performance & smooth Vite bundling
@@ -97,8 +96,7 @@ type AdminTab =
   | 'MEDIA'
   | 'BACKUP'
   | 'AUDIT_LOG'
-  | 'USERS'
-  | 'SECURITY';
+  | 'USERS';
 
 interface AdminGalleryItem {
   id: number;
@@ -525,22 +523,6 @@ export const AdminDashboard: React.FC = () => {
   const [usersStatus, setUsersStatus] = useState('ALL');
   const [usersPage, setUsersPage] = useState(1);
   const usersPerPage = 5;
-
-  // Security & Anti-Judol Scanner State
-  const [isScanningSecurity, setIsScanningSecurity] = useState(false);
-  const [securityScanResults, setSecurityScanResults] = useState<{
-    scannedItems: number;
-    threatsFound: number;
-    threatList: Array<{ module: string; title: string; issues: string[] }>;
-    lastScanTime: string;
-    securityScore: number;
-  }>({
-    scannedItems: 24,
-    threatsFound: 0,
-    threatList: [],
-    lastScanTime: 'Baru saja',
-    securityScore: 100,
-  });
 
   // -------------------------------------------------------------
   // EDIT & MODAL STATES
@@ -1398,100 +1380,6 @@ export const AdminDashboard: React.FC = () => {
     addAuditLog('Export daftar akun petugas ke Excel (.xlsx)', 'Semua Akun Petugas', 'UPDATE');
   };
 
-  // -------------------------------------------------------------
-  // ACTIVE ANTI-JUDOL & SECURITY DEEP SCANNER
-  // -------------------------------------------------------------
-  const handleRunSecurityAudit = () => {
-    setIsScanningSecurity(true);
-    setTimeout(() => {
-      let count = 0;
-      const threats: Array<{ module: string; title: string; issues: string[] }> = [];
-
-      // 1. Scan Berita & Artikel
-      newsList.forEach((n) => {
-        count++;
-        const scan = scanForThreats(n.content || '', n.title || '');
-        if (!scan.isClean) {
-          threats.push({
-            module: 'Berita & Artikel',
-            title: n.title,
-            issues: [...scan.detectedKeywords, ...scan.detectedPatterns],
-          });
-        }
-      });
-
-      // 2. Scan Pengumuman & Surat Edaran
-      announcements.forEach((a) => {
-        count++;
-        const scan = scanForThreats(a.content || '', a.title || '');
-        if (!scan.isClean) {
-          threats.push({
-            module: 'Surat Edaran / SK (PDF)',
-            title: a.title,
-            issues: [...scan.detectedKeywords, ...scan.detectedPatterns],
-          });
-        }
-      });
-
-      // 3. Scan Galeri Kegiatan
-      galleryList.forEach((g) => {
-        count++;
-        const scan = scanForThreats(g.fullStory || '', g.title || '');
-        if (!scan.isClean) {
-          threats.push({
-            module: 'Dokumentasi Galeri',
-            title: g.title,
-            issues: [...scan.detectedKeywords, ...scan.detectedPatterns],
-          });
-        }
-      });
-
-      // 4. Scan Basis Pengetahuan Chatbot AI
-      knowledgeBase.forEach((k) => {
-        count++;
-        const scan = scanForThreats(k.answer || '', k.question || '');
-        if (!scan.isClean) {
-          threats.push({
-            module: 'Chatbot FAQ AI',
-            title: k.question,
-            issues: [...scan.detectedKeywords, ...scan.detectedPatterns],
-          });
-        }
-      });
-
-      // 5. Scan Pustaka Media Aset
-      mediaList.forEach((m) => {
-        count++;
-        const scan = scanForThreats(m.name || '', m.category || '');
-        if (!scan.isClean) {
-          threats.push({
-            module: 'Pustaka Media',
-            title: m.name,
-            issues: [...scan.detectedKeywords, ...scan.detectedPatterns],
-          });
-        }
-      });
-
-      const score = threats.length === 0 ? 100 : Math.max(30, 100 - threats.length * 25);
-      const now = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-
-      setSecurityScanResults({
-        scannedItems: count,
-        threatsFound: threats.length,
-        threatList: threats,
-        lastScanTime: `Hari ini, ${now} WIB`,
-        securityScore: score,
-      });
-
-      setIsScanningSecurity(false);
-      addAuditLog(
-        `Audit Keamanan Anti-Judol Selesai: ${count} berkas diperiksa, ${threats.length} ancaman terdeteksi.`,
-        'Pusat Keamanan Siber Portal',
-        threats.length > 0 ? 'DELETE' : 'LOGIN'
-      );
-    }, 1200);
-  };
-
   // Helper Pagination Renderer
   const renderPaginationControls = (
     currentPage: number,
@@ -1588,7 +1476,6 @@ export const AdminDashboard: React.FC = () => {
                 {activeTab === 'KB' && 'Chatbot AI'}
                 {activeTab === 'AUDIT_LOG' && 'Audit Log'}
                 {activeTab === 'USERS' && 'Petugas'}
-                {activeTab === 'SECURITY' && 'Keamanan & Anti-Judol'}
               </div>
             </div>
           </div>
@@ -1723,7 +1610,6 @@ export const AdminDashboard: React.FC = () => {
               { id: 'BACKUP', label: 'Backup & Database cPanel', icon: Database },
               { id: 'AUDIT_LOG', label: 'Riwayat Aktivitas', icon: History, count: auditLogs.length },
               { id: 'USERS', label: 'Manajemen Petugas', icon: Users, count: usersList.length },
-              { id: 'SECURITY', label: 'Keamanan & Anti-Judol', icon: ShieldCheck, isSecurity: true },
             ].map((item) => {
               const Icon = item.icon;
               const isActive = activeTab === item.id;
@@ -1745,11 +1631,6 @@ export const AdminDashboard: React.FC = () => {
                     <Icon className={cn('w-4 h-4', isActive ? 'text-[#F5D32F]' : 'text-purple-300')} />
                     <span>{item.label}</span>
                   </div>
-                  {(item as any).isSecurity && (
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-full font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
-                      100% Aman
-                    </span>
-                  )}
                   {item.count !== undefined && (
                     <span
                       className={cn(
@@ -1832,7 +1713,6 @@ export const AdminDashboard: React.FC = () => {
                     {activeTab === 'KB' && 'Basis Pengetahuan Chatbot AI'}
                     {activeTab === 'AUDIT_LOG' && 'Riwayat Aktivitas Sistem'}
                     {activeTab === 'USERS' && 'Manajemen Akun Petugas'}
-                    {activeTab === 'SECURITY' && 'Pusat Keamanan Siber & Anti-Judol'}
                   </span>
                 </Breadcrumbs.Item>
               </Breadcrumbs>
@@ -1850,7 +1730,6 @@ export const AdminDashboard: React.FC = () => {
                 {activeTab === 'KB' && 'Basis Pengetahuan Chatbot AI Otomatis'}
                 {activeTab === 'AUDIT_LOG' && 'Log Audit & Jejak Aktivitas Petugas'}
                 {activeTab === 'USERS' && 'Daftar Auditor & Petugas LPH'}
-                {activeTab === 'SECURITY' && 'Pusat Keamanan Siber & Anti-Defacement Judol'}
               </h2>
             </div>
 
@@ -3607,199 +3486,6 @@ export const AdminDashboard: React.FC = () => {
                 setUsersPage
               )}
             </Card>
-          )}
-
-          {/* -------------------------------------------------------------
-              TAB 13: PUSAT KEAMANAN SIBER & PERTAHANAN ANTI-JUDOL
-          ------------------------------------------------------------- */}
-          {activeTab === 'SECURITY' && (
-            <div className="space-y-6">
-              {/* Security Shield Banner */}
-              <Card className="bg-gradient-to-br from-[#1A0B2E] via-[#2D0D4B] to-[#140624] text-white rounded-3xl p-6 sm:p-8 border border-[#F5D32F]/40 shadow-2xl relative overflow-hidden">
-                <div className="absolute -right-16 -top-16 w-64 h-64 bg-[#6B18A8]/40 rounded-full blur-3xl pointer-events-none" />
-                <div className="absolute -left-16 -bottom-16 w-64 h-64 bg-[#F5D32F]/10 rounded-full blur-3xl pointer-events-none" />
-
-                <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-                  <div className="space-y-3 max-w-2xl">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-400/30">
-                      <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                      <span>PERISAI SIBER ANTI-JUDOL &amp; DEFACEMENT AKTIF</span>
-                    </div>
-                    <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-                      Pusat Pertahanan Siber &amp; Integritas Portal LPH
-                    </h3>
-                    <p className="text-xs sm:text-sm text-purple-200/80 leading-relaxed">
-                      Sistem pertahanan berlapis dirancang khusus untuk memblokir pola serangan yang sering menargetkan website universitas dan lembaga resmi (.ac.id &amp; .go.id), terutama injeksi kata kunci slot/judi online (SEO cloaking), web shell execution, dan credential brute-force.
-                    </p>
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
-                    <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15 text-center min-w-[140px]">
-                      <div className="text-3xl font-black text-[#F5D32F] font-mono">
-                        {securityScanResults.securityScore}/100
-                      </div>
-                      <div className="text-[11px] font-bold text-purple-200">Skor Keamanan</div>
-                      <div className="text-[9px] text-emerald-400 font-semibold mt-0.5">Grade A (Kebal Injeksi)</div>
-                    </div>
-
-                    <Button
-                      variant="primary"
-                      onPress={handleRunSecurityAudit}
-                      isDisabled={isScanningSecurity}
-                      className="w-full sm:w-auto bg-[#F5D32F] hover:bg-[#e0be22] text-[#4B0D78] font-black text-xs px-5 py-3.5 rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-yellow-500/20 cursor-pointer disabled:opacity-50"
-                    >
-                      <RefreshCw className={cn('w-4 h-4 text-[#4B0D78]', isScanningSecurity && 'animate-spin')} />
-                      <span>{isScanningSecurity ? 'Memindai Seluruh Sistem...' : 'Jalankan Audit & Scan Anti-Judol'}</span>
-                    </Button>
-                  </div>
-                </div>
-
-                <div className="mt-6 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs text-purple-200/70 font-medium">
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-[#F5D32F]" />
-                    <span>Audit Terakhir: <strong className="text-white">{securityScanResults.lastScanTime}</strong></span>
-                  </div>
-                  <div>
-                    Status Audit: <strong className="text-emerald-400">{securityScanResults.scannedItems} Berkas &amp; Konten Diperiksa (0 Pelanggaran)</strong>
-                  </div>
-                </div>
-              </Card>
-
-              {/* 6 Layer Security Matrix */}
-              <div>
-                <h4 className="text-sm font-bold text-neutral-800 mb-3 flex items-center gap-2">
-                  <Layers className="w-4 h-4 text-[#6B18A8]" />
-                  <span>Matriks 6 Lapisan Proteksi Aktif (Defense-in-Depth)</span>
-                </h4>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {/* Layer 1 */}
-                  <Card className="p-5 bg-white rounded-2xl border border-emerald-200 shadow-2xs space-y-2.5">
-                    <div className="flex items-center justify-between">
-                      <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">
-                        1
-                      </div>
-                      <Chip size="sm" className="bg-emerald-50 text-emerald-700 border border-emerald-300 font-bold text-[10px]">
-                        AKTIF PROTEK
-                      </Chip>
-                    </div>
-                    <h5 className="font-bold text-xs text-neutral-900">Anti-Judol &amp; SEO Cloaking Scanner</h5>
-                    <p className="text-[11px] text-neutral-500 leading-relaxed">
-                      Memindai naskah artikel, pengumuman, dan formulir aduan masyarakat dari 35+ varian kata kunci slot/judi gacor dan teknik link tersembunyi (<code className="text-[10px]">display:none</code>).
-                    </p>
-                  </Card>
-
-                  {/* Layer 2 */}
-                  <Card className="p-5 bg-white rounded-2xl border border-emerald-200 shadow-2xs space-y-2.5">
-                    <div className="flex items-center justify-between">
-                      <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">
-                        2
-                      </div>
-                      <Chip size="sm" className="bg-emerald-50 text-emerald-700 border border-emerald-300 font-bold text-[10px]">
-                        AKTIF PROTEK
-                      </Chip>
-                    </div>
-                    <h5 className="font-bold text-xs text-neutral-900">DOMPurify HTML Sanitizer</h5>
-                    <p className="text-[11px] text-neutral-500 leading-relaxed">
-                      Membersihkan seluruh masukan TinyMCE dengan whitelist ketat anti-XSS. Menghapus tag skrip eksternal, event handler jahat (<code className="text-[10px]">onload/onerror</code>), dan iframe pihak ketiga.
-                    </p>
-                  </Card>
-
-                  {/* Layer 3 */}
-                  <Card className="p-5 bg-white rounded-2xl border border-emerald-200 shadow-2xs space-y-2.5">
-                    <div className="flex items-center justify-between">
-                      <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">
-                        3
-                      </div>
-                      <Chip size="sm" className="bg-emerald-50 text-emerald-700 border border-emerald-300 font-bold text-[10px]">
-                        AKTIF PROTEK
-                      </Chip>
-                    </div>
-                    <h5 className="font-bold text-xs text-neutral-900">Anti-Web Shell &amp; Upload Guard</h5>
-                    <p className="text-[11px] text-neutral-500 leading-relaxed">
-                      Memvalidasi berkas secara ganda (ekstensi &amp; MIME type). Memblokir mutlak berkas berbahaya (<code className="text-[10px]">.php, .phtml, .exe, .sh, .svg</code>) dan upaya path traversal.
-                    </p>
-                  </Card>
-
-                  {/* Layer 4 */}
-                  <Card className="p-5 bg-white rounded-2xl border border-emerald-200 shadow-2xs space-y-2.5">
-                    <div className="flex items-center justify-between">
-                      <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">
-                        4
-                      </div>
-                      <Chip size="sm" className="bg-emerald-50 text-emerald-700 border border-emerald-300 font-bold text-[10px]">
-                        AKTIF PROTEK
-                      </Chip>
-                    </div>
-                    <h5 className="font-bold text-xs text-neutral-900">Anti-Brute Force Login Shield</h5>
-                    <p className="text-[11px] text-neutral-500 leading-relaxed">
-                      Membatasi upaya login hingga 5 kali. Jika terjadi kegagalan beruntun, form login dikunci otomatis selama 300 detik dengan hitung mundur langsung untuk menggagalkan bot password cracker.
-                    </p>
-                  </Card>
-
-                  {/* Layer 5 */}
-                  <Card className="p-5 bg-white rounded-2xl border border-emerald-200 shadow-2xs space-y-2.5">
-                    <div className="flex items-center justify-between">
-                      <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">
-                        5
-                      </div>
-                      <Chip size="sm" className="bg-emerald-50 text-emerald-700 border border-emerald-300 font-bold text-[10px]">
-                        AKTIF PROTEK
-                      </Chip>
-                    </div>
-                    <h5 className="font-bold text-xs text-neutral-900">Session Security &amp; Token Expiry</h5>
-                    <p className="text-[11px] text-neutral-500 leading-relaxed">
-                      Sesi terenkripsi dengan masa aktif maksimal 8 jam. Sesi tidak sah atau kadaluwarsa langsung diarahkan kembali ke gerbang login tanpa memberi celah akses dashboard.
-                    </p>
-                  </Card>
-
-                  {/* Layer 6 */}
-                  <Card className="p-5 bg-white rounded-2xl border border-emerald-200 shadow-2xs space-y-2.5">
-                    <div className="flex items-center justify-between">
-                      <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">
-                        6
-                      </div>
-                      <Chip size="sm" className="bg-emerald-50 text-emerald-700 border border-emerald-300 font-bold text-[10px]">
-                        TERPASANG
-                      </Chip>
-                    </div>
-                    <h5 className="font-bold text-xs text-neutral-900">Hardened Server Policy (.htaccess)</h5>
-                    <p className="text-[11px] text-neutral-500 leading-relaxed">
-                      Blokir penjelajahan direktori (<code className="text-[10px]">Options -Indexes</code>), matikan eksekusi script di folder upload, dan suntikkan header anti-clickjacking (<code className="text-[10px]">X-Frame-Options: SAMEORIGIN</code>).
-                    </p>
-                  </Card>
-                </div>
-              </div>
-
-              {/* Threat Intelligence Keyword Monitor */}
-              <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <ShieldAlert className="w-4 h-4 text-[#6B18A8]" />
-                    <h4 className="text-sm font-bold text-neutral-800">
-                      Basis Data Pengawasan Kata Kunci Terlarang (Anti-Judol Dictionary)
-                    </h4>
-                  </div>
-                  <Chip size="sm" className="bg-[#FAF7FD] text-[#6B18A8] border border-[#C9A5E8]/50 font-bold text-[10px]">
-                    {JUDOL_BLACKLIST_KEYWORDS.length} Kata Kunci Terpantau
-                  </Chip>
-                </div>
-                <p className="text-xs text-neutral-500">
-                  Setiap artikel baru, naskah TinyMCE, surat edaran PDF, formulir aduan masyarakat, dan survei otomatis di-crosscheck terhadap kata kunci di bawah ini. Jika ditemukan, sistem akan seketika menolak dan mencatat insiden ke Audit Trail.
-                </p>
-
-                <div className="flex flex-wrap gap-1.5 p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 max-h-48 overflow-y-auto">
-                  {JUDOL_BLACKLIST_KEYWORDS.map((keyword, idx) => (
-                    <span
-                      key={idx}
-                      className="inline-flex items-center px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold bg-white text-rose-800 border border-rose-200 shadow-2xs"
-                    >
-                      🚫 {keyword}
-                    </span>
-                  ))}
-                </div>
-              </Card>
-            </div>
           )}
         </div>
       </main>
