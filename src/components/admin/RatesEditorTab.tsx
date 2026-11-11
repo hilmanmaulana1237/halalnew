@@ -249,7 +249,7 @@ export const RatesEditorTab: React.FC<RatesEditorTabProps> = ({ onLogAudit }) =>
         </div>
 
         <Table variant="secondary" className="w-full">
-          <Table.ScrollContainer>
+          <Table.ScrollContainer className="w-full overflow-x-auto">
             <Table.Content aria-label="Tabel Tarif Dasar KMA 784">
               <Table.Header>
                 <Table.Column isRowHeader>Skala Usaha</Table.Column>
@@ -317,7 +317,7 @@ export const RatesEditorTab: React.FC<RatesEditorTabProps> = ({ onLogAudit }) =>
               <span className="text-xs font-bold text-neutral-700 block">
                 Tambahan Biaya per Varian Produk (Mulai Produk ke-2)
               </span>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="text-[10px] font-bold text-neutral-500 uppercase block mb-1">
                     BPJPH (Rp)
@@ -351,7 +351,7 @@ export const RatesEditorTab: React.FC<RatesEditorTabProps> = ({ onLogAudit }) =>
               <span className="text-xs font-bold text-neutral-700 block">
                 Tambahan Biaya per Bahan Baku Tambahan (Jika &gt; 10 Bahan)
               </span>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="text-[10px] font-bold text-neutral-500 uppercase block mb-1">
                     BPJPH (Rp)
@@ -449,21 +449,21 @@ export const RatesEditorTab: React.FC<RatesEditorTabProps> = ({ onLogAudit }) =>
       {/* MODAL: EDIT BASE SCALE RATE */}
       <Modal.Backdrop isOpen={!!isEditingScale} onOpenChange={(open) => !open && setIsEditingScale(null)}>
         <Modal.Container placement="center">
-          <Modal.Dialog className="max-w-lg p-0 overflow-hidden rounded-3xl bg-white border border-[#C9A5E8]/40 shadow-2xl">
+          <Modal.Dialog className="w-[95vw] sm:max-w-lg max-h-[90vh] flex flex-col p-0 overflow-hidden rounded-3xl bg-white border border-[#C9A5E8]/40 shadow-2xl">
             <Modal.CloseTrigger />
             {isEditingScale && (
-              <form onSubmit={handleSaveScale}>
-                <Modal.Header className="p-6 bg-gradient-to-r from-[#FAF7FD] to-white border-b border-[#C9A5E8]/30">
+              <form onSubmit={handleSaveScale} className="flex flex-col max-h-[90vh]">
+                <Modal.Header className="p-4 sm:p-6 bg-gradient-to-r from-[#FAF7FD] to-white border-b border-[#C9A5E8]/30 shrink-0">
                   <div className="flex items-center gap-2 mb-1">
                     <Chip size="sm" className="bg-[#FAF7FD] text-[#6B18A8] font-bold text-[10px]">
                       {isEditingScale}
                     </Chip>
                   </div>
-                  <Modal.Heading className="text-lg font-black text-[#292333]">
+                  <Modal.Heading className="text-base sm:text-lg font-black text-[#292333]">
                     Edit Komponen Tarif: {scaleForm.label}
                   </Modal.Heading>
                 </Modal.Header>
-                <Modal.Body className="p-6 space-y-4">
+                <Modal.Body className="p-4 sm:p-6 space-y-4 overflow-y-auto">
                   <div>
                     <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
                       Deskripsi Skala Usaha
@@ -533,3 +533,4 @@ export const RatesEditorTab: React.FC<RatesEditorTabProps> = ({ onLogAudit }) =>
 };
 
 export default RatesEditorTab;
+

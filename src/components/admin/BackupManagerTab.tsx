@@ -378,7 +378,7 @@ echo "Backup harian selesai: {$backupFile}";
   return (
     <div className="space-y-6">
       {/* Overview Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">
@@ -576,7 +576,7 @@ echo "Backup harian selesai: {$backupFile}";
         </div>
 
         <Table variant="secondary" className="w-full">
-          <Table.ScrollContainer>
+          <Table.ScrollContainer className="w-full overflow-x-auto">
             <Table.Content aria-label="Riwayat Arsip Backup">
               <Table.Header>
                 <Table.Column isRowHeader>Nama Berkas Arsip</Table.Column>
@@ -728,7 +728,7 @@ echo "Backup harian selesai: {$backupFile}";
               )}
             </Button>
           </div>
-          <div className="p-3.5 rounded-xl bg-neutral-900 text-neutral-100 font-mono text-xs overflow-x-auto shadow-inner">
+          <div className="p-3.5 rounded-xl bg-neutral-900 text-neutral-100 font-mono text-xs overflow-x-auto shadow-inner break-all sm:break-normal">
             {cpanelCronCommand}
           </div>
         </div>
@@ -758,7 +758,7 @@ echo "Backup harian selesai: {$backupFile}";
               )}
             </Button>
           </div>
-          <pre className="p-4 rounded-xl bg-neutral-900 text-purple-200 font-mono text-[11px] overflow-x-auto max-h-60 shadow-inner">
+          <pre className="p-4 rounded-xl bg-neutral-900 text-purple-200 font-mono text-[11px] overflow-x-auto max-h-60 shadow-inner whitespace-pre">
             {cpanelPhpScript}
           </pre>
         </div>
@@ -782,3 +782,4 @@ echo "Backup harian selesai: {$backupFile}";
 };
 
 export default BackupManagerTab;
+

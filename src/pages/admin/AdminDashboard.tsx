@@ -59,6 +59,8 @@ import {
   Edit3,
   Pin,
   ArrowRight,
+  Menu,
+  X,
 } from 'lucide-react';
 import { api, formatDate, formatRupiah } from '@/services/api';
 import { cn } from '@/lib/utils';
@@ -536,6 +538,20 @@ export const AdminDashboard: React.FC = () => {
     answer: '',
     tags: '',
   });
+
+  // Mobile / Tablet Sidebar State
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Close sidebar on Escape key press
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && sidebarOpen) {
+        setSidebarOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [sidebarOpen]);
 
   // -------------------------------------------------------------
   // HELPER: AUDIT LOG CREATION & STORAGE
@@ -1223,25 +1239,107 @@ export const AdminDashboard: React.FC = () => {
   const pendingComplaintsCount = complaints.filter((c) => c.status === 'RECEIVED').length;
 
   return (
-    <div className="min-h-screen bg-[#F8F6FB] flex flex-col md:flex-row text-[#292333]">
+    <div className="min-h-screen bg-[#F8F6FB] flex flex-col lg:flex-row text-[#292333] relative">
+      {/* -------------------------------------------------------------
+          MOBILE & TABLET TOP HEADER BAR (< lg)
+      ------------------------------------------------------------- */}
+      <header className="lg:hidden sticky top-0 z-30 bg-[#180828] text-white px-3.5 py-3 flex items-center justify-between border-b border-[#4B0D78]/40 shadow-md">
+        <div className="flex items-center gap-2.5 min-w-0">
+          <Button
+            size="sm"
+            variant="ghost"
+            onPress={() => setSidebarOpen(true)}
+            className="text-white hover:bg-white/10 p-2 rounded-xl shrink-0 cursor-pointer"
+            aria-label="Buka Menu Navigasi"
+          >
+            <Menu className="w-5 h-5 text-[#F5D32F]" />
+          </Button>
+
+          <div className="flex items-center gap-2 min-w-0">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#6B18A8] to-[#F5D32F] flex items-center justify-center font-black text-white text-xs shadow-md shrink-0">
+              LPH
+            </div>
+            <div className="min-w-0">
+              <div className="font-extrabold text-xs text-white truncate leading-tight">LPH UIN SGD</div>
+              <div className="text-[10px] text-[#F5D32F] font-bold truncate leading-tight">
+                {activeTab === 'OVERVIEW' && 'Dashboard Ringkasan'}
+                {activeTab === 'NEWS' && 'Berita & Artikel'}
+                {activeTab === 'ANNOUNCEMENTS' && 'Pengumuman PDF'}
+                {activeTab === 'GALLERY' && 'Galeri Kegiatan'}
+                {activeTab === 'MEDIA' && 'Pustaka Media'}
+                {activeTab === 'COMPLAINTS' && 'Tiket Pengaduan'}
+                {activeTab === 'SATISFACTION' && 'Survei IKM'}
+                {activeTab === 'RATES' && 'Tarif KMA 784'}
+                {activeTab === 'BACKUP' && 'Backup Database'}
+                {activeTab === 'KB' && 'Chatbot AI'}
+                {activeTab === 'AUDIT_LOG' && 'Audit Log'}
+                {activeTab === 'USERS' && 'Petugas'}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-1.5 shrink-0">
+          <Button
+            size="sm"
+            variant="secondary"
+            onPress={() => window.open('/', '_blank')}
+            className="text-[11px] font-bold bg-white/10 text-white hover:bg-white/20 border border-white/15 rounded-xl px-2.5 py-1.5 flex items-center gap-1.5 cursor-pointer"
+          >
+            <ExternalLink className="w-3.5 h-3.5 text-[#F5D32F]" />
+            <span className="hidden sm:inline">Web Publik</span>
+          </Button>
+        </div>
+      </header>
+
+      {/* -------------------------------------------------------------
+          MOBILE DRAWER BACKDROP (< lg)
+      ------------------------------------------------------------- */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/60 backdrop-blur-xs z-40 lg:hidden transition-opacity"
+          onClick={() => setSidebarOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
       {/* -------------------------------------------------------------
           SIDEBAR NAVIGATION (BRAND ROYAL PURPLE & GOLD)
       ------------------------------------------------------------- */}
-      <aside className="w-full md:w-72 bg-[#180828] text-white flex flex-col justify-between p-5 border-r border-[#4B0D78]/40 shrink-0">
+      <aside
+        className={cn(
+          'fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] bg-[#180828] text-white flex flex-col justify-between p-5 border-r border-[#4B0D78]/40 transition-transform duration-300 ease-in-out overflow-y-auto shadow-2xl',
+          'lg:static lg:translate-x-0 lg:h-screen lg:sticky lg:top-0 lg:z-auto lg:shadow-none lg:shrink-0',
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        )}
+      >
         <div className="space-y-6">
           {/* Brand Header */}
-          <div className="flex items-center gap-3 px-2 py-3 border-b border-white/10">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#6B18A8] to-[#F5D32F] flex items-center justify-center font-black text-white text-base shadow-lg shadow-purple-900/50">
-              LPH
+          <div className="flex items-center justify-between pb-3 border-b border-white/10">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#6B18A8] to-[#F5D32F] flex items-center justify-center font-black text-white text-base shadow-lg shadow-purple-900/50">
+                LPH
+              </div>
+              <div>
+                <h1 className="font-extrabold text-sm tracking-tight text-white leading-tight">
+                  LPH UIN SGD
+                </h1>
+                <span className="text-[10px] text-[#F5D32F] font-bold tracking-wider block">
+                  ADMIN CONSOLE 2.0
+                </span>
+              </div>
             </div>
-            <div>
-              <h1 className="font-extrabold text-sm tracking-tight text-white leading-tight">
-                LPH UIN SGD
-              </h1>
-              <span className="text-[10px] text-[#F5D32F] font-bold tracking-wider block">
-                ADMIN CONSOLE 2.0
-              </span>
-            </div>
+
+            {/* Close button on mobile/tablet */}
+            <Button
+              size="sm"
+              variant="ghost"
+              onPress={() => setSidebarOpen(false)}
+              className="lg:hidden text-white/70 hover:text-white hover:bg-white/10 p-1.5 rounded-xl cursor-pointer"
+              aria-label="Tutup Menu"
+            >
+              <X className="w-5 h-5" />
+            </Button>
           </div>
 
           {/* Nav Items */}
@@ -1267,6 +1365,7 @@ export const AdminDashboard: React.FC = () => {
                   onClick={() => {
                     setActiveTab(item.id as AdminTab);
                     if (item.id === 'NEWS') setPostViewMode('LIST');
+                    setSidebarOpen(false);
                   }}
                   className={cn(
                     'w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer group',
@@ -1317,6 +1416,7 @@ export const AdminDashboard: React.FC = () => {
                   key={item.id}
                   onClick={() => {
                     setActiveTab(item.id as AdminTab);
+                    setSidebarOpen(false);
                   }}
                   className={cn(
                     'w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer group',
@@ -1369,7 +1469,7 @@ export const AdminDashboard: React.FC = () => {
               size="sm"
               variant="secondary"
               onPress={() => window.open('/', '_blank')}
-              className="text-xs font-bold bg-white/10 text-white hover:bg-white/20 border border-white/15 rounded-xl flex items-center justify-center gap-1"
+              className="text-xs font-bold bg-white/10 text-white hover:bg-white/20 border border-white/15 rounded-xl flex items-center justify-center gap-1 cursor-pointer"
             >
               <ExternalLink className="w-3.5 h-3.5" />
               <span>Web Publik</span>
@@ -1378,7 +1478,7 @@ export const AdminDashboard: React.FC = () => {
               size="sm"
               variant="secondary"
               onPress={handleLogout}
-              className="text-xs font-bold bg-rose-950/40 text-rose-300 hover:bg-rose-900/60 border border-rose-800/40 rounded-xl flex items-center justify-center gap-1"
+              className="text-xs font-bold bg-rose-950/40 text-rose-300 hover:bg-rose-900/60 border border-rose-800/40 rounded-xl flex items-center justify-center gap-1 cursor-pointer"
             >
               <LogOut className="w-3.5 h-3.5" />
               <span>Keluar</span>
@@ -1390,12 +1490,12 @@ export const AdminDashboard: React.FC = () => {
       {/* -------------------------------------------------------------
           MAIN CONTENT AREA
       ------------------------------------------------------------- */}
-      <main className="flex-1 p-6 sm:p-10 overflow-y-auto">
-        <div className="max-w-7xl mx-auto space-y-8">
+      <main className="flex-1 min-w-0 w-full p-3.5 sm:p-6 lg:p-8 overflow-y-auto overflow-x-hidden">
+        <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8 min-w-0 w-full">
           {/* Top Bar with Breadcrumbs & Action Buttons */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#C9A5E8]/30">
-            <div>
-              <Breadcrumbs className="text-neutral-500 mb-2">
+            <div className="min-w-0">
+              <Breadcrumbs className="text-neutral-500 mb-2 overflow-x-auto whitespace-nowrap">
                 <Breadcrumbs.Item href="/admin">Console Admin</Breadcrumbs.Item>
                 <Breadcrumbs.Item>
                   <span className="text-[#6B18A8] font-bold">
@@ -1415,7 +1515,7 @@ export const AdminDashboard: React.FC = () => {
                 </Breadcrumbs.Item>
               </Breadcrumbs>
 
-              <h2 className="text-2xl sm:text-3xl font-black text-[#292333] tracking-tight">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-[#292333] tracking-tight break-words">
                 {activeTab === 'OVERVIEW' && 'Dashboard Manajemen LPH UIN SGD'}
                 {activeTab === 'NEWS' && (postViewMode === 'EDITOR' ? (editingPostId ? 'Edit Artikel Berita' : 'Tulis Berita Baru dengan TinyMCE') : 'Manajemen Berita & Artikel')}
                 {activeTab === 'ANNOUNCEMENTS' && 'Pengumuman & Surat Edaran Resmi (PDF)'}
@@ -1437,7 +1537,7 @@ export const AdminDashboard: React.FC = () => {
                 <Button
                   variant="primary"
                   onPress={handleOpenNewPost}
-                  className="bg-[#6B18A8] text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center gap-1.5 shadow-md shadow-purple-950/20"
+                  className="w-full sm:w-auto bg-[#6B18A8] text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center justify-center gap-1.5 shadow-md shadow-purple-950/20 cursor-pointer"
                 >
                   <Plus className="w-4 h-4 text-[#F5D32F]" />
                   <span>Tulis Berita (TinyMCE)</span>
@@ -1447,7 +1547,7 @@ export const AdminDashboard: React.FC = () => {
                 <Button
                   variant="primary"
                   onPress={handleOpenNewAnnouncement}
-                  className="bg-[#6B18A8] text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center gap-1.5 shadow-md shadow-purple-950/20"
+                  className="w-full sm:w-auto bg-[#6B18A8] text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center justify-center gap-1.5 shadow-md shadow-purple-950/20 cursor-pointer"
                 >
                   <Plus className="w-4 h-4 text-[#F5D32F]" />
                   <span>Upload Surat Edaran (PDF)</span>
@@ -1457,7 +1557,7 @@ export const AdminDashboard: React.FC = () => {
                 <Button
                   variant="primary"
                   onPress={handleOpenNewGallery}
-                  className="bg-[#6B18A8] text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center gap-1.5 shadow-md shadow-purple-950/20"
+                  className="w-full sm:w-auto bg-[#6B18A8] text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center justify-center gap-1.5 shadow-md shadow-purple-950/20 cursor-pointer"
                 >
                   <Plus className="w-4 h-4 text-[#F5D32F]" />
                   <span>Upload Foto Galeri</span>
@@ -1467,7 +1567,7 @@ export const AdminDashboard: React.FC = () => {
                 <Button
                   variant="primary"
                   onPress={() => setModalType('ADD_KB')}
-                  className="bg-[#6B18A8] text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center gap-1.5 shadow-md shadow-purple-950/20"
+                  className="w-full sm:w-auto bg-[#6B18A8] text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center justify-center gap-1.5 shadow-md shadow-purple-950/20 cursor-pointer"
                 >
                   <Plus className="w-4 h-4 text-[#F5D32F]" />
                   <span>Tambah FAQ AI</span>
@@ -1703,7 +1803,7 @@ export const AdminDashboard: React.FC = () => {
 
                   {/* Table with Pagination */}
                   <Table variant="secondary" className="w-full">
-                    <Table.ScrollContainer>
+                    <Table.ScrollContainer className="w-full overflow-x-auto">
                       <Table.Content aria-label="Daftar Berita LPH">
                         <Table.Header>
                           <Table.Column isRowHeader>Judul Berita</Table.Column>
@@ -2094,7 +2194,7 @@ export const AdminDashboard: React.FC = () => {
 
               {/* Announcements Table */}
               <Table variant="secondary" className="w-full">
-                <Table.ScrollContainer>
+                <Table.ScrollContainer className="w-full overflow-x-auto">
                   <Table.Content aria-label="Daftar Pengumuman Resmi">
                     <Table.Header>
                       <Table.Column isRowHeader>Nama Dokumen / Surat Edaran</Table.Column>
@@ -2262,7 +2362,7 @@ export const AdminDashboard: React.FC = () => {
 
               {/* Gallery Table */}
               <Table variant="secondary" className="w-full">
-                <Table.ScrollContainer>
+                <Table.ScrollContainer className="w-full overflow-x-auto">
                   <Table.Content aria-label="Daftar Foto Galeri">
                     <Table.Header>
                       <Table.Column isRowHeader>Foto &amp; Judul Kegiatan</Table.Column>
@@ -2377,7 +2477,7 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               )}
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {mediaList.map((m) => (
                   <div
                     key={m.id}
@@ -2477,7 +2577,7 @@ export const AdminDashboard: React.FC = () => {
               </div>
 
               <Table variant="secondary" className="w-full">
-                <Table.ScrollContainer>
+                <Table.ScrollContainer className="w-full overflow-x-auto">
                   <Table.Content aria-label="Daftar Tiket Pengaduan">
                     <Table.Header>
                       <Table.Column isRowHeader>Kode Tiket</Table.Column>
@@ -2837,7 +2937,7 @@ export const AdminDashboard: React.FC = () => {
               </div>
 
               <Table variant="secondary" className="w-full">
-                <Table.ScrollContainer>
+                <Table.ScrollContainer className="w-full overflow-x-auto">
                   <Table.Content aria-label="Jejak Audit Aktivitas">
                     <Table.Header>
                       <Table.Column isRowHeader>ID Log</Table.Column>
@@ -2913,7 +3013,7 @@ export const AdminDashboard: React.FC = () => {
               </div>
 
               <Table variant="secondary" className="w-full">
-                <Table.ScrollContainer>
+                <Table.ScrollContainer className="w-full overflow-x-auto">
                   <Table.Content aria-label="Daftar Petugas LPH">
                     <Table.Header>
                       <Table.Column isRowHeader>Nama Lengkap</Table.Column>
@@ -2959,11 +3059,11 @@ export const AdminDashboard: React.FC = () => {
         onOpenChange={(open) => !open && setModalType(null)}
       >
         <Modal.Container placement="center">
-          <Modal.Dialog className="max-w-xl p-0 overflow-hidden rounded-3xl bg-white border border-[#C9A5E8]/40 shadow-2xl">
+          <Modal.Dialog className="w-[95vw] sm:max-w-xl max-h-[90vh] flex flex-col p-0 overflow-hidden rounded-3xl bg-white border border-[#C9A5E8]/40 shadow-2xl">
             <Modal.CloseTrigger />
-            <form onSubmit={handleSaveAnnouncement}>
-              <Modal.Header className="p-6 bg-gradient-to-r from-[#FAF7FD] to-white border-b border-[#C9A5E8]/30">
-                <Modal.Heading className="text-lg font-black text-[#292333] flex items-center gap-2">
+            <form onSubmit={handleSaveAnnouncement} className="flex flex-col max-h-[90vh]">
+              <Modal.Header className="p-4 sm:p-6 bg-gradient-to-r from-[#FAF7FD] to-white border-b border-[#C9A5E8]/30 shrink-0">
+                <Modal.Heading className="text-base sm:text-lg font-black text-[#292333] flex items-center gap-2">
                   <FileText className="w-5 h-5 text-[#6B18A8]" />
                   <span>
                     {editingAnnouncementId
@@ -2972,7 +3072,7 @@ export const AdminDashboard: React.FC = () => {
                   </span>
                 </Modal.Heading>
               </Modal.Header>
-              <Modal.Body className="p-6 space-y-4">
+              <Modal.Body className="p-4 sm:p-6 space-y-4 overflow-y-auto">
                 <div>
                   <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
                     Judul Pengumuman / Nomor Surat Edaran
@@ -3067,11 +3167,11 @@ export const AdminDashboard: React.FC = () => {
                   </label>
                 </div>
               </Modal.Body>
-              <Modal.Footer className="p-4 sm:p-6 bg-[#FAF7FD] border-t border-[#C9A5E8]/30 flex justify-end gap-2">
-                <Button variant="secondary" slot="close" className="text-xs font-bold rounded-xl px-4 py-2">
+              <Modal.Footer className="p-4 sm:p-6 bg-[#FAF7FD] border-t border-[#C9A5E8]/30 flex justify-end gap-2 shrink-0">
+                <Button variant="secondary" slot="close" className="text-xs font-bold rounded-xl px-4 py-2 cursor-pointer">
                   Batal
                 </Button>
-                <Button type="submit" variant="primary" className="bg-[#6B18A8] text-white text-xs font-bold rounded-xl px-5 py-2">
+                <Button type="submit" variant="primary" className="bg-[#6B18A8] text-white text-xs font-bold rounded-xl px-5 py-2 cursor-pointer">
                   {editingAnnouncementId ? 'Simpan Perubahan' : 'Terbitkan Pengumuman (PDF)'}
                 </Button>
               </Modal.Footer>
@@ -3086,11 +3186,11 @@ export const AdminDashboard: React.FC = () => {
         onOpenChange={(open) => !open && setModalType(null)}
       >
         <Modal.Container placement="center">
-          <Modal.Dialog className="max-w-xl p-0 overflow-hidden rounded-3xl bg-white border border-[#C9A5E8]/40 shadow-2xl">
+          <Modal.Dialog className="w-[95vw] sm:max-w-xl max-h-[90vh] flex flex-col p-0 overflow-hidden rounded-3xl bg-white border border-[#C9A5E8]/40 shadow-2xl">
             <Modal.CloseTrigger />
-            <form onSubmit={handleSaveGallery}>
-              <Modal.Header className="p-6 bg-gradient-to-r from-[#FAF7FD] to-white border-b border-[#C9A5E8]/30">
-                <Modal.Heading className="text-lg font-black text-[#292333] flex items-center gap-2">
+            <form onSubmit={handleSaveGallery} className="flex flex-col max-h-[90vh]">
+              <Modal.Header className="p-4 sm:p-6 bg-gradient-to-r from-[#FAF7FD] to-white border-b border-[#C9A5E8]/30 shrink-0">
+                <Modal.Heading className="text-base sm:text-lg font-black text-[#292333] flex items-center gap-2">
                   <ImageIcon className="w-5 h-5 text-[#6B18A8]" />
                   <span>
                     {editingGalleryId
@@ -3099,7 +3199,7 @@ export const AdminDashboard: React.FC = () => {
                   </span>
                 </Modal.Heading>
               </Modal.Header>
-              <Modal.Body className="p-6 space-y-4">
+              <Modal.Body className="p-4 sm:p-6 space-y-4 overflow-y-auto">
                 <div>
                   <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
                     Judul Dokumentasi Kegiatan
@@ -3112,7 +3212,7 @@ export const AdminDashboard: React.FC = () => {
                     className="w-full text-xs"
                   />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
                       Kategori Galeri
@@ -3148,7 +3248,7 @@ export const AdminDashboard: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
                       Auditor / Penanggung Jawab
@@ -3198,11 +3298,11 @@ export const AdminDashboard: React.FC = () => {
                   />
                 </div>
               </Modal.Body>
-              <Modal.Footer className="p-4 sm:p-6 bg-[#FAF7FD] border-t border-[#C9A5E8]/30 flex justify-end gap-2">
-                <Button variant="secondary" slot="close" className="text-xs font-bold rounded-xl px-4 py-2">
+              <Modal.Footer className="p-4 sm:p-6 bg-[#FAF7FD] border-t border-[#C9A5E8]/30 flex justify-end gap-2 shrink-0">
+                <Button variant="secondary" slot="close" className="text-xs font-bold rounded-xl px-4 py-2 cursor-pointer">
                   Batal
                 </Button>
-                <Button type="submit" variant="primary" className="bg-[#6B18A8] text-white text-xs font-bold rounded-xl px-5 py-2">
+                <Button type="submit" variant="primary" className="bg-[#6B18A8] text-white text-xs font-bold rounded-xl px-5 py-2 cursor-pointer">
                   {editingGalleryId ? 'Simpan Perubahan' : 'Simpan ke Galeri'}
                 </Button>
               </Modal.Footer>
@@ -3214,11 +3314,11 @@ export const AdminDashboard: React.FC = () => {
       {/* MODAL: RESPON TIKET PENGADUAN */}
       <Modal.Backdrop isOpen={modalType === 'EDIT_COMPLAINT'} onOpenChange={(open) => !open && setModalType(null)}>
         <Modal.Container placement="center">
-          <Modal.Dialog className="max-w-xl p-0 overflow-hidden rounded-3xl bg-white border border-[#C9A5E8]/40 shadow-2xl">
+          <Modal.Dialog className="w-[95vw] sm:max-w-xl max-h-[90vh] flex flex-col p-0 overflow-hidden rounded-3xl bg-white border border-[#C9A5E8]/40 shadow-2xl">
             <Modal.CloseTrigger />
             {selectedComplaint && (
-              <form onSubmit={handleSaveComplaintReply}>
-                <Modal.Header className="p-6 bg-gradient-to-r from-[#FAF7FD] to-white border-b border-[#C9A5E8]/30">
+              <form onSubmit={handleSaveComplaintReply} className="flex flex-col max-h-[90vh]">
+                <Modal.Header className="p-4 sm:p-6 bg-gradient-to-r from-[#FAF7FD] to-white border-b border-[#C9A5E8]/30 shrink-0">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="font-mono font-black text-sm text-[#6B18A8]">
                       {selectedComplaint.ticketCode}
@@ -3227,11 +3327,11 @@ export const AdminDashboard: React.FC = () => {
                       {selectedComplaint.category}
                     </Chip>
                   </div>
-                  <Modal.Heading className="text-lg font-black text-[#292333]">
+                  <Modal.Heading className="text-base sm:text-lg font-black text-[#292333]">
                     Tindak Lanjut &amp; Respon Pengaduan
                   </Modal.Heading>
                 </Modal.Header>
-                <Modal.Body className="p-6 space-y-4">
+                <Modal.Body className="p-4 sm:p-6 space-y-4 overflow-y-auto">
                   <div className="p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 space-y-1">
                     <div className="text-xs font-bold text-neutral-800">
                       Pelapor: {selectedComplaint.name} ({selectedComplaint.contact})
@@ -3270,11 +3370,11 @@ export const AdminDashboard: React.FC = () => {
                     />
                   </div>
                 </Modal.Body>
-                <Modal.Footer className="p-4 sm:p-6 bg-[#FAF7FD] border-t border-[#C9A5E8]/30 flex justify-end gap-2">
-                  <Button variant="secondary" slot="close" className="text-xs font-bold rounded-xl px-4 py-2">
+                <Modal.Footer className="p-4 sm:p-6 bg-[#FAF7FD] border-t border-[#C9A5E8]/30 flex justify-end gap-2 shrink-0">
+                  <Button variant="secondary" slot="close" className="text-xs font-bold rounded-xl px-4 py-2 cursor-pointer">
                     Batal
                   </Button>
-                  <Button type="submit" variant="primary" className="bg-[#6B18A8] text-white text-xs font-bold rounded-xl px-5 py-2">
+                  <Button type="submit" variant="primary" className="bg-[#6B18A8] text-white text-xs font-bold rounded-xl px-5 py-2 cursor-pointer">
                     Simpan &amp; Perbarui Tiket
                   </Button>
                 </Modal.Footer>
@@ -3287,15 +3387,15 @@ export const AdminDashboard: React.FC = () => {
       {/* MODAL: TAMBAH PENGETAHUAN CHATBOT (KB) */}
       <Modal.Backdrop isOpen={modalType === 'ADD_KB'} onOpenChange={(open) => !open && setModalType(null)}>
         <Modal.Container placement="center">
-          <Modal.Dialog className="max-w-xl p-0 overflow-hidden rounded-3xl bg-white border border-[#C9A5E8]/40 shadow-2xl">
+          <Modal.Dialog className="w-[95vw] sm:max-w-xl max-h-[90vh] flex flex-col p-0 overflow-hidden rounded-3xl bg-white border border-[#C9A5E8]/40 shadow-2xl">
             <Modal.CloseTrigger />
-            <form onSubmit={handleSaveKb}>
-              <Modal.Header className="p-6 bg-gradient-to-r from-[#FAF7FD] to-white border-b border-[#C9A5E8]/30">
-                <Modal.Heading className="text-lg font-black text-[#292333]">
+            <form onSubmit={handleSaveKb} className="flex flex-col max-h-[90vh]">
+              <Modal.Header className="p-4 sm:p-6 bg-gradient-to-r from-[#FAF7FD] to-white border-b border-[#C9A5E8]/30 shrink-0">
+                <Modal.Heading className="text-base sm:text-lg font-black text-[#292333]">
                   Tambah Pengetahuan AI Chatbot
                 </Modal.Heading>
               </Modal.Header>
-              <Modal.Body className="p-6 space-y-4">
+              <Modal.Body className="p-4 sm:p-6 space-y-4 overflow-y-auto">
                 <div>
                   <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
                     Pertanyaan yang Sering Diajukan
@@ -3333,11 +3433,11 @@ export const AdminDashboard: React.FC = () => {
                   />
                 </div>
               </Modal.Body>
-              <Modal.Footer className="p-4 sm:p-6 bg-[#FAF7FD] border-t border-[#C9A5E8]/30 flex justify-end gap-2">
-                <Button variant="secondary" slot="close" className="text-xs font-bold rounded-xl px-4 py-2">
+              <Modal.Footer className="p-4 sm:p-6 bg-[#FAF7FD] border-t border-[#C9A5E8]/30 flex justify-end gap-2 shrink-0">
+                <Button variant="secondary" slot="close" className="text-xs font-bold rounded-xl px-4 py-2 cursor-pointer">
                   Batal
                 </Button>
-                <Button type="submit" variant="primary" className="bg-[#6B18A8] text-white text-xs font-bold rounded-xl px-5 py-2">
+                <Button type="submit" variant="primary" className="bg-[#6B18A8] text-white text-xs font-bold rounded-xl px-5 py-2 cursor-pointer">
                   Simpan Pengetahuan
                 </Button>
               </Modal.Footer>
