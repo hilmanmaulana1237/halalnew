@@ -7,6 +7,7 @@ import { api } from '@/services/api';
 import type { CalculationResult } from '@/types';
 import { useLanguage } from '@/context/LanguageContext';
 import { SparklesCore } from '@/components/ui/sparkles';
+import { getRatesMatrix } from '@/services/ratesService';
 
 export const PriceCalculatorPage: React.FC = () => {
   const { language, t } = useLanguage();
@@ -32,22 +33,27 @@ export const PriceCalculatorPage: React.FC = () => {
         throw new Error('API offline');
       }
     } catch {
-      // Standard calculation matching BPJPH rates
-      const bpjphBase =
-        businessScale === 'MIKRO'
-          ? 300000
-          : businessScale === 'KECIL'
-          ? 2500000
-          : businessScale === 'MENENGAH'
-          ? 5000000
-          : 12500000;
-      const lphBase = Math.round(bpjphBase * 0.85);
-      const prodAddon = (productCount - 1) * 25000;
-      const ingrAddon = ingredientCount > 10 ? (ingredientCount - 10) * 15000 : 0;
+      // Dynamic calculation matching BPJPH & LPH rates configured in Admin Console
+      const rates = getRatesMatrix();
+      const scaleConfig = rates.baseRates[businessScale as keyof typeof rates.baseRates] || rates.baseRates.MIKRO;
+      const bpjphBase = scaleConfig.bpjph;
+      const lphBase = scaleConfig.lph;
+
+      const prodUnitBpjph = rates.productAddonPerItem?.bpjph ?? 25000;
+      const prodUnitLph = rates.productAddonPerItem?.lph ?? 20000;
+      const ingrThreshold = rates.ingredientAddonPerItem?.threshold ?? 10;
+      const ingrUnitBpjph = rates.ingredientAddonPerItem?.bpjph ?? 15000;
+      const ingrUnitLph = rates.ingredientAddonPerItem?.lph ?? 12000;
+
+      const prodAddon = (productCount - 1) * prodUnitBpjph;
+      const prodAddonLph = (productCount - 1) * prodUnitLph;
+      const ingrAddon = ingredientCount > ingrThreshold ? (ingredientCount - ingrThreshold) * ingrUnitBpjph : 0;
+      const ingrAddonLph = ingredientCount > ingrThreshold ? (ingredientCount - ingrThreshold) * ingrUnitLph : 0;
+
       const totalB = bpjphBase + prodAddon + ingrAddon;
-      const totalL = lphBase + Math.round(prodAddon * 0.8) + Math.round(ingrAddon * 0.8);
-      const savingsNominal = totalB - totalL;
-      const savingsPercent = Math.round((savingsNominal / totalB) * 100);
+      const totalL = lphBase + prodAddonLph + ingrAddonLph;
+      const savingsNominal = Math.max(0, totalB - totalL);
+      const savingsPercent = totalB > 0 ? Math.round((savingsNominal / totalB) * 100) : 0;
 
       const isEn = language === 'en';
 
@@ -79,12 +85,12 @@ export const PriceCalculatorPage: React.FC = () => {
               ? `Additional Product Variants (${productCount} items) & Ingredients (${ingredientCount} items)`
               : `Tambahan Varian Produk (${productCount} item) & Bahan (${ingredientCount} item)`,
             bpjph: prodAddon + ingrAddon,
-            lph: Math.round((prodAddon + ingrAddon) * 0.8),
+            lph: prodAddonLph + ingrAddonLph,
           },
         ],
         notes: isEn
-          ? 'Simulation based on BPJPH Official Regulation and LPH UIN SGD Bandung Service Standards.'
-          : 'Simulasi biaya didasarkan pada Keputusan Kepala BPJPH dan Standar Layanan LPH UIN SGD Bandung.',
+          ? 'Simulation based on BPJPH Official Regulation and LPH UIN SGD Bandung Service Standards (Configured via Admin Console).'
+          : 'Simulasi biaya didasarkan pada Keputusan Kepala BPJPH dan Standar Layanan LPH UIN SGD Bandung (Dikonfigurasi melalui Admin Console).',
       });
     } finally {
       setLoading(false);
@@ -93,6 +99,9 @@ export const PriceCalculatorPage: React.FC = () => {
 
   useEffect(() => {
     calculate();
+    const handleRatesUpdate = () => calculate();
+    window.addEventListener('lph-rates-updated', handleRatesUpdate);
+    return () => window.removeEventListener('lph-rates-updated', handleRatesUpdate);
   }, [serviceType, businessScale, productCount, ingredientCount, language]);
 
   const handleDownloadPDF = async () => {

@@ -9,6 +9,7 @@ import {
   Modal,
   Chip,
   Breadcrumbs,
+  Pagination,
 } from '@heroui/react';
 import {
   Newspaper,
@@ -49,10 +50,23 @@ import {
   Globe,
   Settings,
   Filter,
+  Database,
+  FileSpreadsheet,
+  Download,
+  Upload,
+  RotateCcw,
+  Scale,
+  Edit3,
+  Pin,
+  ArrowRight,
 } from 'lucide-react';
 import { api, formatDate, formatRupiah } from '@/services/api';
 import { cn } from '@/lib/utils';
 import type { NewsItem, AnnouncementItem, Complaint, SatisfactionSurvey, KnowledgeBaseItem } from '@/types';
+import { exportToExcel } from '@/lib/excelExport';
+import { RatesEditorTab } from '@/components/admin/RatesEditorTab';
+import { BackupManagerTab } from '@/components/admin/BackupManagerTab';
+import { getRatesMatrix } from '@/services/ratesService';
 
 // Lazy-load TinyMCE editor for performance & smooth Vite bundling
 const RichTextEditor = React.lazy(() => import('@/components/admin/RichTextEditor'));
@@ -67,6 +81,7 @@ type AdminTab =
   | 'RATES'
   | 'KB'
   | 'MEDIA'
+  | 'BACKUP'
   | 'AUDIT_LOG'
   | 'USERS';
 
@@ -104,7 +119,6 @@ export const AdminDashboard: React.FC = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<any>({ name: 'Administrator LPH UIN SGD', role: 'SUPER_ADMIN' });
   const [activeTab, setActiveTab] = useState<AdminTab>('OVERVIEW');
-  const [searchQuery, setSearchQuery] = useState('');
   const [copiedUrl, setCopiedUrl] = useState<string | null>(null);
 
   // Sub-view mode for Posts: 'LIST' or 'EDITOR'
@@ -112,60 +126,322 @@ export const AdminDashboard: React.FC = () => {
   const [editingPostId, setEditingPostId] = useState<number | null>(null);
 
   // -------------------------------------------------------------
-  // DATA STATES
+  // INITIAL DATA WITH LOCALSTORAGE PERSISTENCE
   // -------------------------------------------------------------
-  const [newsList, setNewsList] = useState<NewsItem[]>([
-    {
-      id: 1,
-      title: 'Akselerasi Audit Sertifikasi Halal: LPH UIN SGD Perluas Jangkauan Industri Jawa Barat',
-      slug: 'akselerasi-audit-sertifikasi-halal-lph-uin-sgd',
-      category: 'KEGIATAN',
-      status: 'PUBLISHED',
-      publishedAt: '2026-11-04',
-      excerpt: 'LPH UIN Sunan Gunung Djati Bandung memperkuat kapasitas auditor halal dan laboratorium terpadu.',
-      content: `<h2>Akselerasi Audit Sertifikasi Halal di Jawa Barat</h2>
+  const [newsList, setNewsList] = useState<NewsItem[]>(() => {
+    try {
+      const raw = localStorage.getItem('lph_news_list');
+      if (raw) return JSON.parse(raw);
+    } catch {}
+    return [
+      {
+        id: 1,
+        title: 'Akselerasi Audit Sertifikasi Halal: LPH UIN SGD Perluas Jangkauan Industri Jawa Barat',
+        slug: 'akselerasi-audit-sertifikasi-halal-lph-uin-sgd',
+        category: 'KEGIATAN',
+        status: 'PUBLISHED',
+        publishedAt: '2026-11-04',
+        excerpt: 'LPH UIN Sunan Gunung Djati Bandung memperkuat kapasitas auditor halal dan laboratorium terpadu.',
+        content: `<h2>Akselerasi Audit Sertifikasi Halal di Jawa Barat</h2>
 <p>Lembaga Pemeriksa Halal (LPH) UIN Sunan Gunung Djati Bandung terus memperluas kapasitas audit halal bagi pelaku industri menengah dan besar di kawasan industri Jawa Barat.</p>
 <blockquote>Komitmen kami adalah memastikan setiap produk yang diaudit memenuhi standar syar'i dan regulasi KMA 784 secara transparan dan akuntabel.</blockquote>
 <p>Dalam kurun waktu kuartal terakhir tahun 2026, lebih dari <strong>450 fasilitas manufaktur</strong> telah menyelesaikan audit lapangan dan uji laboratorium DNA qPCR dengan waktu rata-rata 12 hari kerja.</p>`,
-      image: '/assets/images/beranda_004.jpg',
-    },
-    {
-      id: 2,
-      title: 'Kerjasama Internasional: Ekosistem Halalsphere University Menuju Kancah Global',
-      slug: 'kerjasama-internasional-ekosistem-halalsphere',
-      category: 'ACARA',
-      status: 'PUBLISHED',
-      publishedAt: '2026-11-03',
-      excerpt: 'Penandatanganan kemitraan strategis dengan konsorsium riset halal global.',
-      content: `<h2>Penguatan Ekosistem Halalsphere Global</h2>
+        image: '/assets/images/beranda_004.jpg',
+      },
+      {
+        id: 2,
+        title: 'Kerjasama Internasional: Ekosistem Halalsphere University Menuju Kancah Global',
+        slug: 'kerjasama-internasional-ekosistem-halalsphere',
+        category: 'ACARA',
+        status: 'PUBLISHED',
+        publishedAt: '2026-11-03',
+        excerpt: 'Penandatanganan kemitraan strategis dengan konsorsium riset halal global.',
+        content: `<h2>Penguatan Ekosistem Halalsphere Global</h2>
 <p>UIN Sunan Gunung Djati Bandung resmi menandatangani nota kesepahaman (MoU) internasional untuk pengembangan riset halal biosains dan standarisasi pengujian laboratorium halal.</p>
 <p>Kerjasama ini mencakup pertukaran saintis, validasi metode ekstraksi DNA porcine, dan harmonisasi sertifikasi produk ekspor.</p>`,
-      image: '/assets/images/uin_sgd/uin_14.webp',
-    },
-    {
-      id: 3,
-      title: 'Kewajiban Sertifikasi Halal Bertahap bagi Pelaku Usaha Makanan dan Minuman',
-      slug: 'kewajiban-sertifikasi-halal-bertahap-makanan-minuman',
-      category: 'AGENDA',
-      status: 'PUBLISHED',
-      publishedAt: '2026-11-02',
-      excerpt: 'Panduan teknis dan simulasi biaya KMA 784 bagi UMKM se-Jawa Barat.',
-      content: `<h2>Panduan Wajib Halal Bertahap 2026</h2>
+        image: '/assets/images/uin_sgd/uin_14.webp',
+      },
+      {
+        id: 3,
+        title: 'Kewajiban Sertifikasi Halal Bertahap bagi Pelaku Usaha Makanan dan Minuman',
+        slug: 'kewajiban-sertifikasi-halal-bertahap-makanan-minuman',
+        category: 'AGENDA',
+        status: 'PUBLISHED',
+        publishedAt: '2026-11-02',
+        excerpt: 'Panduan teknis dan simulasi biaya KMA 784 bagi UMKM se-Jawa Barat.',
+        content: `<h2>Panduan Wajib Halal Bertahap 2026</h2>
 <p>Menjelang tenggat implementasi regulasi wajib halal, LPH UIN SGD menyelenggarakan rangkaian sosialisasi daring dan luring bagi asosiasi kuliner dan pelaku usaha pangan kemasan.</p>`,
-      image: '/assets/images/pemeriksaaan-kehalalan-produk.jpg',
-    },
-    {
-      id: 4,
-      title: 'Pelatihan Juru Sembelih Halal (JULEHA) Profesional Berbasis SKKNI Angkatan VIII',
-      slug: 'pelatihan-juru-sembelih-halal-juleha-skkni',
-      category: 'KEGIATAN',
-      status: 'DRAFT',
-      publishedAt: '2026-11-01',
-      excerpt: 'Bimbingan teknis dan uji kompetensi resmi BNSP bagi 120 juru sembelih masjid dan RPH.',
-      content: `<h2>Pelatihan & Sertifikasi Kompetensi JULEHA</h2>
+        image: '/assets/images/pemeriksaaan-kehalalan-produk.jpg',
+      },
+      {
+        id: 4,
+        title: 'Pelatihan Juru Sembelih Halal (JULEHA) Profesional Berbasis SKKNI Angkatan VIII',
+        slug: 'pelatihan-juru-sembelih-halal-juleha-skkni',
+        category: 'KEGIATAN',
+        status: 'DRAFT',
+        publishedAt: '2026-11-01',
+        excerpt: 'Bimbingan teknis dan uji kompetensi resmi BNSP bagi 120 juru sembelih masjid dan RPH.',
+        content: `<h2>Pelatihan & Sertifikasi Kompetensi JULEHA</h2>
 <p>LPJPH UIN SGD bersama BNSP menggelar uji kompetensi profesi juru sembelih halal untuk memastikan kesesuaian syar'i dan prinsip animal welfare.</p>`,
-      image: '/assets/images/img_013.jpg',
-    },
+        image: '/assets/images/img_013.jpg',
+      },
+    ];
+  });
+
+  const [announcements, setAnnouncements] = useState<AnnouncementItem[]>(() => {
+    try {
+      const raw = localStorage.getItem('lph_announcements_cache');
+      if (raw) return JSON.parse(raw);
+    } catch {}
+    return [
+      {
+        id: 1,
+        title: 'Surat Keputusan Penetapan Tarif Pelayanan Pemeriksaan Halal LPH UIN SGD Tahun 2026',
+        slug: 'sk-tarif-pelayanan-halal-2026',
+        fileName: 'SK_Tarif_Halal_UIN_SGD_2026.pdf',
+        fileUrl: '/assets/docs/sk_tarif_2026.pdf',
+        fileSize: '1.4 MB',
+        isPinned: true,
+        status: 'PUBLISHED',
+        publishedAt: '2026-11-01',
+        content: 'Keputusan resmi penetapan rincian tarif audit lapangan dan pengujian laboratorium terakreditasi.',
+      },
+      {
+        id: 2,
+        title: 'Jadwal Audit Lapangan dan Pelaksanaan Sidang Fatwa Halal Periode November 2026',
+        slug: 'jadwal-audit-sidang-fatwa-nov-2026',
+        fileName: 'Jadwal_Audit_Sidang_Fatwa_Nov2026.pdf',
+        fileUrl: '/assets/docs/jadwal_audit_nov2026.pdf',
+        fileSize: '820 KB',
+        isPinned: false,
+        status: 'PUBLISHED',
+        publishedAt: '2026-10-28',
+        content: 'Pemberitahuan slot waktu verifikasi lapangan bagi pelaku usaha reguler yang telah tervalidasi.',
+      },
+      {
+        id: 3,
+        title: 'Surat Edaran BPJPH No. 2 Tahun 2026 tentang Integrasi Layanan SIHALAL dan Uji qPCR',
+        slug: 'edaran-bpjph-integrasi-sihalal-qpcr',
+        fileName: 'SE_BPJPH_Integrasi_qPCR_2026.pdf',
+        fileUrl: '/assets/docs/edaran_bpjph_qpcr_2026.pdf',
+        fileSize: '2.1 MB',
+        isPinned: false,
+        status: 'PUBLISHED',
+        publishedAt: '2026-10-20',
+        content: 'Instruksi wajib lampiran hasil uji laboratorium terakreditasi KAN untuk matriks bahan kritis hewani.',
+      },
+    ];
+  });
+
+  const [galleryList, setGalleryList] = useState<AdminGalleryItem[]>(() => {
+    try {
+      const raw = localStorage.getItem('lph_gallery_list');
+      if (raw) return JSON.parse(raw);
+    } catch {}
+    return [
+      {
+        id: 1,
+        title: 'Audit Fasilitas Pabrik Pengolahan Pangan & Minuman Berkecepatan Tinggi',
+        category: 'Audit Lapangan',
+        src: '/assets/images/pemeriksaaan-kehalalan-produk.jpg',
+        date: '15 Oktober 2026',
+        location: 'Kawasan Industri MM2100, Cikarang',
+        auditorLead: 'Drs. H. Ahmad Fauzi, M.Si',
+        facility: 'PT Indofood CBP Sukses Makmur Tbk',
+        standard: 'KMA 784 / SNI 99001:2016',
+        fullStory: 'Pemeriksaan langsung terhadap lini produksi pemrosesan makanan kemasan berkecepatan tinggi.',
+      },
+      {
+        id: 2,
+        title: 'Deteksi Saintifik Real-Time PCR DNA Porcine Sensitivitas Tinggi',
+        category: 'Laboratorium ISO 17025',
+        src: '/assets/images/lab-dna-testing.jpg',
+        date: '22 Oktober 2026',
+        location: 'Laboratorium Terpadu Kampus 2 UIN SGD',
+        auditorLead: 'Dr. Tri Cahyanto, M.Si',
+        facility: 'Laboratorium Uji Halal Kampus 2',
+        standard: 'ISO/IEC 17025:2017 LP-1542-IDN',
+        fullStory: 'Pengujian molekuler presisi tinggi menggunakan primer qPCR spesifik gen sitokrom b.',
+      },
+      {
+        id: 3,
+        title: 'Pelatihan & Sertifikasi Juru Sembelih Halal (JULEHA) Angkatan VIII',
+        category: 'Pelatihan & JULEHA',
+        src: '/assets/images/img_013.jpg',
+        date: '02 November 2026',
+        location: 'Auditorium Anwar Musaddad UIN SGD',
+        auditorLead: 'Prof. Dr. H. Rosihon Anwar, M.Ag',
+        facility: 'LPJPH Halal Center UIN SGD',
+        standard: 'SKKNI No. 147 Tahun 2022',
+        fullStory: 'Pemberian materi anatomi leher hewan ternak, fiqih dzabh, dan uji kompetensi BNSP.',
+      },
+      {
+        id: 4,
+        title: 'Monitoring & Kunjungan Kerja Akselerasi Layanan Bersama Pimpinan BPJPH',
+        category: 'Kunjungan & MoA',
+        src: '/assets/images/uin_sgd/uin_14.webp',
+        date: '08 November 2026',
+        location: 'Gedung Halal Center Kampus 1 UIN SGD',
+        auditorLead: 'Pimpinan BPJPH Kemenag RI',
+        facility: 'Pusat Riset Halal UIN SGD',
+        standard: 'PP No. 39 Tahun 2021',
+        fullStory: 'Evaluasi kesiapan sarana laboratorium dan integrasi platform digital SIHALAL.',
+      },
+    ];
+  });
+
+  const [complaints, setComplaints] = useState<Complaint[]>(() => {
+    try {
+      const raw = localStorage.getItem('lph_complaints_list');
+      if (raw) return JSON.parse(raw);
+    } catch {}
+    return [
+      {
+        id: 1,
+        ticketCode: 'TKT-829104',
+        name: 'Pelapor Anonim (Pelaku Usaha)',
+        contact: '081298412xxx',
+        contactType: 'WHATSAPP',
+        category: 'PELAYANAN',
+        description: 'Konfirmasi dokumen bahan tambahan pangan pada akun SIHALAL belum terverifikasi oleh petugas.',
+        status: 'IN_PROGRESS',
+        adminReply: 'Petugas verifikator sedang memeriksa kecukupan sertifikat halal pemasok bahan tambahan pangan.',
+        submittedAt: '2026-11-09T08:30:00Z',
+      },
+      {
+        id: 2,
+        ticketCode: 'TKT-412098',
+        name: 'Koperasi UMK Priangan Halal',
+        contact: 'koperasi.priangan@gmail.com',
+        contactType: 'EMAIL',
+        category: 'AUDIT',
+        description: 'Permohonan penjadwalan ulang audit lapangan karena renovasi fasilitas higienis rumah produksi.',
+        status: 'RESOLVED',
+        adminReply: 'Jadwal audit telah disesuaikan menjadi tanggal 18 November 2026 bersama Tim Auditor 2.',
+        submittedAt: '2026-11-06T14:15:00Z',
+      },
+      {
+        id: 3,
+        ticketCode: 'TKT-993210',
+        name: 'PT Cahaya Rasa Nusantara',
+        contact: 'quality@cahayarasa.co.id',
+        contactType: 'EMAIL',
+        category: 'TARIF_KMA',
+        description: 'Pertanyaan rincian biaya penambahan 3 sampel uji laboratorium GC-FID untuk produk minuman fermentasi.',
+        status: 'RECEIVED',
+        adminReply: '',
+        submittedAt: '2026-11-10T10:00:00Z',
+      },
+    ];
+  });
+
+  const [surveys, setSurveys] = useState<SatisfactionSurvey[]>(() => {
+    try {
+      const raw = localStorage.getItem('lph_surveys_list');
+      if (raw) return JSON.parse(raw);
+    } catch {}
+    return [
+      {
+        id: 1,
+        name: 'CV Berkah Pangan Mandiri',
+        contact: '081321980xxx',
+        serviceUsed: 'Pemeriksaan Halal Reguler Pabrik',
+        rating: 5,
+        speedRating: 5,
+        friendlinessRating: 5,
+        clarityRating: 5,
+        facilityRating: 5,
+        comment: 'Pelayanan auditor sangat profesional, komunikatif, dan transparan dalam verifikasi dokumen bahan baku.',
+        submittedAt: '2026-11-08',
+      },
+      {
+        id: 2,
+        name: 'Restoran Sambal Pasundan',
+        contact: 'resto.pasundan@yahoo.com',
+        serviceUsed: 'Sertifikasi Halal Restoran & Dapur',
+        rating: 5,
+        speedRating: 4,
+        friendlinessRating: 5,
+        clarityRating: 5,
+        facilityRating: 4,
+        comment: 'Proses pemeriksaan tepat waktu sesuai SLA dan panduan perbaikan bahan pengganti sangat solutif.',
+        submittedAt: '2026-11-07',
+      },
+      {
+        id: 3,
+        name: 'Laboratorium Farmasi Al-Shifa',
+        contact: '085721099xxx',
+        serviceUsed: 'Uji Laboratorium DNA qPCR & Spektro',
+        rating: 5,
+        speedRating: 5,
+        friendlinessRating: 5,
+        clarityRating: 5,
+        facilityRating: 5,
+        comment: 'Hasil uji lab qPCR keluar cepat dengan sertifikat hasil uji berstandar akreditasi KAN ISO 17025.',
+        submittedAt: '2026-11-05',
+      },
+    ];
+  });
+
+  const [knowledgeBase, setKnowledgeBase] = useState<KnowledgeBaseItem[]>(() => {
+    try {
+      const raw = localStorage.getItem('lph_kb_list');
+      if (raw) return JSON.parse(raw);
+    } catch {}
+    return [
+      {
+        id: 1,
+        question: 'Bagaimana alur pendaftaran sertifikasi halal reguler di LPH UIN SGD?',
+        answer: 'Pelaku usaha login ke ptsp.halal.go.id (SIHALAL), unggah berkas NIB dan manual SJPH, lalu pilih Lembaga Pemeriksa Halal LPH-018-ID (UIN Sunan Gunung Djati Bandung).',
+        tags: 'prosedur, sihalal, alur',
+        isActive: true,
+      },
+      {
+        id: 2,
+        question: 'Berapa lama standar SLA pemeriksaan halal di LPH UIN SGD?',
+        answer: 'Sesuai regulasi BPJPH, pemeriksaan dokumen dan audit lapangan diselesaikan dalam waktu maksimal 15 hari kerja sejak verifikasi kelayakan permohonan disetujui.',
+        tags: 'waktu, sla, regulasi',
+        isActive: true,
+      },
+      {
+        id: 3,
+        question: 'Apakah pengujian laboratorium DNA babi (qPCR) wajib untuk seluruh produk?',
+        answer: 'Tidak semua produk wajib uji lab. Pengujian saintifik qPCR dan GC-FID hanya dipersyaratkan untuk bahan baku yang berisiko tinggi (kritis) seperti olahan daging, gelatin, kolagen, dan perisa fermentasi.',
+        tags: 'laboratorium, qpcr, dna',
+        isActive: true,
+      },
+    ];
+  });
+
+  const [auditLogs, setAuditLogs] = useState<AuditLogItem[]>(() => {
+    try {
+      const raw = localStorage.getItem('lph_audit_logs');
+      if (raw) return JSON.parse(raw);
+    } catch {}
+    return [
+      { id: 'LOG-01', user: 'Administrator', action: 'Memperbarui respon tiket', target: 'TKT-829104', time: '10 menit yang lalu', type: 'UPDATE' },
+      { id: 'LOG-02', user: 'Administrator', action: 'Menerbitkan berita baru dengan TinyMCE', target: 'Akselerasi Audit Sertifikasi Halal', time: '45 menit yang lalu', type: 'CREATE' },
+      { id: 'LOG-03', user: 'Admin Layanan', action: 'Mengunggah dokumentasi galeri baru', target: 'Pengujian Saintifik qPCR DNA', time: '2 jam yang lalu', type: 'CREATE' },
+      { id: 'LOG-04', user: 'Administrator', action: 'Login berhasil ke Admin Console', target: 'Sesi Web IP 10.12.4.1', time: '3 jam yang lalu', type: 'LOGIN' },
+    ];
+  });
+
+  const [mediaList] = useState<MediaItem[]>([
+    { id: 1, name: 'pemeriksaaan-kehalalan-produk.jpg', src: '/assets/images/pemeriksaaan-kehalalan-produk.jpg', category: 'Audit', size: '185 KB' },
+    { id: 2, name: 'lab-dna-testing.jpg', src: '/assets/images/lab-dna-testing.jpg', category: 'Laboratorium', size: '240 KB' },
+    { id: 3, name: 'img_011.jpg', src: '/assets/images/img_011.jpg', category: 'Sembelihan RPH', size: '190 KB' },
+    { id: 4, name: 'img_013.jpg', src: '/assets/images/img_013.jpg', category: 'Pelatihan JULEHA', size: '310 KB' },
+    { id: 5, name: 'lab-landscape-1.jpg', src: '/assets/images/lab-landscape-1.jpg', category: 'GC-FID Lab', size: '220 KB' },
+    { id: 6, name: 'director_rosihon.webp', src: '/assets/images/uin_sgd/director_rosihon.webp', category: 'Pimpinan', size: '63 KB' },
+    { id: 7, name: 'director_tri.webp', src: '/assets/images/uin_sgd/director_tri.webp', category: 'Pimpinan', size: '145 KB' },
+    { id: 8, name: 'beranda_004.jpg', src: '/assets/images/beranda_004.jpg', category: 'Pabrik Kemasan', size: '305 KB' },
+  ]);
+
+  const [usersList] = useState([
+    { id: 1, name: 'Prof. Dr. H. Rosihon Anwar, M.Ag', role: 'SUPER_ADMIN', email: 'rektor@uinsgd.ac.id', status: 'AKTIF', lastLogin: 'Hari ini, 09:20' },
+    { id: 2, name: 'Dr. Tri Cahyanto, M.Si', role: 'DIREKTUR_LPH', email: 'tri.cahyanto@uinsgd.ac.id', status: 'AKTIF', lastLogin: 'Kemarin, 14:15' },
+    { id: 3, name: 'Drs. H. Ahmad Fauzi, M.Si', role: 'AUDITOR_LEAD', email: 'ahmad.fauzi@uinsgd.ac.id', status: 'AKTIF', lastLogin: '09 Nov 2026' },
+    { id: 4, name: 'Administrator Portal LPH', role: 'OPERATOR_CMS', email: 'admin@lph-uinsgd.ac.id', status: 'AKTIF', lastLogin: 'Baru saja' },
   ]);
 
   // Form state for TinyMCE Post Editor
@@ -182,237 +458,64 @@ export const AdminDashboard: React.FC = () => {
     metaDescription: '',
   });
 
-  const [announcements, setAnnouncements] = useState<AnnouncementItem[]>([
-    {
-      id: 1,
-      title: 'Surat Keputusan Penetapan Tarif Pelayanan Pemeriksaan Halal LPH UIN SGD Tahun 2026',
-      slug: 'sk-tarif-pelayanan-halal-2026',
-      fileName: 'SK_Tarif_Halal_UIN_SGD_2026.pdf',
-      fileSize: '1.4 MB',
-      isPinned: true,
-      status: 'PUBLISHED',
-      publishedAt: '2026-11-01',
-      content: 'Keputusan resmi penetapan rincian tarif audit lapangan dan pengujian laboratorium terakreditasi.',
-    },
-    {
-      id: 2,
-      title: 'Jadwal Audit Lapangan dan Pelaksanaan Sidang Fatwa Halal Periode November 2026',
-      slug: 'jadwal-audit-sidang-fatwa-nov-2026',
-      fileName: 'Jadwal_Audit_Sidang_Fatwa_Nov2026.pdf',
-      fileSize: '820 KB',
-      isPinned: false,
-      status: 'PUBLISHED',
-      publishedAt: '2026-10-28',
-      content: 'Pemberitahuan slot waktu verifikasi lapangan bagi pelaku usaha reguler yang telah tervalidasi.',
-    },
-    {
-      id: 3,
-      title: 'Surat Edaran BPJPH No. 2 Tahun 2026 tentang Integrasi Layanan SIHALAL dan Uji qPCR',
-      slug: 'edaran-bpjph-integrasi-sihalal-qpcr',
-      fileName: 'SE_BPJPH_Integrasi_qPCR_2026.pdf',
-      fileSize: '2.1 MB',
-      isPinned: false,
-      status: 'PUBLISHED',
-      publishedAt: '2026-10-20',
-      content: 'Instruksi wajib lampiran hasil uji laboratorium terakreditasi KAN untuk matriks bahan kritis hewani.',
-    },
-  ]);
+  // -------------------------------------------------------------
+  // PAGINATION & FILTER STATES
+  // -------------------------------------------------------------
+  // News
+  const [newsSearch, setNewsSearch] = useState('');
+  const [newsCategory, setNewsCategory] = useState('ALL');
+  const [newsStatus, setNewsStatus] = useState('ALL');
+  const [newsPage, setNewsPage] = useState(1);
+  const newsPerPage = 5;
 
-  const [galleryList, setGalleryList] = useState<AdminGalleryItem[]>([
-    {
-      id: 1,
-      title: 'Audit Fasilitas Pabrik Pengolahan Pangan & Minuman Berkecepatan Tinggi',
-      category: 'Audit Lapangan',
-      src: '/assets/images/pemeriksaaan-kehalalan-produk.jpg',
-      date: '15 Oktober 2026',
-      location: 'Kawasan Industri MM2100, Cikarang',
-      auditorLead: 'Drs. H. Ahmad Fauzi, M.Si',
-      facility: 'PT Indofood CBP Sukses Makmur Tbk',
-      standard: 'KMA 784 / SNI 99001:2016',
-      fullStory: 'Pemeriksaan langsung terhadap lini produksi pemrosesan makanan kemasan berkecepatan tinggi.',
-    },
-    {
-      id: 2,
-      title: 'Deteksi Saintifik Real-Time PCR DNA Porcine Sensitivitas Tinggi',
-      category: 'Laboratorium ISO 17025',
-      src: '/assets/images/lab-dna-testing.jpg',
-      date: '22 Oktober 2026',
-      location: 'Laboratorium Terpadu Kampus 2 UIN SGD',
-      auditorLead: 'Dr. Tri Cahyanto, M.Si',
-      facility: 'Laboratorium Uji Halal Kampus 2',
-      standard: 'ISO/IEC 17025:2017 LP-1542-IDN',
-      fullStory: 'Pengujian molekuler presisi tinggi menggunakan primer qPCR spesifik gen sitokrom b.',
-    },
-    {
-      id: 3,
-      title: 'Pelatihan & Sertifikasi Juru Sembelih Halal (JULEHA) Angkatan VIII',
-      category: 'Pelatihan & JULEHA',
-      src: '/assets/images/img_013.jpg',
-      date: '02 November 2026',
-      location: 'Auditorium Anwar Musaddad UIN SGD',
-      auditorLead: 'Prof. Dr. H. Rosihon Anwar, M.Ag',
-      facility: 'LPJPH Halal Center UIN SGD',
-      standard: 'SKKNI No. 147 Tahun 2022',
-      fullStory: 'Pemberian materi anatomi leher hewan ternak, fiqih dzabh, dan uji kompetensi BNSP.',
-    },
-    {
-      id: 4,
-      title: 'Monitoring & Kunjungan Kerja Akselerasi Layanan Bersama Pimpinan BPJPH',
-      category: 'Kunjungan & MoA',
-      src: '/assets/images/uin_sgd/uin_14.webp',
-      date: '08 November 2026',
-      location: 'Gedung Halal Center Kampus 1 UIN SGD',
-      auditorLead: 'Pimpinan BPJPH Kemenag RI',
-      facility: 'Pusat Riset Halal UIN SGD',
-      standard: 'PP No. 39 Tahun 2021',
-      fullStory: 'Evaluasi kesiapan sarana laboratorium dan integrasi platform digital SIHALAL.',
-    },
-  ]);
+  // Announcements
+  const [announcementSearch, setAnnouncementSearch] = useState('');
+  const [announcementStatus, setAnnouncementStatus] = useState('ALL');
+  const [announcementPage, setAnnouncementPage] = useState(1);
+  const announcementPerPage = 5;
 
-  const [complaints, setComplaints] = useState<Complaint[]>([
-    {
-      id: 1,
-      ticketCode: 'TKT-829104',
-      name: 'Pelapor Anonim (Pelaku Usaha)',
-      contact: '081298412xxx',
-      contactType: 'WHATSAPP',
-      category: 'PELAYANAN',
-      description: 'Konfirmasi dokumen bahan tambahan pangan pada akun SIHALAL belum terverifikasi oleh petugas.',
-      status: 'IN_PROGRESS',
-      adminReply: 'Petugas verifikator sedang memeriksa kecukupan sertifikat halal pemasok bahan tambahan pangan.',
-      submittedAt: '2026-11-09T08:30:00Z',
-    },
-    {
-      id: 2,
-      ticketCode: 'TKT-412098',
-      name: 'Koperasi UMK Priangan Halal',
-      contact: 'koperasi.priangan@gmail.com',
-      contactType: 'EMAIL',
-      category: 'AUDIT',
-      description: 'Permohonan penjadwalan ulang audit lapangan karena renovasi fasilitas higienis rumah produksi.',
-      status: 'RESOLVED',
-      adminReply: 'Jadwal audit telah disesuaikan menjadi tanggal 18 November 2026 bersama Tim Auditor 2.',
-      submittedAt: '2026-11-06T14:15:00Z',
-    },
-    {
-      id: 3,
-      ticketCode: 'TKT-993210',
-      name: 'PT Cahaya Rasa Nusantara',
-      contact: 'quality@cahayarasa.co.id',
-      contactType: 'EMAIL',
-      category: 'TARIF_KMA',
-      description: 'Pertanyaan rincian biaya penambahan 3 sampel uji laboratorium GC-FID untuk produk minuman fermentasi.',
-      status: 'RECEIVED',
-      adminReply: '',
-      submittedAt: '2026-11-10T10:00:00Z',
-    },
-  ]);
+  // Gallery
+  const [gallerySearch, setGallerySearch] = useState('');
+  const [galleryCategory, setGalleryCategory] = useState('ALL');
+  const [galleryPage, setGalleryPage] = useState(1);
+  const galleryPerPage = 6;
 
-  const [surveys, setSurveys] = useState<SatisfactionSurvey[]>([
-    {
-      id: 1,
-      name: 'CV Berkah Pangan Mandiri',
-      contact: '081321980xxx',
-      serviceUsed: 'Pemeriksaan Halal Reguler Pabrik',
-      rating: 5,
-      speedRating: 5,
-      friendlinessRating: 5,
-      clarityRating: 5,
-      facilityRating: 5,
-      comment: 'Pelayanan auditor sangat profesional, komunikatif, dan transparan dalam verifikasi dokumen bahan baku.',
-      submittedAt: '2026-11-08',
-    },
-    {
-      id: 2,
-      name: 'Restoran Sambal Pasundan',
-      contact: 'resto.pasundan@yahoo.com',
-      serviceUsed: 'Sertifikasi Halal Restoran & Dapur',
-      rating: 5,
-      speedRating: 4,
-      friendlinessRating: 5,
-      clarityRating: 5,
-      facilityRating: 4,
-      comment: 'Proses pemeriksaan tepat waktu sesuai SLA dan panduan perbaikan bahan pengganti sangat solutif.',
-      submittedAt: '2026-11-07',
-    },
-    {
-      id: 3,
-      name: 'Laboratorium Farmasi Al-Shifa',
-      contact: '085721099xxx',
-      serviceUsed: 'Uji Laboratorium DNA qPCR & Spektro',
-      rating: 5,
-      speedRating: 5,
-      friendlinessRating: 5,
-      clarityRating: 5,
-      facilityRating: 5,
-      comment: 'Hasil uji lab qPCR keluar cepat dengan sertifikat hasil uji berstandar akreditasi KAN ISO 17025.',
-      submittedAt: '2026-11-05',
-    },
-  ]);
+  // Complaints
+  const [complaintSearch, setComplaintSearch] = useState('');
+  const [complaintStatus, setComplaintStatus] = useState('ALL');
+  const [complaintPage, setComplaintPage] = useState(1);
+  const complaintPerPage = 5;
 
-  const [knowledgeBase, setKnowledgeBase] = useState<KnowledgeBaseItem[]>([
-    {
-      id: 1,
-      question: 'Bagaimana alur pendaftaran sertifikasi halal reguler di LPH UIN SGD?',
-      answer: 'Pelaku usaha login ke ptsp.halal.go.id (SIHALAL), unggah berkas NIB dan manual SJPH, lalu pilih Lembaga Pemeriksa Halal LPH-018-ID (UIN Sunan Gunung Djati Bandung).',
-      tags: 'prosedur, sihalal, alur',
-      isActive: true,
-    },
-    {
-      id: 2,
-      question: 'Berapa lama standar SLA pemeriksaan halal di LPH UIN SGD?',
-      answer: 'Sesuai regulasi BPJPH, pemeriksaan dokumen dan audit lapangan diselesaikan dalam waktu maksimal 15 hari kerja sejak verifikasi kelayakan permohonan disetujui.',
-      tags: 'waktu, sla, regulasi',
-      isActive: true,
-    },
-    {
-      id: 3,
-      question: 'Apakah pengujian laboratorium DNA babi (qPCR) wajib untuk seluruh produk?',
-      answer: 'Tidak semua produk wajib uji lab. Pengujian saintifik qPCR dan GC-FID hanya dipersyaratkan untuk bahan baku yang berisiko tinggi (kritis) seperti olahan daging, gelatin, kolagen, dan perisa fermentasi.',
-      tags: 'laboratorium, qpcr, dna',
-      isActive: true,
-    },
-  ]);
+  // Surveys
+  const [surveySearch, setSurveySearch] = useState('');
+  const [surveyRating, setSurveyRating] = useState('ALL');
+  const [surveyPage, setSurveyPage] = useState(1);
+  const surveyPerPage = 5;
 
-  const [mediaList] = useState<MediaItem[]>([
-    { id: 1, name: 'pemeriksaaan-kehalalan-produk.jpg', src: '/assets/images/pemeriksaaan-kehalalan-produk.jpg', category: 'Audit', size: '185 KB' },
-    { id: 2, name: 'lab-dna-testing.jpg', src: '/assets/images/lab-dna-testing.jpg', category: 'Laboratorium', size: '240 KB' },
-    { id: 3, name: 'img_011.jpg', src: '/assets/images/img_011.jpg', category: 'Sembelihan RPH', size: '190 KB' },
-    { id: 4, name: 'img_013.jpg', src: '/assets/images/img_013.jpg', category: 'Pelatihan JULEHA', size: '310 KB' },
-    { id: 5, name: 'lab-landscape-1.jpg', src: '/assets/images/lab-landscape-1.jpg', category: 'GC-FID Lab', size: '220 KB' },
-    { id: 6, name: 'director_rosihon.webp', src: '/assets/images/uin_sgd/director_rosihon.webp', category: 'Pimpinan', size: '63 KB' },
-    { id: 7, name: 'director_tri.webp', src: '/assets/images/uin_sgd/director_tri.webp', category: 'Pimpinan', size: '145 KB' },
-    { id: 8, name: 'beranda_004.jpg', src: '/assets/images/beranda_004.jpg', category: 'Pabrik Kemasan', size: '305 KB' },
-  ]);
-
-  const [auditLogs, setAuditLogs] = useState<AuditLogItem[]>([
-    { id: 'LOG-01', user: 'Administrator', action: 'Memperbarui respon tiket', target: 'TKT-829104', time: '10 menit yang lalu', type: 'UPDATE' },
-    { id: 'LOG-02', user: 'Administrator', action: 'Menerbitkan berita baru dengan TinyMCE', target: 'Akselerasi Audit Sertifikasi Halal', time: '45 menit yang lalu', type: 'CREATE' },
-    { id: 'LOG-03', user: 'Admin Layanan', action: 'Mengunggah dokumentasi galeri baru', target: 'Pengujian Saintifik qPCR DNA', time: '2 jam yang lalu', type: 'CREATE' },
-    { id: 'LOG-04', user: 'Administrator', action: 'Login berhasil ke Admin Console', target: 'Sesi Web IP 10.12.4.1', time: '3 jam yang lalu', type: 'LOGIN' },
-  ]);
-
-  const [usersList] = useState([
-    { id: 1, name: 'Prof. Dr. H. Rosihon Anwar, M.Ag', role: 'SUPER_ADMIN', email: 'rektor@uinsgd.ac.id', status: 'AKTIF', lastLogin: 'Hari ini, 09:20' },
-    { id: 2, name: 'Dr. Tri Cahyanto, M.Si', role: 'DIREKTUR_LPH', email: 'tri.cahyanto@uinsgd.ac.id', status: 'AKTIF', lastLogin: 'Kemarin, 14:15' },
-    { id: 3, name: 'Drs. H. Ahmad Fauzi, M.Si', role: 'AUDITOR_LEAD', email: 'ahmad.fauzi@uinsgd.ac.id', status: 'AKTIF', lastLogin: '09 Nov 2026' },
-    { id: 4, name: 'Administrator Portal LPH', role: 'OPERATOR_CMS', email: 'admin@lph-uinsgd.ac.id', status: 'AKTIF', lastLogin: 'Baru saja' },
-  ]);
+  // Audit Logs
+  const [auditLogSearch, setAuditLogSearch] = useState('');
+  const [auditLogType, setAuditLogType] = useState('ALL');
+  const [auditLogPage, setAuditLogPage] = useState(1);
+  const auditLogPerPage = 6;
 
   // -------------------------------------------------------------
-  // MODAL STATES
+  // EDIT & MODAL STATES
   // -------------------------------------------------------------
   const [modalType, setModalType] = useState<
-    'ADD_ANNOUNCEMENT' | 'ADD_GALLERY' | 'EDIT_COMPLAINT' | 'ADD_KB' | null
+    'ADD_ANNOUNCEMENT' | 'EDIT_ANNOUNCEMENT' | 'ADD_GALLERY' | 'EDIT_GALLERY' | 'EDIT_COMPLAINT' | 'ADD_KB' | null
   >(null);
 
+  const [editingAnnouncementId, setEditingAnnouncementId] = useState<number | null>(null);
   const [announcementForm, setAnnouncementForm] = useState({
     title: '',
     fileName: '',
+    fileSize: '',
+    fileUrl: '',
     content: '',
     isPinned: false,
   });
 
+  const [editingGalleryId, setEditingGalleryId] = useState<number | null>(null);
   const [galleryForm, setGalleryForm] = useState({
     title: '',
     category: 'Audit Lapangan',
@@ -435,8 +538,27 @@ export const AdminDashboard: React.FC = () => {
   });
 
   // -------------------------------------------------------------
-  // AUTH CHECK
+  // HELPER: AUDIT LOG CREATION & STORAGE
   // -------------------------------------------------------------
+  const addAuditLog = (action: string, target: string, type: 'CREATE' | 'UPDATE' | 'DELETE' | 'LOGIN' = 'UPDATE') => {
+    const newLog: AuditLogItem = {
+      id: `LOG-${Date.now()}`,
+      user: user.name || 'Administrator',
+      action,
+      target,
+      time: 'Baru saja',
+      type,
+    };
+    setAuditLogs((prev) => {
+      const updated = [newLog, ...prev];
+      try {
+        localStorage.setItem('lph_audit_logs', JSON.stringify(updated.slice(0, 50)));
+      } catch {}
+      return updated;
+    });
+  };
+
+  // Auth check
   useEffect(() => {
     const storedUser = localStorage.getItem('lph_admin_user');
     const token = localStorage.getItem('lph_admin_token');
@@ -460,7 +582,7 @@ export const AdminDashboard: React.FC = () => {
   };
 
   // -------------------------------------------------------------
-  // POST EDITOR ACTIONS (TINYMCE)
+  // POST ACTIONS (TINYMCE)
   // -------------------------------------------------------------
   const handleOpenNewPost = () => {
     setEditingPostId(null);
@@ -501,42 +623,30 @@ export const AdminDashboard: React.FC = () => {
       alert('Judul berita tidak boleh kosong!');
       return;
     }
-
     const currentStatus = forcedStatus || postForm.status;
 
     if (editingPostId) {
-      // Update existing post
-      setNewsList(
-        newsList.map((p) =>
-          p.id === editingPostId
-            ? {
-                ...p,
-                title: postForm.title,
-                slug: postForm.slug || postForm.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-                category: postForm.category,
-                status: currentStatus,
-                publishedAt: postForm.publishedAt,
-                excerpt: postForm.excerpt,
-                content: postForm.content,
-                image: postForm.image,
-              }
-            : p
-        )
+      const updated = newsList.map((p) =>
+        p.id === editingPostId
+          ? {
+              ...p,
+              title: postForm.title,
+              slug: postForm.slug || postForm.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+              category: postForm.category,
+              status: currentStatus,
+              publishedAt: postForm.publishedAt,
+              excerpt: postForm.excerpt,
+              content: postForm.content,
+              image: postForm.image,
+            }
+          : p
       );
-
-      setAuditLogs([
-        {
-          id: `LOG-${Date.now()}`,
-          user: user.name,
-          action: 'Memperbarui artikel berita (TinyMCE)',
-          target: postForm.title,
-          time: 'Baru saja',
-          type: 'UPDATE',
-        },
-        ...auditLogs,
-      ]);
+      setNewsList(updated);
+      try {
+        localStorage.setItem('lph_news_list', JSON.stringify(updated));
+      } catch {}
+      addAuditLog('Memperbarui artikel berita (TinyMCE)', postForm.title, 'UPDATE');
     } else {
-      // Create new post
       const newPost: NewsItem = {
         id: Date.now(),
         title: postForm.title,
@@ -548,87 +658,141 @@ export const AdminDashboard: React.FC = () => {
         content: postForm.content,
         image: postForm.image,
       };
-
-      setNewsList([newPost, ...newsList]);
-
-      setAuditLogs([
-        {
-          id: `LOG-${Date.now()}`,
-          user: user.name,
-          action: 'Menerbitkan berita baru (TinyMCE)',
-          target: postForm.title,
-          time: 'Baru saja',
-          type: 'CREATE',
-        },
-        ...auditLogs,
-      ]);
+      const updated = [newPost, ...newsList];
+      setNewsList(updated);
+      try {
+        localStorage.setItem('lph_news_list', JSON.stringify(updated));
+      } catch {}
+      addAuditLog('Menerbitkan berita baru (TinyMCE)', postForm.title, 'CREATE');
     }
-
     setPostViewMode('LIST');
   };
 
   const handleDeleteNews = (id: number) => {
     if (window.confirm('Yakin ingin menghapus berita ini?')) {
       const targetPost = newsList.find((n) => n.id === id);
-      setNewsList(newsList.filter((n) => n.id !== id));
+      const updated = newsList.filter((n) => n.id !== id);
+      setNewsList(updated);
+      try {
+        localStorage.setItem('lph_news_list', JSON.stringify(updated));
+      } catch {}
       if (targetPost) {
-        setAuditLogs([
-          {
-            id: `LOG-${Date.now()}`,
-            user: user.name,
-            action: 'Menghapus artikel berita',
-            target: targetPost.title,
-            time: 'Baru saja',
-            type: 'DELETE',
-          },
-          ...auditLogs,
-        ]);
+        addAuditLog('Menghapus artikel berita', targetPost.title, 'DELETE');
       }
     }
   };
 
   // -------------------------------------------------------------
-  // OTHER CRUD ACTIONS
+  // ANNOUNCEMENT ACTIONS (PDF UPLOAD + EDIT)
   // -------------------------------------------------------------
+  const handlePdfFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.name.toLowerCase().endsWith('.pdf') && file.type !== 'application/pdf') {
+      alert('Harap unggah berkas resmi berformat PDF (.pdf)');
+      return;
+    }
+    const sizeMB = (file.size / (1024 * 1024)).toFixed(1);
+    const sizeStr = file.size > 1024 * 1024 ? `${sizeMB} MB` : `${Math.round(file.size / 1024)} KB`;
+    const blobUrl = URL.createObjectURL(file);
+    setAnnouncementForm((prev) => ({
+      ...prev,
+      fileName: file.name,
+      fileSize: sizeStr,
+      fileUrl: blobUrl,
+    }));
+  };
+
+  const handleOpenNewAnnouncement = () => {
+    setEditingAnnouncementId(null);
+    setAnnouncementForm({
+      title: '',
+      fileName: '',
+      fileSize: '',
+      fileUrl: '',
+      content: '',
+      isPinned: false,
+    });
+    setModalType('ADD_ANNOUNCEMENT');
+  };
+
+  const handleOpenEditAnnouncement = (ann: AnnouncementItem) => {
+    setEditingAnnouncementId(ann.id);
+    setAnnouncementForm({
+      title: ann.title,
+      fileName: ann.fileName || '',
+      fileSize: ann.fileSize || '',
+      fileUrl: ann.fileUrl || (ann.fileName ? `/assets/docs/${ann.fileName}` : ''),
+      content: ann.content,
+      isPinned: ann.isPinned,
+    });
+    setModalType('EDIT_ANNOUNCEMENT');
+  };
+
   const handleSaveAnnouncement = (e: React.FormEvent) => {
     e.preventDefault();
-    const newAnn: AnnouncementItem = {
-      id: Date.now(),
-      title: announcementForm.title,
-      slug: announcementForm.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-      fileName: announcementForm.fileName || 'Surat_Edaran_Resmi_2026.pdf',
-      fileSize: '1.2 MB',
-      isPinned: announcementForm.isPinned,
-      status: 'PUBLISHED',
-      publishedAt: new Date().toISOString().split('T')[0],
-      content: announcementForm.content,
-    };
-    setAnnouncements([newAnn, ...announcements]);
-    setAnnouncementForm({ title: '', fileName: '', content: '', isPinned: false });
+    if (editingAnnouncementId) {
+      const updated = announcements.map((a) =>
+        a.id === editingAnnouncementId
+          ? {
+              ...a,
+              title: announcementForm.title,
+              fileName: announcementForm.fileName || 'Surat_Edaran_2026.pdf',
+              fileSize: announcementForm.fileSize || '1.2 MB',
+              fileUrl: announcementForm.fileUrl,
+              content: announcementForm.content,
+              isPinned: announcementForm.isPinned,
+            }
+          : a
+      );
+      setAnnouncements(updated);
+      try {
+        localStorage.setItem('lph_announcements_cache', JSON.stringify(updated));
+      } catch {}
+      addAuditLog('Memperbarui surat edaran & dokumen PDF', announcementForm.title, 'UPDATE');
+    } else {
+      const newAnn: AnnouncementItem = {
+        id: Date.now(),
+        title: announcementForm.title,
+        slug: announcementForm.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        fileName: announcementForm.fileName || 'Surat_Edaran_Resmi_2026.pdf',
+        fileSize: announcementForm.fileSize || '1.2 MB',
+        fileUrl: announcementForm.fileUrl || '/assets/docs/sk_tarif_2026.pdf',
+        isPinned: announcementForm.isPinned,
+        status: 'PUBLISHED',
+        publishedAt: new Date().toISOString().split('T')[0],
+        content: announcementForm.content,
+      };
+      const updated = [newAnn, ...announcements];
+      setAnnouncements(updated);
+      try {
+        localStorage.setItem('lph_announcements_cache', JSON.stringify(updated));
+      } catch {}
+      addAuditLog('Menerbitkan pengumuman resmi baru dengan PDF', announcementForm.title, 'CREATE');
+    }
+    setEditingAnnouncementId(null);
     setModalType(null);
   };
 
   const handleDeleteAnnouncement = (id: number) => {
     if (window.confirm('Hapus pengumuman ini?')) {
-      setAnnouncements(announcements.filter((a) => a.id !== id));
+      const target = announcements.find((a) => a.id === id);
+      const updated = announcements.filter((a) => a.id !== id);
+      setAnnouncements(updated);
+      try {
+        localStorage.setItem('lph_announcements_cache', JSON.stringify(updated));
+      } catch {}
+      if (target) {
+        addAuditLog('Menghapus pengumuman resmi', target.title, 'DELETE');
+      }
     }
   };
 
-  const handleSaveGallery = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newPhoto: AdminGalleryItem = {
-      id: Date.now(),
-      title: galleryForm.title,
-      category: galleryForm.category,
-      src: galleryForm.src,
-      date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
-      location: galleryForm.location || 'Fasilitas Terverifikasi',
-      auditorLead: galleryForm.auditorLead || 'Tim Auditor Halal LPH UIN SGD',
-      facility: galleryForm.facility || 'Sentra Produksi Pangan Halal',
-      standard: galleryForm.standard,
-      fullStory: galleryForm.fullStory,
-    };
-    setGalleryList([newPhoto, ...galleryList]);
+  // -------------------------------------------------------------
+  // GALLERY ACTIONS (EDIT & ADD)
+  // -------------------------------------------------------------
+  const handleOpenNewGallery = () => {
+    setEditingGalleryId(null);
     setGalleryForm({
       title: '',
       category: 'Audit Lapangan',
@@ -639,15 +803,88 @@ export const AdminDashboard: React.FC = () => {
       fullStory: '',
       src: '/assets/images/beranda_004.jpg',
     });
+    setModalType('ADD_GALLERY');
+  };
+
+  const handleOpenEditGallery = (item: AdminGalleryItem) => {
+    setEditingGalleryId(item.id);
+    setGalleryForm({
+      title: item.title,
+      category: item.category,
+      location: item.location,
+      facility: item.facility,
+      auditorLead: item.auditorLead,
+      standard: item.standard,
+      fullStory: item.fullStory,
+      src: item.src,
+    });
+    setModalType('EDIT_GALLERY');
+  };
+
+  const handleSaveGallery = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (editingGalleryId) {
+      const updated = galleryList.map((g) =>
+        g.id === editingGalleryId
+          ? {
+              ...g,
+              title: galleryForm.title,
+              category: galleryForm.category,
+              location: galleryForm.location,
+              facility: galleryForm.facility,
+              auditorLead: galleryForm.auditorLead,
+              standard: galleryForm.standard,
+              fullStory: galleryForm.fullStory,
+              src: galleryForm.src,
+            }
+          : g
+      );
+      setGalleryList(updated);
+      try {
+        localStorage.setItem('lph_gallery_list', JSON.stringify(updated));
+      } catch {}
+      addAuditLog('Memperbarui foto dokumentasi kegiatan galeri', galleryForm.title, 'UPDATE');
+    } else {
+      const newPhoto: AdminGalleryItem = {
+        id: Date.now(),
+        title: galleryForm.title,
+        category: galleryForm.category,
+        src: galleryForm.src,
+        date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+        location: galleryForm.location || 'Fasilitas Terverifikasi',
+        auditorLead: galleryForm.auditorLead || 'Tim Auditor Halal LPH UIN SGD',
+        facility: galleryForm.facility || 'Sentra Produksi Pangan Halal',
+        standard: galleryForm.standard,
+        fullStory: galleryForm.fullStory,
+      };
+      const updated = [newPhoto, ...galleryList];
+      setGalleryList(updated);
+      try {
+        localStorage.setItem('lph_gallery_list', JSON.stringify(updated));
+      } catch {}
+      addAuditLog('Menambahkan foto galeri kegiatan baru', galleryForm.title, 'CREATE');
+    }
+    setEditingGalleryId(null);
     setModalType(null);
   };
 
   const handleDeleteGallery = (id: number) => {
     if (window.confirm('Hapus foto kegiatan ini dari galeri?')) {
-      setGalleryList(galleryList.filter((g) => g.id !== id));
+      const target = galleryList.find((g) => g.id === id);
+      const updated = galleryList.filter((g) => g.id !== id);
+      setGalleryList(updated);
+      try {
+        localStorage.setItem('lph_gallery_list', JSON.stringify(updated));
+      } catch {}
+      if (target) {
+        addAuditLog('Menghapus foto galeri', target.title, 'DELETE');
+      }
     }
   };
 
+  // -------------------------------------------------------------
+  // COMPLAINT & KB ACTIONS
+  // -------------------------------------------------------------
   const handleOpenComplaintModal = (comp: Complaint) => {
     setSelectedComplaint(comp);
     setComplaintReplyText(comp.adminReply || '');
@@ -658,13 +895,16 @@ export const AdminDashboard: React.FC = () => {
   const handleSaveComplaintReply = (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedComplaint) return;
-    setComplaints(
-      complaints.map((c) =>
-        c.id === selectedComplaint.id
-          ? { ...c, status: complaintStatusInput, adminReply: complaintReplyText }
-          : c
-      )
+    const updated = complaints.map((c) =>
+      c.id === selectedComplaint.id
+        ? { ...c, status: complaintStatusInput, adminReply: complaintReplyText }
+        : c
     );
+    setComplaints(updated);
+    try {
+      localStorage.setItem('lph_complaints_list', JSON.stringify(updated));
+    } catch {}
+    addAuditLog('Menjawab respon tiket pengaduan', selectedComplaint.ticketCode, 'UPDATE');
     setModalType(null);
     setSelectedComplaint(null);
   };
@@ -678,14 +918,27 @@ export const AdminDashboard: React.FC = () => {
       tags: kbForm.tags,
       isActive: true,
     };
-    setKnowledgeBase([newKb, ...knowledgeBase]);
+    const updated = [newKb, ...knowledgeBase];
+    setKnowledgeBase(updated);
+    try {
+      localStorage.setItem('lph_kb_list', JSON.stringify(updated));
+    } catch {}
+    addAuditLog('Menambahkan entri FAQ chatbot baru', kbForm.question, 'CREATE');
     setKbForm({ question: '', answer: '', tags: '' });
     setModalType(null);
   };
 
   const handleDeleteKb = (id: number) => {
     if (window.confirm('Hapus tanya jawab ini?')) {
-      setKnowledgeBase(knowledgeBase.filter((k) => k.id !== id));
+      const target = knowledgeBase.find((k) => k.id !== id);
+      const updated = knowledgeBase.filter((k) => k.id !== id);
+      setKnowledgeBase(updated);
+      try {
+        localStorage.setItem('lph_kb_list', JSON.stringify(updated));
+      } catch {}
+      if (target) {
+        addAuditLog('Menghapus entri FAQ chatbot', target.question, 'DELETE');
+      }
     }
   };
 
@@ -695,40 +948,315 @@ export const AdminDashboard: React.FC = () => {
     setTimeout(() => setCopiedUrl(null), 2000);
   };
 
+  // Restore database callback
+  const handleRestoreData = (restored: any) => {
+    if (restored.newsList) {
+      setNewsList(restored.newsList);
+      localStorage.setItem('lph_news_list', JSON.stringify(restored.newsList));
+    }
+    if (restored.announcements) {
+      setAnnouncements(restored.announcements);
+      localStorage.setItem('lph_announcements_cache', JSON.stringify(restored.announcements));
+    }
+    if (restored.galleryList) {
+      setGalleryList(restored.galleryList);
+      localStorage.setItem('lph_gallery_list', JSON.stringify(restored.galleryList));
+    }
+    if (restored.complaints) {
+      setComplaints(restored.complaints);
+      localStorage.setItem('lph_complaints_list', JSON.stringify(restored.complaints));
+    }
+    if (restored.surveys) {
+      setSurveys(restored.surveys);
+      localStorage.setItem('lph_surveys_list', JSON.stringify(restored.surveys));
+    }
+    if (restored.knowledgeBase) {
+      setKnowledgeBase(restored.knowledgeBase);
+      localStorage.setItem('lph_kb_list', JSON.stringify(restored.knowledgeBase));
+    }
+  };
+
+  // -------------------------------------------------------------
+  // FILTERED DATA & PAGINATION COMPUTATIONS
+  // -------------------------------------------------------------
+  // News Filter & Pagination
+  const filteredNews = useMemo(() => {
+    return newsList.filter((n) => {
+      const matchSearch = !newsSearch || n.title.toLowerCase().includes(newsSearch.toLowerCase()) || (n.excerpt && n.excerpt.toLowerCase().includes(newsSearch.toLowerCase()));
+      const matchCat = newsCategory === 'ALL' || n.category === newsCategory;
+      const matchStat = newsStatus === 'ALL' || n.status === newsStatus;
+      return matchSearch && matchCat && matchStat;
+    });
+  }, [newsList, newsSearch, newsCategory, newsStatus]);
+
+  const newsTotalPages = Math.max(1, Math.ceil(filteredNews.length / newsPerPage));
+  const paginatedNews = useMemo(() => {
+    const start = (newsPage - 1) * newsPerPage;
+    return filteredNews.slice(start, start + newsPerPage);
+  }, [filteredNews, newsPage]);
+
+  // Announcements Filter & Pagination
+  const filteredAnnouncements = useMemo(() => {
+    return announcements.filter((a) => {
+      const matchSearch = !announcementSearch || a.title.toLowerCase().includes(announcementSearch.toLowerCase()) || (a.content && a.content.toLowerCase().includes(announcementSearch.toLowerCase()));
+      const matchStat = announcementStatus === 'ALL' || (announcementStatus === 'PINNED' ? a.isPinned : !a.isPinned);
+      return matchSearch && matchStat;
+    });
+  }, [announcements, announcementSearch, announcementStatus]);
+
+  const announcementTotalPages = Math.max(1, Math.ceil(filteredAnnouncements.length / announcementPerPage));
+  const paginatedAnnouncements = useMemo(() => {
+    const start = (announcementPage - 1) * announcementPerPage;
+    return filteredAnnouncements.slice(start, start + announcementPerPage);
+  }, [filteredAnnouncements, announcementPage]);
+
+  // Gallery Filter & Pagination
+  const filteredGallery = useMemo(() => {
+    return galleryList.filter((g) => {
+      const matchSearch = !gallerySearch || g.title.toLowerCase().includes(gallerySearch.toLowerCase()) || g.location.toLowerCase().includes(gallerySearch.toLowerCase()) || g.auditorLead.toLowerCase().includes(gallerySearch.toLowerCase());
+      const matchCat = galleryCategory === 'ALL' || g.category === galleryCategory;
+      return matchSearch && matchCat;
+    });
+  }, [galleryList, gallerySearch, galleryCategory]);
+
+  const galleryTotalPages = Math.max(1, Math.ceil(filteredGallery.length / galleryPerPage));
+  const paginatedGallery = useMemo(() => {
+    const start = (galleryPage - 1) * galleryPerPage;
+    return filteredGallery.slice(start, start + galleryPerPage);
+  }, [filteredGallery, galleryPage]);
+
+  // Complaints Filter & Pagination
+  const filteredComplaints = useMemo(() => {
+    return complaints.filter((c) => {
+      const matchSearch = !complaintSearch || c.ticketCode.toLowerCase().includes(complaintSearch.toLowerCase()) || c.name.toLowerCase().includes(complaintSearch.toLowerCase()) || c.description.toLowerCase().includes(complaintSearch.toLowerCase());
+      const matchStat = complaintStatus === 'ALL' || c.status === complaintStatus;
+      return matchSearch && matchStat;
+    });
+  }, [complaints, complaintSearch, complaintStatus]);
+
+  const complaintTotalPages = Math.max(1, Math.ceil(filteredComplaints.length / complaintPerPage));
+  const paginatedComplaints = useMemo(() => {
+    const start = (complaintPage - 1) * complaintPerPage;
+    return filteredComplaints.slice(start, start + complaintPerPage);
+  }, [filteredComplaints, complaintPage]);
+
+  // Surveys Filter & Pagination
+  const filteredSurveys = useMemo(() => {
+    return surveys.filter((s) => {
+      const matchSearch = !surveySearch || (s.name && s.name.toLowerCase().includes(surveySearch.toLowerCase())) || (s.comment && s.comment.toLowerCase().includes(surveySearch.toLowerCase()));
+      const matchRating = surveyRating === 'ALL' || String(s.rating) === surveyRating;
+      return matchSearch && matchRating;
+    });
+  }, [surveys, surveySearch, surveyRating]);
+
+  const surveyTotalPages = Math.max(1, Math.ceil(filteredSurveys.length / surveyPerPage));
+  const paginatedSurveys = useMemo(() => {
+    const start = (surveyPage - 1) * surveyPerPage;
+    return filteredSurveys.slice(start, start + surveyPerPage);
+  }, [filteredSurveys, surveyPage]);
+
+  // Audit Logs Filter & Pagination
+  const filteredAuditLogs = useMemo(() => {
+    return auditLogs.filter((l) => {
+      const matchSearch = !auditLogSearch || l.action.toLowerCase().includes(auditLogSearch.toLowerCase()) || l.target.toLowerCase().includes(auditLogSearch.toLowerCase()) || l.user.toLowerCase().includes(auditLogSearch.toLowerCase());
+      const matchType = auditLogType === 'ALL' || l.type === auditLogType;
+      return matchSearch && matchType;
+    });
+  }, [auditLogs, auditLogSearch, auditLogType]);
+
+  const auditLogTotalPages = Math.max(1, Math.ceil(filteredAuditLogs.length / auditLogPerPage));
+  const paginatedAuditLogs = useMemo(() => {
+    const start = (auditLogPage - 1) * auditLogPerPage;
+    return filteredAuditLogs.slice(start, start + auditLogPerPage);
+  }, [filteredAuditLogs, auditLogPage]);
+
+  // -------------------------------------------------------------
+  // EXCEL EXPORT HANDLERS
+  // -------------------------------------------------------------
+  const handleExportNewsExcel = () => {
+    const rows = filteredNews.map((n) => ({
+      ID: n.id,
+      'Judul Artikel': n.title,
+      Kategori: n.category,
+      Status: n.status,
+      'Tanggal Terbit': n.publishedAt || '-',
+      Slug: n.slug,
+      Ringkasan: n.excerpt || '',
+    }));
+    exportToExcel(rows, 'Daftar_Berita_Artikel_LPH_UIN_SGD', 'Berita & Artikel');
+    addAuditLog('Export daftar berita ke Excel (.xlsx)', 'Semua Data Berita', 'UPDATE');
+  };
+
+  const handleExportAnnouncementsExcel = () => {
+    const rows = filteredAnnouncements.map((a) => ({
+      ID: a.id,
+      'Judul Surat Edaran': a.title,
+      'Nama Berkas PDF': a.fileName || '-',
+      'Ukuran Berkas': a.fileSize || '-',
+      Disematkan: a.isPinned ? 'Ya' : 'Tidak',
+      'Tanggal Rilis': a.publishedAt || '-',
+      Uraian: a.content,
+    }));
+    exportToExcel(rows, 'Daftar_Pengumuman_Resmi_LPH_UIN_SGD', 'Surat Edaran');
+    addAuditLog('Export pengumuman resmi ke Excel (.xlsx)', 'Semua Pengumuman', 'UPDATE');
+  };
+
+  const handleExportGalleryExcel = () => {
+    const rows = filteredGallery.map((g) => ({
+      ID: g.id,
+      'Judul Kegiatan': g.title,
+      Kategori: g.category,
+      Tanggal: g.date,
+      Lokasi: g.location,
+      'Auditor Lead': g.auditorLead,
+      Fasilitas: g.facility,
+      'Standar Regulasi': g.standard,
+      'Konteks Lengkap': g.fullStory,
+    }));
+    exportToExcel(rows, 'Dokumentasi_Galeri_Kegiatan_LPH', 'Galeri Kegiatan');
+    addAuditLog('Export galeri kegiatan ke Excel (.xlsx)', 'Semua Foto Galeri', 'UPDATE');
+  };
+
+  const handleExportComplaintsExcel = () => {
+    const rows = filteredComplaints.map((c) => ({
+      'Kode Tiket': c.ticketCode,
+      'Nama Pelapor': c.name,
+      Kontak: c.contact,
+      'Media Kontak': c.contactType,
+      Kategori: c.category,
+      'Status Tiket': c.status,
+      'Uraian Pengaduan': c.description,
+      'Respon Petugas LPH': c.adminReply || '-',
+      'Waktu Masuk': c.submittedAt ? formatDate(c.submittedAt) : '-',
+    }));
+    exportToExcel(rows, 'Laporan_Pengaduan_Masyarakat_LPH', 'Pengaduan');
+    addAuditLog('Export tiket pengaduan ke Excel (.xlsx)', 'Semua Tiket', 'UPDATE');
+  };
+
+  const handleExportSurveysExcel = () => {
+    const rows = filteredSurveys.map((s) => ({
+      ID: s.id,
+      'Pelaku Usaha / Responden': s.name || 'Anonim',
+      'Layanan Digunakan': s.serviceUsed,
+      'Rating Keseluruhan': s.rating,
+      'Kecepatan Pelayanan': s.speedRating,
+      'Keramahan Petugas': s.friendlinessRating,
+      'Kejelasan Informasi': s.clarityRating,
+      'Fasilitas Laboratorium': s.facilityRating,
+      'Kritik & Saran': s.comment || '-',
+      'Tanggal Pengisian': s.submittedAt || '-',
+    }));
+    exportToExcel(rows, 'Hasil_Survei_Kepuasan_IKM_LPH', 'Survei IKM');
+    addAuditLog('Export survei kepuasan IKM ke Excel (.xlsx)', 'Semua Data Survei', 'UPDATE');
+  };
+
+  const handleExportAuditLogsExcel = () => {
+    const rows = filteredAuditLogs.map((l) => ({
+      'ID Log': l.id,
+      Petugas: l.user,
+      Aktivitas: l.action,
+      Target: l.target,
+      Waktu: l.time,
+      Tipe: l.type,
+    }));
+    exportToExcel(rows, 'Riwayat_Log_Aktivitas_LPH_UIN_SGD', 'Audit Trail');
+  };
+
+  // Helper Pagination Renderer
+  const renderPaginationControls = (
+    currentPage: number,
+    totalPages: number,
+    totalItems: number,
+    itemLabel: string,
+    onPageChange: (p: number) => void
+  ) => {
+    if (totalPages <= 1) return null;
+    return (
+      <div className="pt-4 border-t border-neutral-100">
+        <Pagination className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 p-3 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30">
+          <Pagination.Summary className="text-xs text-neutral-600 font-semibold">
+            Halaman {currentPage} dari {totalPages} ({totalItems} total {itemLabel})
+          </Pagination.Summary>
+          <Pagination.Content className="flex items-center gap-1.5 flex-wrap justify-center">
+            <Pagination.Item>
+              <Pagination.Previous
+                onPress={() => onPageChange(Math.max(1, currentPage - 1))}
+                isDisabled={currentPage === 1}
+                className="cursor-pointer px-3 py-1.5 text-xs font-bold rounded-xl border border-neutral-200 bg-white hover:bg-[#FAF7FD] hover:text-[#6B18A8] disabled:opacity-40"
+              >
+                Sebelumnya
+              </Pagination.Previous>
+            </Pagination.Item>
+            {Array.from({ length: totalPages }).map((_, idx) => {
+              const pageNum = idx + 1;
+              return (
+                <Pagination.Item key={pageNum}>
+                  <Pagination.Link
+                    isActive={currentPage === pageNum}
+                    onPress={() => onPageChange(pageNum)}
+                    className={`cursor-pointer w-8 h-8 flex items-center justify-center text-xs font-bold rounded-xl transition-all ${
+                      currentPage === pageNum
+                        ? 'bg-[#6B18A8] text-white font-black shadow-xs'
+                        : 'bg-white border border-neutral-200 text-neutral-700 hover:bg-[#FAF7FD]'
+                    }`}
+                  >
+                    {pageNum}
+                  </Pagination.Link>
+                </Pagination.Item>
+              );
+            })}
+            <Pagination.Item>
+              <Pagination.Next
+                onPress={() => onPageChange(Math.min(totalPages, currentPage + 1))}
+                isDisabled={currentPage === totalPages}
+                className="cursor-pointer px-3 py-1.5 text-xs font-bold rounded-xl border border-neutral-200 bg-white hover:bg-[#FAF7FD] hover:text-[#6B18A8] disabled:opacity-40"
+              >
+                Selanjutnya
+              </Pagination.Next>
+            </Pagination.Item>
+          </Pagination.Content>
+        </Pagination>
+      </div>
+    );
+  };
+
+  const pendingComplaintsCount = complaints.filter((c) => c.status === 'RECEIVED').length;
+
   return (
     <div className="min-h-screen bg-[#F8F6FB] flex flex-col md:flex-row text-[#292333]">
       {/* -------------------------------------------------------------
-          SIDEBAR NAVIGATION (HeroUI Design Tokens & Brand Palette)
+          SIDEBAR NAVIGATION (BRAND ROYAL PURPLE & GOLD)
       ------------------------------------------------------------- */}
-      <aside className="w-full md:w-72 bg-[#180828] text-white flex flex-col p-5 shrink-0 justify-between border-r border-[#C9A5E8]/20 shadow-2xl relative z-20">
-        <div>
+      <aside className="w-full md:w-72 bg-[#180828] text-white flex flex-col justify-between p-5 border-r border-[#4B0D78]/40 shrink-0">
+        <div className="space-y-6">
           {/* Brand Header */}
-          <div className="pb-5 border-b border-white/10 mb-6 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-[#6B18A8] text-white flex items-center justify-center shadow-lg shadow-purple-950/40 border border-[#F5D32F]/30 font-black">
-                <ShieldCheck className="w-6 h-6 text-[#F5D32F]" />
-              </div>
-              <div>
-                <h1 className="text-sm font-black text-white tracking-wide">
-                  LPH UIN SGD
-                </h1>
-                <p className="text-[10px] text-[#F5D32F] font-bold tracking-wider uppercase">
-                  CMS &amp; Admin Suite v3.4
-                </p>
-              </div>
+          <div className="flex items-center gap-3 px-2 py-3 border-b border-white/10">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#6B18A8] to-[#F5D32F] flex items-center justify-center font-black text-white text-base shadow-lg shadow-purple-900/50">
+              LPH
+            </div>
+            <div>
+              <h1 className="font-extrabold text-sm tracking-tight text-white leading-tight">
+                LPH UIN SGD
+              </h1>
+              <span className="text-[10px] text-[#F5D32F] font-bold tracking-wider block">
+                ADMIN CONSOLE 2.0
+              </span>
             </div>
           </div>
 
-          {/* Navigation Menu */}
-          <nav className="space-y-1.5" aria-label="Navigasi Menu Utama">
-            <p className="px-3 pb-1 text-[10px] font-black uppercase tracking-widest text-purple-300/60">
-              Konten &amp; Publikasi
-            </p>
+          {/* Nav Items */}
+          <nav className="space-y-1">
+            <div className="pb-1">
+              <p className="px-3 pb-1 text-[10px] font-black uppercase tracking-widest text-purple-300/60">
+                Menu Utama
+              </p>
+            </div>
+
             {[
-              { id: 'OVERVIEW', label: 'Dashboard Ringkasan', icon: LayoutDashboard },
-              { id: 'NEWS', label: 'Berita & TinyMCE', icon: Newspaper, count: newsList.length },
-              { id: 'ANNOUNCEMENTS', label: 'Pengumuman & SK', icon: Bell, count: announcements.length },
-              { id: 'GALLERY', label: 'Galeri Kegiatan', icon: ImageIcon, count: galleryList.length },
+              { id: 'OVERVIEW', label: 'Ringkasan Eksekutif', icon: LayoutDashboard },
+              { id: 'NEWS', label: 'Kanal Berita & Rilis', icon: Newspaper, count: newsList.length },
+              { id: 'ANNOUNCEMENTS', label: 'Pengumuman Resmi', icon: Bell, count: announcements.length },
+              { id: 'GALLERY', label: 'Galeri Dokumentasi', icon: ImageIcon, count: galleryList.length },
               { id: 'MEDIA', label: 'Pustaka Media', icon: FolderOpen, count: mediaList.length },
             ].map((item) => {
               const Icon = item.icon;
@@ -769,15 +1297,16 @@ export const AdminDashboard: React.FC = () => {
 
             <div className="pt-3 pb-1">
               <p className="px-3 pb-1 text-[10px] font-black uppercase tracking-widest text-purple-300/60">
-                Layanan &amp; Interaksi
+                Layanan, Tarif &amp; Data
               </p>
             </div>
 
             {[
-              { id: 'COMPLAINTS', label: 'Tiket Pengaduan', icon: ShieldAlert, count: complaints.filter(c => c.status !== 'RESOLVED').length },
+              { id: 'COMPLAINTS', label: 'Tiket Pengaduan', icon: ShieldAlert, count: complaints.filter(c => c.status !== 'RESOLVED').length, badgeDanger: pendingComplaintsCount > 0 },
               { id: 'SATISFACTION', label: 'Survei Kepuasan (IKM)', icon: Smile, count: surveys.length },
-              { id: 'RATES', label: 'Tarif KMA 784', icon: Calculator },
+              { id: 'RATES', label: 'Tarif KMA 784 (Kalkulator)', icon: Calculator },
               { id: 'KB', label: 'Chatbot Knowledge', icon: Bot, count: knowledgeBase.length },
+              { id: 'BACKUP', label: 'Backup & Database cPanel', icon: Database },
               { id: 'AUDIT_LOG', label: 'Riwayat Aktivitas', icon: History, count: auditLogs.length },
               { id: 'USERS', label: 'Manajemen Petugas', icon: Users, count: usersList.length },
             ].map((item) => {
@@ -804,7 +1333,9 @@ export const AdminDashboard: React.FC = () => {
                     <span
                       className={cn(
                         'text-[10px] font-mono px-2 py-0.5 rounded-full font-bold',
-                        isActive
+                        item.badgeDanger
+                          ? 'bg-rose-500 text-white animate-pulse'
+                          : isActive
                           ? 'bg-[#F5D32F] text-[#4B0D78]'
                           : 'bg-white/10 text-purple-200'
                       )}
@@ -875,7 +1406,8 @@ export const AdminDashboard: React.FC = () => {
                     {activeTab === 'MEDIA' && 'Pustaka Aset & Media'}
                     {activeTab === 'COMPLAINTS' && 'Tiket Layanan Pengaduan'}
                     {activeTab === 'SATISFACTION' && 'Indeks Kepuasan Masyarakat (IKM)'}
-                    {activeTab === 'RATES' && 'Simulasi Tarif Halal KMA 784'}
+                    {activeTab === 'RATES' && 'Kelola Tarif & Kalkulator KMA 784'}
+                    {activeTab === 'BACKUP' && 'Cadangan Database & Integrasi cPanel'}
                     {activeTab === 'KB' && 'Basis Pengetahuan Chatbot AI'}
                     {activeTab === 'AUDIT_LOG' && 'Riwayat Aktivitas Sistem'}
                     {activeTab === 'USERS' && 'Manajemen Akun Petugas'}
@@ -886,12 +1418,13 @@ export const AdminDashboard: React.FC = () => {
               <h2 className="text-2xl sm:text-3xl font-black text-[#292333] tracking-tight">
                 {activeTab === 'OVERVIEW' && 'Dashboard Manajemen LPH UIN SGD'}
                 {activeTab === 'NEWS' && (postViewMode === 'EDITOR' ? (editingPostId ? 'Edit Artikel Berita' : 'Tulis Berita Baru dengan TinyMCE') : 'Manajemen Berita & Artikel')}
-                {activeTab === 'ANNOUNCEMENTS' && 'Pengumuman & Surat Edaran Resmi'}
+                {activeTab === 'ANNOUNCEMENTS' && 'Pengumuman & Surat Edaran Resmi (PDF)'}
                 {activeTab === 'GALLERY' && 'Dokumentasi Galeri Kegiatan Lapangan & Lab'}
                 {activeTab === 'MEDIA' && 'Pustaka Foto & Berkas Media'}
                 {activeTab === 'COMPLAINTS' && 'Pusat Penanganan Tiket Pengaduan'}
                 {activeTab === 'SATISFACTION' && 'Evaluasi Survei Kepuasan Pelaku Usaha'}
                 {activeTab === 'RATES' && 'Konfigurasi Tarif Resmi KMA 784'}
+                {activeTab === 'BACKUP' && 'Cadangan Database Harian & cPanel File Manager'}
                 {activeTab === 'KB' && 'Basis Pengetahuan Chatbot AI Otomatis'}
                 {activeTab === 'AUDIT_LOG' && 'Log Audit & Jejak Aktivitas Petugas'}
                 {activeTab === 'USERS' && 'Daftar Auditor & Petugas LPH'}
@@ -899,7 +1432,7 @@ export const AdminDashboard: React.FC = () => {
             </div>
 
             {/* Quick action button depending on Tab */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               {activeTab === 'NEWS' && postViewMode === 'LIST' && (
                 <Button
                   variant="primary"
@@ -913,17 +1446,17 @@ export const AdminDashboard: React.FC = () => {
               {activeTab === 'ANNOUNCEMENTS' && (
                 <Button
                   variant="primary"
-                  onPress={() => setModalType('ADD_ANNOUNCEMENT')}
+                  onPress={handleOpenNewAnnouncement}
                   className="bg-[#6B18A8] text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center gap-1.5 shadow-md shadow-purple-950/20"
                 >
                   <Plus className="w-4 h-4 text-[#F5D32F]" />
-                  <span>Tambah Pengumuman</span>
+                  <span>Upload Surat Edaran (PDF)</span>
                 </Button>
               )}
               {activeTab === 'GALLERY' && (
                 <Button
                   variant="primary"
-                  onPress={() => setModalType('ADD_GALLERY')}
+                  onPress={handleOpenNewGallery}
                   className="bg-[#6B18A8] text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center gap-1.5 shadow-md shadow-purple-950/20"
                 >
                   <Plus className="w-4 h-4 text-[#F5D32F]" />
@@ -948,223 +1481,139 @@ export const AdminDashboard: React.FC = () => {
           ------------------------------------------------------------- */}
           {activeTab === 'OVERVIEW' && (
             <div className="space-y-8">
-              {/* 6 Key Stat Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {/* Stat Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 {[
                   {
-                    title: 'Berita & Artikel Publikasi',
-                    count: `${newsList.length} Artikel`,
-                    note: `${newsList.filter(n => n.status === 'PUBLISHED').length} Tayang di Beranda`,
+                    title: 'Total Artikel Berita',
+                    value: newsList.length,
+                    desc: 'Dipublikasikan di portal',
                     icon: Newspaper,
                     linkTab: 'NEWS',
                   },
                   {
-                    title: 'Dokumen Pengumuman Resmi',
-                    count: `${announcements.length} Dokumen`,
-                    note: 'SK Tarif & Jadwal Sidang Fatwa',
+                    title: 'Surat Edaran & SK',
+                    value: announcements.length,
+                    desc: 'Lampiran PDF resmi',
                     icon: Bell,
                     linkTab: 'ANNOUNCEMENTS',
                   },
                   {
-                    title: 'Galeri Foto Kegiatan LPH',
-                    count: `${galleryList.length} Foto Audit`,
-                    note: 'Audit Lapangan, Lab & JULEHA',
-                    icon: ImageIcon,
-                    linkTab: 'GALLERY',
-                  },
-                  {
-                    title: 'Tiket Pengaduan Masuk',
-                    count: `${complaints.length} Tiket Aduan`,
-                    note: `${complaints.filter(c => c.status === 'RESOLVED').length} Tiket Berhasil Ditangani`,
+                    title: 'Aduan Ditangani',
+                    value: complaints.filter((c) => c.status === 'RESOLVED').length,
+                    desc: `${complaints.filter((c) => c.status !== 'RESOLVED').length} tiket proses`,
                     icon: ShieldAlert,
                     linkTab: 'COMPLAINTS',
                   },
                   {
-                    title: 'Indeks Kepuasan (IKM)',
-                    count: '4.92 / 5.0',
-                    note: 'Predikat A (Sangat Memuaskan)',
+                    title: 'Indeks Kepuasan IKM',
+                    value: '4.92 / 5.0',
+                    desc: `${surveys.length} ulasan pelaku usaha`,
                     icon: Smile,
                     linkTab: 'SATISFACTION',
-                  },
-                  {
-                    title: 'Simulasi Tarif Halal KMA 784',
-                    count: '142 Simulasi',
-                    note: 'Dihitung Pelaku Usaha Bulan Ini',
-                    icon: Calculator,
-                    linkTab: 'RATES',
                   },
                 ].map((stat, idx) => {
                   const Icon = stat.icon;
                   return (
                     <Card
                       key={idx}
-                      className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 hover:shadow-xl hover:shadow-purple-950/5 transition-all duration-300"
+                      className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs hover:shadow-md transition-all p-6 space-y-3 cursor-pointer group"
+                      onClick={() => setActiveTab(stat.linkTab as AdminTab)}
                     >
-                      <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center justify-between">
                         <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">
                           {stat.title}
                         </span>
-                        <div className="p-2.5 rounded-2xl bg-[#FAF7FD] text-[#6B18A8] border border-[#C9A5E8]/40">
-                          <Icon className="w-5 h-5 text-[#6B18A8]" />
+                        <div className="w-9 h-9 rounded-xl bg-[#FAF7FD] text-[#6B18A8] group-hover:bg-[#6B18A8] group-hover:text-white transition-colors flex items-center justify-center">
+                          <Icon className="w-4 h-4" />
                         </div>
                       </div>
-                      <div className="text-3xl font-black text-[#292333] tracking-tight">
-                        {stat.count}
+                      <div className="text-2xl font-black text-[#292333] tracking-tight">
+                        {stat.value}
                       </div>
-                      <div className="mt-3 flex items-center justify-between pt-3 border-t border-neutral-100">
-                        <span className="text-xs text-neutral-500 font-medium">
-                          {stat.note}
-                        </span>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onPress={() => {
-                            setActiveTab(stat.linkTab as AdminTab);
-                            if (stat.linkTab === 'NEWS') setPostViewMode('LIST');
-                          }}
-                          className="text-[11px] font-bold text-[#6B18A8] hover:bg-[#F5EDFB] px-2 py-1 rounded-lg"
-                        >
-                          Kelola &rarr;
-                        </Button>
-                      </div>
+                      <p className="text-xs text-neutral-500">{stat.desc}</p>
                     </Card>
                   );
                 })}
               </div>
 
-              {/* Action Banner: TinyMCE Editor Callout */}
+              {/* Quick Shortcuts & Database Status */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <Card className="lg:col-span-2 bg-gradient-to-r from-[#240638] via-[#4B0D78] to-[#240638] text-white rounded-3xl p-7 relative overflow-hidden border border-[#C9A5E8]/40 shadow-xl">
-                  <div className="relative z-10 max-w-xl">
-                    <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] mb-3 inline-block">
-                      VISUAL CMS TINYMCE INTEGRATED
-                    </span>
-                    <h3 className="text-2xl font-black text-white tracking-tight mt-1">
-                      Tulis &amp; Format Berita dengan TinyMCE
-                    </h3>
-                    <p className="text-xs sm:text-sm text-purple-100/90 mt-2 leading-relaxed">
-                      Lengkapi publikasi kegiatan audit halal dengan pemformatan visual kaya: heading, kutipan fatwa, tabel hasil uji, gambar resolusi tinggi, serta integrasi SEO otomatis.
-                    </p>
-                    <div className="mt-6 flex items-center gap-3">
-                      <Button
-                        variant="primary"
-                        onPress={handleOpenNewPost}
-                        className="bg-[#F5D32F] hover:bg-[#ffe358] text-[#4B0D78] font-black text-xs px-5 py-2.5 rounded-xl shadow-md"
-                      >
-                        Buka Editor TinyMCE Sekarang
-                      </Button>
-                      <Button
-                        variant="secondary"
-                        onPress={() => {
-                          setActiveTab('NEWS');
-                          setPostViewMode('LIST');
-                        }}
-                        className="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold text-xs px-4 py-2.5 rounded-xl"
-                      >
-                        Lihat Daftar Berita
-                      </Button>
-                    </div>
-                  </div>
-                </Card>
-
-                {/* Quick Shortcuts */}
-                <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 flex flex-col justify-between">
-                  <div>
-                    <h4 className="text-sm font-bold text-[#292333] mb-3 flex items-center gap-2">
-                      <Sparkles className="w-4 h-4 text-[#6B18A8]" />
-                      <span>Aksi Pintas Cepat</span>
-                    </h4>
-                    <div className="space-y-2">
-                      <Button
-                        variant="outline"
-                        onPress={() => setModalType('ADD_ANNOUNCEMENT')}
-                        className="w-full justify-start text-xs font-bold rounded-xl py-2 px-3 border-neutral-200 hover:border-[#6B18A8] hover:text-[#6B18A8]"
-                      >
-                        + Unggah SK / Pengumuman Resmi
-                      </Button>
-                      <Button
-                        variant="outline"
-                        onPress={() => setModalType('ADD_GALLERY')}
-                        className="w-full justify-start text-xs font-bold rounded-xl py-2 px-3 border-neutral-200 hover:border-[#6B18A8] hover:text-[#6B18A8]"
-                      >
-                        + Tambah Foto Dokumentasi Galeri
-                      </Button>
-                      <Button
-                        variant="outline"
-                        onPress={() => setModalType('ADD_KB')}
-                        className="w-full justify-start text-xs font-bold rounded-xl py-2 px-3 border-neutral-200 hover:border-[#6B18A8] hover:text-[#6B18A8]"
-                      >
-                        + Update Jawaban Chatbot AI
-                      </Button>
-                    </div>
-                  </div>
-                  <div className="pt-4 border-t border-neutral-100 text-[11px] text-neutral-400">
-                    Sistem beroperasi normal • SLA 100% On Time
-                  </div>
-                </Card>
-              </div>
-
-              {/* Pending Whistleblowing List */}
-              <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <div>
+                <Card className="lg:col-span-2 bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 space-y-4">
+                  <div className="flex items-center justify-between">
                     <h3 className="text-base font-bold text-[#292333] flex items-center gap-2">
-                      <Clock className="w-4 h-4 text-[#6B18A8]" />
-                      <span>Tiket Pengaduan Membutuhkan Tindak Lanjut</span>
+                      <TrendingUp className="w-4 h-4 text-[#6B18A8]" />
+                      <span>Ringkasan Pengaduan Publik &amp; Tindak Lanjut</span>
                     </h3>
-                    <p className="text-xs text-neutral-500 mt-0.5">
-                      Daftar tiket aduan masyarakat yang belum ditutup atau membutuhkan konfirmasi verifikator.
-                    </p>
+                    <Button
+                      variant="outline"
+                      onPress={() => setActiveTab('COMPLAINTS')}
+                      className="text-xs font-bold border-[#C9A5E8] text-[#6B18A8] rounded-xl px-3 py-1"
+                    >
+                      Buka Semua Tiket
+                    </Button>
                   </div>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onPress={() => setActiveTab('COMPLAINTS')}
-                    className="text-xs font-bold rounded-xl"
-                  >
-                    Lihat Semua Tiket
-                  </Button>
-                </div>
-
-                <div className="space-y-3">
-                  {complaints
-                    .filter((c) => c.status !== 'RESOLVED')
-                    .map((item) => (
+                  <div className="space-y-3">
+                    {complaints.slice(0, 3).map((comp) => (
                       <div
-                        key={item.id}
-                        className="p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                        key={comp.id}
+                        className="p-3.5 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 flex items-center justify-between gap-4"
                       >
-                        <div>
+                        <div className="min-w-0 flex-1">
                           <div className="flex items-center gap-2 mb-1">
-                            <span className="text-xs font-mono font-black text-[#6B18A8]">
-                              {item.ticketCode}
+                            <span className="font-mono text-xs font-bold text-[#6B18A8]">
+                              {comp.ticketCode}
                             </span>
-                            <Chip size="sm" className="bg-[#FFF7D1] text-[#713f12] font-bold text-[10px]">
-                              {item.category}
+                            <Chip size="sm" className="bg-[#FFF7D1] text-[#713f12] text-[10px] font-bold">
+                              {comp.category}
                             </Chip>
-                            <span className="text-[11px] text-neutral-400">
-                              {formatDate(item.submittedAt)}
-                            </span>
                           </div>
-                          <p className="text-xs text-neutral-700 font-medium">
-                            {item.description}
-                          </p>
-                          <span className="text-[11px] text-neutral-500 mt-1 block">
-                            Pelapor: {item.name} ({item.contact})
-                          </span>
+                          <p className="text-xs text-neutral-700 truncate">{comp.description}</p>
                         </div>
-                        <Button
+                        <Chip
                           size="sm"
-                          variant="primary"
-                          onPress={() => handleOpenComplaintModal(item)}
-                          className="bg-[#6B18A8] text-white text-xs font-bold rounded-xl px-4 shrink-0"
+                          className={cn(
+                            'text-[10px] font-bold shrink-0',
+                            comp.status === 'RESOLVED'
+                              ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                              : 'bg-amber-50 text-amber-700 border border-amber-200'
+                          )}
                         >
-                          Tindak Lanjuti
-                        </Button>
+                          {comp.status}
+                        </Chip>
                       </div>
                     ))}
-                </div>
-              </Card>
+                  </div>
+                </Card>
+
+                <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 space-y-4">
+                  <h3 className="text-base font-bold text-[#292333] flex items-center gap-2">
+                    <Database className="w-4 h-4 text-[#6B18A8]" />
+                    <span>Status Cadangan Database</span>
+                  </h3>
+                  <div className="p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 space-y-3 text-xs">
+                    <div className="flex justify-between">
+                      <span className="text-neutral-500">Auto-Backup:</span>
+                      <span className="font-bold text-emerald-600">Aktif (02:00 WIB)</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-neutral-500">Penyimpanan:</span>
+                      <span className="font-mono font-bold text-neutral-700">cPanel File Manager</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-neutral-500">Retensi:</span>
+                      <span className="font-bold text-neutral-700">30 Hari Terakhir</span>
+                    </div>
+                  </div>
+                  <Button
+                    variant="primary"
+                    onPress={() => setActiveTab('BACKUP')}
+                    className="w-full bg-[#6B18A8] text-white text-xs font-bold py-2 rounded-xl"
+                  >
+                    Buka Manager Backup &amp; cPanel
+                  </Button>
+                </Card>
+              </div>
             </div>
           )}
 
@@ -1186,15 +1635,15 @@ export const AdminDashboard: React.FC = () => {
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-3">
-                      <div className="w-full sm:w-64">
-                        <Input
-                          placeholder="Cari berita..."
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                          className="text-xs rounded-xl"
-                        />
-                      </div>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <Button
+                        variant="outline"
+                        onPress={handleExportNewsExcel}
+                        className="border-emerald-300 text-emerald-800 bg-emerald-50/50 hover:bg-emerald-100 text-xs font-bold rounded-xl px-3.5 py-2 flex items-center gap-1.5"
+                      >
+                        <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>Export ke Excel (.xlsx)</span>
+                      </Button>
                       <Button
                         variant="primary"
                         onPress={handleOpenNewPost}
@@ -1206,6 +1655,53 @@ export const AdminDashboard: React.FC = () => {
                     </div>
                   </div>
 
+                  {/* Filter Controls Bar */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30">
+                    <div className="relative">
+                      <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
+                      <Input
+                        placeholder="Cari judul berita atau ringkasan..."
+                        value={newsSearch}
+                        onChange={(e) => {
+                          setNewsSearch(e.target.value);
+                          setNewsPage(1);
+                        }}
+                        className="pl-9 text-xs rounded-xl w-full"
+                      />
+                    </div>
+                    <div>
+                      <select
+                        value={newsCategory}
+                        onChange={(e) => {
+                          setNewsCategory(e.target.value);
+                          setNewsPage(1);
+                        }}
+                        className="w-full p-2 rounded-xl border border-neutral-300 text-xs bg-white font-bold"
+                      >
+                        <option value="ALL">Semua Kategori</option>
+                        <option value="KEGIATAN">KEGIATAN (Audit &amp; Sertifikasi)</option>
+                        <option value="ACARA">ACARA (Seminar &amp; Workshop)</option>
+                        <option value="AGENDA">AGENDA (Jadwal &amp; Pengumuman)</option>
+                        <option value="EDUKASI">EDUKASI (Tips &amp; Regulasi)</option>
+                      </select>
+                    </div>
+                    <div>
+                      <select
+                        value={newsStatus}
+                        onChange={(e) => {
+                          setNewsStatus(e.target.value);
+                          setNewsPage(1);
+                        }}
+                        className="w-full p-2 rounded-xl border border-neutral-300 text-xs bg-white font-bold"
+                      >
+                        <option value="ALL">Semua Status</option>
+                        <option value="PUBLISHED">PUBLISHED (Tayang)</option>
+                        <option value="DRAFT">DRAFT (Konsep)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Table with Pagination */}
                   <Table variant="secondary" className="w-full">
                     <Table.ScrollContainer>
                       <Table.Content aria-label="Daftar Berita LPH">
@@ -1217,179 +1713,198 @@ export const AdminDashboard: React.FC = () => {
                           <Table.Column>Aksi</Table.Column>
                         </Table.Header>
                         <Table.Body>
-                          {newsList
-                            .filter((n) => !searchQuery || n.title.toLowerCase().includes(searchQuery.toLowerCase()))
-                            .map((news) => (
-                              <Table.Row key={news.id} className="border-b border-neutral-100 hover:bg-[#FAF7FD]/50">
-                                <Table.Cell className="py-3.5 max-w-md">
-                                  <div className="flex items-center gap-3">
-                                    {news.image && (
-                                      <img
-                                        src={news.image}
-                                        alt=""
-                                        className="w-12 h-10 object-cover rounded-lg border border-neutral-200 shrink-0"
-                                      />
-                                    )}
-                                    <div className="min-w-0">
-                                      <span className="font-bold text-neutral-800 text-xs block truncate">
-                                        {news.title}
-                                      </span>
-                                      <span className="text-[11px] text-neutral-400 block truncate mt-0.5">
-                                        {news.excerpt}
-                                      </span>
-                                    </div>
+                          {paginatedNews.map((news) => (
+                            <Table.Row key={news.id} className="border-b border-neutral-100 hover:bg-[#FAF7FD]/50">
+                              <Table.Cell className="py-3.5 max-w-md">
+                                <div className="flex items-center gap-3">
+                                  {news.image && (
+                                    <img
+                                      src={news.image}
+                                      alt=""
+                                      className="w-12 h-10 object-cover rounded-lg border border-neutral-200 shrink-0"
+                                    />
+                                  )}
+                                  <div className="min-w-0">
+                                    <span className="font-bold text-neutral-800 text-xs block truncate">
+                                      {news.title}
+                                    </span>
+                                    <span className="text-[11px] text-neutral-400 block truncate mt-0.5">
+                                      {news.excerpt}
+                                    </span>
                                   </div>
-                                </Table.Cell>
-                                <Table.Cell>
-                                  <Chip size="sm" className="bg-[#FAF7FD] text-[#6B18A8] border border-[#C9A5E8]/60 font-bold text-[10px]">
-                                    {news.category}
-                                  </Chip>
-                                </Table.Cell>
-                                <Table.Cell>
-                                  <Chip
+                                </div>
+                              </Table.Cell>
+                              <Table.Cell>
+                                <Chip size="sm" className="bg-[#FAF7FD] text-[#6B18A8] border border-[#C9A5E8]/60 font-bold text-[10px]">
+                                  {news.category}
+                                </Chip>
+                              </Table.Cell>
+                              <Table.Cell>
+                                <Chip
+                                  size="sm"
+                                  className={cn(
+                                    'font-bold text-[10px]',
+                                    news.status === 'PUBLISHED'
+                                      ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                                      : 'bg-amber-50 text-amber-700 border border-amber-200'
+                                  )}
+                                >
+                                  {news.status}
+                                </Chip>
+                              </Table.Cell>
+                              <Table.Cell className="text-xs text-neutral-500 whitespace-nowrap">
+                                {news.publishedAt}
+                              </Table.Cell>
+                              <Table.Cell>
+                                <div className="flex items-center gap-1">
+                                  <Button
                                     size="sm"
-                                    className={cn(
-                                      'font-bold text-[10px]',
-                                      news.status === 'PUBLISHED'
-                                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                                        : 'bg-amber-50 text-amber-700 border border-amber-200'
-                                    )}
+                                    variant="ghost"
+                                    onPress={() => handleOpenEditPost(news)}
+                                    className="text-[#6B18A8] hover:bg-[#F5EDFB] p-1.5 rounded-lg flex items-center gap-1 text-xs font-bold"
                                   >
-                                    {news.status}
-                                  </Chip>
-                                </Table.Cell>
-                                <Table.Cell className="text-xs text-neutral-500 whitespace-nowrap">
-                                  {news.publishedAt}
-                                </Table.Cell>
-                                <Table.Cell>
-                                  <div className="flex items-center gap-1">
-                                    <Button
-                                      size="sm"
-                                      variant="ghost"
-                                      onPress={() => handleOpenEditPost(news)}
-                                      className="text-[#6B18A8] hover:bg-[#F5EDFB] p-1.5 rounded-lg flex items-center gap-1 text-xs font-bold"
-                                    >
-                                      <Edit className="w-3.5 h-3.5" />
-                                      <span>Edit</span>
-                                    </Button>
-                                    <Button
-                                      size="sm"
-                                      variant="ghost"
-                                      onPress={() => window.open(`/berita/${news.slug}`, '_blank')}
-                                      className="text-neutral-500 hover:text-[#6B18A8] p-1.5 rounded-lg"
-                                    >
-                                      <Eye className="w-3.5 h-3.5" />
-                                    </Button>
-                                    <Button
-                                      size="sm"
-                                      variant="ghost"
-                                      onPress={() => handleDeleteNews(news.id)}
-                                      className="text-rose-500 hover:text-rose-700 hover:bg-rose-50 p-1.5 rounded-lg"
-                                    >
-                                      <Trash2 className="w-3.5 h-3.5" />
-                                    </Button>
-                                  </div>
-                                </Table.Cell>
-                              </Table.Row>
-                            ))}
+                                    <Edit className="w-3.5 h-3.5" />
+                                    <span>Edit</span>
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    onPress={() => window.open(`/berita/${news.slug}`, '_blank')}
+                                    className="text-neutral-500 hover:text-[#6B18A8] p-1.5 rounded-lg"
+                                  >
+                                    <ExternalLink className="w-3.5 h-3.5" />
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    onPress={() => handleDeleteNews(news.id)}
+                                    className="text-rose-500 hover:text-rose-700 hover:bg-rose-50 p-1.5 rounded-lg"
+                                  >
+                                    <Trash2 className="w-3.5 h-3.5" />
+                                  </Button>
+                                </div>
+                              </Table.Cell>
+                            </Table.Row>
+                          ))}
                         </Table.Body>
                       </Table.Content>
                     </Table.ScrollContainer>
                   </Table>
+
+                  {/* HeroUI Pagination */}
+                  {renderPaginationControls(
+                    newsPage,
+                    newsTotalPages,
+                    filteredNews.length,
+                    'artikel berita',
+                    setNewsPage
+                  )}
                 </Card>
               ) : (
-                /* 2B. ADVANCED TINYMCE EDITOR VIEW (Inspired by WebsitePsikologiUIN1) */
+                /* 2B. TINYMCE RICH TEXT FULL-PAGE EDITOR */
                 <div className="space-y-6">
-                  {/* Top Bar Navigation & Save Actions */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-white border border-[#C9A5E8]/30 shadow-xs">
-                    <Button
-                      variant="secondary"
-                      onPress={() => setPostViewMode('LIST')}
-                      className="text-xs font-bold text-neutral-700 hover:text-[#6B18A8] rounded-xl flex items-center gap-1.5 px-3 py-2 w-fit"
-                    >
-                      <ArrowLeft className="w-4 h-4" />
-                      <span>Kembali ke Daftar Berita</span>
-                    </Button>
+                  {/* Top Bar for Editor */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-3xl border border-[#C9A5E8]/30 shadow-xs">
+                    <div className="flex items-center gap-3">
+                      <Button
+                        variant="secondary"
+                        onPress={() => setPostViewMode('LIST')}
+                        className="text-xs font-bold rounded-xl border border-neutral-200 px-3 py-1.5 flex items-center gap-1.5"
+                      >
+                        <ArrowLeft className="w-4 h-4" />
+                        <span>Kembali ke Daftar</span>
+                      </Button>
+                      <div>
+                        <h3 className="text-sm font-bold text-neutral-800">
+                          {editingPostId ? 'Edit Artikel Berita' : 'Tulis Artikel Berita Baru'}
+                        </h3>
+                        <span className="text-[11px] text-neutral-400">
+                          Editor Visual TinyMCE dengan standar typography LPH UIN SGD.
+                        </span>
+                      </div>
+                    </div>
 
                     <div className="flex items-center gap-2">
                       <Button
                         variant="secondary"
                         onPress={() => handleSavePost('DRAFT')}
-                        className="text-xs font-bold border-neutral-300 rounded-xl px-4 py-2 flex items-center gap-1.5"
+                        className="text-xs font-bold rounded-xl border border-neutral-300 px-4 py-2"
                       >
-                        <Save className="w-4 h-4 text-neutral-500" />
-                        <span>Simpan Draf</span>
+                        Simpan sebagai Draft
                       </Button>
                       <Button
                         variant="primary"
                         onPress={() => handleSavePost('PUBLISHED')}
-                        className="bg-[#6B18A8] text-white text-xs font-bold rounded-xl px-5 py-2 flex items-center gap-1.5 shadow-md shadow-purple-950/20"
+                        className="bg-[#6B18A8] text-white text-xs font-bold px-5 py-2 rounded-xl flex items-center gap-1.5 shadow-md shadow-purple-950/25"
                       >
-                        <Send className="w-4 h-4 text-[#F5D32F]" />
-                        <span>{editingPostId ? 'Perbarui Berita' : 'Terbitkan Sekarang'}</span>
+                        <Save className="w-4 h-4 text-[#F5D32F]" />
+                        <span>Publikasikan Sekarang</span>
                       </Button>
                     </div>
                   </div>
 
-                  {/* 2-Column Editor Workspace */}
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                    {/* Left Column: Title, Excerpt, and TinyMCE Visual Editor (8 Cols) */}
+                  {/* 2-Column Layout */}
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    {/* Left Column: Title, Excerpt, TinyMCE Editor (8 Cols) */}
                     <div className="lg:col-span-8 space-y-5">
                       <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 space-y-4">
                         <div>
-                          <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
-                            Judul Berita Utama
+                          <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wider mb-1.5">
+                            Judul Artikel Berita
                           </label>
                           <Input
                             value={postForm.title}
                             onChange={(e) => {
-                              const title = e.target.value;
-                              const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-                              setPostForm({ ...postForm, title, slug });
+                              const t = e.target.value;
+                              setPostForm({
+                                ...postForm,
+                                title: t,
+                                slug: t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+                              });
                             }}
-                            placeholder="Ketikkan judul artikel berita..."
-                            className="text-sm font-bold w-full rounded-xl"
-                            required
+                            placeholder="Contoh: Akselerasi Audit Sertifikasi Halal di Jawa Barat..."
+                            className="w-full text-sm font-bold rounded-xl"
                           />
                         </div>
 
                         <div>
-                          <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
-                            Permalink / Slug URL
+                          <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wider mb-1.5">
+                            Permalink / URL Slug
                           </label>
-                          <div className="flex items-center gap-2">
-                            <span className="text-xs font-mono text-neutral-400 select-none">
+                          <div className="flex items-center gap-2 p-2 rounded-xl bg-[#FAF7FD] border border-[#C9A5E8]/30">
+                            <span className="text-[11px] font-mono text-neutral-400 pl-2">
                               /berita/
                             </span>
-                            <Input
+                            <input
+                              type="text"
                               value={postForm.slug}
                               onChange={(e) => setPostForm({ ...postForm, slug: e.target.value })}
+                              className="text-xs font-mono font-bold text-[#6B18A8] bg-transparent outline-none flex-1"
                               placeholder="slug-otomatis-dari-judul"
-                              className="text-xs font-mono w-full rounded-xl"
                             />
                           </div>
                         </div>
 
                         <div>
-                          <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
-                            Ringkasan Singkat (Excerpt / Deskripsi Singkat)
+                          <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wider mb-1.5">
+                            Ringkasan Singkat (Excerpt)
                           </label>
                           <TextArea
                             value={postForm.excerpt}
                             onChange={(e) => setPostForm({ ...postForm, excerpt: e.target.value })}
-                            rows={2}
-                            placeholder="Ringkasan 1-2 kalimat yang tampil pada kartu berita dan pratinjau media sosial..."
-                            className="text-xs w-full rounded-xl"
+                            rows={3}
+                            placeholder="Ringkasan 2-3 kalimat untuk kartu preview di beranda dan hasil pencarian Google..."
+                            className="w-full text-xs rounded-xl"
                           />
                         </div>
                       </Card>
 
-                      {/* TinyMCE Visual Rich Text Editor */}
+                      {/* TinyMCE Rich Text Editor Card */}
                       <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 space-y-3">
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between pb-2 border-b border-neutral-100">
                           <div>
-                            <h4 className="text-xs font-bold text-neutral-700 uppercase tracking-wider">
-                              Konten Berita Visual (TinyMCE Editor)
+                            <h4 className="text-xs font-bold text-neutral-800 uppercase tracking-wider">
+                              Isi Konten Artikel (Visual Editor)
                             </h4>
                             <p className="text-[11px] text-neutral-400">
                               Format artikel lengkap dengan heading, bullet point, tabel, kutipan, dan gambar.
@@ -1454,7 +1969,6 @@ export const AdminDashboard: React.FC = () => {
                             <option value="ACARA">ACARA (Seminar &amp; Workshop)</option>
                             <option value="AGENDA">AGENDA (Jadwal &amp; Pengumuman)</option>
                             <option value="EDUKASI">EDUKASI (Tips &amp; Regulasi Halal)</option>
-                            <option value="RISIK_HALAL">RISIK &amp; JURNAL (IJHR)</option>
                           </select>
                         </div>
 
@@ -1505,24 +2019,6 @@ export const AdminDashboard: React.FC = () => {
                           </div>
                         )}
                       </Card>
-
-                      {/* SEO & Meta Tag Card */}
-                      <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 space-y-3">
-                        <h4 className="text-xs font-bold text-neutral-700 uppercase tracking-wider border-b border-neutral-100 pb-2">
-                          Pratinjau Google SEO
-                        </h4>
-                        <div className="p-3.5 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 space-y-1">
-                          <span className="text-[10px] text-emerald-700 font-mono block">
-                            https://lph.uinsgd.ac.id/berita/{postForm.slug || 'judul-berita'}
-                          </span>
-                          <p className="text-xs font-bold text-blue-700 hover:underline cursor-pointer truncate">
-                            {postForm.title || 'Judul Artikel Berita LPH UIN SGD'}
-                          </p>
-                          <p className="text-[11px] text-neutral-600 line-clamp-2">
-                            {postForm.excerpt || 'Ringkasan singkat berita ini yang akan tampil di hasil pencarian Google...'}
-                          </p>
-                        </div>
-                      </Card>
                     </div>
                   </div>
                 </div>
@@ -1531,47 +2027,115 @@ export const AdminDashboard: React.FC = () => {
           )}
 
           {/* -------------------------------------------------------------
-              TAB 3: ANNOUNCEMENTS MANAGEMENT
+              TAB 3: ANNOUNCEMENTS MANAGEMENT (WITH PDF UPLOAD & EDIT)
           ------------------------------------------------------------- */}
           {activeTab === 'ANNOUNCEMENTS' && (
             <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <h3 className="text-base font-bold text-[#292333]">
-                    Surat Edaran, SK Tarif &amp; Pengumuman BPJPH
+                  <h3 className="text-base font-bold text-[#292333] flex items-center gap-2">
+                    <Bell className="w-4 h-4 text-[#6B18A8]" />
+                    <span>Surat Edaran, SK Penetapan Tarif &amp; Dokumen Resmi (PDF)</span>
                   </h3>
                   <p className="text-xs text-neutral-500">
-                    Dokumen resmi yang dapat diunduh publik melalui portal.
+                    Setiap dokumen surat edaran wajib memiliki tautan unduh berkas PDF yang valid untuk masyarakat.
                   </p>
+                </div>
+
+                <div className="flex items-center gap-2 flex-wrap">
+                  <Button
+                    variant="outline"
+                    onPress={handleExportAnnouncementsExcel}
+                    className="border-emerald-300 text-emerald-800 bg-emerald-50/50 hover:bg-emerald-100 text-xs font-bold rounded-xl px-3.5 py-2 flex items-center gap-1.5"
+                  >
+                    <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>Export ke Excel (.xlsx)</span>
+                  </Button>
+                  <Button
+                    variant="primary"
+                    onPress={handleOpenNewAnnouncement}
+                    className="bg-[#6B18A8] text-white text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5"
+                  >
+                    <Plus className="w-4 h-4 text-[#F5D32F]" />
+                    <span>Upload Surat Edaran (PDF)</span>
+                  </Button>
                 </div>
               </div>
 
+              {/* Filter Controls Bar */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30">
+                <div className="relative">
+                  <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
+                  <Input
+                    placeholder="Cari judul surat edaran atau nomor berkas..."
+                    value={announcementSearch}
+                    onChange={(e) => {
+                      setAnnouncementSearch(e.target.value);
+                      setAnnouncementPage(1);
+                    }}
+                    className="pl-9 text-xs rounded-xl w-full"
+                  />
+                </div>
+                <div>
+                  <select
+                    value={announcementStatus}
+                    onChange={(e) => {
+                      setAnnouncementStatus(e.target.value);
+                      setAnnouncementPage(1);
+                    }}
+                    className="w-full p-2 rounded-xl border border-neutral-300 text-xs bg-white font-bold"
+                  >
+                    <option value="ALL">Semua Surat Edaran</option>
+                    <option value="PINNED">Hanya yang Disematkan (Pinned)</option>
+                    <option value="REGULAR">Surat Edaran Reguler</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Announcements Table */}
               <Table variant="secondary" className="w-full">
                 <Table.ScrollContainer>
                   <Table.Content aria-label="Daftar Pengumuman Resmi">
                     <Table.Header>
-                      <Table.Column isRowHeader>Nama Dokumen / Pengumuman</Table.Column>
-                      <Table.Column>Berkas PDF</Table.Column>
+                      <Table.Column isRowHeader>Nama Dokumen / Surat Edaran</Table.Column>
+                      <Table.Column>Lampiran File PDF</Table.Column>
                       <Table.Column>Status</Table.Column>
                       <Table.Column>Tanggal</Table.Column>
-                      <Table.Column>Aksi</Table.Column>
+                      <Table.Column className="text-right">Aksi</Table.Column>
                     </Table.Header>
                     <Table.Body>
-                      {announcements.map((ann) => (
+                      {paginatedAnnouncements.map((ann) => (
                         <Table.Row key={ann.id} className="border-b border-neutral-100 hover:bg-[#FAF7FD]/50">
                           <Table.Cell className="py-3.5 max-w-md">
                             <span className="font-bold text-neutral-800 text-xs block">
                               {ann.title}
                             </span>
-                            <span className="text-[11px] text-neutral-400 block mt-0.5">
+                            <span className="text-[11px] text-neutral-500 block mt-0.5 line-clamp-1">
                               {ann.content}
                             </span>
                           </Table.Cell>
                           <Table.Cell>
-                            <span className="text-xs font-mono text-[#6B18A8] font-bold block">
-                              {ann.fileName}
-                            </span>
-                            <span className="text-[10px] text-neutral-400">{ann.fileSize}</span>
+                            {ann.fileName ? (
+                              <div className="flex items-center gap-2">
+                                <a
+                                  href={ann.fileUrl || `/assets/docs/${ann.fileName}`}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  download={ann.fileName}
+                                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-50 text-[#6B18A8] hover:bg-[#6B18A8] hover:text-white transition-all text-xs font-mono font-bold border border-[#C9A5E8]/40"
+                                  title="Klik untuk membuka atau mengunduh berkas PDF"
+                                >
+                                  <FileText className="w-3.5 h-3.5" />
+                                  <span>{ann.fileName}</span>
+                                  <Download className="w-3 h-3 ml-0.5" />
+                                </a>
+                                <span className="text-[10px] text-neutral-400 font-mono">
+                                  {ann.fileSize || '1.2 MB'}
+                                </span>
+                              </div>
+                            ) : (
+                              <span className="text-xs text-rose-500 italic">Tidak ada lampiran PDF</span>
+                            )}
                           </Table.Cell>
                           <Table.Cell>
                             <Chip
@@ -1589,15 +2153,26 @@ export const AdminDashboard: React.FC = () => {
                           <Table.Cell className="text-xs text-neutral-500 whitespace-nowrap">
                             {ann.publishedAt}
                           </Table.Cell>
-                          <Table.Cell>
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              onPress={() => handleDeleteAnnouncement(ann.id)}
-                              className="text-rose-500 hover:text-rose-700 hover:bg-rose-50 p-1.5 rounded-lg"
-                            >
-                              <Trash2 className="w-3.5 h-3.5" />
-                            </Button>
+                          <Table.Cell className="text-right">
+                            <div className="flex items-center justify-end gap-1">
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                onPress={() => handleOpenEditAnnouncement(ann)}
+                                className="text-[#6B18A8] hover:bg-[#F5EDFB] p-1.5 rounded-lg flex items-center gap-1 text-xs font-bold"
+                              >
+                                <Edit3 className="w-3.5 h-3.5" />
+                                <span>Edit</span>
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                onPress={() => handleDeleteAnnouncement(ann.id)}
+                                className="text-rose-500 hover:text-rose-700 hover:bg-rose-50 p-1.5 rounded-lg"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </Button>
+                            </div>
                           </Table.Cell>
                         </Table.Row>
                       ))}
@@ -1605,11 +2180,20 @@ export const AdminDashboard: React.FC = () => {
                   </Table.Content>
                 </Table.ScrollContainer>
               </Table>
+
+              {/* HeroUI Pagination */}
+              {renderPaginationControls(
+                announcementPage,
+                announcementTotalPages,
+                filteredAnnouncements.length,
+                'surat edaran',
+                setAnnouncementPage
+              )}
             </Card>
           )}
 
           {/* -------------------------------------------------------------
-              TAB 4: ACTIVITY GALLERY MANAGEMENT
+              TAB 4: ACTIVITY GALLERY MANAGEMENT (WITH EDIT & FILTER)
           ------------------------------------------------------------- */}
           {activeTab === 'GALLERY' && (
             <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 space-y-6">
@@ -1623,8 +2207,60 @@ export const AdminDashboard: React.FC = () => {
                     Foto-foto audit lapangan, laboratorium ISO 17025, dan pelatihan JULEHA yang tampil di halaman /galeri.
                   </p>
                 </div>
+
+                <div className="flex items-center gap-2 flex-wrap">
+                  <Button
+                    variant="outline"
+                    onPress={handleExportGalleryExcel}
+                    className="border-emerald-300 text-emerald-800 bg-emerald-50/50 hover:bg-emerald-100 text-xs font-bold rounded-xl px-3.5 py-2 flex items-center gap-1.5"
+                  >
+                    <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>Export ke Excel (.xlsx)</span>
+                  </Button>
+                  <Button
+                    variant="primary"
+                    onPress={handleOpenNewGallery}
+                    className="bg-[#6B18A8] text-white text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5"
+                  >
+                    <Plus className="w-4 h-4 text-[#F5D32F]" />
+                    <span>Upload Foto Galeri</span>
+                  </Button>
+                </div>
               </div>
 
+              {/* Filter Controls Bar */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30">
+                <div className="relative">
+                  <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
+                  <Input
+                    placeholder="Cari kegiatan, nama auditor, atau fasilitas..."
+                    value={gallerySearch}
+                    onChange={(e) => {
+                      setGallerySearch(e.target.value);
+                      setGalleryPage(1);
+                    }}
+                    className="pl-9 text-xs rounded-xl w-full"
+                  />
+                </div>
+                <div>
+                  <select
+                    value={galleryCategory}
+                    onChange={(e) => {
+                      setGalleryCategory(e.target.value);
+                      setGalleryPage(1);
+                    }}
+                    className="w-full p-2 rounded-xl border border-neutral-300 text-xs bg-white font-bold"
+                  >
+                    <option value="ALL">Semua Kategori Galeri</option>
+                    <option value="Audit Lapangan">Audit Lapangan</option>
+                    <option value="Laboratorium ISO 17025">Laboratorium ISO 17025</option>
+                    <option value="Pelatihan & JULEHA">Pelatihan &amp; JULEHA</option>
+                    <option value="Kunjungan & MoA">Kunjungan &amp; MoA</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Gallery Table */}
               <Table variant="secondary" className="w-full">
                 <Table.ScrollContainer>
                   <Table.Content aria-label="Daftar Foto Galeri">
@@ -1634,10 +2270,10 @@ export const AdminDashboard: React.FC = () => {
                       <Table.Column>Auditor Penanggung Jawab</Table.Column>
                       <Table.Column>Fasilitas / Lokasi</Table.Column>
                       <Table.Column>Tanggal</Table.Column>
-                      <Table.Column>Aksi</Table.Column>
+                      <Table.Column className="text-right">Aksi</Table.Column>
                     </Table.Header>
                     <Table.Body>
-                      {galleryList.map((item) => (
+                      {paginatedGallery.map((item) => (
                         <Table.Row key={item.id} className="border-b border-neutral-100 hover:bg-[#FAF7FD]/50">
                           <Table.Cell className="py-3">
                             <div className="flex items-center gap-3">
@@ -1670,8 +2306,17 @@ export const AdminDashboard: React.FC = () => {
                           <Table.Cell className="text-xs text-neutral-500 whitespace-nowrap">
                             {item.date}
                           </Table.Cell>
-                          <Table.Cell>
-                            <div className="flex items-center gap-1">
+                          <Table.Cell className="text-right">
+                            <div className="flex items-center justify-end gap-1">
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                onPress={() => handleOpenEditGallery(item)}
+                                className="text-[#6B18A8] hover:bg-[#F5EDFB] p-1.5 rounded-lg flex items-center gap-1 text-xs font-bold"
+                              >
+                                <Edit3 className="w-3.5 h-3.5" />
+                                <span>Edit</span>
+                              </Button>
                               <Button
                                 size="sm"
                                 variant="ghost"
@@ -1696,63 +2341,77 @@ export const AdminDashboard: React.FC = () => {
                   </Table.Content>
                 </Table.ScrollContainer>
               </Table>
+
+              {/* HeroUI Pagination */}
+              {renderPaginationControls(
+                galleryPage,
+                galleryTotalPages,
+                filteredGallery.length,
+                'foto galeri',
+                setGalleryPage
+              )}
             </Card>
           )}
 
           {/* -------------------------------------------------------------
-              TAB 5: MEDIA ASSET LIBRARY (NEW!)
+              TAB 5: MEDIA ASSET LIBRARY
           ------------------------------------------------------------- */}
           {activeTab === 'MEDIA' && (
             <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 space-y-6">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-base font-bold text-[#292333] flex items-center gap-2">
                     <FolderOpen className="w-4 h-4 text-[#6B18A8]" />
-                    <span>Pustaka Aset &amp; Media Dokumentasi</span>
+                    <span>Pustaka Berkas &amp; Media Gambar</span>
                   </h3>
                   <p className="text-xs text-neutral-500">
-                    Koleksi gambar resmi yang dapat disalin URL-nya untuk disematkan ke dalam artikel TinyMCE atau galeri.
+                    Klik tombol salin URL untuk menyisipkan gambar langsung ke dalam editor naskah berita TinyMCE.
                   </p>
                 </div>
-
-                {copiedUrl && (
-                  <Chip size="sm" className="bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold text-xs flex items-center gap-1">
-                    <Check className="w-3.5 h-3.5" />
-                    <span>URL Berhasil Disalin!</span>
-                  </Chip>
-                )}
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              {copiedUrl && (
+                <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-600" />
+                  <span>URL Berhasil Disalin: {copiedUrl}</span>
+                </div>
+              )}
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 {mediaList.map((m) => (
                   <div
                     key={m.id}
-                    className="group rounded-2xl border border-neutral-200 overflow-hidden bg-white hover:border-[#6B18A8] hover:shadow-lg transition-all"
+                    className="group rounded-2xl overflow-hidden border border-[#C9A5E8]/30 bg-neutral-50 hover:shadow-md transition-all flex flex-col justify-between"
                   >
-                    <div className="h-32 w-full overflow-hidden bg-neutral-900 relative">
+                    <div className="h-32 overflow-hidden bg-neutral-900 relative">
                       <img
                         src={m.src}
                         alt={m.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
-                      <span className="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md text-[9px] font-bold text-white uppercase">
-                        {m.category}
-                      </span>
-                    </div>
-                    <div className="p-3">
-                      <p className="text-xs font-bold text-neutral-800 truncate" title={m.name}>
-                        {m.name}
-                      </p>
-                      <span className="text-[10px] text-neutral-400 block mt-0.5">{m.size}</span>
-                      <Button
+                      <Chip
                         size="sm"
-                        variant="secondary"
-                        onPress={() => handleCopyMediaUrl(m.src)}
-                        className="w-full mt-2.5 text-[11px] font-bold py-1.5 rounded-xl border border-neutral-200 hover:bg-[#FAF7FD] hover:text-[#6B18A8] flex items-center justify-center gap-1"
+                        className="absolute bottom-2 left-2 bg-black/60 text-white font-bold text-[9px] backdrop-blur-xs"
                       >
-                        <Copy className="w-3 h-3" />
-                        <span>Salin URL</span>
-                      </Button>
+                        {m.category}
+                      </Chip>
+                    </div>
+                    <div className="p-3 space-y-2">
+                      <div className="text-[11px] font-bold text-neutral-800 truncate" title={m.name}>
+                        {m.name}
+                      </div>
+                      <div className="flex items-center justify-between text-[10px] text-neutral-400">
+                        <span>{m.size}</span>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onPress={() => handleCopyMediaUrl(m.src)}
+                          className="px-2 py-0.5 text-[10px] rounded-lg border-[#C9A5E8] text-[#6B18A8] hover:bg-[#FAF7FD] font-bold flex items-center gap-1"
+                        >
+                          <Copy className="w-3 h-3" />
+                          <span>Salin URL</span>
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -1761,18 +2420,59 @@ export const AdminDashboard: React.FC = () => {
           )}
 
           {/* -------------------------------------------------------------
-              TAB 6: COMPLAINTS & WHISTLEBLOWING
+              TAB 6: COMPLAINTS & WHISTLEBLOWING (WITH PAGINATION & EXCEL)
           ------------------------------------------------------------- */}
           {activeTab === 'COMPLAINTS' && (
             <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <h3 className="text-base font-bold text-[#292333]">
-                    Pusat Tiket Pengaduan &amp; Whistleblowing Layanan
+                  <h3 className="text-base font-bold text-[#292333] flex items-center gap-2">
+                    <ShieldAlert className="w-4 h-4 text-[#6B18A8]" />
+                    <span>Pusat Tiket Pengaduan &amp; Whistleblowing Layanan</span>
                   </h3>
                   <p className="text-xs text-neutral-500">
                     Kawal integritas layanan publik, bebas gratifikasi dan pungli di lingkungan LPH UIN SGD.
                   </p>
+                </div>
+
+                <Button
+                  variant="outline"
+                  onPress={handleExportComplaintsExcel}
+                  className="border-emerald-300 text-emerald-800 bg-emerald-50/50 hover:bg-emerald-100 text-xs font-bold rounded-xl px-3.5 py-2 flex items-center gap-1.5"
+                >
+                  <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Export ke Excel (.xlsx)</span>
+                </Button>
+              </div>
+
+              {/* Filter Controls Bar */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30">
+                <div className="relative">
+                  <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
+                  <Input
+                    placeholder="Cari kode tiket, nama pelapor, atau isi keluhan..."
+                    value={complaintSearch}
+                    onChange={(e) => {
+                      setComplaintSearch(e.target.value);
+                      setComplaintPage(1);
+                    }}
+                    className="pl-9 text-xs rounded-xl w-full"
+                  />
+                </div>
+                <div>
+                  <select
+                    value={complaintStatus}
+                    onChange={(e) => {
+                      setComplaintStatus(e.target.value);
+                      setComplaintPage(1);
+                    }}
+                    className="w-full p-2 rounded-xl border border-neutral-300 text-xs bg-white font-bold"
+                  >
+                    <option value="ALL">Semua Status Tiket</option>
+                    <option value="RECEIVED">RECEIVED (Menunggu Verifikator)</option>
+                    <option value="IN_PROGRESS">IN_PROGRESS (Sedang Ditangani)</option>
+                    <option value="RESOLVED">RESOLVED (Selesai)</option>
+                  </select>
                 </div>
               </div>
 
@@ -1785,10 +2485,10 @@ export const AdminDashboard: React.FC = () => {
                       <Table.Column>Kategori</Table.Column>
                       <Table.Column>Uraian Pengaduan</Table.Column>
                       <Table.Column>Status</Table.Column>
-                      <Table.Column>Tindak Lanjut</Table.Column>
+                      <Table.Column className="text-right">Tindak Lanjut</Table.Column>
                     </Table.Header>
                     <Table.Body>
-                      {complaints.map((comp) => (
+                      {paginatedComplaints.map((comp) => (
                         <Table.Row key={comp.id} className="border-b border-neutral-100 hover:bg-[#FAF7FD]/50">
                           <Table.Cell className="font-mono font-black text-xs text-[#6B18A8] whitespace-nowrap">
                             {comp.ticketCode}
@@ -1823,13 +2523,13 @@ export const AdminDashboard: React.FC = () => {
                                   ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                                   : comp.status === 'IN_PROGRESS'
                                   ? 'bg-amber-50 text-amber-700 border border-amber-200'
-                                  : 'bg-neutral-100 text-neutral-600 border border-neutral-200'
+                                  : 'bg-rose-50 text-rose-700 border border-rose-200'
                               )}
                             >
                               {comp.status}
                             </Chip>
                           </Table.Cell>
-                          <Table.Cell>
+                          <Table.Cell className="text-right">
                             <Button
                               size="sm"
                               variant="primary"
@@ -1845,11 +2545,20 @@ export const AdminDashboard: React.FC = () => {
                   </Table.Content>
                 </Table.ScrollContainer>
               </Table>
+
+              {/* HeroUI Pagination */}
+              {renderPaginationControls(
+                complaintPage,
+                complaintTotalPages,
+                filteredComplaints.length,
+                'tiket aduan',
+                setComplaintPage
+              )}
             </Card>
           )}
 
           {/* -------------------------------------------------------------
-              TAB 7: CUSTOMER SATISFACTION (IKM)
+              TAB 7: CUSTOMER SATISFACTION (IKM) (WITH PAGINATION & EXCEL)
           ------------------------------------------------------------- */}
           {activeTab === 'SATISFACTION' && (
             <div className="space-y-6">
@@ -1875,12 +2584,60 @@ export const AdminDashboard: React.FC = () => {
               </div>
 
               <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 space-y-6">
-                <h3 className="text-base font-bold text-[#292333]">
-                  Masukan &amp; Evaluasi Pelaku Usaha Terbaru
-                </h3>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div>
+                    <h3 className="text-base font-bold text-[#292333] flex items-center gap-2">
+                      <Smile className="w-4 h-4 text-[#6B18A8]" />
+                      <span>Masukan &amp; Evaluasi Pelaku Usaha Terbaru</span>
+                    </h3>
+                    <p className="text-xs text-neutral-500">
+                      Survei kepuasan real-time dari formulir IKM publik.
+                    </p>
+                  </div>
+
+                  <Button
+                    variant="outline"
+                    onPress={handleExportSurveysExcel}
+                    className="border-emerald-300 text-emerald-800 bg-emerald-50/50 hover:bg-emerald-100 text-xs font-bold rounded-xl px-3.5 py-2 flex items-center gap-1.5"
+                  >
+                    <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>Export ke Excel (.xlsx)</span>
+                  </Button>
+                </div>
+
+                {/* Filter Controls Bar */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30">
+                  <div className="relative">
+                    <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
+                    <Input
+                      placeholder="Cari pelaku usaha atau kritik saran..."
+                      value={surveySearch}
+                      onChange={(e) => {
+                        setSurveySearch(e.target.value);
+                        setSurveyPage(1);
+                      }}
+                      className="pl-9 text-xs rounded-xl w-full"
+                    />
+                  </div>
+                  <div>
+                    <select
+                      value={surveyRating}
+                      onChange={(e) => {
+                        setSurveyRating(e.target.value);
+                        setSurveyPage(1);
+                      }}
+                      className="w-full p-2 rounded-xl border border-neutral-300 text-xs bg-white font-bold"
+                    >
+                      <option value="ALL">Semua Rating Bintang</option>
+                      <option value="5">Bintang 5 Saja</option>
+                      <option value="4">Bintang 4 Saja</option>
+                      <option value="3">Bintang 3 Saja</option>
+                    </select>
+                  </div>
+                </div>
 
                 <div className="space-y-4">
-                  {surveys.map((s) => (
+                  {paginatedSurveys.map((s) => (
                     <div
                       key={s.id}
                       className="p-5 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 space-y-2"
@@ -1905,63 +2662,28 @@ export const AdminDashboard: React.FC = () => {
                     </div>
                   ))}
                 </div>
+
+                {/* HeroUI Pagination */}
+                {renderPaginationControls(
+                  surveyPage,
+                  surveyTotalPages,
+                  filteredSurveys.length,
+                  'ulasan responden',
+                  setSurveyPage
+                )}
               </Card>
             </div>
           )}
 
           {/* -------------------------------------------------------------
-              TAB 8: HALAL FEE RATES (KMA 784)
+              TAB 8: HALAL FEE RATES (EDITABLE KMA 784 & SYNC TO CALCULATOR)
           ------------------------------------------------------------- */}
           {activeTab === 'RATES' && (
-            <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 space-y-6">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div>
-                  <h3 className="text-base font-bold text-[#292333] flex items-center gap-2">
-                    <Calculator className="w-4 h-4 text-[#6B18A8]" />
-                    <span>Matriks Tarif Resmi Sertifikasi Halal KMA 784</span>
-                  </h3>
-                  <p className="text-xs text-neutral-500">
-                    Standar tarif batas atas dan bawah berdasarkan regulasi Kementerian Agama RI &amp; BPJPH.
-                  </p>
-                </div>
-              </div>
-
-              <Table variant="secondary" className="w-full">
-                <Table.ScrollContainer>
-                  <Table.Content aria-label="Matriks Tarif KMA 784">
-                    <Table.Header>
-                      <Table.Column isRowHeader>Skala Usaha</Table.Column>
-                      <Table.Column>Jenis Fasilitas</Table.Column>
-                      <Table.Column>Tarif BPJPH</Table.Column>
-                      <Table.Column>Tarif Pemeriksaan LPH</Table.Column>
-                      <Table.Column>Status Regulasi</Table.Column>
-                    </Table.Header>
-                    <Table.Body>
-                      {[
-                        { scale: 'Usaha Mikro (UMK)', fac: 'Pangan Sederhana (Self Declare / Reguler)', bpjph: 'Rp 300.000', lph: 'Rp 350.000', stat: 'KMA 784/2021' },
-                        { scale: 'Usaha Kecil', fac: '1 Lini Produksi Pabrik / Restoran', bpjph: 'Rp 650.000', lph: 'Rp 2.500.000', stat: 'KMA 784/2021' },
-                        { scale: 'Usaha Menengah', fac: 'Pabrik Kompleks & Bahan Tambahan Pangan', bpjph: 'Rp 1.250.000', lph: 'Rp 5.500.000', stat: 'KMA 784/2021' },
-                        { scale: 'Usaha Besar', fac: 'Industri Multinasional / Farmasi / RPH', bpjph: 'Rp 3.500.000', lph: 'Rp 12.500.000', stat: 'KMA 784/2021' },
-                        { scale: 'Semua Skala', fac: 'Uji Laboratorium DNA Porcine qPCR (Per Sampel)', bpjph: '-', lph: 'Rp 1.200.000', stat: 'ISO 17025' },
-                        { scale: 'Semua Skala', fac: 'Uji Laboratorium Etanol GC-FID (Per Sampel)', bpjph: '-', lph: 'Rp 650.000', stat: 'ISO 17025' },
-                      ].map((rate, i) => (
-                        <Table.Row key={i} className="border-b border-neutral-100 hover:bg-[#FAF7FD]/50">
-                          <Table.Cell className="font-bold text-xs text-neutral-800">{rate.scale}</Table.Cell>
-                          <Table.Cell className="text-xs text-neutral-600">{rate.fac}</Table.Cell>
-                          <Table.Cell className="text-xs font-mono font-semibold text-neutral-700">{rate.bpjph}</Table.Cell>
-                          <Table.Cell className="text-xs font-mono font-black text-[#6B18A8]">{rate.lph}</Table.Cell>
-                          <Table.Cell>
-                            <Chip size="sm" className="bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] font-bold text-[10px]">
-                              {rate.stat}
-                            </Chip>
-                          </Table.Cell>
-                        </Table.Row>
-                      ))}
-                    </Table.Body>
-                  </Table.Content>
-                </Table.ScrollContainer>
-              </Table>
-            </Card>
+            <RatesEditorTab
+              onLogAudit={(action, target) => {
+                addAuditLog(action, target, 'UPDATE');
+              }}
+            />
           )}
 
           {/* -------------------------------------------------------------
@@ -1979,39 +2701,50 @@ export const AdminDashboard: React.FC = () => {
                     Data jawaban resmi yang digunakan widget chatbot di pojok kanan bawah website untuk melayani masyarakat 24/7.
                   </p>
                 </div>
+
+                <Button
+                  variant="primary"
+                  onPress={() => setModalType('ADD_KB')}
+                  className="bg-[#6B18A8] text-white text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5"
+                >
+                  <Plus className="w-4 h-4 text-[#F5D32F]" />
+                  <span>Tambah Tanya Jawab AI</span>
+                </Button>
               </div>
 
               <div className="space-y-4">
-                {knowledgeBase.map((item) => (
+                {knowledgeBase.map((kb) => (
                   <div
-                    key={item.id}
-                    className="p-5 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 space-y-2 relative"
+                    key={kb.id}
+                    className="p-5 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 space-y-2 relative group"
                   >
-                    <div className="flex items-center justify-between gap-4">
+                    <div className="flex items-start justify-between gap-4">
                       <h4 className="text-xs font-bold text-neutral-900 flex items-center gap-2">
-                        <HelpCircle className="w-4 h-4 text-[#6B18A8]" />
-                        <span>{item.question}</span>
+                        <span className="w-5 h-5 rounded-lg bg-[#6B18A8] text-white text-[10px] flex items-center justify-center font-black">
+                          Q
+                        </span>
+                        <span>{kb.question}</span>
                       </h4>
                       <Button
                         size="sm"
                         variant="ghost"
-                        onPress={() => handleDeleteKb(item.id)}
-                        className="text-rose-500 hover:text-rose-700 hover:bg-rose-50 p-1.5 rounded-lg shrink-0"
+                        onPress={() => handleDeleteKb(kb.id)}
+                        className="text-rose-500 hover:text-rose-700 hover:bg-rose-50 p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </Button>
                     </div>
-                    <p className="text-xs text-neutral-600 leading-relaxed font-normal pl-6">
-                      {item.answer}
+                    <p className="text-xs text-neutral-600 pl-7 leading-relaxed">
+                      {kb.answer}
                     </p>
-                    {item.tags && (
-                      <div className="pl-6 pt-1 flex items-center gap-1.5 flex-wrap">
-                        {item.tags.split(',').map((t, i) => (
+                    {kb.tags && (
+                      <div className="pl-7 pt-1 flex items-center gap-1.5 flex-wrap">
+                        {kb.tags.split(',').map((tag, i) => (
                           <span
                             key={i}
-                            className="text-[9px] font-mono px-2 py-0.5 rounded-md bg-white border border-[#C9A5E8]/40 text-[#6B18A8]"
+                            className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white border border-[#C9A5E8]/30 text-purple-900"
                           >
-                            #{t.trim()}
+                            #{tag.trim()}
                           </span>
                         ))}
                       </div>
@@ -2023,55 +2756,149 @@ export const AdminDashboard: React.FC = () => {
           )}
 
           {/* -------------------------------------------------------------
-              TAB 10: AUDIT LOG (ACTIVITY HISTORY)
+              TAB 10: BACKUP & DATABASE (CPANEL FILE MANAGER INTEGRATION)
+          ------------------------------------------------------------- */}
+          {activeTab === 'BACKUP' && (
+            <BackupManagerTab
+              currentData={{
+                newsList,
+                announcements,
+                galleryList,
+                complaints,
+                surveys,
+                knowledgeBase,
+                ratesMatrix: getRatesMatrix(),
+                auditLogs,
+                usersList,
+              }}
+              onRestoreData={handleRestoreData}
+              onLogAudit={(action, target) => {
+                addAuditLog(action, target, 'UPDATE');
+              }}
+            />
+          )}
+
+          {/* -------------------------------------------------------------
+              TAB 11: AUDIT LOG (ACTIVITY HISTORY) WITH EXCEL EXPORT
           ------------------------------------------------------------- */}
           {activeTab === 'AUDIT_LOG' && (
             <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 space-y-6">
-              <div>
-                <h3 className="text-base font-bold text-[#292333] flex items-center gap-2">
-                  <History className="w-4 h-4 text-[#6B18A8]" />
-                  <span>Jejak Audit &amp; Riwayat Aktivitas Sistem</span>
-                </h3>
-                <p className="text-xs text-neutral-500">
-                  Pencatatan seluruh aksi perubahan data artikel, penanganan tiket, dan modifikasi konten untuk akuntabilitas.
-                </p>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <h3 className="text-base font-bold text-[#292333] flex items-center gap-2">
+                    <History className="w-4 h-4 text-[#6B18A8]" />
+                    <span>Jejak Audit &amp; Rekam Aktivitas Administrator</span>
+                  </h3>
+                  <p className="text-xs text-neutral-500">
+                    Rekam jejak setiap perubahan konten, pembaruan tiket, dan aksi sistem demi transparansi.
+                  </p>
+                </div>
+
+                <Button
+                  variant="outline"
+                  onPress={handleExportAuditLogsExcel}
+                  className="border-emerald-300 text-emerald-800 bg-emerald-50/50 hover:bg-emerald-100 text-xs font-bold rounded-xl px-3.5 py-2 flex items-center gap-1.5"
+                >
+                  <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Export ke Excel (.xlsx)</span>
+                </Button>
               </div>
 
-              <div className="space-y-3">
-                {auditLogs.map((log) => (
-                  <div
-                    key={log.id}
-                    className="p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 flex items-center justify-between gap-4"
+              {/* Filter Controls Bar */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30">
+                <div className="relative">
+                  <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
+                  <Input
+                    placeholder="Cari aktivitas, nama petugas, atau target aksi..."
+                    value={auditLogSearch}
+                    onChange={(e) => {
+                      setAuditLogSearch(e.target.value);
+                      setAuditLogPage(1);
+                    }}
+                    className="pl-9 text-xs rounded-xl w-full"
+                  />
+                </div>
+                <div>
+                  <select
+                    value={auditLogType}
+                    onChange={(e) => {
+                      setAuditLogType(e.target.value);
+                      setAuditLogPage(1);
+                    }}
+                    className="w-full p-2 rounded-xl border border-neutral-300 text-xs bg-white font-bold"
                   >
-                    <div className="flex items-center gap-3">
-                      <div className={cn(
-                        "w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs shrink-0",
-                        log.type === 'CREATE' ? "bg-emerald-100 text-emerald-800" :
-                        log.type === 'UPDATE' ? "bg-purple-100 text-[#6B18A8]" :
-                        log.type === 'DELETE' ? "bg-rose-100 text-rose-800" : "bg-neutral-200 text-neutral-800"
-                      )}>
-                        {log.type.slice(0, 3)}
-                      </div>
-                      <div>
-                        <div className="text-xs font-bold text-neutral-800">
-                          {log.action}: <span className="text-[#6B18A8] font-semibold">{log.target}</span>
-                        </div>
-                        <span className="text-[11px] text-neutral-400">
-                          Oleh {log.user} • {log.time}
-                        </span>
-                      </div>
-                    </div>
-                    <span className="text-[10px] font-mono text-neutral-400 font-semibold">
-                      {log.id}
-                    </span>
-                  </div>
-                ))}
+                    <option value="ALL">Semua Tipe Aksi</option>
+                    <option value="CREATE">CREATE (Tambah Data)</option>
+                    <option value="UPDATE">UPDATE (Perbarui Data)</option>
+                    <option value="DELETE">DELETE (Hapus Data)</option>
+                    <option value="LOGIN">LOGIN (Sesi Masuk)</option>
+                  </select>
+                </div>
               </div>
+
+              <Table variant="secondary" className="w-full">
+                <Table.ScrollContainer>
+                  <Table.Content aria-label="Jejak Audit Aktivitas">
+                    <Table.Header>
+                      <Table.Column isRowHeader>ID Log</Table.Column>
+                      <Table.Column>Petugas</Table.Column>
+                      <Table.Column>Tindakan</Table.Column>
+                      <Table.Column>Objek / Target</Table.Column>
+                      <Table.Column>Waktu</Table.Column>
+                      <Table.Column>Tipe</Table.Column>
+                    </Table.Header>
+                    <Table.Body>
+                      {paginatedAuditLogs.map((log) => (
+                        <Table.Row key={log.id} className="border-b border-neutral-100 hover:bg-[#FAF7FD]/50">
+                          <Table.Cell className="font-mono text-xs text-neutral-500 font-bold">
+                            {log.id}
+                          </Table.Cell>
+                          <Table.Cell className="font-bold text-xs text-neutral-800">
+                            {log.user}
+                          </Table.Cell>
+                          <Table.Cell className="text-xs text-neutral-700">
+                            {log.action}
+                          </Table.Cell>
+                          <Table.Cell className="text-xs text-[#6B18A8] font-bold">
+                            {log.target}
+                          </Table.Cell>
+                          <Table.Cell className="text-xs text-neutral-500 whitespace-nowrap">
+                            {log.time}
+                          </Table.Cell>
+                          <Table.Cell>
+                            <Chip
+                              size="sm"
+                              className={cn(
+                                'font-bold text-[9px]',
+                                log.type === 'CREATE' && 'bg-emerald-50 text-emerald-700 border border-emerald-200',
+                                log.type === 'UPDATE' && 'bg-blue-50 text-blue-700 border border-blue-200',
+                                log.type === 'DELETE' && 'bg-rose-50 text-rose-700 border border-rose-200',
+                                log.type === 'LOGIN' && 'bg-purple-50 text-purple-700 border border-purple-200'
+                              )}
+                            >
+                              {log.type}
+                            </Chip>
+                          </Table.Cell>
+                        </Table.Row>
+                      ))}
+                    </Table.Body>
+                  </Table.Content>
+                </Table.ScrollContainer>
+              </Table>
+
+              {/* HeroUI Pagination */}
+              {renderPaginationControls(
+                auditLogPage,
+                auditLogTotalPages,
+                filteredAuditLogs.length,
+                'log aktivitas',
+                setAuditLogPage
+              )}
             </Card>
           )}
 
           {/* -------------------------------------------------------------
-              TAB 11: PETUGAS & AUDITOR MANAGEMENT
+              TAB 12: PETUGAS & AUDITOR MANAGEMENT
           ------------------------------------------------------------- */}
           {activeTab === 'USERS' && (
             <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 space-y-6">
@@ -2126,52 +2953,118 @@ export const AdminDashboard: React.FC = () => {
           MODALS: HEROUI V3 MODAL DIALOGS
       ------------------------------------------------------------- */}
 
-      {/* MODAL: TAMBAH PENGUMUMAN */}
-      <Modal.Backdrop isOpen={modalType === 'ADD_ANNOUNCEMENT'} onOpenChange={(open) => !open && setModalType(null)}>
+      {/* MODAL: TAMBAH / EDIT PENGUMUMAN DENGAN UPLOAD PDF */}
+      <Modal.Backdrop
+        isOpen={modalType === 'ADD_ANNOUNCEMENT' || modalType === 'EDIT_ANNOUNCEMENT'}
+        onOpenChange={(open) => !open && setModalType(null)}
+      >
         <Modal.Container placement="center">
           <Modal.Dialog className="max-w-xl p-0 overflow-hidden rounded-3xl bg-white border border-[#C9A5E8]/40 shadow-2xl">
             <Modal.CloseTrigger />
             <form onSubmit={handleSaveAnnouncement}>
               <Modal.Header className="p-6 bg-gradient-to-r from-[#FAF7FD] to-white border-b border-[#C9A5E8]/30">
-                <Modal.Heading className="text-lg font-black text-[#292333]">
-                  Tambah Pengumuman Resmi / SK
+                <Modal.Heading className="text-lg font-black text-[#292333] flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-[#6B18A8]" />
+                  <span>
+                    {editingAnnouncementId
+                      ? 'Edit Surat Edaran & Dokumen PDF'
+                      : 'Upload & Terbitkan Surat Edaran Resmi (PDF)'}
+                  </span>
                 </Modal.Heading>
               </Modal.Header>
               <Modal.Body className="p-6 space-y-4">
                 <div>
                   <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
-                    Judul Pengumuman
+                    Judul Pengumuman / Nomor Surat Edaran
                   </label>
                   <Input
                     value={announcementForm.title}
                     onChange={(e) => setAnnouncementForm({ ...announcementForm, title: e.target.value })}
                     required
-                    placeholder="Contoh: Surat Edaran Penyesuaian Jadwal Fatwa..."
+                    placeholder="Contoh: Surat Edaran Penyesuaian Jadwal Fatwa Halal..."
                     className="w-full text-xs"
                   />
                 </div>
+
+                {/* PDF File Upload Zone */}
                 <div>
                   <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
-                    Nama File Lampiran (PDF)
+                    Unggah Berkas Lampiran PDF (Wajib Ada Link / File)
                   </label>
-                  <Input
-                    value={announcementForm.fileName}
-                    onChange={(e) => setAnnouncementForm({ ...announcementForm, fileName: e.target.value })}
-                    placeholder="Contoh: SE_Jadwal_Fatwa_2026.pdf"
-                    className="w-full text-xs"
-                  />
+                  <div className="border-2 border-dashed border-[#C9A5E8]/60 hover:border-[#6B18A8] transition-colors rounded-2xl p-4 bg-[#FAF7FD]/50 text-center">
+                    <input
+                      type="file"
+                      accept=".pdf,application/pdf"
+                      onChange={handlePdfFileUpload}
+                      id="pdf-file-input"
+                      className="hidden"
+                    />
+                    <label htmlFor="pdf-file-input" className="cursor-pointer block">
+                      <Upload className="w-6 h-6 text-[#6B18A8] mx-auto mb-1 opacity-80" />
+                      <span className="text-xs font-bold text-[#6B18A8] hover:underline">
+                        Pilih Berkas PDF dari Komputer
+                      </span>
+                      <span className="block text-[11px] text-neutral-500 mt-0.5">
+                        Maksimal ukuran file: 15 MB (.pdf)
+                      </span>
+                    </label>
+                  </div>
+
+                  {/* PDF Info Badge */}
+                  {announcementForm.fileName && (
+                    <div className="mt-2.5 p-3 rounded-xl bg-purple-50/70 border border-purple-200 flex items-center justify-between gap-3 text-xs">
+                      <div className="flex items-center gap-2 overflow-hidden">
+                        <FileText className="w-4 h-4 text-[#6B18A8] shrink-0" />
+                        <span className="font-bold text-neutral-800 truncate font-mono">
+                          {announcementForm.fileName}
+                        </span>
+                        {announcementForm.fileSize && (
+                          <span className="text-neutral-500 text-[11px] font-mono shrink-0">
+                            ({announcementForm.fileSize})
+                          </span>
+                        )}
+                      </div>
+
+                      {announcementForm.fileUrl && (
+                        <a
+                          href={announcementForm.fileUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          download={announcementForm.fileName}
+                          className="text-[#6B18A8] hover:text-[#58138c] font-bold text-[11px] flex items-center gap-1 shrink-0"
+                        >
+                          <Download className="w-3 h-3" />
+                          <span>Uji Unduh</span>
+                        </a>
+                      )}
+                    </div>
+                  )}
                 </div>
+
                 <div>
                   <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
-                    Deskripsi Ringkas
+                    Deskripsi Ringkas Dokumen
                   </label>
                   <TextArea
                     value={announcementForm.content}
                     onChange={(e) => setAnnouncementForm({ ...announcementForm, content: e.target.value })}
                     rows={3}
-                    placeholder="Keterangan singkat pengumuman..."
+                    placeholder="Keterangan singkat mengenai substansi surat edaran..."
                     className="w-full text-xs"
                   />
+                </div>
+
+                <div className="flex items-center gap-2 pt-1">
+                  <input
+                    type="checkbox"
+                    id="pinned-checkbox"
+                    checked={announcementForm.isPinned}
+                    onChange={(e) => setAnnouncementForm({ ...announcementForm, isPinned: e.target.checked })}
+                    className="w-4 h-4 text-[#6B18A8] rounded-md border-neutral-300 focus:ring-[#6B18A8]"
+                  />
+                  <label htmlFor="pinned-checkbox" className="text-xs font-bold text-neutral-700 cursor-pointer">
+                    Sematkan di Bagian Teratas (Pinned Notice)
+                  </label>
                 </div>
               </Modal.Body>
               <Modal.Footer className="p-4 sm:p-6 bg-[#FAF7FD] border-t border-[#C9A5E8]/30 flex justify-end gap-2">
@@ -2179,7 +3072,7 @@ export const AdminDashboard: React.FC = () => {
                   Batal
                 </Button>
                 <Button type="submit" variant="primary" className="bg-[#6B18A8] text-white text-xs font-bold rounded-xl px-5 py-2">
-                  Simpan Pengumuman
+                  {editingAnnouncementId ? 'Simpan Perubahan' : 'Terbitkan Pengumuman (PDF)'}
                 </Button>
               </Modal.Footer>
             </form>
@@ -2187,15 +3080,23 @@ export const AdminDashboard: React.FC = () => {
         </Modal.Container>
       </Modal.Backdrop>
 
-      {/* MODAL: TAMBAH FOTO GALERI */}
-      <Modal.Backdrop isOpen={modalType === 'ADD_GALLERY'} onOpenChange={(open) => !open && setModalType(null)}>
+      {/* MODAL: TAMBAH / EDIT FOTO GALERI */}
+      <Modal.Backdrop
+        isOpen={modalType === 'ADD_GALLERY' || modalType === 'EDIT_GALLERY'}
+        onOpenChange={(open) => !open && setModalType(null)}
+      >
         <Modal.Container placement="center">
           <Modal.Dialog className="max-w-xl p-0 overflow-hidden rounded-3xl bg-white border border-[#C9A5E8]/40 shadow-2xl">
             <Modal.CloseTrigger />
             <form onSubmit={handleSaveGallery}>
               <Modal.Header className="p-6 bg-gradient-to-r from-[#FAF7FD] to-white border-b border-[#C9A5E8]/30">
-                <Modal.Heading className="text-lg font-black text-[#292333]">
-                  Upload &amp; Publikasi Foto Galeri Kegiatan
+                <Modal.Heading className="text-lg font-black text-[#292333] flex items-center gap-2">
+                  <ImageIcon className="w-5 h-5 text-[#6B18A8]" />
+                  <span>
+                    {editingGalleryId
+                      ? 'Edit Dokumentasi Foto Galeri Kegiatan'
+                      : 'Upload & Publikasi Foto Galeri Kegiatan'}
+                  </span>
                 </Modal.Heading>
               </Modal.Header>
               <Modal.Body className="p-6 space-y-4">
@@ -2219,7 +3120,7 @@ export const AdminDashboard: React.FC = () => {
                     <select
                       value={galleryForm.category}
                       onChange={(e) => setGalleryForm({ ...galleryForm, category: e.target.value })}
-                      className="w-full p-2.5 rounded-xl border border-neutral-300 text-xs bg-white"
+                      className="w-full p-2.5 rounded-xl border border-neutral-300 text-xs bg-white font-bold"
                     >
                       <option value="Audit Lapangan">Audit Lapangan</option>
                       <option value="Laboratorium ISO 17025">Laboratorium ISO 17025</option>
@@ -2246,6 +3147,7 @@ export const AdminDashboard: React.FC = () => {
                     </select>
                   </div>
                 </div>
+
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
@@ -2265,20 +3167,33 @@ export const AdminDashboard: React.FC = () => {
                     <Input
                       value={galleryForm.location}
                       onChange={(e) => setGalleryForm({ ...galleryForm, location: e.target.value })}
-                      placeholder="Contoh: Kawasan Industri..."
+                      placeholder="Contoh: Kawasan Industri MM2100..."
                       className="w-full text-xs"
                     />
                   </div>
                 </div>
+
                 <div>
                   <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
-                    Uraian Konteks Kegiatan
+                    Standar Regulasi / Akreditasi
+                  </label>
+                  <Input
+                    value={galleryForm.standard}
+                    onChange={(e) => setGalleryForm({ ...galleryForm, standard: e.target.value })}
+                    placeholder="Contoh: KMA 784 / ISO 17025"
+                    className="w-full text-xs"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
+                    Uraian Konteks Kegiatan Lengkap
                   </label>
                   <TextArea
                     value={galleryForm.fullStory}
                     onChange={(e) => setGalleryForm({ ...galleryForm, fullStory: e.target.value })}
                     rows={3}
-                    placeholder="Uraian detail pelaksanaan audit atau uji lab..."
+                    placeholder="Uraian detail pelaksanaan audit atau uji laboratorium..."
                     className="w-full text-xs"
                   />
                 </div>
@@ -2288,7 +3203,7 @@ export const AdminDashboard: React.FC = () => {
                   Batal
                 </Button>
                 <Button type="submit" variant="primary" className="bg-[#6B18A8] text-white text-xs font-bold rounded-xl px-5 py-2">
-                  Simpan ke Galeri
+                  {editingGalleryId ? 'Simpan Perubahan' : 'Simpan ke Galeri'}
                 </Button>
               </Modal.Footer>
             </form>

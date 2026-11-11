@@ -13,6 +13,7 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: [
+      'xlsx',
       '@tinymce/tinymce-react',
       'tinymce/tinymce',
       'tinymce/models/dom/model',
