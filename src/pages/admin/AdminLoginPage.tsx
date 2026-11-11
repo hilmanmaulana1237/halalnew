@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Card, Input } from '@heroui/react';
-import { ShieldCheck, Lock, Mail, AlertTriangle } from 'lucide-react';
+import { ShieldCheck, Lock, Mail, AlertTriangle, ArrowRight } from 'lucide-react';
 import { api } from '@/services/api';
+import { Spotlight } from '@/components/ui/spotlight';
+import { YellowHighlight } from '@/components/ui/decorative-shapes';
 
 export const AdminLoginPage: React.FC = () => {
   const [email, setEmail] = useState('admin@lph-uinsgd.ac.id');
@@ -33,7 +35,7 @@ export const AdminLoginPage: React.FC = () => {
           JSON.stringify({
             name: 'Administrator LPH UIN SGD',
             email: 'admin@lph-uinsgd.ac.id',
-            role: 'ADMIN',
+            role: 'SUPER_ADMIN',
           })
         );
         navigate('/admin');
@@ -45,23 +47,39 @@ export const AdminLoginPage: React.FC = () => {
     }
   };
 
+  const handleDirectDemoLogin = () => {
+    localStorage.setItem('lph_admin_token', 'mock_jwt_token_2026');
+    localStorage.setItem(
+      'lph_admin_user',
+      JSON.stringify({
+        name: 'Administrator LPH UIN SGD',
+        email: 'admin@lph-uinsgd.ac.id',
+        role: 'SUPER_ADMIN',
+      })
+    );
+    navigate('/admin');
+  };
+
   return (
-    <div className="min-h-[85vh] flex items-center justify-center bg-neutral-50 p-4">
-      <Card className="w-full max-w-md bg-white rounded-3xl border border-neutral-200/80 shadow-2xl p-8 space-y-6">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#180828] via-[#240638] to-[#180828] p-4 relative overflow-hidden">
+      {/* Aceternity UI Spotlight */}
+      <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="#F5D32F" />
+
+      <Card className="w-full max-w-md bg-white rounded-3xl border border-[#C9A5E8]/40 shadow-2xl p-8 space-y-6 relative z-10">
         <div className="text-center space-y-2">
-          <div className="w-14 h-14 rounded-2xl bg-[#272353] text-white flex items-center justify-center mx-auto shadow-md">
-            <ShieldCheck className="w-8 h-8 text-emerald-400" />
+          <div className="w-14 h-14 rounded-2xl bg-[#6B18A8] text-white flex items-center justify-center mx-auto shadow-lg shadow-purple-950/20 border border-[#F5D32F]/40">
+            <ShieldCheck className="w-8 h-8 text-[#F5D32F]" />
           </div>
-          <h2 className="text-2xl font-extrabold text-[#272353]">
-            Portal Admin LPH UIN SGD
+          <h2 className="text-2xl font-black text-[#292333] tracking-tight">
+            Console Admin <YellowHighlight>LPH UIN SGD</YellowHighlight>
           </h2>
           <p className="text-xs text-neutral-500">
-            Masuk untuk mengelola tiket pengaduan, survei kepuasan, berita, dan live chat.
+            Masuk untuk mengelola berita, pengumuman, galeri kegiatan, tiket pengaduan, dan survei kepuasan.
           </p>
         </div>
 
         {error && (
-          <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-2">
+          <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-2">
             <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0" />
             <span>{error}</span>
           </div>
@@ -77,7 +95,7 @@ export const AdminLoginPage: React.FC = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full"
+              className="w-full text-xs"
             />
           </div>
 
@@ -90,7 +108,7 @@ export const AdminLoginPage: React.FC = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full"
+              className="w-full text-xs"
             />
           </div>
 
@@ -98,17 +116,26 @@ export const AdminLoginPage: React.FC = () => {
             <Button
               type="submit"
               variant="primary"
-              fullWidth
-              isPending={loading}
-              className="bg-[#272353] hover:bg-[#1b183a] text-white font-bold py-3 rounded-xl shadow-md text-sm"
+              className="w-full bg-[#6B18A8] hover:bg-[#521082] text-white font-bold py-3 rounded-xl shadow-lg shadow-purple-950/20 text-xs flex items-center justify-center gap-2"
             >
-              Masuk Dashboard
+              <span>{loading ? 'Memverifikasi...' : 'Masuk Dashboard'}</span>
+              <ArrowRight className="w-4 h-4 text-[#F5D32F]" />
             </Button>
           </div>
         </form>
 
-        <div className="p-3 rounded-xl bg-neutral-50 border border-neutral-100 text-[11px] text-neutral-500 text-center">
-          Akun Demo: <strong>admin@lph-uinsgd.ac.id</strong> / <strong>admin123456</strong>
+        <div className="pt-2 border-t border-neutral-100 flex flex-col gap-2">
+          <Button
+            variant="secondary"
+            onPress={handleDirectDemoLogin}
+            className="w-full bg-[#FAF7FD] hover:bg-[#F5EDFB] text-[#6B18A8] border border-[#C9A5E8]/60 text-xs font-bold py-2.5 rounded-xl"
+          >
+            Akses Langsung Mode Demo (One-Click)
+          </Button>
+
+          <p className="text-[10px] text-neutral-400 text-center">
+            Kredensial Default: admin@lph-uinsgd.ac.id / admin123456
+          </p>
         </div>
       </Card>
     </div>
