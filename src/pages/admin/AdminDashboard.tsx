@@ -2533,22 +2533,6 @@ export const AdminDashboard: React.FC = () => {
 
                       <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 space-y-4">
                         <div>
-                          <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wider mb-1.5">
-                            Judul Artikel Berita
-                          </label>
-                          <Input
-                            value={postForm.title}
-                            onChange={(e) => {
-                              const t = e.target.value;
-                              setPostForm({
-                                ...postForm,
-                                title: t,
-                                slug: t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
-                              });
-                            }}
-                            placeholder="Contoh: Akselerasi Audit Sertifikasi Halal di Jawa Barat..."
-                            className="w-full text-sm font-bold rounded-xl"
-                          />
                           <div className="flex items-center justify-between mb-1.5">
                             <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wider">
                               {activeEditorLang === 'ID'
@@ -2590,10 +2574,9 @@ export const AdminDashboard: React.FC = () => {
 
                         <div>
                           <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wider mb-1.5">
-                            Permalink / URL Slug
                             Permalink / URL Slug (Global)
                           </label>
-                          <div className="flex items-center gap-2 p-2 rounded-xl bg-[#FAF7FD] border border-[#C9A5E8]/30">
+                          <div className="flex items-center gap-2 p-2.5 rounded-xl bg-[#FAF7FD] border border-[#C9A5E8]/30">
                             <span className="text-[11px] font-mono text-neutral-400 pl-2">
                               /berita/
                             </span>
@@ -2608,16 +2591,6 @@ export const AdminDashboard: React.FC = () => {
                         </div>
 
                         <div>
-                          <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wider mb-1.5">
-                            Ringkasan Singkat (Excerpt)
-                          </label>
-                          <TextArea
-                            value={postForm.excerpt}
-                            onChange={(e) => setPostForm({ ...postForm, excerpt: e.target.value })}
-                            rows={3}
-                            placeholder="Ringkasan 2-3 kalimat untuk kartu preview di beranda dan hasil pencarian Google..."
-                            className="w-full text-xs rounded-xl"
-                          />
                           <div className="flex items-center justify-between mb-1.5">
                             <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wider">
                               {activeEditorLang === 'ID'

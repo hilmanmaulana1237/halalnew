@@ -130,7 +130,7 @@ export const PriceCalculatorPage: React.FC = () => {
   return (
     <div className="flex flex-col w-full min-h-screen bg-gradient-to-b from-[#FAF7FD] via-white to-[#F7F2FB] pb-24">
       {/* Header Banner */}
-      <section className="relative py-20 lg:py-24 bg-[#1a0726] text-white overflow-hidden text-center">
+      <section className="relative py-14 sm:py-20 lg:py-24 bg-[#1a0726] text-white overflow-hidden text-center">
         <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[#4B0D78] via-[#6B18A8] via-[#F5D32F] to-[#6B18A8]" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#1a0726] via-[#4a0d5c] to-[#1a0726] opacity-95" />
         <SparklesCore
@@ -145,10 +145,10 @@ export const PriceCalculatorPage: React.FC = () => {
             <Calculator className="w-3.5 h-3.5 text-[#eab308]" />
             {isEn ? 'OFFICIAL HALAL TARIFF ESTIMATION' : 'ESTIMASI TARIF SERTIFIKASI HALAL REGULER'}
           </div>
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white drop-shadow-2xl leading-tight">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white drop-shadow-2xl leading-tight">
             ESTIMASI TARIF <span className="text-[#F5D32F]">SKEMA REGULER</span>
           </h1>
-          <p className="mt-3 text-base sm:text-lg text-purple-200 font-medium">
+          <p className="mt-2 text-sm sm:text-base text-purple-200 font-bold">
             Lembaga Pemeriksa Halal (LPH) UIN Sunan Gunung Djati Bandung
           </p>
           <p className="mt-2 text-xs sm:text-sm text-neutral-300 max-w-2xl mx-auto leading-relaxed">
@@ -159,13 +159,38 @@ export const PriceCalculatorPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Main Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-30 space-y-8">
+      {/* Main Container - Extended Proportions & Responsive Spacing */}
+      <div className="w-full max-w-[1440px] xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-12 -mt-6 sm:-mt-10 relative z-30 space-y-6 sm:space-y-8">
+        
+        {/* Prominent Estimation Warning Banner */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3.5 p-4 sm:p-5 rounded-2xl bg-white border-2 border-[#F5D32F] shadow-lg shadow-yellow-950/5">
+          <div className="flex items-start gap-3">
+            <div className="w-9 h-9 rounded-xl bg-[#FFF7D1] text-[#713f12] flex items-center justify-center shrink-0 border border-[#F5D32F]/60 mt-0.5">
+              <AlertCircle className="w-5 h-5 text-amber-700" />
+            </div>
+            <div>
+              <h4 className="text-xs sm:text-sm font-extrabold text-[#713f12] uppercase tracking-wide">
+                {isEn ? 'ESTIMATION STAGE NOTICE (NOT A FIXED FEE)' : 'PEMBERITAHUAN: SELURUH NOMINAL MASIH TAHAP ESTIMASI (BUKAN BIAYA FIX)'}
+              </h4>
+              <p className="text-xs text-neutral-600 mt-0.5 leading-relaxed">
+                {isEn
+                  ? 'Tariff estimates are benchmarked against BPJPH Decree No. 22 of 2024 and include institutional fee relief discounts provided by LPH UIN SGD Bandung. Final official invoice will be generated directly via SIHALAL BPJPH.'
+                  : 'Estimasi tarif mengacu pada Kepkaban 22 Tahun 2024 dengan potongan harga khusus dari LPH UIN SGD Bandung. Tagihan resmi final diterbitkan melalui invoice billing SIHALAL BPJPH.'}
+              </p>
+            </div>
+          </div>
+          <div className="shrink-0 pl-12 sm:pl-0">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] whitespace-nowrap">
+              <Sparkles className="w-3 h-3 text-amber-600" />
+              {isEn ? 'Official LPH Rate' : 'Diskon Khusus LPH'}
+            </span>
+          </div>
+        </div>
 
         {/* 2-Column Section: Flyer Card (Left) & Interactive Calculator (Right) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
           {/* Left Column: Official Flyer Visual (Col 5) */}
-          <div className="lg:col-span-5 space-y-4">
+          <div className="lg:col-span-5 space-y-4 lg:sticky lg:top-28">
             <Card className="bg-white rounded-3xl border border-[#C9A5E8]/40 shadow-xl overflow-hidden p-4 sm:p-6 space-y-4">
               <div className="flex items-center justify-between pb-2 border-b border-neutral-100">
                 <div className="flex items-center gap-2">
@@ -174,32 +199,35 @@ export const PriceCalculatorPage: React.FC = () => {
                     {isEn ? 'Official Tariff Flyer' : 'Flyer Resmi Skema Reguler'}
                   </h3>
                 </div>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#FAF7FD] text-[#6B18A8] border border-[#C9A5E8]/50">
+                  Resmi LPH
+                </span>
               </div>
 
               {/* Flyer Image with Zoom Preview */}
               <div
-                className="relative rounded-2xl overflow-hidden border border-neutral-200 bg-neutral-100 group cursor-pointer shadow-inner"
+                className="relative rounded-2xl overflow-hidden border border-neutral-200 bg-neutral-100 group cursor-pointer shadow-inner max-h-[380px] sm:max-h-[460px] lg:max-h-none"
                 onClick={() => setIsFlyerZoomed(true)}
               >
                 <img
                   src="/assets/images/flyer-skema-reguler.jpg"
                   alt="Flyer Sertifikasi Halal Skema Reguler LPH UIN SGD Bandung"
-                  className="w-full h-auto object-cover group-hover:scale-102 transition-transform duration-300"
+                  className="w-full h-auto object-cover object-top group-hover:scale-102 transition-transform duration-300"
                 />
-                <div className="absolute inset-0 bg-[#3B074A]/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white font-bold text-xs">
-                  <ZoomIn className="w-5 h-5 text-[#F5D32F]" />
-                  <span>{isEn ? 'Click to Enlarge Flyer' : 'Klik untuk Memperbesar Flyer'}</span>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4 text-white font-bold text-xs gap-2">
+                  <ZoomIn className="w-4 h-4 text-[#F5D32F]" />
+                  <span>{isEn ? 'Tap to Enlarge Flyer' : 'Ketuk untuk Memperbesar Flyer'}</span>
                 </div>
               </div>
 
               <div className="flex items-center gap-2 pt-1">
                 <Button
                   variant="primary"
-                  className="flex-1 bg-[#6B18A8] hover:bg-[#58138a] text-white text-xs font-bold py-2.5 rounded-xl cursor-pointer flex items-center justify-center gap-1.5 shadow-sm"
+                  className="flex-1 bg-[#6B18A8] hover:bg-[#58138a] text-white text-xs font-bold py-2.5 rounded-xl cursor-pointer flex items-center justify-center gap-1.5 shadow-xs"
                   onPress={() => setIsFlyerZoomed(true)}
                 >
                   <ZoomIn className="w-3.5 h-3.5 text-[#F5D32F]" />
-                  <span>{isEn ? 'View Full Flyer' : 'Buka Flyer Penuh'}</span>
+                  <span>{isEn ? 'Enlarge' : 'Perbesar Flyer'}</span>
                 </Button>
                 <a
                   href="/assets/images/flyer-skema-reguler.jpg"
@@ -211,18 +239,16 @@ export const PriceCalculatorPage: React.FC = () => {
                     className="w-full border-neutral-300 text-neutral-700 text-xs font-bold py-2.5 rounded-xl cursor-pointer flex items-center justify-center gap-1.5 hover:bg-neutral-50"
                   >
                     <Download className="w-3.5 h-3.5 text-[#6B18A8]" />
-                    <span>{isEn ? 'Download Flyer' : 'Unduh Flyer'}</span>
+                    <span>{isEn ? 'Download (.jpg)' : 'Unduh (.jpg)'}</span>
                   </Button>
                 </a>
               </div>
-
-
             </Card>
           </div>
 
           {/* Right Column: Interactive Estimation Simulator (Col 7) */}
           <div className="lg:col-span-7 space-y-6">
-            <Card className="bg-white rounded-3xl border border-[#C9A5E8]/40 shadow-xl p-6 sm:p-8 space-y-6">
+            <Card className="bg-white rounded-3xl border border-[#C9A5E8]/40 shadow-xl p-4 sm:p-6 lg:p-8 space-y-5 sm:space-y-6">
               <div className="border-b border-neutral-100 pb-4">
                 <div className="inline-flex items-center gap-1.5 text-xs font-black text-[#6B18A8] uppercase tracking-wider">
                   <Calculator className="w-3.5 h-3.5" />
@@ -244,7 +270,7 @@ export const PriceCalculatorPage: React.FC = () => {
                   <MapPin className="w-3.5 h-3.5 text-[#6B18A8]" />
                   <span>{isEn ? 'Enterprise Location / Region' : 'Wilayah / Lokasi Pelaku Usaha'}</span>
                 </label>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-2.5">
                   {[
                     { id: 'BANDUNG', label: 'Kota Bandung', sub: 'Mulai Rp1,82 Jt' },
                     { id: 'JABAR', label: 'Jawa Barat', sub: 'Mulai Rp3,3 Jt' },
@@ -254,13 +280,14 @@ export const PriceCalculatorPage: React.FC = () => {
                       key={r.id}
                       type="button"
                       onClick={() => setSelectedRegion(r.id as any)}
-                      className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between ${selectedRegion === r.id
-                        ? 'bg-[#6B18A8] text-white border-[#6B18A8] shadow-md shadow-purple-950/20'
-                        : 'bg-[#FAF7FD] text-neutral-700 border-[#C9A5E8]/40 hover:bg-white hover:border-[#6B18A8]'
-                        }`}
+                      className={`p-3 sm:p-3.5 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between min-h-[56px] sm:min-h-[64px] ${
+                        selectedRegion === r.id
+                          ? 'bg-[#6B18A8] text-white border-[#6B18A8] shadow-md shadow-purple-950/20'
+                          : 'bg-[#FAF7FD] text-neutral-700 border-[#C9A5E8]/40 hover:bg-white hover:border-[#6B18A8]'
+                      }`}
                     >
                       <span className="font-bold text-xs sm:text-sm">{r.label}</span>
-                      <span className={`text-[10px] font-semibold mt-1 ${selectedRegion === r.id ? 'text-[#F5D32F]' : 'text-[#6B18A8]'}`}>
+                      <span className={`text-[11px] font-bold mt-1 ${selectedRegion === r.id ? 'text-[#F5D32F]' : 'text-[#6B18A8]'}`}>
                         {r.sub}
                       </span>
                     </button>
@@ -275,27 +302,27 @@ export const PriceCalculatorPage: React.FC = () => {
                     <Layers className="w-3.5 h-3.5 text-[#6B18A8]" />
                     <span>{isEn ? 'Business Scale' : 'Skala Usaha'}</span>
                   </label>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-2.5">
                     {[
                       { id: 'MIKRO_KECIL', label: 'Mikro / Kecil', desc: 'UMKM & Industri Kecil' },
                       { id: 'MENENGAH', label: 'Menengah', desc: 'Industri Menengah' },
                       { id: 'BESAR', label: 'Besar', desc: 'Korporasi & Pabrik' },
                     ].map((s) => (
-                      <Button
+                      <button
                         key={s.id}
                         type="button"
-                        variant={businessScale === s.id ? 'primary' : 'outline'}
-                        className={`text-xs font-bold py-3 rounded-xl transition-all cursor-pointer h-auto flex flex-col items-start ${businessScale === s.id
-                          ? 'bg-[#6B18A8] text-white shadow-xs'
-                          : 'border-neutral-200 text-neutral-700 hover:bg-[#FAF7FD]'
-                          }`}
-                        onPress={() => setBusinessScale(s.id as any)}
+                        onClick={() => setBusinessScale(s.id as any)}
+                        className={`p-3 sm:p-3.5 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between min-h-[56px] sm:min-h-[64px] ${
+                          businessScale === s.id
+                            ? 'bg-[#6B18A8] text-white border-[#6B18A8] shadow-md shadow-purple-950/20'
+                            : 'bg-[#FAF7FD] text-neutral-700 border-[#C9A5E8]/40 hover:bg-white hover:border-[#6B18A8]'
+                        }`}
                       >
-                        <span className="font-bold text-xs">{s.label}</span>
-                        <span className={`text-[10px] font-normal ${businessScale === s.id ? 'text-purple-200' : 'text-neutral-400'}`}>
+                        <span className="font-bold text-xs sm:text-sm">{s.label}</span>
+                        <span className={`text-[10px] font-medium mt-1 ${businessScale === s.id ? 'text-purple-200' : 'text-neutral-500'}`}>
                           {s.desc}
                         </span>
-                      </Button>
+                      </button>
                     ))}
                   </div>
                 </div>
@@ -307,7 +334,7 @@ export const PriceCalculatorPage: React.FC = () => {
                   <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wide mb-2">
                     {isEn ? 'Number of Product Variants (Jawa Barat Scheme)' : 'Jumlah Varian Produk (Sesuai Skema Jabar di Flyer)'}
                   </label>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5">
                     {[
                       { tier: 50, label: '0 - 50 Produk', price: 'Rp3.300.000' },
                       { tier: 100, label: '50 - 100 Produk', price: 'Rp3.900.000' },
@@ -318,13 +345,14 @@ export const PriceCalculatorPage: React.FC = () => {
                         key={p.tier}
                         type="button"
                         onClick={() => setProductTier(p.tier)}
-                        className={`p-2.5 rounded-xl border text-center transition-all cursor-pointer flex flex-col items-center justify-center ${productTier === p.tier
-                          ? 'bg-[#6B18A8] text-white border-[#6B18A8] shadow-xs'
-                          : 'bg-neutral-50 text-neutral-700 border-neutral-200 hover:bg-white'
-                          }`}
+                        className={`p-2.5 sm:p-3 rounded-2xl border text-center transition-all cursor-pointer flex flex-col items-center justify-center min-h-[56px] sm:min-h-[64px] ${
+                          productTier === p.tier
+                            ? 'bg-[#6B18A8] text-white border-[#6B18A8] shadow-xs'
+                            : 'bg-neutral-50 text-neutral-700 border-neutral-200 hover:bg-white'
+                        }`}
                       >
-                        <span className="font-bold text-xs">{p.label}</span>
-                        <span className={`text-[10px] font-extrabold mt-0.5 ${productTier === p.tier ? 'text-[#F5D32F]' : 'text-[#6B18A8]'}`}>
+                        <span className="font-bold text-[11px] sm:text-xs">{p.label}</span>
+                        <span className={`text-[10px] sm:text-[11px] font-extrabold mt-1 ${productTier === p.tier ? 'text-[#F5D32F]' : 'text-[#6B18A8]'}`}>
                           {p.price}
                         </span>
                       </button>
@@ -334,26 +362,31 @@ export const PriceCalculatorPage: React.FC = () => {
               )}
 
               {/* Result Showcase Card */}
-              <div className="p-6 rounded-2xl bg-gradient-to-r from-[#FAF7FD] to-purple-50/70 border-2 border-[#C9A5E8]/60 shadow-sm space-y-3">
+              <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-[#FAF7FD] to-purple-50/70 border-2 border-[#C9A5E8]/60 shadow-sm space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold uppercase tracking-wider text-[#6B18A8]">
-                    {isEn ? 'Estimated Rate' : 'Estimasi Tarif Layanan'}
+                    {isEn ? 'Estimated Service Rate' : 'Estimasi Tarif Layanan'}
                   </span>
                   <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F]">
                     {isEn ? 'Stage: Estimation' : 'Tahap: Estimasi'}
                   </span>
                 </div>
 
-                <div className="text-3xl sm:text-4xl font-black text-[#6B18A8] font-mono">
+                <div className="text-2xl sm:text-4xl font-black text-[#6B18A8] font-mono break-words">
                   {currentEstimate.label}
                 </div>
 
-                <p className="text-xs text-neutral-600 leading-relaxed">
+                <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-medium">
                   {currentEstimate.notes}
                 </p>
 
+                <div className="pt-2 flex flex-wrap items-center gap-2 text-[11px] text-[#4B0D78] font-semibold border-t border-[#C9A5E8]/30">
+                  <Clock className="w-3.5 h-3.5 text-[#6B18A8] shrink-0" />
+                  <span>{isEn ? 'Estimated Duration: 2 Weeks post-payment (Fatwa session 2x / month)' : 'Estimasi Durasi: 2 Minggu setelah pelunasan (Sidang fatwa 2x sebulan)'}</span>
+                </div>
+
                 {selectedRegion === 'INTERNATIONAL' && (
-                  <div className="pt-2">
+                  <div className="pt-1">
                     <span className="inline-block px-3 py-1 rounded-lg bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200">
                       🌍 Layanan Pemeriksaan Luar Negeri / Internasional
                     </span>
@@ -374,7 +407,7 @@ export const PriceCalculatorPage: React.FC = () => {
                   <Button
                     variant="primary"
                     fullWidth
-                    className="bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold py-3.5 rounded-xl shadow-md flex items-center justify-center gap-2 text-xs sm:text-sm cursor-pointer"
+                    className="bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold min-h-[48px] py-3 rounded-xl shadow-md flex items-center justify-center gap-2 text-xs sm:text-sm cursor-pointer"
                   >
                     <Phone className="w-4 h-4 text-[#3B074A]" />
                     <span>{isEn ? 'Consult via Official WhatsApp' : 'Konsultasi Sertifikasi (WhatsApp)'}</span>
@@ -390,7 +423,7 @@ export const PriceCalculatorPage: React.FC = () => {
                   <Button
                     variant="outline"
                     fullWidth
-                    className="border-neutral-300 text-neutral-700 hover:text-[#6B18A8] font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 text-xs sm:text-sm cursor-pointer hover:bg-neutral-50"
+                    className="border-neutral-300 text-neutral-700 hover:text-[#6B18A8] font-bold min-h-[48px] py-3 rounded-xl flex items-center justify-center gap-2 text-xs sm:text-sm cursor-pointer hover:bg-neutral-50"
                   >
                     <span>{isEn ? 'Open SIHALAL Portal' : 'Buka Portal SIHALAL BPJPH'}</span>
                     <ExternalLink className="w-4 h-4" />

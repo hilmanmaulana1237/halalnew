@@ -258,7 +258,7 @@ export const SatisfactionPage: React.FC = () => {
   return (
     <div className="flex flex-col w-full min-h-screen bg-gradient-to-b from-[#FAF7FD] via-white to-[#F7F2FB] pb-24">
       {/* Banner in Royal Purple Gradient with Yellow Accents & Sparkles */}
-      <section className="relative py-20 lg:py-24 bg-[#1a0726] text-white overflow-hidden text-center">
+      <section className="relative py-14 sm:py-20 lg:py-24 bg-[#1a0726] text-white overflow-hidden text-center">
         <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[#4B0D78] via-[#6B18A8] via-[#F5D32F] to-[#6B18A8]" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#1a0726] via-[#4a0d5c] to-[#1a0726] opacity-95" />
         <SparklesCore
@@ -268,18 +268,18 @@ export const SatisfactionPage: React.FC = () => {
           particleDensity={35}
           particleColor={['#ffffff', '#f5d0fe', '#F5D32F', '#d8b4fe']}
         />
-        <div className="relative z-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFF7D1] text-[#713f12] text-xs font-extrabold uppercase tracking-wider mb-4 border border-[#F5D32F] shadow-xs">
             <Smile className="w-3.5 h-3.5 text-[#eab308]" />
             {isEn ? 'OFFICIAL CUSTOMER SATISFACTION QUESTIONNAIRE' : 'KUESIONER KEPUASAN PELANGGAN RESMI'}
           </div>
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white drop-shadow-2xl leading-tight">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white drop-shadow-2xl leading-tight">
             KUESIONER KEPUASAN <span className="text-[#F5D32F]">PELANGGAN</span>
           </h1>
-          <p className="mt-2 text-base sm:text-lg font-bold text-purple-200">
+          <p className="mt-2 text-sm sm:text-base font-bold text-purple-200">
             Lembaga Pemeriksa Halal (LPH) UIN Sunan Gunung Djati Bandung
           </p>
-          <p className="mt-3 text-sm sm:text-base text-neutral-300 max-w-2xl mx-auto leading-relaxed font-normal">
+          <p className="mt-2 text-xs sm:text-sm text-neutral-300 max-w-2xl mx-auto leading-relaxed font-normal">
             {isEn
               ? 'This questionnaire is conducted as an objective evaluation and basis for future institutional enhancement of LPH UIN SGD Bandung.'
               : 'Kuesioner ini dilakukan sebagai penilaian dan bahan perbaikan bagi lembaga untuk kedepannya.'}
@@ -288,17 +288,17 @@ export const SatisfactionPage: React.FC = () => {
       </section>
 
       {/* Main Container */}
-      <div className="max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 -mt-8 relative z-30">
-        <Card className="bg-white rounded-3xl border border-[#C9A5E8]/40 shadow-2xl p-6 sm:p-10 space-y-8">
+      <div className="w-full max-w-5xl xl:max-w-6xl mx-auto px-3.5 sm:px-6 lg:px-8 -mt-6 sm:-mt-10 relative z-30">
+        <Card className="bg-white rounded-3xl border border-[#C9A5E8]/40 shadow-2xl p-4 sm:p-8 lg:p-10 space-y-6 sm:space-y-8">
           {submitted ? (
-            <div className="p-8 sm:p-12 text-center space-y-5">
-              <div className="w-20 h-20 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center justify-center mx-auto shadow-md">
-                <CheckCircle2 className="w-10 h-10" />
+            <div className="p-6 sm:p-12 text-center space-y-5">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center justify-center mx-auto shadow-md">
+                <CheckCircle2 className="w-8 h-8 sm:w-10 sm:h-10" />
               </div>
-              <h3 className="text-2xl sm:text-3xl font-black text-[#292333]">
+              <h3 className="text-xl sm:text-3xl font-black text-[#292333]">
                 {isEn ? 'Thank You for Your Valuable Assessment!' : 'Terima Kasih Atas Partisipasi Anda!'}
               </h3>
-              <p className="text-sm sm:text-base text-neutral-600 max-w-lg mx-auto leading-relaxed">
+              <p className="text-xs sm:text-base text-neutral-600 max-w-lg mx-auto leading-relaxed">
                 {isEn
                   ? 'Your feedback has been securely registered in the quality management system of LPH UIN Sunan Gunung Djati Bandung for continuous service perfection.'
                   : 'Jawaban dan masukan Anda telah tercatat dengan aman pada sistem penjaminan mutu LPH UIN Sunan Gunung Djati Bandung untuk penyempurnaan layanan pemeriksaan kehalalan produk.'}
@@ -306,7 +306,7 @@ export const SatisfactionPage: React.FC = () => {
               <div className="pt-4 flex justify-center">
                 <Button
                   variant="primary"
-                  className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-extrabold text-sm px-7 py-3 rounded-xl shadow-md cursor-pointer"
+                  className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-extrabold text-xs sm:text-sm px-6 py-3 rounded-xl shadow-md cursor-pointer"
                   onPress={() => setSubmitted(false)}
                 >
                   {isEn ? 'Submit Another Response' : 'Isi Kuesioner Baru'}
@@ -314,9 +314,9 @@ export const SatisfactionPage: React.FC = () => {
               </div>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-8">
+            <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
               {/* Privacy Notice Banner */}
-              <div className="flex items-center gap-3 p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/40 text-xs sm:text-sm text-[#4B0D78]">
+              <div className="flex items-center gap-3 p-3.5 sm:p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/40 text-xs sm:text-sm text-[#4B0D78]">
                 <ShieldCheck className="w-5 h-5 text-[#6B18A8] shrink-0" />
                 <span>
                   <strong>{isEn ? 'Confidential Evaluation:' : 'Penilaian Dijamin Kerahasiaannya:'}</strong>{' '}
@@ -327,25 +327,25 @@ export const SatisfactionPage: React.FC = () => {
               </div>
 
               {/* Section 1: Respondent Profile */}
-              <div className="space-y-5 border-b border-neutral-100 pb-8">
+              <div className="space-y-4 sm:space-y-5 border-b border-neutral-100 pb-6 sm:pb-8">
                 <div className="flex items-center gap-2">
                   <span className="w-7 h-7 rounded-lg bg-[#6B18A8] text-white font-black text-xs flex items-center justify-center">
                     A
                   </span>
-                  <h3 className="text-lg font-black text-[#292333]">
+                  <h3 className="text-base sm:text-lg font-black text-[#292333]">
                     {isEn ? 'Respondent & Enterprise Profile' : 'Profil Pelaku Usaha & Pemohon'}
                   </h3>
                 </div>
 
                 {/* Jenis Produk */}
                 <div>
-                  <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wide mb-2">
+                  <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wide mb-1.5">
                     {isEn ? 'Product Category *' : 'Jenis Produk *'}
                   </label>
                   <select
                     value={productType}
                     onChange={(e) => setProductType(e.target.value)}
-                    className="w-full p-3 rounded-xl border border-neutral-300 text-sm font-semibold bg-white focus:outline-none focus:border-[#6B18A8] shadow-2xs"
+                    className="w-full p-3 rounded-xl border border-neutral-300 text-xs sm:text-sm font-semibold bg-white focus:outline-none focus:border-[#6B18A8] shadow-2xs"
                   >
                     {productTypes.map((pt) => (
                       <option key={pt} value={pt}>
@@ -357,24 +357,23 @@ export const SatisfactionPage: React.FC = () => {
 
                 {/* Skala Usaha */}
                 <div>
-                  <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wide mb-2">
+                  <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wide mb-1.5">
                     {isEn ? 'Business Scale *' : 'Skala Usaha *'}
                   </label>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     {scales.map((sc) => (
-                      <Button
+                      <button
                         key={sc}
                         type="button"
-                        variant={businessScale === sc ? 'primary' : 'outline'}
-                        className={`text-xs font-bold py-2.5 rounded-xl transition-all cursor-pointer ${
+                        className={`text-xs font-bold min-h-[44px] py-2 px-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-center text-center ${
                           businessScale === sc
-                            ? 'bg-[#6B18A8] text-white shadow-xs'
-                            : 'border-neutral-200 text-neutral-700 hover:bg-[#FAF7FD]'
+                            ? 'bg-[#6B18A8] text-white border-[#6B18A8] shadow-xs'
+                            : 'border-neutral-200 text-neutral-700 bg-white hover:bg-[#FAF7FD] hover:border-[#C9A5E8]'
                         }`}
-                        onPress={() => setBusinessScale(sc)}
+                        onClick={() => setBusinessScale(sc)}
                       >
                         {sc}
-                      </Button>
+                      </button>
                     ))}
                   </div>
                 </div>
@@ -389,12 +388,12 @@ export const SatisfactionPage: React.FC = () => {
                     value={businessLocation}
                     onChange={(e) => setBusinessLocation(e.target.value)}
                     required
-                    className="w-full text-sm font-semibold rounded-xl"
+                    className="w-full text-xs sm:text-sm font-semibold rounded-xl"
                   />
                 </div>
 
                 {/* Optional Name & Contact */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 pt-1">
                   <div>
                     <label className="block text-xs font-bold text-neutral-500 uppercase tracking-wide mb-1">
                       {isEn ? 'Contact Person / Enterprise Name (Optional)' : 'Nama Kontak / Pelaku Usaha (Opsional)'}
@@ -421,30 +420,30 @@ export const SatisfactionPage: React.FC = () => {
               </div>
 
               {/* Section 2: 9 Questions based on GForm */}
-              <div className="space-y-6">
-                <div className="flex items-center justify-between border-b border-neutral-100 pb-3">
+              <div className="space-y-5 sm:space-y-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-neutral-100 pb-3 gap-1">
                   <div className="flex items-center gap-2">
                     <span className="w-7 h-7 rounded-lg bg-[#F5D32F] text-[#3B074A] font-black text-xs flex items-center justify-center">
                       B
                     </span>
-                    <h3 className="text-lg font-black text-[#292333]">
+                    <h3 className="text-base sm:text-lg font-black text-[#292333]">
                       {isEn ? 'Service Quality Assessment (Scale 1 - 4)' : 'Penilaian Mutu Pelayanan (Skala 1 - 4)'}
                     </h3>
                   </div>
                   <span className="text-[11px] font-semibold text-neutral-400">
-                    {isEn ? 'Mohon diisi sesuai pengalaman Anda' : 'Mohon diisi sesuai pengalaman Anda!'}
+                    {isEn ? 'Please answer based on your actual experience' : 'Mohon diisi sesuai pengalaman Anda!'}
                   </span>
                 </div>
 
-                <div className="space-y-5">
+                <div className="space-y-4 sm:space-y-5">
                   {QUESTIONS.map((q, idx) => {
                     const currentVal = ratings[q.id] || 4;
                     return (
                       <div
                         key={q.id}
-                        className="p-5 rounded-2xl bg-white border border-[#C9A5E8]/35 hover:border-[#6B18A8]/60 shadow-xs transition-all space-y-3"
+                        className="p-3.5 sm:p-5 rounded-2xl bg-white border border-[#C9A5E8]/35 hover:border-[#6B18A8]/60 shadow-xs transition-all space-y-3"
                       >
-                        <div className="flex items-start gap-3">
+                        <div className="flex items-start gap-2.5 sm:gap-3">
                           <span className="w-6 h-6 rounded-full bg-[#6B18A8]/10 text-[#6B18A8] font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
                             {idx + 1}
                           </span>
@@ -465,16 +464,16 @@ export const SatisfactionPage: React.FC = () => {
                                 key={score}
                                 type="button"
                                 onClick={() => setQuestionRating(q.id, score)}
-                                className={`p-3 rounded-xl border text-left transition-all duration-150 cursor-pointer flex flex-col justify-between min-h-[64px] ${
+                                className={`p-2.5 sm:p-3 rounded-xl border text-left transition-all duration-150 cursor-pointer flex flex-col justify-between min-h-[58px] sm:min-h-[66px] ${
                                   isSelected
-                                    ? 'bg-[#6B18A8] text-white border-[#6B18A8] shadow-md shadow-purple-950/20'
+                                    ? 'bg-[#6B18A8] text-white border-[#6B18A8] shadow-md shadow-purple-950/20 ring-2 ring-[#F5D32F]'
                                     : 'bg-[#FAF7FD] text-neutral-700 border-[#C9A5E8]/40 hover:bg-white hover:border-[#6B18A8]'
                                 }`}
                               >
-                                <span className={`text-base font-black ${isSelected ? 'text-[#F5D32F]' : 'text-[#6B18A8]'}`}>
+                                <span className={`text-base sm:text-lg font-black ${isSelected ? 'text-[#F5D32F]' : 'text-[#6B18A8]'}`}>
                                   {score}
                                 </span>
-                                <span className="text-[11px] font-semibold leading-tight line-clamp-2 mt-1">
+                                <span className="text-[11px] sm:text-xs font-semibold leading-tight line-clamp-2 mt-1">
                                   {labelText}
                                 </span>
                               </button>
@@ -488,7 +487,7 @@ export const SatisfactionPage: React.FC = () => {
               </div>
 
               {/* Section 3: Comments & Feedback */}
-              <div className="space-y-3 border-t border-neutral-100 pt-6">
+              <div className="space-y-2.5 border-t border-neutral-100 pt-5 sm:pt-6">
                 <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wide">
                   {isEn ? 'Additional Feedback, Suggestions & Appreciation' : 'Kritik, Saran & Masukan Tambahan Bagi LPH UIN SGD'}
                 </label>
@@ -511,7 +510,7 @@ export const SatisfactionPage: React.FC = () => {
                 variant="primary"
                 fullWidth
                 isPending={loading}
-                className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-extrabold py-4 rounded-2xl shadow-xl shadow-purple-950/25 text-sm sm:text-base cursor-pointer hover:scale-[1.01] transition-transform"
+                className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-extrabold min-h-[50px] py-3.5 sm:py-4 rounded-2xl shadow-xl shadow-purple-950/25 text-sm sm:text-base cursor-pointer hover:scale-[1.01] transition-transform"
               >
                 {isEn ? 'Submit Customer Satisfaction Questionnaire' : 'Kirim Kuesioner Kepuasan Pelanggan'}
               </Button>
