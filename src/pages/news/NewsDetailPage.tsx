@@ -110,7 +110,6 @@ Rektor UIN SGD Bandung, Prof. Dr. H. Rosihon Anwar, M.Ag., dalam sambutannya men
               )}
             </div>
             <h1 className="text-2xl sm:text-4xl font-extrabold text-[#1a0726] tracking-tight leading-snug">
-              {news.title}
               {isEn && news.titleEn ? news.titleEn : news.title}
             </h1>
             <div className="flex flex-wrap items-center gap-4 text-xs text-neutral-400 mt-4 pb-4 border-b border-neutral-100">
@@ -127,7 +126,6 @@ Rektor UIN SGD Bandung, Prof. Dr. H. Rosihon Anwar, M.Ag., dalam sambutannya men
           <div className="rounded-2xl overflow-hidden border border-neutral-100">
             <img
               src={news.image || '/assets/images/img_011.jpg'}
-              alt={news.title}
               alt={isEn && news.titleEn ? news.titleEn : news.title}
               className="w-full max-h-[450px] object-cover"
             />
@@ -156,16 +154,6 @@ Rektor UIN SGD Bandung, Prof. Dr. H. Rosihon Anwar, M.Ag., dalam sambutannya men
           )}
 
           {/* Body Content with Anti-XSS Sanitization */}
-          {news.content.includes('<') ? (
-            <div
-              className="prose max-w-none text-neutral-700 text-sm sm:text-base leading-relaxed space-y-4"
-              dangerouslySetInnerHTML={{ __html: sanitizeHtml(news.content) }}
-            />
-          ) : (
-            <div className="prose max-w-none text-neutral-700 text-sm sm:text-base leading-relaxed space-y-4 whitespace-pre-line">
-              {news.content}
-            </div>
-          )}
           {(() => {
             const displayContent = isEn && news.contentEn ? news.contentEn : news.content;
             return displayContent.includes('<') ? (

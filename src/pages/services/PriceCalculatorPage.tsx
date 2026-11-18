@@ -1,136 +1,126 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Card, Input, Skeleton } from '@heroui/react';
-import { Calculator, Download, CheckCircle, FileText, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
-import { api } from '@/services/api';
-import type { CalculationResult } from '@/types';
+import React, { useState } from 'react';
+import { Button, Card, Input } from '@heroui/react';
+import {
+  Calculator,
+  Download,
+  CheckCircle,
+  FileText,
+  ArrowRight,
+  ShieldCheck,
+  Sparkles,
+  MapPin,
+  Clock,
+  Globe2,
+  ExternalLink,
+  Phone,
+  ZoomIn,
+  AlertCircle,
+  Layers,
+} from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { SparklesCore } from '@/components/ui/sparkles';
-import { getRatesMatrix } from '@/services/ratesService';
 
 export const PriceCalculatorPage: React.FC = () => {
-  const { language, t } = useLanguage();
-  const [serviceType, setServiceType] = useState<string>('REGULER');
-  const [businessScale, setBusinessScale] = useState<string>('MIKRO');
-  const [productCount, setProductCount] = useState<number>(1);
-  const [ingredientCount, setIngredientCount] = useState<number>(5);
-  const [result, setResult] = useState<CalculationResult | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const { language } = useLanguage();
+  const isEn = language === 'en';
 
-  const calculate = async () => {
-    setLoading(true);
-    try {
-      const res = await api.post('/calculator/calculate', {
-        serviceType,
-        businessScale,
-        productCount: Number(productCount),
-        ingredientCount: Number(ingredientCount),
-      });
-      if (res.data?.success) {
-        setResult(res.data.data);
-      } else {
-        throw new Error('API offline');
-      }
-    } catch {
-      // Dynamic calculation matching BPJPH & LPH rates configured in Admin Console
-      const rates = getRatesMatrix();
-      const scaleConfig = rates.baseRates[businessScale as keyof typeof rates.baseRates] || rates.baseRates.MIKRO;
-      const bpjphBase = scaleConfig.bpjph;
-      const lphBase = scaleConfig.lph;
+  // State for interactive simulator
+  const [selectedRegion, setSelectedRegion] = useState<'BANDUNG' | 'JABAR' | 'INTERNATIONAL'>('JABAR');
+  const [businessScale, setBusinessScale] = useState<'MIKRO_KECIL' | 'MENENGAH' | 'BESAR'>('MIKRO_KECIL');
+  const [productTier, setProductTier] = useState<number>(50); // 50, 100, 200, 201
+  const [isFlyerZoomed, setIsFlyerZoomed] = useState<boolean>(false);
 
-      const prodUnitBpjph = rates.productAddonPerItem?.bpjph ?? 25000;
-      const prodUnitLph = rates.productAddonPerItem?.lph ?? 20000;
-      const ingrThreshold = rates.ingredientAddonPerItem?.threshold ?? 10;
-      const ingrUnitBpjph = rates.ingredientAddonPerItem?.bpjph ?? 15000;
-      const ingrUnitLph = rates.ingredientAddonPerItem?.lph ?? 12000;
-
-      const prodAddon = (productCount - 1) * prodUnitBpjph;
-      const prodAddonLph = (productCount - 1) * prodUnitLph;
-      const ingrAddon = ingredientCount > ingrThreshold ? (ingredientCount - ingrThreshold) * ingrUnitBpjph : 0;
-      const ingrAddonLph = ingredientCount > ingrThreshold ? (ingredientCount - ingrThreshold) * ingrUnitLph : 0;
-
-      const totalB = bpjphBase + prodAddon + ingrAddon;
-      const totalL = lphBase + prodAddonLph + ingrAddonLph;
-      const savingsNominal = Math.max(0, totalB - totalL);
-      const savingsPercent = totalB > 0 ? Math.round((savingsNominal / totalB) * 100) : 0;
-
-      const isEn = language === 'en';
-
-      setResult({
-        serviceType,
-        businessScale,
-        totalBpjph: totalB,
-        totalLph: totalL,
-        savingsNominal,
-        savingsPercent,
-        breakdown: [
-          {
-            item: isEn ? 'Registration & Document Verification Fee' : 'Biaya Pendaftaran & Verifikasi Dokumen',
-            bpjph: Math.round(bpjphBase * 0.3),
-            lph: Math.round(lphBase * 0.3),
-          },
-          {
-            item: isEn ? 'On-Site Audit & Inspection by LPH Halal Auditors' : 'Audit & Pemeriksaan Lapangan oleh Auditor Halal LPH',
-            bpjph: Math.round(bpjphBase * 0.5),
-            lph: Math.round(lphBase * 0.5),
-          },
-          {
-            item: isEn ? 'Laboratory Testing & Scientific Halal Analysis' : 'Uji Laboratorium & Analisis Kehalalan Saintifik',
-            bpjph: Math.round(bpjphBase * 0.2),
-            lph: Math.round(lphBase * 0.2),
-          },
-          {
-            item: isEn
-              ? `Additional Product Variants (${productCount} items) & Ingredients (${ingredientCount} items)`
-              : `Tambahan Varian Produk (${productCount} item) & Bahan (${ingredientCount} item)`,
-            bpjph: prodAddon + ingrAddon,
-            lph: prodAddonLph + ingrAddonLph,
-          },
-        ],
+  // Calculation logic based on official flyer
+  const getEstimatedFee = () => {
+    if (selectedRegion === 'INTERNATIONAL') {
+      return {
+        amount: 60000000,
+        label: isEn ? 'Starting from Rp 60,000,000' : 'Mulai dari Rp60.000.000,-',
         notes: isEn
-          ? 'Simulation based on BPJPH Official Regulation and LPH UIN SGD Bandung Service Standards (Configured via Admin Console).'
-          : 'Simulasi biaya didasarkan pada Keputusan Kepala BPJPH dan Standar Layanan LPH UIN SGD Bandung (Dikonfigurasi melalui Admin Console).',
-      });
-    } finally {
-      setLoading(false);
+          ? 'International inspection outside Indonesia. Please consult official LPH WhatsApp for custom quotation and logistics.'
+          : 'Pemeriksaan internasional luar negeri. Hubungi WhatsApp resmi LPH untuk estimasi detail akomodasi dan logistik auditor.',
+        isCustom: true,
+      };
+    }
+
+    if (selectedRegion === 'BANDUNG') {
+      if (businessScale === 'MIKRO_KECIL') {
+        return {
+          amount: 1820000,
+          label: 'Rp1.820.000,-',
+          notes: isEn
+            ? 'Estimated starting fee for Micro / Small scale within Bandung City area.'
+            : 'Mulai dari Rp1.820.000,- untuk Usaha Mikro / Kecil wilayah Kota Bandung.',
+          isCustom: false,
+        };
+      } else {
+        return {
+          amount: 17000000,
+          label: 'Rp17.000.000,-',
+          notes: isEn
+            ? 'Estimated starting fee for Medium / Large scale within Bandung City area.'
+            : 'Mulai dari Rp17.000.000,- untuk Usaha Menengah / Besar wilayah Kota Bandung.',
+          isCustom: false,
+        };
+      }
+    }
+
+    // Jawa Barat Region
+    if (businessScale === 'MIKRO_KECIL') {
+      if (productTier <= 50) {
+        return {
+          amount: 3300000,
+          label: 'Rp3.300.000,-',
+          notes: isEn ? '0 - 50 Product Variants (Jawa Barat)' : 'Jumlah Produk 0 - 50 (Wilayah Jawa Barat)',
+          isCustom: false,
+        };
+      } else if (productTier <= 100) {
+        return {
+          amount: 3900000,
+          label: 'Rp3.900.000,-',
+          notes: isEn ? '50 - 100 Product Variants (Jawa Barat)' : 'Jumlah Produk 50 - 100 (Wilayah Jawa Barat)',
+          isCustom: false,
+        };
+      } else if (productTier <= 200) {
+        return {
+          amount: 4400000,
+          label: 'Rp4.400.000,-',
+          notes: isEn ? '100 - 200 Product Variants (Jawa Barat)' : 'Jumlah Produk 100 - 200 (Wilayah Jawa Barat)',
+          isCustom: false,
+        };
+      } else {
+        return {
+          amount: 4900000,
+          label: 'Rp4.900.000,-',
+          notes: isEn ? '> 200 Product Variants (Jawa Barat)' : 'Jumlah Produk > 200 (Wilayah Jawa Barat)',
+          isCustom: false,
+        };
+      }
+    } else if (businessScale === 'MENENGAH') {
+      return {
+        amount: 21000000,
+        label: 'Rp21.000.000,-',
+        notes: isEn
+          ? 'Medium Enterprise scale across West Java region.'
+          : 'Mulai dari Rp21.000.000,- untuk Usaha Menengah di Jawa Barat.',
+        isCustom: false,
+      };
+    } else {
+      return {
+        amount: 30000000,
+        label: 'Rp30.000.000,-',
+        notes: isEn
+          ? 'Large Enterprise scale across West Java region.'
+          : 'Mulai dari Rp30.000.000,- untuk Usaha Besar di Jawa Barat.',
+        isCustom: false,
+      };
     }
   };
 
-  useEffect(() => {
-    calculate();
-    const handleRatesUpdate = () => calculate();
-    window.addEventListener('lph-rates-updated', handleRatesUpdate);
-    return () => window.removeEventListener('lph-rates-updated', handleRatesUpdate);
-  }, [serviceType, businessScale, productCount, ingredientCount, language]);
-
-  const handleDownloadPDF = async () => {
-    const el = document.getElementById('calc-summary-card');
-    if (!el) return;
-    try {
-      const canvas = await html2canvas(el, { scale: 2 });
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const imgWidth = 190;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      pdf.text(
-        language === 'en'
-          ? 'Halal Inspection Fee Estimate - LPH UIN SGD Bandung'
-          : 'Estimasi Biaya Pemeriksaan Halal - LPH UIN SGD Bandung',
-        10,
-        15
-      );
-      pdf.addImage(imgData, 'PNG', 10, 25, imgWidth, imgHeight);
-      pdf.save(
-        `Estimasi_Tarif_Halal_${businessScale}_${new Date().toISOString().split('T')[0]}.pdf`
-      );
-    } catch {
-      window.print();
-    }
-  };
+  const currentEstimate = getEstimatedFee();
 
   const formatRupiah = (val: number) => {
-    return new Intl.NumberFormat(language === 'en' ? 'en-US' : 'id-ID', {
+    return new Intl.NumberFormat(isEn ? 'en-US' : 'id-ID', {
       style: 'currency',
       currency: 'IDR',
       maximumFractionDigits: 0,
@@ -138,9 +128,9 @@ export const PriceCalculatorPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col w-full min-h-screen bg-neutral-50 pb-20">
-      {/* Header Banner in Royal Purple Gradient with Yellow Accents & Sparkles */}
-      <section className="relative py-20 lg:py-24 bg-[#1a0726] text-white overflow-hidden">
+    <div className="flex flex-col w-full min-h-screen bg-gradient-to-b from-[#FAF7FD] via-white to-[#F7F2FB] pb-24">
+      {/* Header Banner */}
+      <section className="relative py-20 lg:py-24 bg-[#1a0726] text-white overflow-hidden text-center">
         <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[#4B0D78] via-[#6B18A8] via-[#F5D32F] to-[#6B18A8]" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#1a0726] via-[#4a0d5c] to-[#1a0726] opacity-95" />
         <SparklesCore
@@ -150,272 +140,349 @@ export const PriceCalculatorPage: React.FC = () => {
           particleDensity={35}
           particleColor={['#ffffff', '#f5d0fe', '#F5D32F', '#d8b4fe']}
         />
-        <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFF7D1] text-[#713f12] text-xs font-extrabold uppercase tracking-wider mb-4 border border-[#F5D32F] shadow-xs">
             <Calculator className="w-3.5 h-3.5 text-[#eab308]" />
-            {t('calc_badge')}
+            {isEn ? 'OFFICIAL HALAL TARIFF ESTIMATION' : 'ESTIMASI TARIF SERTIFIKASI HALAL REGULER'}
           </div>
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white drop-shadow-2xl leading-tight">
-            {language === 'en' ? (
-              <>Halal Tariff <span className="text-[#F5D32F]">Calculator</span> LPH UIN SGD</>
-            ) : (
-              <>Kalkulator Tarif <span className="text-[#F5D32F]">Halal</span> LPH UIN SGD</>
-            )}
+            ESTIMASI TARIF <span className="text-[#F5D32F]">SKEMA REGULER</span>
           </h1>
-          <p className="mt-4 text-base sm:text-lg text-neutral-200 max-w-2xl mx-auto leading-relaxed font-normal">
-            {t('calc_subtitle')}
+          <p className="mt-3 text-base sm:text-lg text-purple-200 font-medium">
+            Lembaga Pemeriksa Halal (LPH) UIN Sunan Gunung Djati Bandung
+          </p>
+          <p className="mt-2 text-xs sm:text-sm text-neutral-300 max-w-2xl mx-auto leading-relaxed">
+            {isEn
+              ? 'Transparent tariff simulation conforming to BPJPH Decree No. 22 of 2024 with institutional price concession discounts from LPH UIN SGD Bandung.'
+              : 'Simulasi tarif transparan mengacu pada Kepkaban 22 Tahun 2024 yang kemudian diberikan potongan harga dari LPH UIN SGD Bandung.'}
           </p>
         </div>
       </section>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Input Parameter Form (Col 5) */}
-          <div className="lg:col-span-5">
-            <Card className="bg-white rounded-3xl border border-neutral-200/80 shadow-xl p-6 sm:p-8 space-y-6">
-              <div className="border-b border-neutral-100 pb-4">
-                <span className="text-xs font-black text-[#6b1282] uppercase tracking-wider">
-                  {t('calc_param_tag')}
+      {/* Main Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-30 space-y-8">
+        {/* Prominent Disclaimer Notice: TAHAP ESTIMASI */}
+        <div className="p-4 sm:p-5 rounded-2xl bg-amber-50 border-2 border-amber-300 text-amber-950 shadow-md flex items-start sm:items-center gap-3.5">
+          <AlertCircle className="w-6 h-6 text-amber-600 shrink-0 mt-0.5 sm:mt-0" />
+          <div className="text-xs sm:text-sm leading-relaxed">
+            <strong className="text-amber-900 uppercase tracking-wide">
+              {isEn ? 'Official Notice: All figures are in ESTIMATION STAGE (Not Final / Fix Fee):' : 'PEMBERITAHUAN RESMI: SELURUH NOMINAL MASIH TAHAP ESTIMASI (BUKAN BIAYA FIX):'}
+            </strong>{' '}
+            {isEn
+              ? 'Tariff estimates are subject to audit scope, facility complexity, and specific laboratory testing requirements. Duration is estimated at 2 weeks post-payment completion.'
+              : 'Biaya yang tercantum merupakan estimasi rujukan berdasarkan flyer resmi. Durasi proses sekitar 2 Minggu setelah pelunasan pembayaran (pengajuan sidang fatwa 2x sebulan). Biaya final ditetapkan resmi oleh BPJPH melalui SIHALAL.'}
+          </div>
+        </div>
+
+        {/* 2-Column Section: Flyer Card (Left) & Interactive Calculator (Right) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Left Column: Official Flyer Visual (Col 5) */}
+          <div className="lg:col-span-5 space-y-4">
+            <Card className="bg-white rounded-3xl border border-[#C9A5E8]/40 shadow-xl overflow-hidden p-4 sm:p-6 space-y-4">
+              <div className="flex items-center justify-between pb-2 border-b border-neutral-100">
+                <div className="flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-[#6B18A8]" />
+                  <h3 className="font-bold text-sm sm:text-base text-neutral-900">
+                    {isEn ? 'Official Tariff Flyer' : 'Flyer Resmi Skema Reguler'}
+                  </h3>
+                </div>
+                <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F]">
+                  Kepkaban 22/2024
                 </span>
-                <h3 className="text-xl font-black text-[#1b183a] mt-1">
-                  {t('calc_param_title')}
-                </h3>
-                <p className="text-xs text-neutral-500 mt-1">
-                  {t('calc_param_desc')}
-                </p>
               </div>
 
-              {/* Service Type */}
-              <div>
-                <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wide mb-2">
-                  {t('calc_scheme_label')}
-                </label>
-                <div className="grid grid-cols-2 gap-2">
+              {/* Flyer Image with Zoom Preview */}
+              <div
+                className="relative rounded-2xl overflow-hidden border border-neutral-200 bg-neutral-100 group cursor-pointer shadow-inner"
+                onClick={() => setIsFlyerZoomed(true)}
+              >
+                <img
+                  src="/assets/images/flyer-skema-reguler.jpg"
+                  alt="Flyer Sertifikasi Halal Skema Reguler LPH UIN SGD Bandung"
+                  className="w-full h-auto object-cover group-hover:scale-102 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-[#3B074A]/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white font-bold text-xs">
+                  <ZoomIn className="w-5 h-5 text-[#F5D32F]" />
+                  <span>{isEn ? 'Click to Enlarge Flyer' : 'Klik untuk Memperbesar Flyer'}</span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 pt-1">
+                <Button
+                  variant="primary"
+                  className="flex-1 bg-[#6B18A8] hover:bg-[#58138a] text-white text-xs font-bold py-2.5 rounded-xl cursor-pointer flex items-center justify-center gap-1.5 shadow-sm"
+                  onPress={() => setIsFlyerZoomed(true)}
+                >
+                  <ZoomIn className="w-3.5 h-3.5 text-[#F5D32F]" />
+                  <span>{isEn ? 'View Full Flyer' : 'Buka Flyer Penuh'}</span>
+                </Button>
+                <a
+                  href="/assets/images/flyer-skema-reguler.jpg"
+                  download="Flyer_Sertifikasi_Halal_LPH_UIN_SGD.jpg"
+                  className="flex-1"
+                >
                   <Button
-                    variant={serviceType === 'REGULER' ? 'primary' : 'outline'}
-                    className={
-                      serviceType === 'REGULER'
-                        ? 'bg-[#6b1282] text-white font-bold text-xs py-2.5 rounded-xl shadow-xs'
-                        : 'border-neutral-200 text-neutral-700 text-xs py-2.5 rounded-xl'
-                    }
-                    onPress={() => setServiceType('REGULER')}
+                    variant="outline"
+                    className="w-full border-neutral-300 text-neutral-700 text-xs font-bold py-2.5 rounded-xl cursor-pointer flex items-center justify-center gap-1.5 hover:bg-neutral-50"
                   >
-                    {t('calc_scheme_new')}
+                    <Download className="w-3.5 h-3.5 text-[#6B18A8]" />
+                    <span>{isEn ? 'Download Flyer' : 'Unduh Flyer'}</span>
                   </Button>
-                  <Button
-                    variant={serviceType === 'PERPANJANGAN' ? 'primary' : 'outline'}
-                    className={
-                      serviceType === 'PERPANJANGAN'
-                        ? 'bg-[#6b1282] text-white font-bold text-xs py-2.5 rounded-xl shadow-xs'
-                        : 'border-neutral-200 text-neutral-700 text-xs py-2.5 rounded-xl'
-                    }
-                    onPress={() => setServiceType('PERPANJANGAN')}
-                  >
-                    {t('calc_scheme_renewal')}
-                  </Button>
-                </div>
+                </a>
               </div>
 
-              {/* Business Scale */}
-              <div>
-                <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wide mb-2">
-                  {t('calc_scale_label')}
-                </label>
-                <div className="grid grid-cols-2 gap-2">
-                  {[
-                    { id: 'MIKRO', label: t('calc_scale_micro') },
-                    { id: 'KECIL', label: t('calc_scale_small') },
-                    { id: 'MENENGAH', label: t('calc_scale_medium') },
-                    { id: 'BESAR', label: t('calc_scale_large') },
-                  ].map((s) => (
-                    <Button
-                      key={s.id}
-                      variant={businessScale === s.id ? 'primary' : 'outline'}
-                      className={
-                        businessScale === s.id
-                          ? 'bg-[#6b1282] text-white font-bold text-xs py-2.5 rounded-xl shadow-xs'
-                          : 'border-neutral-200 text-neutral-700 text-xs py-2.5 rounded-xl hover:bg-purple-50/50'
-                      }
-                      onPress={() => setBusinessScale(s.id)}
-                    >
-                      {s.label}
-                    </Button>
-                  ))}
+              {/* Summary key highlights from flyer */}
+              <div className="space-y-2 pt-2 text-xs text-neutral-600 border-t border-neutral-100">
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                  <span><strong>Nomor Registrasi LPH:</strong> LHA-2U1000000000000001082322</span>
                 </div>
-              </div>
-
-              {/* Product and Ingredient Count */}
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wide mb-1.5">
-                    {t('calc_products_count')}
-                  </label>
-                  <Input
-                    type="number"
-                    min="1"
-                    max="500"
-                    value={productCount.toString()}
-                    onChange={(e) =>
-                      setProductCount(Math.max(1, parseInt(e.target.value) || 1))
-                    }
-                    className="w-full rounded-xl"
-                  />
+                <div className="flex items-start gap-2">
+                  <Clock className="w-4 h-4 text-[#6B18A8] shrink-0 mt-0.5" />
+                  <span><strong>Estimasi Durasi:</strong> 2 Minggu setelah pelunasan pembayaran</span>
                 </div>
-                <div>
-                  <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wide mb-1.5">
-                    {t('calc_ingredients_count')}
-                  </label>
-                  <Input
-                    type="number"
-                    min="1"
-                    max="1000"
-                    value={ingredientCount.toString()}
-                    onChange={(e) =>
-                      setIngredientCount(Math.max(1, parseInt(e.target.value) || 1))
-                    }
-                    className="w-full rounded-xl"
-                  />
+                <div className="flex items-start gap-2">
+                  <Sparkles className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                  <span><strong>Sidang Fatwa:</strong> LPH menyediakan pengajuan 2 kali setiap bulannya</span>
                 </div>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-purple-50/70 border border-purple-200/80 text-xs text-purple-950 leading-relaxed flex items-start gap-2.5">
-                <ShieldCheck className="w-5 h-5 text-[#6b1282] shrink-0 mt-0.5" />
-                <span>
-                  {t('calc_iso_note')}
-                </span>
               </div>
             </Card>
           </div>
 
-          {/* Result Calculation Summary (Col 7) */}
-          <div className="lg:col-span-7">
-            <div id="calc-summary-card">
-              <Card className="bg-white rounded-3xl border border-neutral-200/80 shadow-xl p-6 sm:p-8 space-y-6">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-neutral-100 gap-2">
-                  <div>
-                    <span className="text-xs font-black text-[#6b1282] uppercase tracking-wider">
-                      {t('calc_summary_tag')}
-                    </span>
-                    <h3 className="text-xl font-black text-[#1b183a]">
-                      {t('calc_summary_title')}
-                    </h3>
+          {/* Right Column: Interactive Estimation Simulator (Col 7) */}
+          <div className="lg:col-span-7 space-y-6">
+            <Card className="bg-white rounded-3xl border border-[#C9A5E8]/40 shadow-xl p-6 sm:p-8 space-y-6">
+              <div className="border-b border-neutral-100 pb-4">
+                <div className="inline-flex items-center gap-1.5 text-xs font-black text-[#6B18A8] uppercase tracking-wider">
+                  <Calculator className="w-3.5 h-3.5" />
+                  <span>{isEn ? 'Interactive Tariff Simulator' : 'Simulasi Estimasi Interaktif'}</span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-black text-[#292333] mt-1">
+                  {isEn ? 'Calculate Estimated Audit Cost' : 'Hitung Estimasi Biaya Berdasarkan Flyer'}
+                </h3>
+                <p className="text-xs sm:text-sm text-neutral-500 mt-1">
+                  {isEn
+                    ? 'Select your enterprise location and scale to review the corresponding flyer rate.'
+                    : 'Pilih wilayah lokasi dan skala usaha Anda untuk melihat estimasi biaya yang sesuai dengan flyer resmi.'}
+                </p>
+              </div>
+
+              {/* Region Selector */}
+              <div>
+                <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wide mb-2 flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-[#6B18A8]" />
+                  <span>{isEn ? 'Enterprise Location / Region' : 'Wilayah / Lokasi Pelaku Usaha'}</span>
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  {[
+                    { id: 'BANDUNG', label: 'Kota Bandung', sub: 'Mulai Rp1,82 Jt' },
+                    { id: 'JABAR', label: 'Jawa Barat', sub: 'Mulai Rp3,3 Jt' },
+                    { id: 'INTERNATIONAL', label: 'Luar Indonesia', sub: 'Mulai Rp60 Jt' },
+                  ].map((r) => (
+                    <button
+                      key={r.id}
+                      type="button"
+                      onClick={() => setSelectedRegion(r.id as any)}
+                      className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
+                        selectedRegion === r.id
+                          ? 'bg-[#6B18A8] text-white border-[#6B18A8] shadow-md shadow-purple-950/20'
+                          : 'bg-[#FAF7FD] text-neutral-700 border-[#C9A5E8]/40 hover:bg-white hover:border-[#6B18A8]'
+                      }`}
+                    >
+                      <span className="font-bold text-xs sm:text-sm">{r.label}</span>
+                      <span className={`text-[10px] font-semibold mt-1 ${selectedRegion === r.id ? 'text-[#F5D32F]' : 'text-[#6B18A8]'}`}>
+                        {r.sub}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Business Scale (For Bandung & Jabar) */}
+              {selectedRegion !== 'INTERNATIONAL' && (
+                <div>
+                  <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wide mb-2 flex items-center gap-1.5">
+                    <Layers className="w-3.5 h-3.5 text-[#6B18A8]" />
+                    <span>{isEn ? 'Business Scale' : 'Skala Usaha'}</span>
+                  </label>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    {[
+                      { id: 'MIKRO_KECIL', label: 'Mikro / Kecil', desc: 'UMKM & Industri Kecil' },
+                      { id: 'MENENGAH', label: 'Menengah', desc: 'Industri Menengah' },
+                      { id: 'BESAR', label: 'Besar', desc: 'Korporasi & Pabrik' },
+                    ].map((s) => (
+                      <Button
+                        key={s.id}
+                        type="button"
+                        variant={businessScale === s.id ? 'primary' : 'outline'}
+                        className={`text-xs font-bold py-3 rounded-xl transition-all cursor-pointer h-auto flex flex-col items-start ${
+                          businessScale === s.id
+                            ? 'bg-[#6B18A8] text-white shadow-xs'
+                            : 'border-neutral-200 text-neutral-700 hover:bg-[#FAF7FD]'
+                        }`}
+                        onPress={() => setBusinessScale(s.id as any)}
+                      >
+                        <span className="font-bold text-xs">{s.label}</span>
+                        <span className={`text-[10px] font-normal ${businessScale === s.id ? 'text-purple-200' : 'text-neutral-400'}`}>
+                          {s.desc}
+                        </span>
+                      </Button>
+                    ))}
                   </div>
-                  <Button
-                    variant="outline"
-                    className="border-neutral-200 text-[#6b1282] font-bold text-xs px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 self-start sm:self-auto hover:bg-purple-50"
-                    onPress={handleDownloadPDF}
-                  >
-                    <Download className="w-3.5 h-3.5" />
-                    {t('calc_download_pdf')}
-                  </Button>
+                </div>
+              )}
+
+              {/* Product Tier (Only for Jawa Barat + Mikro/Kecil) */}
+              {selectedRegion === 'JABAR' && businessScale === 'MIKRO_KECIL' && (
+                <div>
+                  <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wide mb-2">
+                    {isEn ? 'Number of Product Variants (Jawa Barat Scheme)' : 'Jumlah Varian Produk (Sesuai Skema Jabar di Flyer)'}
+                  </label>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    {[
+                      { tier: 50, label: '0 - 50 Produk', price: 'Rp3.300.000' },
+                      { tier: 100, label: '50 - 100 Produk', price: 'Rp3.900.000' },
+                      { tier: 200, label: '100 - 200 Produk', price: 'Rp4.400.000' },
+                      { tier: 201, label: '> 200 Produk', price: 'Rp4.900.000' },
+                    ].map((p) => (
+                      <button
+                        key={p.tier}
+                        type="button"
+                        onClick={() => setProductTier(p.tier)}
+                        className={`p-2.5 rounded-xl border text-center transition-all cursor-pointer flex flex-col items-center justify-center ${
+                          productTier === p.tier
+                            ? 'bg-[#6B18A8] text-white border-[#6B18A8] shadow-xs'
+                            : 'bg-neutral-50 text-neutral-700 border-neutral-200 hover:bg-white'
+                        }`}
+                      >
+                        <span className="font-bold text-xs">{p.label}</span>
+                        <span className={`text-[10px] font-extrabold mt-0.5 ${productTier === p.tier ? 'text-[#F5D32F]' : 'text-[#6B18A8]'}`}>
+                          {p.price}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Result Showcase Card */}
+              <div className="p-6 rounded-2xl bg-gradient-to-r from-[#FAF7FD] to-purple-50/70 border-2 border-[#C9A5E8]/60 shadow-sm space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#6B18A8]">
+                    {isEn ? 'Estimated Rate' : 'Estimasi Tarif Layanan'}
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F]">
+                    {isEn ? 'Stage: Estimation' : 'Tahap: Estimasi'}
+                  </span>
                 </div>
 
-                {loading || !result ? (
-                  <div className="space-y-4">
-                    <Skeleton className="h-20 w-full rounded-xl" />
-                    <Skeleton className="h-40 w-full rounded-xl" />
+                <div className="text-3xl sm:text-4xl font-black text-[#6B18A8] font-mono">
+                  {currentEstimate.label}
+                </div>
+
+                <p className="text-xs text-neutral-600 leading-relaxed">
+                  {currentEstimate.notes}
+                </p>
+
+                {selectedRegion === 'INTERNATIONAL' && (
+                  <div className="pt-2">
+                    <span className="inline-block px-3 py-1 rounded-lg bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200">
+                      🌍 Layanan Pemeriksaan Luar Negeri / Internasional
+                    </span>
                   </div>
-                ) : (
-                  <>
-                    {/* Big Metric Box */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="p-5 rounded-2xl bg-neutral-50 border border-neutral-200">
-                        <span className="text-xs font-bold text-neutral-500 block uppercase">
-                          {t('calc_bpjph_max')}
-                        </span>
-                        <span className="text-2xl sm:text-3xl font-black text-neutral-800 block mt-1 font-mono">
-                          {formatRupiah(result.totalBpjph)}
-                        </span>
-                        <span className="text-[11px] text-neutral-400 mt-1 block">
-                          {t('calc_official_tariff')}
-                        </span>
-                      </div>
-
-                      <div className="p-4 sm:p-5 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/40 shadow-sm">
-                        <div className="flex items-center justify-between gap-2">
-                          <span className="text-xs font-bold text-[#6B18A8] uppercase truncate">
-                            {t('calc_uin_estimate')}
-                          </span>
-                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-[#F5D32F] text-[#3B074A] shadow-xs shrink-0 whitespace-nowrap">
-                            {t('calc_save')} {result.savingsPercent}%
-                          </span>
-                        </div>
-                        <span className="text-2xl sm:text-3xl font-black text-[#6B18A8] block mt-1 font-mono">
-                          {formatRupiah(result.totalLph)}
-                        </span>
-                        <span className="text-[11px] text-purple-900 mt-1 block font-semibold">
-                          {t('calc_saving_efficiency')} {formatRupiah(result.savingsNominal)}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Breakdown Table */}
-                    <div>
-                      <h4 className="text-xs font-bold text-neutral-700 uppercase tracking-wide mb-3">
-                        {t('calc_breakdown_title')}
-                      </h4>
-                      <div className="rounded-2xl border border-neutral-200 overflow-hidden text-xs">
-                        <table className="w-full text-left">
-                          <thead className="bg-neutral-100/80 text-neutral-700 font-bold border-b border-neutral-200">
-                            <tr>
-                              <th className="py-3 px-4">{t('calc_col_component')}</th>
-                              <th className="py-3 px-4 text-right">{t('calc_col_bpjph')}</th>
-                              <th className="py-3 px-4 text-right text-[#6b1282]">{t('calc_col_lph')}</th>
-                            </tr>
-                          </thead>
-                          <tbody className="divide-y divide-neutral-100">
-                            {result.breakdown.map((row, idx) => (
-                              <tr key={idx} className="hover:bg-purple-50/30 transition-colors">
-                                <td className="py-3 px-4 font-semibold text-neutral-800">
-                                  {row.item}
-                                </td>
-                                <td className="py-3 px-4 text-right text-neutral-500 font-mono font-medium">
-                                  {formatRupiah(row.bpjph)}
-                                </td>
-                                <td className="py-3 px-4 text-right font-black text-[#6b1282] font-mono">
-                                  {formatRupiah(row.lph)}
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-
-                    {/* Notes & Disclaimer */}
-                    <p className="text-[11px] text-neutral-400 leading-relaxed italic">
-                      * {result.notes}{' '}
-                      {language === 'en'
-                        ? 'Fees exclude auditor accommodation if the facility is outside regular inspection zones.'
-                        : 'Biaya belum termasuk akomodasi auditor jika lokasi pabrik di luar jangkauan reguler.'}
-                    </p>
-
-                    {/* CTA Button in LPH Gradient */}
-                    <div className="pt-2">
-                      <a
-                        href="https://wa.me/6282126493700"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full block"
-                      >
-                        <Button
-                          variant="primary"
-                          fullWidth
-                          className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-extrabold py-3.5 rounded-2xl shadow-xl shadow-purple-950/20 flex items-center justify-center gap-2 text-sm cursor-pointer hover:scale-[1.01] transition-transform"
-                        >
-                          {t('calc_cta_button')}
-                          <ArrowRight className="w-4 h-4" />
-                        </Button>
-                      </a>
-                    </div>
-                  </>
                 )}
-              </Card>
-            </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="pt-2 flex flex-col sm:flex-row gap-3">
+                <a
+                  href={`https://wa.me/6282126493700?text=${encodeURIComponent(
+                    `Halo Admin LPH UIN SGD Bandung, saya ingin konsultasi pendaftaran sertifikasi halal skema reguler untuk wilayah ${selectedRegion} (${businessScale}). Mohon arahan alur dan persyaratannya.`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1"
+                >
+                  <Button
+                    variant="primary"
+                    fullWidth
+                    className="bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold py-3.5 rounded-xl shadow-md flex items-center justify-center gap-2 text-xs sm:text-sm cursor-pointer"
+                  >
+                    <Phone className="w-4 h-4 text-[#3B074A]" />
+                    <span>{isEn ? 'Consult via Official WhatsApp' : 'Konsultasi Sertifikasi (WhatsApp)'}</span>
+                  </Button>
+                </a>
+
+                <a
+                  href="https://ptsp.halal.go.id/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1"
+                >
+                  <Button
+                    variant="outline"
+                    fullWidth
+                    className="border-neutral-300 text-neutral-700 hover:text-[#6B18A8] font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 text-xs sm:text-sm cursor-pointer hover:bg-neutral-50"
+                  >
+                    <span>{isEn ? 'Open SIHALAL Portal' : 'Buka Portal SIHALAL BPJPH'}</span>
+                    <ExternalLink className="w-4 h-4" />
+                  </Button>
+                </a>
+              </div>
+            </Card>
           </div>
         </div>
       </div>
+
+      {/* Modal Zoom Flyer */}
+      {isFlyerZoomed && (
+        <div
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={() => setIsFlyerZoomed(false)}
+        >
+          <div
+            className="relative max-w-3xl w-full max-h-[90vh] bg-white rounded-3xl overflow-hidden shadow-2xl p-2 sm:p-4 flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between p-3 border-b border-neutral-100">
+              <h3 className="font-bold text-sm sm:text-base text-neutral-800">
+                Flyer Sertifikasi Halal "Skema Reguler" - LPH UIN SGD Bandung
+              </h3>
+              <button
+                type="button"
+                onClick={() => setIsFlyerZoomed(false)}
+                className="w-8 h-8 rounded-full bg-neutral-100 text-neutral-700 hover:bg-neutral-200 flex items-center justify-center font-bold text-sm cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="overflow-y-auto max-h-[75vh] p-2 flex justify-center">
+              <img
+                src="/assets/images/flyer-skema-reguler.jpg"
+                alt="Flyer Sertifikasi Halal Skema Reguler Penuh"
+                className="max-w-full h-auto rounded-xl object-contain"
+              />
+            </div>
+            <div className="p-3 border-t border-neutral-100 flex justify-end gap-2">
+              <a
+                href="/assets/images/flyer-skema-reguler.jpg"
+                download="Flyer_Sertifikasi_Halal_LPH_UIN_SGD.jpg"
+              >
+                <Button variant="primary" className="bg-[#6B18A8] text-white text-xs font-bold px-4 py-2 rounded-xl">
+                  Unduh Flyer (.jpg)
+                </Button>
+              </a>
+              <Button
+                variant="outline"
+                className="text-xs font-bold px-4 py-2 rounded-xl"
+                onPress={() => setIsFlyerZoomed(false)}
+              >
+                Tutup
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

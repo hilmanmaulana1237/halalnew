@@ -180,7 +180,6 @@ export const HomePage: React.FC = () => {
   const directors = getDirectors(isEn);
   const uinServices = getUinServices(isEn);
   const [activeTab, setActiveTab] = useState<string>('artikel');
-  const [selectedDirector, setSelectedDirector] = useState<Director | null>(null);
   const [selectedBranch, setSelectedBranch] = useState(0);
 
   const branchLocations = [
@@ -236,9 +235,9 @@ export const HomePage: React.FC = () => {
       <HeroVideoBanner />
 
       {/* 2. STATS SECTION (Untitled UI Metric Cards Row with Yellow Accents) */}
-      <section className="relative z-30 w-full pt-4 pb-12 sm:pb-16 bg-white overflow-hidden">
+      <section className="relative z-30 w-full pt-6 pb-14 sm:pb-20 bg-gradient-to-b from-white via-[#FAF7FD]/80 to-white overflow-hidden">
         <YellowDotGrid rows={3} cols={6} className="absolute -top-4 right-12 opacity-30 pointer-events-none hidden md:grid" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative max-w-[1440px] xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             <MetricCard
               label={t('metric_exp_label')}
@@ -288,11 +287,11 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* 3. ABOUT LPH SECTION (Soft Purple Canvas with Yellow Accents) */}
-      <section className="py-20 lg:py-28 bg-[#FAF7FD] border-y border-[#C9A5E8]/30 relative overflow-hidden" id="tentang">
+      <section className="py-20 lg:py-28 bg-gradient-to-b from-white via-[#FAF7FD] to-[#FAF7FD]/90 border-y border-[#C9A5E8]/30 relative overflow-hidden" id="tentang">
         <YellowDotGrid rows={4} cols={5} className="absolute top-8 left-8 opacity-25 pointer-events-none hidden lg:grid" />
         <YellowDotGrid rows={3} cols={4} className="absolute bottom-8 right-8 opacity-20 pointer-events-none hidden md:grid" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 max-w-[1440px] xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             {/* Certificate Visual with Aceternity BackgroundGradient Glow */}
             <div className="lg:col-span-5 flex justify-center">
@@ -394,9 +393,9 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* 4. TWO MAIN SERVICES CARDS (Crisp Pure White with Yellow & Purple Accents) */}
-      <section className="py-20 lg:py-24 bg-white relative overflow-hidden" id="layanan">
+      <section className="py-20 lg:py-24 bg-gradient-to-b from-[#FAF7FD]/80 via-white to-[#FAF7FD]/50 relative overflow-hidden" id="layanan">
         <YellowDotGrid rows={3} cols={6} className="absolute top-10 right-10 opacity-25 pointer-events-none hidden lg:grid" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-[1440px] xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-10 relative z-10">
           <SectionHeader
             badge={isEn ? 'CORE SERVICES' : 'LAYANAN UTAMA'}
             badgeColor="yellow"
@@ -459,7 +458,7 @@ export const HomePage: React.FC = () => {
                 <div className="relative h-64 overflow-hidden">
                   <img
                     src="/assets/images/uji-laboratorium.jpg"
-                    alt="Uji Laboratorium & Pelatihan Halal"
+                    alt="Laboratorium Pengujian Halal Terpadu ISO/IEC 17025"
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-4 left-4">
@@ -470,24 +469,34 @@ export const HomePage: React.FC = () => {
                 </div>
                 <div className="p-7 pb-2">
                   <h3 className="text-xl sm:text-2xl font-black text-[#292333]">
-                    {isEn ? 'Laboratory Testing & Halal Training' : 'Uji Laboratorium & Pelatihan Halal'}
+                    {isEn ? 'Integrated Halal Testing Laboratory' : 'Laboratorium Pengujian Halal Terpadu'}
                   </h3>
                   <p className="text-[#756D7C] text-sm leading-relaxed mt-3">
                     {isEn
-                      ? 'Integrated Laboratory services for manufacturers to verify halal compliance (qPCR porcine DNA detection, alcohol, gelatin) and competency training for certified Halal Slaughterers (JULEHA) and Supervisors.'
-                      : 'Layanan pengujian Laboratorium Terpadu bagi produsen untuk mematuhi regulasi halal (deteksi DNA babi qPCR, alkohol, gelatin) serta pelatihan kompetensi Juru Sembelih Halal (JULEHA) dan Penyelia Halal terakreditasi.'}
+                      ? 'Accredited ISO/IEC 17025 laboratory testing services for manufacturers: real-time qPCR porcine DNA detection with 0.01% sensitivity, ethanol residual analysis (GC-FID), and gelatin & fatty acid profiling.'
+                      : 'Layanan pengujian saintifik Laboratorium Terpadu terakreditasi ISO/IEC 17025 bagi pelaku usaha: deteksi DNA babi Real-Time qPCR sensitivitas tinggi (LOD 0,01%), uji cemaran etanol (GC-FID), serta profiling gelatin dan asam lemak.'}
                   </p>
                 </div>
               </div>
               <div className="p-7 pt-4 flex items-center justify-between border-t border-purple-50 mt-4">
-                <Link to="/kontak">
-                  <Button variant="primary" className="bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md cursor-pointer">
-                    {isEn ? 'Book Lab Testing' : 'Reservasi Pengujian Lab'}
+                <a
+                  href="https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button variant="primary" className="bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md cursor-pointer inline-flex items-center gap-1.5">
+                    <span>{isEn ? 'Halal Lab Testing' : 'Pengujian Laboratorium Halal'}</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
                   </Button>
-                </Link>
-                <Link to="/tentang" className="text-xs font-bold text-[#6B18A8] hover:text-[#58138a] hover:underline flex items-center gap-1">
-                  {isEn ? 'View Details' : 'Lihat Detail'} <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
+                </a>
+                <a
+                  href="https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-bold text-[#6B18A8] hover:text-[#58138a] hover:underline flex items-center gap-1"
+                >
+                  {isEn ? 'Facility Inspection & Lab' : 'Pemeriksaan Fasilitas & Lab'} <ArrowRight className="w-3.5 h-3.5" />
+                </a>
               </div>
             </motion.div>
           </div>
@@ -495,10 +504,10 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* 5. FLAGSHIP SERVICES GRID (Classy Light Mesh Micro-Dots with Yellow Dot Decor) */}
-      <section className="py-24 bg-[#FAF7FD] border-y border-[#C9A5E8]/30 relative overflow-hidden" id="layanan-terpadu">
+      <section className="py-24 bg-gradient-to-b from-[#FAF7FD] via-purple-50/30 to-[#FAF7FD] border-y border-[#C9A5E8]/30 relative overflow-hidden" id="layanan-terpadu">
         <YellowDotGrid rows={4} cols={5} className="absolute top-10 right-8 opacity-25 pointer-events-none hidden lg:grid" />
         <YellowDotGrid rows={3} cols={4} className="absolute bottom-10 left-8 opacity-20 pointer-events-none hidden md:grid" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-[1440px] xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-10 relative z-10">
           <SectionHeader
             badge={isEn ? "FLAGSHIP HALAL SERVICES" : "LAYANAN HALAL UNGGULAN"}
             badgeColor="yellow"
@@ -508,7 +517,7 @@ export const HomePage: React.FC = () => {
               : "Ekosistem komprehensif mulai dari audit halal reguler industri hingga pengujian molekuler hayati tingkat lanjut."}
           />
 
-          <BentoGrid className="max-w-7xl">
+          <BentoGrid className="max-w-[1440px] xl:max-w-[1536px]">
             {uinServices.map((srv, idx) => (
               <BentoGridItem
                 key={idx}
@@ -531,7 +540,7 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* 5B. CERTIFICATION JOURNEY TIMELINE with Background Image Overlay */}
-      <section className="py-24 relative overflow-hidden bg-[#FAF7FD]" id="alur-sertifikasi">
+      <section className="py-24 relative overflow-hidden bg-gradient-to-b from-[#FAF7FD] via-white/80 to-[#FAF7FD]" id="alur-sertifikasi">
         {/* Background Image & Texture Overlay */}
         <div className="absolute inset-0 pointer-events-none z-0">
           <img
@@ -547,7 +556,7 @@ export const HomePage: React.FC = () => {
         <YellowDotGrid rows={4} cols={5} className="absolute top-10 right-10 opacity-20 pointer-events-none hidden lg:grid z-0" />
         <YellowDotGrid rows={3} cols={4} className="absolute bottom-10 left-10 opacity-20 pointer-events-none hidden md:grid z-0" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-[1440px] xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-10 relative z-10">
           <SectionHeader
             badge={isEn ? "OFFICIAL PROCEDURAL FLOW" : "ALUR PROSEDUR RESMI"}
             badgeColor="amber"
@@ -562,11 +571,11 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* 5C. THREE INTERACTIVE DIGITAL SERVICES (Aceternity UI 3D Cards) */}
-      <section className="py-20 lg:py-28 bg-gradient-to-b from-white via-[#FAF7FD]/60 to-[#FAF7FD] border-t border-[#C9A5E8]/30 relative overflow-hidden" id="layanan-digital">
+      <section className="py-20 lg:py-28 bg-gradient-to-b from-white via-[#FAF7FD]/70 to-[#FAF7FD] border-t border-[#C9A5E8]/30 relative overflow-hidden" id="layanan-digital">
         <YellowDotGrid rows={4} cols={5} className="absolute top-10 right-10 opacity-20 pointer-events-none hidden lg:grid" />
         <YellowDotGrid rows={3} cols={4} className="absolute bottom-10 left-10 opacity-20 pointer-events-none hidden md:grid" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-[1440px] xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-10 relative z-10">
           <SectionHeader
             badge={isEn ? "CORE DIGITAL PORTAL" : "LAYANAN DIGITAL UTAMA"}
             badgeColor="yellow"
@@ -815,8 +824,8 @@ export const HomePage: React.FC = () => {
                     </h3>
                     <p className="text-xs sm:text-sm font-semibold text-[#756D7C] mt-1">
                       {isEn
-                        ? 'Professor of Quranic Exegesis & Tafsir • Pioneer of "Halalsphere University"'
-                        : "Guru Besar Ilmu Al-Qur'an & Tafsir • Inisiator Paradigma \"Halalsphere University\""}
+                        ? 'Rector of UIN Sunan Gunung Djati Bandung • Advisory Board of LPH UIN SGD'
+                        : 'Rektor UIN SGD Bandung • Dewan Pembina LPH UIN Sunan Gunung Djati'}
                     </p>
 
                     {/* Institutional Quote Box */}
@@ -830,21 +839,24 @@ export const HomePage: React.FC = () => {
 
                   {/* Actions */}
                   <div className="mt-8 pt-6 border-t border-purple-100 flex flex-wrap items-center gap-4">
-                    <Button
-                      variant="primary"
-                      className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-bold text-xs px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2 cursor-pointer"
-                      onPress={() => setSelectedDirector(directors[0])}
-                    >
-                      <span>{isEn ? "View Rector's Track Record & Profile" : 'Buka Profil & Rekam Jejak Rektor'}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Button>
-                    <Link
-                      to="/tentang"
-                      className="text-xs font-bold text-neutral-700 hover:text-[#6B18A8] transition-colors inline-flex items-center gap-1.5"
-                    >
-                      <span>{isEn ? 'Explore Institutional Profile & Vision' : 'Pelajari Profil Lembaga & Visi Kampus'}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                    <Link to="/tentang">
+                      <Button
+                        variant="primary"
+                        className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2 cursor-pointer"
+                      >
+                        <span>{isEn ? 'Explore Institutional Profile & Vision' : 'Pelajari Profil Lembaga & Visi LPH'}</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Button>
                     </Link>
+                    <a
+                      href="https://halal.uinsgd.ac.id"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs sm:text-sm font-bold text-neutral-700 hover:text-[#6B18A8] transition-colors inline-flex items-center gap-1.5"
+                    >
+                      <span>{isEn ? 'University Halal Portal' : 'Portal Halal UIN SGD'}</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
                   </div>
                 </div>
 
@@ -945,98 +957,35 @@ export const HomePage: React.FC = () => {
 
                   {/* Actions */}
                   <div className="mt-8 pt-6 border-t border-purple-100 flex flex-wrap items-center gap-4">
-                    <Button
-                      variant="primary"
-                      className="bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold text-xs px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2 cursor-pointer"
-                      onPress={() => setSelectedDirector(directors[1])}
-                    >
-                      <span>{isEn ? 'View Profile & Credentials' : 'Buka Profil & Kredensial Pimpinan'}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Button>
-                    <Link
-                      to="/layanan/kalkulator"
-                      className="text-xs font-bold text-neutral-700 hover:text-[#6B18A8] transition-colors inline-flex items-center gap-1.5"
-                    >
-                      <span>{isEn ? 'Certification Flow Consultation' : 'Konsultasi Alur Sertifikasi'}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                    <Link to="/layanan/kalkulator">
+                      <Button
+                        variant="primary"
+                        className="bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold text-xs sm:text-sm px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2 cursor-pointer"
+                      >
+                        <span>{isEn ? 'Consultation & Fee Simulation' : 'Konsultasi & Simulasi Alur Sertifikasi'}</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Button>
                     </Link>
+                    <a
+                      href="https://wa.me/6282126493700"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs sm:text-sm font-bold text-neutral-700 hover:text-[#6B18A8] transition-colors inline-flex items-center gap-1.5"
+                    >
+                      <span>{isEn ? 'WhatsApp Consultation' : 'Konsultasi Sertifikasi (WhatsApp)'}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </a>
                   </div>
                 </div>
               </div>
             </motion.div>
           </div>
         </div>
-
-        {/* Modal Director Detail using HeroUI v3 Modal */}
-        {selectedDirector && (
-          <Modal.Backdrop isOpen={!!selectedDirector} onOpenChange={() => setSelectedDirector(null)}>
-            <Modal.Container>
-              <Modal.Dialog className="sm:max-w-[640px] bg-white text-neutral-900 rounded-3xl p-6 sm:p-8">
-                <Modal.CloseTrigger />
-                <Modal.Header className="flex flex-col items-start gap-1 pb-4 border-b border-neutral-100">
-                  <span className="text-xs font-black text-[#6b1282] uppercase tracking-wider">
-                    {selectedDirector.position}
-                  </span>
-                  <Modal.Heading className="text-2xl font-black text-[#1b183a]">
-                    {selectedDirector.name}
-                  </Modal.Heading>
-                </Modal.Header>
-
-                <Modal.Body className="py-6 space-y-6 max-h-[70vh] overflow-y-auto">
-                  <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start bg-neutral-50 p-4 rounded-2xl border border-neutral-100">
-                    <img
-                      src={selectedDirector.image}
-                      alt={selectedDirector.name}
-                      className="w-24 h-24 rounded-2xl object-cover object-top border-2 border-purple-200 shadow-sm shrink-0"
-                    />
-                    <blockquote className="text-xs text-neutral-600 italic leading-relaxed border-l-2 border-[#6b1282] pl-3">
-                      "{selectedDirector.quote}"
-                    </blockquote>
-                  </div>
-
-                  <div>
-                    <h4 className="text-sm font-bold text-neutral-900 uppercase tracking-wider mb-3 flex items-center gap-2 text-[#6b1282]">
-                      <GraduationCap className="w-4 h-4" />
-                      {isEn ? 'Education & Academic Qualifications' : 'Edukasi & Kualifikasi Akademik'}
-                    </h4>
-                    <ul className="space-y-2 text-xs sm:text-sm text-neutral-600 pl-4 list-disc">
-                      {selectedDirector.education.map((edu: string, idx: number) => (
-                        <li key={idx}>{edu}</li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h4 className="text-sm font-bold text-neutral-900 uppercase tracking-wider mb-3 flex items-center gap-2 text-[#6b1282]">
-                      <Award className="w-4 h-4" />
-                      {isEn ? 'Experience & Strategic Focus' : 'Pengalaman & Fokus Strategis'}
-                    </h4>
-                    <ul className="space-y-2 text-xs sm:text-sm text-neutral-600 pl-4 list-disc">
-                      {selectedDirector.experience.map((exp: string, idx: number) => (
-                        <li key={idx}>{exp}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </Modal.Body>
-
-                <Modal.Footer className="border-t border-neutral-100 pt-4">
-                  <Button
-                    variant="primary"
-                    className="w-full bg-[#6b1282] hover:bg-[#581c87] text-white font-bold rounded-xl py-2.5"
-                    onPress={() => setSelectedDirector(null)}
-                  >
-                    {isEn ? 'Close Profile' : 'Tutup Profil'}
-                  </Button>
-                </Modal.Footer>
-              </Modal.Dialog>
-            </Modal.Container>
-          </Modal.Backdrop>
-        )}
       </section>
 
-      {/* 7. NEWS & UPDATE SECTION (Pure Crisp White) */}
-      <section className="py-24 bg-white" id="berita">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 7. NEWS & UPDATE SECTION (Subtle Gradient Background) */}
+      <section className="py-24 bg-gradient-to-b from-white via-[#FAF7FD]/70 to-[#FAF7FD]" id="berita">
+        <div className="max-w-[1440px] xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
             <div>
               <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold bg-purple-100 text-[#6b1282] border border-purple-200 uppercase tracking-wider mb-2">
@@ -1429,9 +1378,9 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 8. MITRA & AKREDITASI MARQUEE (Classy Soft Pearl Ivory) */}
-      <section className="py-16 bg-[#faf8fc] border-t border-purple-100/70 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-6">
+      {/* 8. MITRA & AKREDITASI MARQUEE (Classy Soft Pearl Ivory with Subtle Purple Gradient) */}
+      <section className="py-16 bg-gradient-to-r from-[#FAF7FD] via-[#F5EDFB]/60 to-[#FAF7FD] border-t border-purple-100/70 overflow-hidden">
+        <div className="max-w-[1440px] xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-10 text-center mb-6">
           <p className="text-xs font-bold uppercase tracking-widest text-[#6B18A8]">
             {isEn
               ? 'Affiliate Networks, Advisory Council & Official Accreditation Bodies'
@@ -1444,7 +1393,7 @@ export const HomePage: React.FC = () => {
       {/* 9. MAP LOCATION SECTION (Clean White & Lavender with Yellow Accents) */}
       <section className="py-24 bg-gradient-to-b from-white via-[#fdfbfe] to-[#f7f2fb] relative overflow-hidden" id="lokasi">
         <YellowDotGrid rows={3} cols={6} className="absolute top-8 right-10 opacity-25 pointer-events-none hidden lg:grid" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-[1440px] xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-10 relative z-10">
           <SectionHeader
             badge={isEn ? "SERVICE & LAB NETWORK" : "JARINGAN LAYANAN & LABORATORIUM"}
             badgeColor="yellow"
@@ -1542,13 +1491,13 @@ export const HomePage: React.FC = () => {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] uppercase tracking-wider mb-4 shadow-xs">
             <Sparkles className="w-3.5 h-3.5 text-[#eab308]" />
-            {isEn ? 'OFFICIAL HALAL PARTNERSHIP' : 'KEMITRAAN SERTIFIKASI HALAL'}
+            {isEn ? 'OFFICIAL HALAL ASSISTANCE' : 'PENDAMPINGAN SERTIFIKASI HALAL'}
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#292333] tracking-tight leading-tight">
-            {isEn ? 'Ready to Elevate Your Products to the ' : 'Siap Membawa Produk Anda Menuju '}
+            {isEn ? 'Ready to Get ' : 'Siap Mendapatkan '}
             <YellowHighlight className="text-[#6B18A8]">
-              {isEn ? 'Global Halal Market?' : 'Pasar Halal Global?'}
+              {isEn ? 'Official Halal Assistance?' : 'Pendampingan Sertifikasi Halal?'}
             </YellowHighlight>
           </h2>
 

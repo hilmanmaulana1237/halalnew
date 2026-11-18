@@ -2652,8 +2652,6 @@ export const AdminDashboard: React.FC = () => {
                       <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 space-y-3">
                         <div className="flex items-center justify-between pb-2 border-b border-neutral-100">
                           <div>
-                            <h4 className="text-xs font-bold text-neutral-800 uppercase tracking-wider">
-                              Isi Konten Artikel (Visual Editor)
                             <h4 className="text-xs font-bold text-neutral-800 uppercase tracking-wider flex items-center gap-2">
                               <span>
                                 {activeEditorLang === 'ID'
@@ -2665,7 +2663,6 @@ export const AdminDashboard: React.FC = () => {
                               </span>
                             </h4>
                             <p className="text-[11px] text-neutral-400">
-                              Format artikel lengkap dengan heading, bullet point, tabel, kutipan, dan gambar.
                               {activeEditorLang === 'ID'
                                 ? 'Format artikel lengkap dengan heading, bullet point, tabel, kutipan, dan gambar.'
                                 : 'Struktur HTML, heading, penekanan bold, dan gambar dipertahankan persis dengan teks berbahasa Inggris.'}
@@ -2686,8 +2683,6 @@ export const AdminDashboard: React.FC = () => {
                           }
                         >
                           <RichTextEditor
-                            value={postForm.content}
-                            onChange={(val) => setPostForm({ ...postForm, content: val })}
                             key={`tinymce-editor-${activeEditorLang}`}
                             value={activeEditorLang === 'ID' ? postForm.content : postForm.contentEn}
                             onChange={(val) => {

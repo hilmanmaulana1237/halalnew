@@ -51,7 +51,7 @@ export const translations: Translations = {
   hero_cta_profile: { id: 'Pelajari Profil LPH', en: 'Explore LPH Profile' },
 
   // Hero Search Box
-  search_title: { id: 'Cari Produk Halal Melalui Pemeriksaan LPH UIN SGD', en: 'Search Certified Halal Products Audited by LPH UIN SGD' },
+  search_title: { id: 'Cari Produk Halal', en: 'Search Halal Products' },
   search_subtitle: { id: 'Terhubung langsung dengan Pangkalan Data Resmi BPJPH & MUI', en: 'Directly synchronized with official BPJPH & MUI certification databases' },
   search_popular: { id: 'Pencarian Populer:', en: 'Popular Searches:' },
   search_label_product: { id: 'Nama Produk', en: 'Product Name' },

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Input, Button } from '@heroui/react';
-import { Search, Sparkles, ArrowRight, Tag, Building2, FileCheck, ShieldCheck } from 'lucide-react';
+import { Search, Sparkles, ArrowRight, Tag, Building2, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { FlipWords } from '@/components/ui/flip-words';
@@ -11,7 +11,6 @@ export const HeroVideoBanner: React.FC = () => {
   const { language, t } = useLanguage();
   const [productName, setProductName] = useState('');
   const [producerName, setProducerName] = useState('');
-  const [certNo, setCertNo] = useState('');
 
   const words = language === 'en'
     ? [
@@ -32,7 +31,6 @@ export const HeroVideoBanner: React.FC = () => {
     const query = new URLSearchParams();
     if (productName.trim()) query.set('produk', productName.trim());
     if (producerName.trim()) query.set('produsen', producerName.trim());
-    if (certNo.trim()) query.set('no_regis', certNo.trim());
     const queryString = query.toString();
     const targetUrl = queryString
       ? `https://bpjph.halal.go.id/cari/sertifikat?${queryString}`
@@ -164,12 +162,12 @@ export const HeroVideoBanner: React.FC = () => {
         </motion.div>
       </div>
 
-      {/* Floating Search Box (Pure White with Subtle Purple & Yellow Accents) */}
+      {/* Floating Search Box (Pure White with Subtle Purple & Yellow Accents) - Full width to sides on desktop */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-20 max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-6 sm:pb-8"
+        className="relative z-20 w-full max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 pb-6 sm:pb-8"
       >
         <div className="relative rounded-3xl p-[1.5px] bg-gradient-to-r from-[#6B18A8]/40 via-[#F5D32F]/70 to-[#6B18A8]/40 shadow-2xl shadow-purple-950/25">
           <div className="bg-white rounded-[22px] p-4 sm:p-7 shadow-lg border border-[#C9A5E8]/30">
@@ -179,10 +177,10 @@ export const HeroVideoBanner: React.FC = () => {
                   <Search className="w-5 h-5 text-[#6B18A8]" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h3 className="text-sm sm:text-base lg:text-lg font-extrabold text-[#292333] leading-snug">
+                  <h3 className="text-base sm:text-lg lg:text-xl font-extrabold text-[#292333] leading-snug">
                     {t('search_title')}
                   </h3>
-                  <span className="text-xs font-medium text-[#756D7C] block mt-0.5">
+                  <span className="text-xs sm:text-sm font-medium text-[#756D7C] block mt-0.5">
                     {t('search_subtitle')}
                   </span>
                 </div>
@@ -209,10 +207,10 @@ export const HeroVideoBanner: React.FC = () => {
               action="https://bpjph.halal.go.id/cari/sertifikat"
               method="GET"
               target="_blank"
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_1fr_auto] gap-4 items-end"
             >
               <div className="flex flex-col gap-1.5">
-                <label className="text-[11px] sm:text-xs font-bold text-neutral-700 uppercase tracking-wide flex items-center gap-1.5">
+                <label className="text-xs font-bold text-neutral-700 uppercase tracking-wide flex items-center gap-1.5">
                   <Tag className="w-3.5 h-3.5 text-[#6B18A8]" />
                   <span>{t('search_label_product')}</span>
                 </label>
@@ -223,12 +221,12 @@ export const HeroVideoBanner: React.FC = () => {
                   placeholder={t('search_placeholder_product')}
                   value={productName}
                   onChange={(e) => setProductName(e.target.value)}
-                  className="h-11 rounded-xl bg-neutral-50 border border-neutral-300 hover:border-purple-300 focus:border-[#6B18A8] text-xs sm:text-sm text-neutral-900 shadow-2xs transition-all"
+                  className="h-12 rounded-xl bg-neutral-50 border border-neutral-300 hover:border-purple-300 focus:border-[#6B18A8] text-xs sm:text-sm text-neutral-900 shadow-2xs transition-all"
                 />
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-[11px] sm:text-xs font-bold text-neutral-700 uppercase tracking-wide flex items-center gap-1.5">
+                <label className="text-xs font-bold text-neutral-700 uppercase tracking-wide flex items-center gap-1.5">
                   <Building2 className="w-3.5 h-3.5 text-[#6B18A8]" />
                   <span>{t('search_label_producer')}</span>
                 </label>
@@ -239,35 +237,18 @@ export const HeroVideoBanner: React.FC = () => {
                   placeholder={t('search_placeholder_producer')}
                   value={producerName}
                   onChange={(e) => setProducerName(e.target.value)}
-                  className="h-11 rounded-xl bg-neutral-50 border border-neutral-300 hover:border-purple-300 focus:border-[#6B18A8] text-xs sm:text-sm text-neutral-900 shadow-2xs transition-all"
+                  className="h-12 rounded-xl bg-neutral-50 border border-neutral-300 hover:border-purple-300 focus:border-[#6B18A8] text-xs sm:text-sm text-neutral-900 shadow-2xs transition-all"
                 />
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-[11px] sm:text-xs font-bold text-neutral-700 uppercase tracking-wide flex items-center gap-1.5">
-                  <FileCheck className="w-3.5 h-3.5 text-[#6B18A8]" />
-                  <span>{t('search_label_cert')}</span>
-                </label>
-                <Input
-                  fullWidth
-                  name="no_regis"
-                  variant="primary"
-                  placeholder={t('search_placeholder_cert')}
-                  value={certNo}
-                  onChange={(e) => setCertNo(e.target.value)}
-                  className="h-11 rounded-xl bg-neutral-50 border border-neutral-300 hover:border-purple-300 focus:border-[#6B18A8] text-xs sm:text-sm text-neutral-900 shadow-2xs transition-all"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1.5">
-                <span className="hidden lg:block text-[11px] sm:text-xs font-bold text-transparent select-none">
+                <span className="hidden lg:block text-xs font-bold text-transparent select-none">
                   &nbsp;
                 </span>
                 <Button
                   type="submit"
                   variant="primary"
-                  fullWidth
-                  className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-extrabold h-11 rounded-xl shadow-md shadow-purple-950/20 transition-all flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99] text-xs sm:text-sm cursor-pointer"
+                  className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-extrabold h-12 min-w-40 px-8 rounded-xl shadow-md shadow-purple-950/20 transition-all flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99] text-xs sm:text-sm cursor-pointer"
                 >
                   <Search className="w-4 h-4 text-[#F5D32F]" />
                   <span>{t('search_button')}</span>

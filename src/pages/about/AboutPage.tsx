@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Card, Modal } from '@heroui/react';
+import { Button, Card } from '@heroui/react';
 import {
   Award,
   BookOpen,
@@ -26,7 +26,6 @@ export const AboutPage: React.FC = () => {
   const { language, t } = useLanguage();
   const isEn = language === 'en';
   const directors = getDirectors(isEn);
-  const [selectedDirector, setSelectedDirector] = useState<any | null>(null);
 
   const values = isEn
     ? [
@@ -108,7 +107,7 @@ export const AboutPage: React.FC = () => {
             <BookOpen className="w-3.5 h-3.5 text-[#eab308]" />
             {isEn ? 'Institutional Profile & History' : 'Profil & Sejarah Lembaga'}
           </div>
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white drop-shadow-2xl leading-tight">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight bg-gradient-to-r from-white via-neutral-100 to-[#F5D32F] bg-clip-text text-transparent drop-shadow-2xl leading-tight">
             {isEn ? (
               <>About <span className="text-[#F5D32F]">LPH</span> UIN SGD Bandung</>
             ) : (
@@ -321,8 +320,8 @@ export const AboutPage: React.FC = () => {
                     </h3>
                     <p className="text-xs sm:text-sm font-semibold text-[#756D7C] mt-1">
                       {isEn
-                        ? 'Professor of Quranic Exegesis & Tafsir • Pioneer of "Halalsphere University"'
-                        : "Guru Besar Ilmu Al-Qur'an & Tafsir • Inisiator Paradigma \"Halalsphere University\""}
+                        ? 'Rector of UIN Sunan Gunung Djati Bandung • Advisory Board of LPH UIN SGD'
+                        : 'Rektor UIN SGD Bandung • Dewan Pembina LPH UIN Sunan Gunung Djati'}
                     </p>
 
                     {/* Institutional Quote Box */}
@@ -336,19 +335,20 @@ export const AboutPage: React.FC = () => {
 
                   {/* Actions */}
                   <div className="mt-8 pt-6 border-t border-purple-100 flex flex-wrap items-center gap-4">
-                    <Button
-                      variant="primary"
-                      className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-bold text-xs px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2 cursor-pointer"
-                      onPress={() => setSelectedDirector(directors[0])}
-                    >
-                      <span>{isEn ? "View Rector's Track Record & Profile" : 'Buka Profil & Rekam Jejak Rektor'}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Button>
+                    <Link to="/layanan/kalkulator">
+                      <Button
+                        variant="primary"
+                        className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2 cursor-pointer"
+                      >
+                        <span>{isEn ? 'Consultation & Fee Simulation' : 'Konsultasi & Simulasi Alur Sertifikasi'}</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Button>
+                    </Link>
                     <Link
                       to="/kontak"
-                      className="text-xs font-bold text-neutral-700 hover:text-[#6B18A8] transition-colors inline-flex items-center gap-1.5"
+                      className="text-xs sm:text-sm font-bold text-neutral-700 hover:text-[#6B18A8] transition-colors inline-flex items-center gap-1.5"
                     >
-                      <span>{isEn ? 'Contact Secretariat & Campus Vision' : 'Hubungi Sekretariat & Konsultasi'}</span>
+                      <span>{isEn ? 'Contact Secretariat' : 'Hubungi Sekretariat & Konsultasi'}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
@@ -451,95 +451,30 @@ export const AboutPage: React.FC = () => {
 
                   {/* Actions */}
                   <div className="mt-8 pt-6 border-t border-purple-100 flex flex-wrap items-center gap-4">
-                    <Button
-                      variant="primary"
-                      className="bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold text-xs px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2 cursor-pointer"
-                      onPress={() => setSelectedDirector(directors[1])}
-                    >
-                      <span>{isEn ? 'View Profile & Credentials' : 'Buka Profil & Kredensial Pimpinan'}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Button>
-                    <Link
-                      to="/layanan/kalkulator"
-                      className="text-xs font-bold text-neutral-700 hover:text-[#6B18A8] transition-colors inline-flex items-center gap-1.5"
-                    >
-                      <span>{isEn ? 'Certification Flow Consultation' : 'Konsultasi Alur Sertifikasi'}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                    <Link to="/layanan/kalkulator">
+                      <Button
+                        variant="primary"
+                        className="bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold text-xs sm:text-sm px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2 cursor-pointer"
+                      >
+                        <span>{isEn ? 'Consultation & Fee Simulation' : 'Konsultasi & Simulasi Alur Sertifikasi'}</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Button>
                     </Link>
+                    <a
+                      href="https://wa.me/6282126493700"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs sm:text-sm font-bold text-neutral-700 hover:text-[#6B18A8] transition-colors inline-flex items-center gap-1.5"
+                    >
+                      <span>{isEn ? 'WhatsApp Consultation' : 'Konsultasi Sertifikasi (WhatsApp)'}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </a>
                   </div>
                 </div>
               </div>
             </motion.div>
           </div>
         </div>
-
-        {/* Modal Director Detail using HeroUI v3 Modal */}
-        {selectedDirector && (
-          <Modal.Backdrop isOpen={!!selectedDirector} onOpenChange={() => setSelectedDirector(null)}>
-            <Modal.Container>
-              <Modal.Dialog className="sm:max-w-[640px] bg-white text-neutral-900 rounded-3xl p-6 sm:p-8">
-                <Modal.CloseTrigger />
-                <Modal.Header className="flex flex-col items-start gap-1 pb-4 border-b border-neutral-100">
-                  <span className="text-xs font-black text-[#6b1282] uppercase tracking-wider">
-                    {selectedDirector.position}
-                  </span>
-                  <Modal.Heading className="text-2xl font-black text-[#1b183a]">
-                    {selectedDirector.name}
-                  </Modal.Heading>
-                </Modal.Header>
-
-                <Modal.Body className="py-6 space-y-6 max-h-[70vh] overflow-y-auto">
-                  <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start bg-neutral-50 p-4 rounded-2xl border border-neutral-100">
-                    <img
-                      src={selectedDirector.image}
-                      alt={selectedDirector.name}
-                      className="w-24 h-24 rounded-2xl object-cover object-top border-2 border-purple-200 shadow-sm shrink-0"
-                    />
-                    <blockquote className="text-xs text-neutral-600 italic leading-relaxed border-l-2 border-[#6b1282] pl-3">
-                      "{selectedDirector.quote}"
-                    </blockquote>
-                  </div>
-
-                  <div>
-                    <h4 className="text-sm font-bold text-neutral-900 uppercase tracking-wider mb-3 flex items-center gap-2 text-[#6b1282]">
-                      <GraduationCap className="w-4 h-4" />
-                      {isEn ? 'Education & Academic Qualifications' : 'Edukasi & Kualifikasi Akademik'}
-                    </h4>
-                    <ul className="space-y-2 text-xs sm:text-sm text-neutral-600 pl-4 list-disc">
-                      {selectedDirector.education.map((edu: string, idx: number) => (
-                        <li key={idx}>{edu}</li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {selectedDirector.experience && selectedDirector.experience.length > 0 && (
-                    <div>
-                      <h4 className="text-sm font-bold text-neutral-900 uppercase tracking-wider mb-3 flex items-center gap-2 text-[#6b1282]">
-                        <Award className="w-4 h-4" />
-                        {isEn ? 'Experience & Strategic Focus' : 'Pengalaman & Fokus Strategis'}
-                      </h4>
-                      <ul className="space-y-2 text-xs sm:text-sm text-neutral-600 pl-4 list-disc">
-                        {selectedDirector.experience.map((exp: string, idx: number) => (
-                          <li key={idx}>{exp}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </Modal.Body>
-
-                <Modal.Footer className="border-t border-neutral-100 pt-4">
-                  <Button
-                    variant="primary"
-                    className="w-full bg-[#6b1282] hover:bg-[#581c87] text-white font-bold rounded-xl py-2.5 cursor-pointer"
-                    onPress={() => setSelectedDirector(null)}
-                  >
-                    {isEn ? 'Close Profile' : 'Tutup Profil'}
-                  </Button>
-                </Modal.Footer>
-              </Modal.Dialog>
-            </Modal.Container>
-          </Modal.Backdrop>
-        )}
       </section>
     </div>
   );
