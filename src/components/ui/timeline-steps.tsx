@@ -61,7 +61,7 @@ const STEPS_ID: StepItem[] = [
     title: "Audit Lapangan & Uji Laboratorium",
     subtitle: "Pemeriksaan Fisik & Pengujian DNA qPCR",
     description:
-      "Auditor Halal berlisensi melakukan audit on-site ke fasilitas produksi. Jika terdapat bahan kritis, sampel diuji saintifik di Laboratorium Terpadu Kampus 2 UIN SGD (Real-Time PCR DNA Porcine & GC-FID Alkohol).",
+      "Auditor Halal berlisensi melakukan audit on-site ke fasilitas produksi. Jika terdapat bahan kritis, sampel diuji saintifik di Laboratorium Pengujian Halal Terpadu UIN Sunan Gunung Djati Bandung (Real-Time PCR DNA Porcine & GC-FID Alkohol).",
     icon: <FlaskConical className="w-6 h-6" />,
     badge: "Saintifik ISO 17025",
     points: [

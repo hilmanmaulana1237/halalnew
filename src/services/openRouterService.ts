@@ -73,8 +73,7 @@ Identitas Resmi LPH:
 - Website Resmi: https://halal.uinsgd.ac.id
 - Email Resmi: lph@uinsgd.ac.id
 - WhatsApp Layanan Resmi: +62 821-2649-3700 (Tautan konsultasi: https://wa.me/6282126493700)
-- Kampus 1: Gedung Lecture Hall / Kantor LPH, Jl. A.H. Nasution No. 105, Cibiru, Bandung, Jawa Barat 40614.
-- Kampus 2 (Laboratorium): Laboratorium Biosains Pengujian Halal Terpadu ISO/IEC 17025, Jl. Cimencrang, Gedebage, Bandung (dekat Masjid Raya Al-Jabbar).
+- Kantor & Laboratorium Resmi: Gedung Laboratorium Pengujian Halal Terpadu & Sekretariat LPH UIN SGD, Kawasan Kampus Terpadu UIN Sunan Gunung Djati Bandung, Jl. Cimencrang, Gedebage, Kota Bandung, Jawa Barat 40294 (Kawasan Masjid Raya Al-Jabbar). Seluruh pelayanan kantor dan pengujian laboratorium terpusat di lokasi ini.
 - Jam Layanan: Senin – Jumat, pukul 08.00 – 16.00 WIB.
 
 TUGAS & KARAKTER ANDA:

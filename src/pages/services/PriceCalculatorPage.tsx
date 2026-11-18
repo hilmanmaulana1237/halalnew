@@ -161,18 +161,6 @@ export const PriceCalculatorPage: React.FC = () => {
 
       {/* Main Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-30 space-y-8">
-        {/* Prominent Disclaimer Notice: TAHAP ESTIMASI */}
-        <div className="p-4 sm:p-5 rounded-2xl bg-amber-50 border-2 border-amber-300 text-amber-950 shadow-md flex items-start sm:items-center gap-3.5">
-          <AlertCircle className="w-6 h-6 text-amber-600 shrink-0 mt-0.5 sm:mt-0" />
-          <div className="text-xs sm:text-sm leading-relaxed">
-            <strong className="text-amber-900 uppercase tracking-wide">
-              {isEn ? 'Official Notice: All figures are in ESTIMATION STAGE (Not Final / Fix Fee):' : 'PEMBERITAHUAN RESMI: SELURUH NOMINAL MASIH TAHAP ESTIMASI (BUKAN BIAYA FIX):'}
-            </strong>{' '}
-            {isEn
-              ? 'Tariff estimates are subject to audit scope, facility complexity, and specific laboratory testing requirements. Duration is estimated at 2 weeks post-payment completion.'
-              : 'Biaya yang tercantum merupakan estimasi rujukan berdasarkan flyer resmi. Durasi proses sekitar 2 Minggu setelah pelunasan pembayaran (pengajuan sidang fatwa 2x sebulan). Biaya final ditetapkan resmi oleh BPJPH melalui SIHALAL.'}
-          </div>
-        </div>
 
         {/* 2-Column Section: Flyer Card (Left) & Interactive Calculator (Right) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -186,9 +174,6 @@ export const PriceCalculatorPage: React.FC = () => {
                     {isEn ? 'Official Tariff Flyer' : 'Flyer Resmi Skema Reguler'}
                   </h3>
                 </div>
-                <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F]">
-                  Kepkaban 22/2024
-                </span>
               </div>
 
               {/* Flyer Image with Zoom Preview */}
@@ -231,21 +216,7 @@ export const PriceCalculatorPage: React.FC = () => {
                 </a>
               </div>
 
-              {/* Summary key highlights from flyer */}
-              <div className="space-y-2 pt-2 text-xs text-neutral-600 border-t border-neutral-100">
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                  <span><strong>Nomor Registrasi LPH:</strong> LHA-2U1000000000000001082322</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Clock className="w-4 h-4 text-[#6B18A8] shrink-0 mt-0.5" />
-                  <span><strong>Estimasi Durasi:</strong> 2 Minggu setelah pelunasan pembayaran</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Sparkles className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-                  <span><strong>Sidang Fatwa:</strong> LPH menyediakan pengajuan 2 kali setiap bulannya</span>
-                </div>
-              </div>
+
             </Card>
           </div>
 
@@ -283,11 +254,10 @@ export const PriceCalculatorPage: React.FC = () => {
                       key={r.id}
                       type="button"
                       onClick={() => setSelectedRegion(r.id as any)}
-                      className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
-                        selectedRegion === r.id
-                          ? 'bg-[#6B18A8] text-white border-[#6B18A8] shadow-md shadow-purple-950/20'
-                          : 'bg-[#FAF7FD] text-neutral-700 border-[#C9A5E8]/40 hover:bg-white hover:border-[#6B18A8]'
-                      }`}
+                      className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between ${selectedRegion === r.id
+                        ? 'bg-[#6B18A8] text-white border-[#6B18A8] shadow-md shadow-purple-950/20'
+                        : 'bg-[#FAF7FD] text-neutral-700 border-[#C9A5E8]/40 hover:bg-white hover:border-[#6B18A8]'
+                        }`}
                     >
                       <span className="font-bold text-xs sm:text-sm">{r.label}</span>
                       <span className={`text-[10px] font-semibold mt-1 ${selectedRegion === r.id ? 'text-[#F5D32F]' : 'text-[#6B18A8]'}`}>
@@ -315,11 +285,10 @@ export const PriceCalculatorPage: React.FC = () => {
                         key={s.id}
                         type="button"
                         variant={businessScale === s.id ? 'primary' : 'outline'}
-                        className={`text-xs font-bold py-3 rounded-xl transition-all cursor-pointer h-auto flex flex-col items-start ${
-                          businessScale === s.id
-                            ? 'bg-[#6B18A8] text-white shadow-xs'
-                            : 'border-neutral-200 text-neutral-700 hover:bg-[#FAF7FD]'
-                        }`}
+                        className={`text-xs font-bold py-3 rounded-xl transition-all cursor-pointer h-auto flex flex-col items-start ${businessScale === s.id
+                          ? 'bg-[#6B18A8] text-white shadow-xs'
+                          : 'border-neutral-200 text-neutral-700 hover:bg-[#FAF7FD]'
+                          }`}
                         onPress={() => setBusinessScale(s.id as any)}
                       >
                         <span className="font-bold text-xs">{s.label}</span>
@@ -349,11 +318,10 @@ export const PriceCalculatorPage: React.FC = () => {
                         key={p.tier}
                         type="button"
                         onClick={() => setProductTier(p.tier)}
-                        className={`p-2.5 rounded-xl border text-center transition-all cursor-pointer flex flex-col items-center justify-center ${
-                          productTier === p.tier
-                            ? 'bg-[#6B18A8] text-white border-[#6B18A8] shadow-xs'
-                            : 'bg-neutral-50 text-neutral-700 border-neutral-200 hover:bg-white'
-                        }`}
+                        className={`p-2.5 rounded-xl border text-center transition-all cursor-pointer flex flex-col items-center justify-center ${productTier === p.tier
+                          ? 'bg-[#6B18A8] text-white border-[#6B18A8] shadow-xs'
+                          : 'bg-neutral-50 text-neutral-700 border-neutral-200 hover:bg-white'
+                          }`}
                       >
                         <span className="font-bold text-xs">{p.label}</span>
                         <span className={`text-[10px] font-extrabold mt-0.5 ${productTier === p.tier ? 'text-[#F5D32F]' : 'text-[#6B18A8]'}`}>

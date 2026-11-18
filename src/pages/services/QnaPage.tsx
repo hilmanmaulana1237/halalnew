@@ -51,7 +51,7 @@ const INITIAL_FAQS_ID: KnowledgeBaseItem[] = [
     id: 5,
     question: 'Apakah laboratorium UIN SGD melayani pengujian DNA babi dan alkohol untuk umum?',
     answer:
-      'Ya, Laboratorium Pengujian Halal Terpadu UIN SGD di Kampus 2 melayani pengujian deteksi cemaran DNA Porcine (babi) menggunakan Real-Time qPCR, pengujian kadar etanol (alkohol) dengan GC-MS, dan autentikasi kehalalan gelatin baik bagi mitra audit LPH maupun permohonan pengujian mandiri dari industri.',
+      'Ya, Laboratorium Pengujian Halal Terpadu UIN Sunan Gunung Djati Bandung melayani pengujian deteksi cemaran DNA Porcine (babi) menggunakan Real-Time qPCR, pengujian kadar etanol (alkohol) dengan GC-MS, dan autentikasi kehalalan gelatin baik bagi mitra audit LPH maupun permohonan pengujian mandiri dari industri.',
     tags: 'LABORATORIUM',
     isActive: true,
     createdAt: new Date().toISOString(),

@@ -49,7 +49,7 @@ export const NewsDetailPage: React.FC = () => {
           'LPH UIN Sunan Gunung Djati terus memperkuat kapasitas audit kehalalan produk dan penerapan Sistem Jaminan Produk Halal (SJPH).',
           content: `Lembaga Pemeriksa Halal (LPH) UIN Sunan Gunung Djati Bandung terus memperkuat komitmennya sebagai motor penggerak ekosistem halal nasional melalui konsep "Halalsphere University". 
 
-Dalam kegiatan bimbingan teknis intensif yang diselenggarakan di Kampus 1 Cibiru, tim auditor halal dan pelaku usaha dibekali pemahaman mendalam tentang standar Sistem Jaminan Produk Halal (SJPH), verifikasi dokumen bahan baku, serta validasi saintifik pengujian laboratorium.
+Dalam kegiatan bimbingan teknis intensif yang diselenggarakan di Aula Utama LPH UIN SGD Bandung, tim auditor halal dan pelaku usaha dibekali pemahaman mendalam tentang standar Sistem Jaminan Produk Halal (SJPH), verifikasi dokumen bahan baku, serta validasi saintifik pengujian laboratorium.
 
 Rektor UIN SGD Bandung, Prof. Dr. H. Rosihon Anwar, M.Ag., dalam sambutannya menegaskan bahwa keberadaan Lembaga Pemeriksa Halal (LPH) UIN SGD adalah bukti nyata hilirisasi riset akademik dan pengabdian masyarakat untuk memberikan rasa aman serta perlindungan konsumen muslim di seluruh penjuru Indonesia.
 
@@ -59,7 +59,7 @@ Rektor UIN SGD Bandung, Prof. Dr. H. Rosihon Anwar, M.Ag., dalam sambutannya men
           author: 'Humas LPH UIN SGD',
           image: '/assets/images/img_011.jpg',
           eventDate: '2026-11-10',
-          eventLocation: 'Aula Gedung Rektorat Lt. 2 Kampus 1 UIN SGD',
+          eventLocation: 'Aula Utama LPH UIN SGD Bandung',
           createdAt: '2026-11-04T08:00:00Z',
           updatedAt: '2026-11-04T08:00:00Z',
         });

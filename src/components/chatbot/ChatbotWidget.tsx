@@ -69,8 +69,8 @@ const KNOWLEDGE_BASE: SmartAnswer[] = [
   },
   {
     keywords: ['lab', 'laboratorium', 'dna', 'babi', 'porcine', 'alkohol', 'etanol', 'gelatin', 'iso 17025', 'uji', 'test'],
-    answerId: `🔬 **Layanan Pengujian Laboratorium Hayati ISO/IEC 17025:**\n\nLaboratorium Hayati Terpadu Kampus 2 UIN Sunan Gunung Djati Bandung melayani pengujian saintifik akurasi tinggi:\n\n• **Deteksi qPCR DNA Babi (Porcine):** Deteksi spesifik gen sitokrom b babi pada daging olahan, bumbu, & kosmetik.\n• **Analisis Residual Etanol / Alkohol:** Menggunakan instrumen Gas Chromatography (GC-FID) presisi tinggi.\n• **Identifikasi Gelatin & Asam Lemak:** Uji asal bahan baku hewani.\n\nSeluruh proses uji tervalidasi standar internasional dan diakui KAN & BPJPH.`,
-    answerEn: `🔬 **ISO/IEC 17025 Accredited Laboratory Testing:**\n\nIntegrated Life Sciences Laboratory at Campus 2 UIN Sunan Gunung Djati Bandung provides high-precision testing:\n\n• **Porcine DNA qPCR Detection:** Specific detection of pig cytochrome b genes in processed food, seasonings & cosmetics.\n• **Residual Ethanol / Alcohol Analysis:** High-accuracy GC-FID instrumentation.\n• **Gelatin & Fatty Acid Profiling:** Identification of animal origin derivatives.\n\nAll tests are validated under international ISO/IEC 17025 standards accredited by KAN.`,
+    answerId: `🔬 **Layanan Pengujian Laboratorium Hayati ISO/IEC 17025:**\n\nLaboratorium Pengujian Halal Terpadu UIN Sunan Gunung Djati Bandung melayani pengujian saintifik akurasi tinggi:\n\n• **Deteksi qPCR DNA Babi (Porcine):** Deteksi spesifik gen sitokrom b babi pada daging olahan, bumbu, & kosmetik.\n• **Analisis Residual Etanol / Alkohol:** Menggunakan instrumen Gas Chromatography (GC-FID) presisi tinggi.\n• **Identifikasi Gelatin & Asam Lemak:** Uji asal bahan baku hewani.\n\nSeluruh proses uji tervalidasi standar internasional dan diakui KAN & BPJPH.`,
+    answerEn: `🔬 **ISO/IEC 17025 Accredited Laboratory Testing:**\n\nIntegrated Halal Testing Laboratory at UIN Sunan Gunung Djati Bandung provides high-precision testing:\n\n• **Porcine DNA qPCR Detection:** Specific detection of pig cytochrome b genes in processed food, seasonings & cosmetics.\n• **Residual Ethanol / Alcohol Analysis:** High-accuracy GC-FID instrumentation.\n• **Gelatin & Fatty Acid Profiling:** Identification of animal origin derivatives.\n\nAll tests are validated under international ISO/IEC 17025 standards accredited by KAN.`,
     suggestedAction: {
       labelId: 'Pelajari Laboratorium Halal',
       labelEn: 'Explore Halal Laboratory',
@@ -99,12 +99,12 @@ const KNOWLEDGE_BASE: SmartAnswer[] = [
   },
   {
     keywords: ['lokasi', 'alamat', 'kantor', 'gedung', 'kampus', 'dimana', 'location', 'address', 'office'],
-    answerId: `📍 **Alamat & Kantor LPH UIN SGD:**\n\n• **Kampus 1:** Gedung Lecture Hall / Kantor LPH, Jl. A.H. Nasution No. 105, Cipadung, Kec. Cibiru, Kota Bandung, Jawa Barat 40614.\n• **Kampus 2 (Laboratorium Terpadu ISO 17025):** Jl. Cimencrang, Kec. Gedebage, Kota Bandung (dekat Masjid Raya Al-Jabbar).\n\nJam Operasional Layanan:\nSenin – Jumat: 08.00 – 16.00 WIB.`,
-    answerEn: `📍 **Office Locations of LPH UIN SGD:**\n\n• **Campus 1:** LPH Office Building, Jl. A.H. Nasution No. 105, Cibiru, Bandung, West Java 40614.\n• **Campus 2 (Integrated ISO 17025 Lab):** Jl. Cimencrang, Gedebage, Bandung (near Al-Jabbar Grand Mosque).\n\nOffice Hours:\nMonday – Friday: 08:00 AM – 04:00 PM WIB.`,
+    answerId: `📍 **Alamat Kantor Resmi & Laboratorium LPH UIN SGD:**\n\n• **Gedung Laboratorium Pengujian Halal Terpadu & Sekretariat LPH:**\nKawasan Kampus Terpadu UIN Sunan Gunung Djati Bandung, Jl. Cimencrang, Gedebage, Kota Bandung, Jawa Barat 40294 (Kawasan Masjid Raya Al-Jabbar).\n\nJam Operasional Layanan:\nSenin – Jumat: 08.00 – 16.00 WIB.`,
+    answerEn: `📍 **Official Office & Laboratory Location:**\n\n• **Integrated Halal Testing Laboratory & Secretariat:**\nIntegrated Campus Complex UIN Sunan Gunung Djati Bandung, Jl. Cimencrang, Gedebage, Bandung, West Java 40294 (Adjacent to Al-Jabbar Grand Mosque).\n\nOffice Hours:\nMonday – Friday: 08:00 AM – 04:00 PM WIB.`,
     suggestedAction: {
       labelId: 'Buka Google Maps',
       labelEn: 'Open Google Maps',
-      href: 'https://maps.app.goo.gl/9ZpZJz762a4oFq2N8'
+      href: 'https://maps.google.com/?q=-6.9389,107.7025'
     }
   },
   {

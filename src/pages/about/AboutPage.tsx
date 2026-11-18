@@ -332,26 +332,6 @@ export const AboutPage: React.FC = () => {
                       </p>
                     </div>
                   </div>
-
-                  {/* Actions */}
-                  <div className="mt-8 pt-6 border-t border-purple-100 flex flex-wrap items-center gap-4">
-                    <Link to="/layanan/kalkulator">
-                      <Button
-                        variant="primary"
-                        className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2 cursor-pointer"
-                      >
-                        <span>{isEn ? 'Consultation & Fee Simulation' : 'Konsultasi & Simulasi Alur Sertifikasi'}</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </Button>
-                    </Link>
-                    <Link
-                      to="/kontak"
-                      className="text-xs sm:text-sm font-bold text-neutral-700 hover:text-[#6B18A8] transition-colors inline-flex items-center gap-1.5"
-                    >
-                      <span>{isEn ? 'Contact Secretariat' : 'Hubungi Sekretariat & Konsultasi'}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
                 </div>
 
                 {/* Right (5 cols): Cutout Portrait with Bold Pop-Out Head Breaking Card Top Border */}
@@ -447,28 +427,6 @@ export const AboutPage: React.FC = () => {
                         "{directors[1].quote}"
                       </p>
                     </div>
-                  </div>
-
-                  {/* Actions */}
-                  <div className="mt-8 pt-6 border-t border-purple-100 flex flex-wrap items-center gap-4">
-                    <Link to="/layanan/kalkulator">
-                      <Button
-                        variant="primary"
-                        className="bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold text-xs sm:text-sm px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2 cursor-pointer"
-                      >
-                        <span>{isEn ? 'Consultation & Fee Simulation' : 'Konsultasi & Simulasi Alur Sertifikasi'}</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </Button>
-                    </Link>
-                    <a
-                      href="https://wa.me/6282126493700"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs sm:text-sm font-bold text-neutral-700 hover:text-[#6B18A8] transition-colors inline-flex items-center gap-1.5"
-                    >
-                      <span>{isEn ? 'WhatsApp Consultation' : 'Konsultasi Sertifikasi (WhatsApp)'}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </a>
                   </div>
                 </div>
               </div>

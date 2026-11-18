@@ -72,12 +72,14 @@ export const ContactPage: React.FC = () => {
                 <div className="flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-[#6b1282] shrink-0 mt-0.5" />
                   <div>
-                    <h5 className="font-bold text-neutral-900">{isEn ? 'Office & Lab Addresses' : 'Alamat Kantor & Lab'}</h5>
-                    <p className="text-neutral-600 mt-1">
-                      <strong>{isEn ? 'Campus 1 (Secretariat):' : 'Kampus 1 (Sekretariat):'}</strong> Lecture Hall Lt. 1, Jl. A.H. Nasution No. 105, Cibiru, Bandung 40614
+                    <h5 className="font-bold text-neutral-900">{isEn ? 'Office & Laboratory Address' : 'Alamat Kantor & Laboratorium'}</h5>
+                    <p className="text-neutral-700 font-semibold mt-1">
+                      {isEn ? 'Integrated Halal Testing Laboratory & Secretariat LPH:' : 'Gedung Laboratorium Pengujian Halal Terpadu & Sekretariat LPH:'}
                     </p>
-                    <p className="text-neutral-600 mt-1">
-                      <strong>{isEn ? 'Campus 2 (Integrated Lab):' : 'Kampus 2 (Lab Terpadu):'}</strong> Research &amp; Integrated Lab Bldg, Jl. Cimencrang, Gedebage, Bandung 40294
+                    <p className="text-neutral-600 mt-0.5 leading-relaxed">
+                      {isEn
+                        ? 'Integrated Campus Complex UIN Sunan Gunung Djati Bandung, Jl. Cimencrang, Gedebage, Bandung, West Java 40294 (Adjacent to Al-Jabbar Grand Mosque)'
+                        : 'Kawasan Kampus Terpadu UIN Sunan Gunung Djati Bandung, Jl. Cimencrang, Gedebage, Kota Bandung, Jawa Barat 40294 (Kawasan Masjid Raya Al-Jabbar)'}
                     </p>
                   </div>
                 </div>

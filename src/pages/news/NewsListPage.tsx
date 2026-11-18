@@ -21,7 +21,7 @@ const INITIAL_NEWS: NewsItem[] = [
     author: 'Humas LPH UIN SGD',
     image: '/assets/images/img_011.jpg',
     eventDate: '2026-11-10',
-    eventLocation: 'Aula Gedung Rektorat Lt. 2 Kampus 1 UIN SGD',
+    eventLocation: 'Aula Utama LPH UIN SGD Bandung',
     createdAt: '2026-11-04T08:00:00Z',
     updatedAt: '2026-11-04T08:00:00Z',
   },

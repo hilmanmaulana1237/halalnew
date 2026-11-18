@@ -173,8 +173,14 @@ export const Footer: React.FC = () => {
                   <MapPin className="w-4 h-4 text-[#F5D32F]" />
                 </div>
                 <div className="text-xs leading-relaxed text-neutral-300">
-                  <p><strong className="text-white">{isEn ? 'Campus 1:' : 'Kampus 1:'}</strong> Lecture Hall Lt. 1, Jl. A.H. Nasution No. 105, Cibiru, Bandung 40614</p>
-                  <p className="mt-1"><strong className="text-white">{isEn ? 'Campus 2:' : 'Kampus 2:'}</strong> Integrated Laboratory Bldg, Jl. Cimencrang, Gedebage, Bandung 40294</p>
+                  <p className="font-semibold text-white">
+                    {isEn ? 'Integrated Halal Testing Laboratory & Secretariat:' : 'Gedung Laboratorium Pengujian Halal Terpadu & Sekretariat:'}
+                  </p>
+                  <p className="mt-0.5 text-neutral-300">
+                    {isEn
+                      ? 'Integrated Campus Complex UIN Sunan Gunung Djati Bandung, Jl. Cimencrang, Gedebage, Bandung, West Java 40294'
+                      : 'Kawasan Kampus Terpadu UIN Sunan Gunung Djati Bandung, Jl. Cimencrang, Gedebage, Kota Bandung, Jawa Barat 40294'}
+                  </p>
                 </div>
               </li>
             </ul>

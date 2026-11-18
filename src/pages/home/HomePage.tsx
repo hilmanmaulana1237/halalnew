@@ -180,54 +180,23 @@ export const HomePage: React.FC = () => {
   const directors = getDirectors(isEn);
   const uinServices = getUinServices(isEn);
   const [activeTab, setActiveTab] = useState<string>('artikel');
-  const [selectedBranch, setSelectedBranch] = useState(0);
 
-  const branchLocations = [
-    {
-      id: 'kampus1',
-      title: isEn ? 'Campus 1 (LPH Headquarters & Secretariat)' : 'Kampus 1 (Kantor Pusat LPH & Sekretariat)',
-      badge: isEn ? 'Main Secretariat' : 'Sekretariat Utama',
-      shortName: 'Kampus 1 Cibiru',
-      address: 'Gedung Lecture Hall Lt. 1, Kampus 1 UIN SGD, Jl. A.H. Nasution No. 105, Cipadung, Kec. Cibiru, Kota Bandung, Jawa Barat 40614',
-      lat: -6.9248,
-      lng: 107.7176,
-      query: '-6.9248,107.7176+(LPH+UIN+Sunan+Gunung+Djati+Bandung)',
-      gmapsDirectUrl: 'https://maps.google.com/?q=-6.9248,107.7176',
-    },
-    {
-      id: 'kampus2',
-      title: isEn ? 'Campus 2 (Integrated Lab ISO 17025)' : 'Kampus 2 (Lab Riset Terpadu ISO 17025)',
-      badge: 'ISO/IEC 17025',
-      shortName: 'Kampus 2 Gedebage',
-      address: 'Gedung Riset & Laboratorium Terpadu, Kampus 2 UIN SGD, Jl. Cimencrang, Gedebage, Kota Bandung 40294 (Dekat Masjid Raya Al-Jabbar)',
-      lat: -6.9389,
-      lng: 107.7025,
-      query: '-6.9389,107.7025+(Laboratorium+Halal+Kampus+2+UIN+Sunan+Gunung+Djati)',
-      gmapsDirectUrl: 'https://maps.google.com/?q=-6.9389,107.7025',
-    },
-    {
-      id: 'priangan',
-      title: isEn ? 'Eastern Priangan Regional Hub' : 'Sentra Layanan Halal Priangan Timur',
-      badge: isEn ? 'Tasikmalaya & Garut' : 'Tasikmalaya & Garut',
-      shortName: 'Priangan Timur',
-      address: 'Pusat Koordinasi Layanan & Audit Halal Wilayah Priangan Timur (Tasikmalaya, Garut, Ciamis), Jawa Barat',
-      lat: -7.3274,
-      lng: 108.2207,
-      query: '-7.3274,108.2207+(Sentra+Halal+UIN+SGD+Priangan+Timur)',
-      gmapsDirectUrl: 'https://maps.google.com/?q=-7.3274,108.2207',
-    },
-    {
-      id: 'cirebon',
-      title: isEn ? 'Ciayumajakuning Regional Hub' : 'Sentra Layanan Halal Ciayumajakuning',
-      badge: isEn ? 'Cirebon Region' : 'Wilayah Cirebon',
-      shortName: 'Ciayumajakuning',
-      address: 'Pusat Koordinasi Layanan & Audit Halal Wilayah Ciayumajakuning (Cirebon, Indramayu, Majalengka, Kuningan), Jawa Barat',
-      lat: -6.7320,
-      lng: 108.5523,
-      query: '-6.7320,108.5523+(Sentra+Halal+UIN+SGD+Ciayumajakuning)',
-      gmapsDirectUrl: 'https://maps.google.com/?q=-6.7320,108.5523',
-    },
-  ];
+  const officeLocation = {
+    title: isEn
+      ? 'Integrated Halal Testing Laboratory & Secretariat'
+      : 'Gedung Laboratorium Pengujian Halal Terpadu & Sekretariat LPH',
+    badge: 'ISO/IEC 17025 Accredited',
+    complex: isEn
+      ? 'Integrated Campus Complex UIN Sunan Gunung Djati Bandung'
+      : 'Kawasan Kampus Terpadu UIN Sunan Gunung Djati Bandung',
+    address: isEn
+      ? 'Integrated Halal Laboratory Building, Integrated Campus Complex UIN Sunan Gunung Djati Bandung, Jl. Cimencrang, Gedebage, Bandung, West Java 40294 (Adjacent to Al-Jabbar Grand Mosque)'
+      : 'Gedung Laboratorium Halal Terpadu, Kawasan Kampus Terpadu UIN Sunan Gunung Djati Bandung, Jl. Cimencrang, Gedebage, Kota Bandung, Jawa Barat 40294 (Kawasan Masjid Raya Al-Jabbar)',
+    lat: -6.9389,
+    lng: 107.7025,
+    query: '-6.9389,107.7025+(Gedung+Laboratorium+Halal+Terpadu+UIN+Sunan+Gunung+Djati)',
+    gmapsDirectUrl: 'https://maps.google.com/?q=-6.9389,107.7025',
+  };
 
   return (
     <div className="flex flex-col w-full overflow-hidden bg-white">
@@ -836,28 +805,6 @@ export const HomePage: React.FC = () => {
                       </p>
                     </div>
                   </div>
-
-                  {/* Actions */}
-                  <div className="mt-8 pt-6 border-t border-purple-100 flex flex-wrap items-center gap-4">
-                    <Link to="/tentang">
-                      <Button
-                        variant="primary"
-                        className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2 cursor-pointer"
-                      >
-                        <span>{isEn ? 'Explore Institutional Profile & Vision' : 'Pelajari Profil Lembaga & Visi LPH'}</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </Button>
-                    </Link>
-                    <a
-                      href="https://halal.uinsgd.ac.id"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs sm:text-sm font-bold text-neutral-700 hover:text-[#6B18A8] transition-colors inline-flex items-center gap-1.5"
-                    >
-                      <span>{isEn ? 'University Halal Portal' : 'Portal Halal UIN SGD'}</span>
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    </a>
-                  </div>
                 </div>
 
                 {/* Right (5 cols): Cutout Portrait with Bold Pop-Out Head Breaking Card Top Border */}
@@ -953,28 +900,6 @@ export const HomePage: React.FC = () => {
                         "{directors[1].quote}"
                       </p>
                     </div>
-                  </div>
-
-                  {/* Actions */}
-                  <div className="mt-8 pt-6 border-t border-purple-100 flex flex-wrap items-center gap-4">
-                    <Link to="/layanan/kalkulator">
-                      <Button
-                        variant="primary"
-                        className="bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold text-xs sm:text-sm px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2 cursor-pointer"
-                      >
-                        <span>{isEn ? 'Consultation & Fee Simulation' : 'Konsultasi & Simulasi Alur Sertifikasi'}</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </Button>
-                    </Link>
-                    <a
-                      href="https://wa.me/6282126493700"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs sm:text-sm font-bold text-neutral-700 hover:text-[#6B18A8] transition-colors inline-flex items-center gap-1.5"
-                    >
-                      <span>{isEn ? 'WhatsApp Consultation' : 'Konsultasi Sertifikasi (WhatsApp)'}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </a>
                   </div>
                 </div>
               </div>
@@ -1395,46 +1320,29 @@ export const HomePage: React.FC = () => {
         <YellowDotGrid rows={3} cols={6} className="absolute top-8 right-10 opacity-25 pointer-events-none hidden lg:grid" />
         <div className="max-w-[1440px] xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-10 relative z-10">
           <SectionHeader
-            badge={isEn ? "SERVICE & LAB NETWORK" : "JARINGAN LAYANAN & LABORATORIUM"}
+            badge={isEn ? "OFFICE & LABORATORY LOCATION" : "LOKASI KANTOR & LABORATORIUM"}
             badgeColor="yellow"
-            title={isEn ? "Office & Halal Service Centers of UIN SGD" : "Lokasi Kantor & Sentra Layanan Halal UIN SGD"}
+            title={isEn ? "Central Office & Integrated Halal Testing Laboratory" : "Kantor Layanan & Laboratorium Pengujian Halal Terpadu"}
             subtitle={isEn
-              ? "Visit our service office at Campus 1, Integrated Laboratory Building Campus 2, and partnership centers in Eastern Priangan & Ciayumajakuning."
-              : "Kunjungi kantor layanan kami di Kampus 1, Gedung Laboratorium Terpadu Kampus 2, serta sentra kemitraan Priangan Timur & Ciayumajakuning."}
+              ? "Visit our central service office and ISO/IEC 17025 accredited testing laboratory located in the Integrated Campus Complex of UIN Sunan Gunung Djati Bandung."
+              : "Kunjungi kantor pelayanan utama dan laboratorium pengujian terakreditasi ISO/IEC 17025 LPH UIN Sunan Gunung Djati Bandung."}
           />
-
-          {/* Branch Selector Chips */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
-            {branchLocations.map((branch, idx) => (
-              <button
-                key={branch.id}
-                type="button"
-                onClick={() => setSelectedBranch(idx)}
-                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${selectedBranch === idx
-                  ? 'bg-[#6B18A8] text-white shadow-sm ring-2 ring-[#F5D32F]'
-                  : 'bg-white text-neutral-600 hover:text-[#6B18A8] border border-neutral-200 hover:border-[#C9A5E8] shadow-2xs'
-                  }`}
-              >
-                {branch.shortName}
-              </button>
-            ))}
-          </div>
 
           <div className="relative rounded-3xl p-[2px] bg-gradient-to-r from-[#4B0D78] via-[#6B18A8] via-[#F5D32F] to-[#4B0D78] shadow-2xl shadow-purple-950/10">
             <div className="bg-white rounded-[22px] p-3">
               <iframe
-                title="Peta Kantor LPH UIN SGD"
+                title="Peta Kantor & Laboratorium LPH UIN SGD"
                 width="100%"
                 height="460"
                 className="w-full h-[340px] sm:h-[460px] rounded-2xl border-0 shadow-inner"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                src={`https://maps.google.com/maps?q=${branchLocations[selectedBranch].query}&t=&z=16&ie=UTF8&iwloc=&output=embed`}
+                src={`https://maps.google.com/maps?q=${officeLocation.query}&t=&z=16&ie=UTF8&iwloc=&output=embed`}
               />
             </div>
           </div>
 
-          {/* Active Branch Location Info Card */}
+          {/* Active Office Location Info Card */}
           <div className="mt-6 p-4 sm:p-5 rounded-2xl bg-white border border-[#C9A5E8]/40 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div className="flex items-start gap-3 min-w-0">
               <div className="w-10 h-10 rounded-xl bg-[#F5EDFB] text-[#6B18A8] border border-[#C9A5E8]/30 flex items-center justify-center shrink-0">
@@ -1443,21 +1351,21 @@ export const HomePage: React.FC = () => {
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2 flex-wrap">
                   <h4 className="font-bold text-sm sm:text-base text-neutral-900 truncate">
-                    {branchLocations[selectedBranch].title}
+                    {officeLocation.title}
                   </h4>
                   <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] shrink-0 whitespace-nowrap">
-                    {branchLocations[selectedBranch].badge}
+                    {officeLocation.badge}
                   </span>
                 </div>
-                <p className="text-xs text-neutral-600 mt-1 max-w-3xl">
-                  {branchLocations[selectedBranch].address}
+                <p className="text-xs text-neutral-600 mt-1 max-w-3xl leading-relaxed">
+                  {officeLocation.address}
                 </p>
               </div>
             </div>
 
             <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 w-full md:w-auto shrink-0">
               <a
-                href={branchLocations[selectedBranch].gmapsDirectUrl}
+                href={officeLocation.gmapsDirectUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 sm:flex-initial"

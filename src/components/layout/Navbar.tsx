@@ -165,14 +165,13 @@ export const Navbar: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Bottom Footer Bar (Screenshot 1 Community style) */}
+                  {/* Bottom Footer Bar */}
                   <MenuFooter
-                    label={language === 'en' ? 'Campus Service Hubs' : 'Sentra Jaringan Layanan'}
+                    label={language === 'en' ? 'Official Office Location' : 'Lokasi Kantor Resmi'}
                     links={[
-                      { label: language === 'en' ? 'Campus 1 Cibiru' : 'Kampus 1 Cibiru Bandung', to: '/kontak' },
-                      { label: language === 'en' ? 'Bio Lab Campus 2' : 'Lab Hayati Kampus 2', to: '/kontak' },
-                      { label: language === 'en' ? 'Eastern Priangan Hub' : 'Sentra Priangan Timur', to: '/kontak' },
-                      { label: language === 'en' ? 'Ciayumajakuning Hub' : 'Sentra Ciayumajakuning', to: '/kontak' },
+                      { label: language === 'en' ? 'Integrated Halal Testing Lab' : 'Gedung Laboratorium Pengujian Halal Terpadu', to: '/kontak' },
+                      { label: language === 'en' ? 'Integrated Campus Complex UIN SGD' : 'Kawasan Kampus Terpadu UIN SGD', to: '/kontak' },
+                      { label: language === 'en' ? 'Map & Directions' : 'Peta & Petunjuk Arah', to: '/#lokasi' },
                     ]}
                     onClick={() => setActiveDropdown(null)}
                   />
