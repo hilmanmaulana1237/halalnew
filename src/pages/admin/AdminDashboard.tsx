@@ -785,6 +785,7 @@ export const AdminDashboard: React.FC = () => {
   };
 
   // -------------------------------------------------------------
+  // POST ACTIONS (TINYMCE)
   // POST ACTIONS (TINYMCE & AI TRANSLATION)
   // -------------------------------------------------------------
   const handleOpenNewPost = () => {
@@ -887,6 +888,7 @@ export const AdminDashboard: React.FC = () => {
       return;
     }
 
+    // Active Anti-Judol & Anti-Malware Threat Scan
     // Active Anti-Judol & Anti-Malware Threat Scan on Indonesian content
     const threatScan = scanForThreats(postForm.content, postForm.title);
     if (!threatScan.isClean) {
@@ -939,6 +941,7 @@ export const AdminDashboard: React.FC = () => {
       try {
         localStorage.setItem('lph_news_list', JSON.stringify(updated));
       } catch {}
+      addAuditLog('Memperbarui artikel berita (TinyMCE - Sanitized)', postForm.title, 'UPDATE');
       addAuditLog('Memperbarui artikel berita (Bilingual TinyMCE - Sanitized)', postForm.title, 'UPDATE');
     } else {
       const newPost: NewsItem = {
@@ -960,6 +963,7 @@ export const AdminDashboard: React.FC = () => {
       try {
         localStorage.setItem('lph_news_list', JSON.stringify(updated));
       } catch {}
+      addAuditLog('Menerbitkan berita baru (TinyMCE - Sanitized)', postForm.title, 'CREATE');
       addAuditLog('Menerbitkan berita baru (Bilingual TinyMCE - Sanitized)', postForm.title, 'CREATE');
     }
     setPostViewMode('LIST');
@@ -1558,6 +1562,7 @@ export const AdminDashboard: React.FC = () => {
   const handleExportNewsExcel = () => {
     const rows = filteredNews.map((n) => ({
       ID: n.id,
+      'Judul Artikel': n.title,
       'Judul Artikel (ID)': n.title,
       'Judul Artikel (EN)': n.titleEn || '-',
       'Status Terjemahan EN': n.titleEn ? 'Tersedia (AI/Editor)' : 'Belum Ada',
@@ -1565,6 +1570,7 @@ export const AdminDashboard: React.FC = () => {
       Status: n.status,
       'Tanggal Terbit': n.publishedAt || '-',
       Slug: n.slug,
+      Ringkasan: n.excerpt || '',
       'Ringkasan (ID)': n.excerpt || '',
       'Ringkasan (EN)': n.excerptEn || '',
     }));
@@ -2323,6 +2329,9 @@ export const AdminDashboard: React.FC = () => {
                                     <span className="font-bold text-neutral-800 text-xs block truncate">
                                       {news.title}
                                     </span>
+                                    <span className="text-[11px] text-neutral-400 block truncate mt-0.5">
+                                      {news.excerpt}
+                                    </span>
                                     <div className="flex items-center gap-1.5 mt-0.5">
                                       <span className="text-[11px] text-neutral-400 block truncate">
                                         {news.excerpt}
@@ -2524,6 +2533,22 @@ export const AdminDashboard: React.FC = () => {
 
                       <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 space-y-4">
                         <div>
+                          <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wider mb-1.5">
+                            Judul Artikel Berita
+                          </label>
+                          <Input
+                            value={postForm.title}
+                            onChange={(e) => {
+                              const t = e.target.value;
+                              setPostForm({
+                                ...postForm,
+                                title: t,
+                                slug: t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+                              });
+                            }}
+                            placeholder="Contoh: Akselerasi Audit Sertifikasi Halal di Jawa Barat..."
+                            className="w-full text-sm font-bold rounded-xl"
+                          />
                           <div className="flex items-center justify-between mb-1.5">
                             <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wider">
                               {activeEditorLang === 'ID'
@@ -2565,6 +2590,7 @@ export const AdminDashboard: React.FC = () => {
 
                         <div>
                           <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wider mb-1.5">
+                            Permalink / URL Slug
                             Permalink / URL Slug (Global)
                           </label>
                           <div className="flex items-center gap-2 p-2 rounded-xl bg-[#FAF7FD] border border-[#C9A5E8]/30">
@@ -2582,6 +2608,16 @@ export const AdminDashboard: React.FC = () => {
                         </div>
 
                         <div>
+                          <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wider mb-1.5">
+                            Ringkasan Singkat (Excerpt)
+                          </label>
+                          <TextArea
+                            value={postForm.excerpt}
+                            onChange={(e) => setPostForm({ ...postForm, excerpt: e.target.value })}
+                            rows={3}
+                            placeholder="Ringkasan 2-3 kalimat untuk kartu preview di beranda dan hasil pencarian Google..."
+                            className="w-full text-xs rounded-xl"
+                          />
                           <div className="flex items-center justify-between mb-1.5">
                             <label className="block text-xs font-bold text-neutral-700 uppercase tracking-wider">
                               {activeEditorLang === 'ID'
@@ -2616,6 +2652,8 @@ export const AdminDashboard: React.FC = () => {
                       <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 space-y-3">
                         <div className="flex items-center justify-between pb-2 border-b border-neutral-100">
                           <div>
+                            <h4 className="text-xs font-bold text-neutral-800 uppercase tracking-wider">
+                              Isi Konten Artikel (Visual Editor)
                             <h4 className="text-xs font-bold text-neutral-800 uppercase tracking-wider flex items-center gap-2">
                               <span>
                                 {activeEditorLang === 'ID'
@@ -2627,6 +2665,7 @@ export const AdminDashboard: React.FC = () => {
                               </span>
                             </h4>
                             <p className="text-[11px] text-neutral-400">
+                              Format artikel lengkap dengan heading, bullet point, tabel, kutipan, dan gambar.
                               {activeEditorLang === 'ID'
                                 ? 'Format artikel lengkap dengan heading, bullet point, tabel, kutipan, dan gambar.'
                                 : 'Struktur HTML, heading, penekanan bold, dan gambar dipertahankan persis dengan teks berbahasa Inggris.'}
@@ -2647,6 +2686,8 @@ export const AdminDashboard: React.FC = () => {
                           }
                         >
                           <RichTextEditor
+                            value={postForm.content}
+                            onChange={(val) => setPostForm({ ...postForm, content: val })}
                             key={`tinymce-editor-${activeEditorLang}`}
                             value={activeEditorLang === 'ID' ? postForm.content : postForm.contentEn}
                             onChange={(val) => {
