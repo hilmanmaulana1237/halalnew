@@ -271,15 +271,7 @@ export const HomePage: React.FC = () => {
                     alt="Sertifikat Akreditasi LPH UIN SGD"
                     className="w-full max-h-[460px] object-contain rounded-xl"
                   />
-                  <div className="mt-4 flex items-center justify-between text-xs font-semibold px-2">
-                    <span className="flex items-center gap-1.5 text-emerald-700 font-bold">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                      {isEn ? 'Official BPJPH Accreditation' : 'Akreditasi Resmi BPJPH'}
-                    </span>
-                    <span className="text-[#6B18A8] font-mono font-bold bg-[#F5EDFB] px-2.5 py-1 rounded-md border border-[#C9A5E8]/40">
-                      No. Reg: LPH-018-ID
-                    </span>
-                  </div>
+
                 </div>
               </BackgroundGradient>
             </div>
@@ -1024,23 +1016,23 @@ export const HomePage: React.FC = () => {
                       transition={{ duration: 0.25 }}
                       className="rounded-3xl border border-neutral-200/80 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all flex flex-col justify-between"
                     >
-                        <img src={article.img} alt={article.title} className="w-full h-48 object-cover" />
-                        <div className="p-6">
-                          <span className={`text-[11px] font-black uppercase tracking-wider ${article.catColor}`}>
-                            {article.cat}
-                          </span>
-                          <h3 className="font-extrabold text-lg text-neutral-900 mt-2 mb-2 line-clamp-2">
-                            {article.title}
-                          </h3>
-                          <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed mb-4">
-                            {article.desc}
-                          </p>
-                          <Link to={article.link} className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
-                            {isEn ? 'Read Now' : 'Baca Sekarang'} <ArrowRight className="w-3.5 h-3.5" />
-                          </Link>
-                        </div>
-                      </motion.div>
-                    ))}
+                      <img src={article.img} alt={article.title} className="w-full h-48 object-cover" />
+                      <div className="p-6">
+                        <span className={`text-[11px] font-black uppercase tracking-wider ${article.catColor}`}>
+                          {article.cat}
+                        </span>
+                        <h3 className="font-extrabold text-lg text-neutral-900 mt-2 mb-2 line-clamp-2">
+                          {article.title}
+                        </h3>
+                        <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed mb-4">
+                          {article.desc}
+                        </p>
+                        <Link to={article.link} className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
+                          {isEn ? 'Read Now' : 'Baca Sekarang'} <ArrowRight className="w-3.5 h-3.5" />
+                        </Link>
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
               )}
 
@@ -1088,23 +1080,23 @@ export const HomePage: React.FC = () => {
                       transition={{ duration: 0.25 }}
                       className="rounded-3xl border border-neutral-200/80 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all"
                     >
-                        <img src={article.img} alt={article.title} className="w-full h-48 object-cover" />
-                        <div className="p-6">
-                          <span className="text-[11px] font-black text-[#6b1282] uppercase tracking-wider">
-                            {article.cat}
-                          </span>
-                          <h3 className="font-extrabold text-lg text-neutral-900 mt-2 mb-2 line-clamp-2">
-                            {article.title}
-                          </h3>
-                          <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed mb-4">
-                            {article.desc}
-                          </p>
-                          <Link to={article.link} className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
-                            {isEn ? 'Read Now' : 'Baca Sekarang'} <ArrowRight className="w-3.5 h-3.5" />
-                          </Link>
-                        </div>
-                      </motion.div>
-                    ))}
+                      <img src={article.img} alt={article.title} className="w-full h-48 object-cover" />
+                      <div className="p-6">
+                        <span className="text-[11px] font-black text-[#6b1282] uppercase tracking-wider">
+                          {article.cat}
+                        </span>
+                        <h3 className="font-extrabold text-lg text-neutral-900 mt-2 mb-2 line-clamp-2">
+                          {article.title}
+                        </h3>
+                        <p className="text-xs text-neutral-500 line-clamp-3 leading-relaxed mb-4">
+                          {article.desc}
+                        </p>
+                        <Link to={article.link} className="text-xs font-bold text-[#6b1282] hover:underline flex items-center gap-1">
+                          {isEn ? 'Read Now' : 'Baca Sekarang'} <ArrowRight className="w-3.5 h-3.5" />
+                        </Link>
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
               )}
 

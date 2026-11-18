@@ -9,6 +9,96 @@ export interface HalalRateConfig {
   isActive: boolean;
 }
 
+export interface FlyerRatesConfig {
+  bandung: {
+    mikroKecil: number;
+    menengahBesar: number;
+  };
+  jabar: {
+    mikroKecil: {
+      p0_50: number;
+      p50_100: number;
+      p100_200: number;
+      pOver200: number;
+    };
+    menengah: number;
+    besar: number;
+  };
+  international: {
+    minPrice: number;
+    contactWa: string;
+  };
+  updatedAt: string;
+}
+
+export const DEFAULT_FLYER_RATES: FlyerRatesConfig = {
+  bandung: {
+    mikroKecil: 1820000,
+    menengahBesar: 17000000,
+  },
+  jabar: {
+    mikroKecil: {
+      p0_50: 3300000,
+      p50_100: 3900000,
+      p100_200: 4400000,
+      pOver200: 4900000,
+    },
+    menengah: 21000000,
+    besar: 30000000,
+  },
+  international: {
+    minPrice: 60000000,
+    contactWa: '6282126493700',
+  },
+  updatedAt: new Date().toISOString(),
+};
+
+const FLYER_STORAGE_KEY = 'lph_flyer_rates_config';
+
+export const getFlyerRates = (): FlyerRatesConfig => {
+  try {
+    const raw = localStorage.getItem(FLYER_STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      return {
+        ...DEFAULT_FLYER_RATES,
+        ...parsed,
+        bandung: { ...DEFAULT_FLYER_RATES.bandung, ...(parsed.bandung || {}) },
+        jabar: {
+          ...DEFAULT_FLYER_RATES.jabar,
+          ...(parsed.jabar || {}),
+          mikroKecil: {
+            ...DEFAULT_FLYER_RATES.jabar.mikroKecil,
+            ...(parsed.jabar?.mikroKecil || {}),
+          },
+        },
+        international: {
+          ...DEFAULT_FLYER_RATES.international,
+          ...(parsed.international || {}),
+        },
+      };
+    }
+  } catch (e) {
+    console.error('Failed to parse stored flyer rates:', e);
+  }
+  return DEFAULT_FLYER_RATES;
+};
+
+export const saveFlyerRates = (rates: FlyerRatesConfig): void => {
+  try {
+    rates.updatedAt = new Date().toISOString();
+    localStorage.setItem(FLYER_STORAGE_KEY, JSON.stringify(rates));
+    window.dispatchEvent(new CustomEvent('lph-rates-updated', { detail: rates }));
+  } catch (e) {
+    console.error('Failed to save flyer rates:', e);
+  }
+};
+
+export const resetFlyerRates = (): FlyerRatesConfig => {
+  saveFlyerRates(DEFAULT_FLYER_RATES);
+  return DEFAULT_FLYER_RATES;
+};
+
 export interface RatesMatrix {
   baseRates: {
     MIKRO: { bpjph: number; lph: number; label: string };

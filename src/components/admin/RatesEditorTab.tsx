@@ -12,13 +12,21 @@ import {
   FlaskConical,
   Scale,
   Sparkles,
+  MapPin,
+  Layers,
+  Phone,
+  ExternalLink,
 } from 'lucide-react';
 import {
   getRatesMatrix,
   saveRatesMatrix,
   resetRatesMatrix,
+  getFlyerRates,
+  saveFlyerRates,
+  resetFlyerRates,
   type RatesMatrix,
   type HalalRateConfig,
+  type FlyerRatesConfig,
 } from '@/services/ratesService';
 import { formatRupiah } from '@/services/api';
 import { exportToExcel } from '@/lib/excelExport';
@@ -29,6 +37,10 @@ interface RatesEditorTabProps {
 
 export const RatesEditorTab: React.FC<RatesEditorTabProps> = ({ onLogAudit }) => {
   const [rates, setRates] = useState<RatesMatrix>(getRatesMatrix());
+  const [flyerRates, setFlyerRates] = useState<FlyerRatesConfig>(getFlyerRates());
+  const [isEditingFlyer, setIsEditingFlyer] = useState<boolean>(false);
+  const [flyerForm, setFlyerForm] = useState<FlyerRatesConfig>(getFlyerRates());
+
   const [isEditingScale, setIsEditingScale] = useState<string | null>(null);
   const [scaleForm, setScaleForm] = useState({
     bpjph: 0,
@@ -102,6 +114,38 @@ export const RatesEditorTab: React.FC<RatesEditorTabProps> = ({ onLogAudit }) =>
     }
   };
 
+  // Open Edit Flyer Modal
+  const handleOpenEditFlyer = () => {
+    setFlyerForm(JSON.parse(JSON.stringify(flyerRates)));
+    setIsEditingFlyer(true);
+  };
+
+  // Save Flyer Rates
+  const handleSaveFlyerRates = (e: React.FormEvent) => {
+    e.preventDefault();
+    saveFlyerRates(flyerForm);
+    setFlyerRates(flyerForm);
+    setIsEditingFlyer(false);
+    setSaveSuccessMsg('Konfigurasi Tarif Flyer Resmi LPH berhasil disimpan & disinkronkan ke halaman /layanan/kalkulator.');
+    setTimeout(() => setSaveSuccessMsg(null), 4000);
+    if (onLogAudit) {
+      onLogAudit('Memperbarui tarif skema flyer kalkulator', 'Kota Bandung, Jabar & Luar Indonesia');
+    }
+  };
+
+  // Reset Flyer Rates
+  const handleResetFlyer = () => {
+    if (window.confirm('Reset seluruh konfigurasi tarif flyer resmi ke default standar flyer LPH?')) {
+      const def = resetFlyerRates();
+      setFlyerRates(def);
+      setSaveSuccessMsg('Tarif flyer berhasil dikembalikan ke standar awal.');
+      setTimeout(() => setSaveSuccessMsg(null), 4000);
+      if (onLogAudit) {
+        onLogAudit('Reset tarif flyer ke default', 'Seluruh Wilayah');
+      }
+    }
+  };
+
   // Update Addon / Lab Values
   const handleUpdateAddon = (field: 'product' | 'ingredient' | 'qpcr' | 'gcfid', subfield: string, val: number) => {
     let updated: RatesMatrix = { ...rates };
@@ -147,6 +191,89 @@ export const RatesEditorTab: React.FC<RatesEditorTabProps> = ({ onLogAudit }) =>
   // Export Rates to Excel
   const handleExportRatesExcel = () => {
     const excelRows = [
+      // Flyer Rates Section
+      {
+        'Komponen Biaya': 'Flyer LPH - Kota Bandung (Mikro / Kecil)',
+        'Skala Usaha': 'Mikro / Kecil',
+        'Tarif BPJPH (Kas Negara)': 0,
+        'Tarif Pemeriksaan LPH': flyerRates.bandung.mikroKecil,
+        'Total Biaya': flyerRates.bandung.mikroKecil,
+        'Dasar Regulasi': 'Flyer Skema Reguler LPH UIN SGD',
+        Status: 'Aktif (Live Sync)',
+      },
+      {
+        'Komponen Biaya': 'Flyer LPH - Kota Bandung (Menengah / Besar)',
+        'Skala Usaha': 'Menengah / Besar',
+        'Tarif BPJPH (Kas Negara)': 0,
+        'Tarif Pemeriksaan LPH': flyerRates.bandung.menengahBesar,
+        'Total Biaya': flyerRates.bandung.menengahBesar,
+        'Dasar Regulasi': 'Flyer Skema Reguler LPH UIN SGD',
+        Status: 'Aktif (Live Sync)',
+      },
+      {
+        'Komponen Biaya': 'Flyer LPH - Jawa Barat (Mikro/Kecil 0-50 Produk)',
+        'Skala Usaha': 'Mikro / Kecil',
+        'Tarif BPJPH (Kas Negara)': 0,
+        'Tarif Pemeriksaan LPH': flyerRates.jabar.mikroKecil.p0_50,
+        'Total Biaya': flyerRates.jabar.mikroKecil.p0_50,
+        'Dasar Regulasi': 'Flyer Skema Reguler LPH UIN SGD',
+        Status: 'Aktif (Live Sync)',
+      },
+      {
+        'Komponen Biaya': 'Flyer LPH - Jawa Barat (Mikro/Kecil 50-100 Produk)',
+        'Skala Usaha': 'Mikro / Kecil',
+        'Tarif BPJPH (Kas Negara)': 0,
+        'Tarif Pemeriksaan LPH': flyerRates.jabar.mikroKecil.p50_100,
+        'Total Biaya': flyerRates.jabar.mikroKecil.p50_100,
+        'Dasar Regulasi': 'Flyer Skema Reguler LPH UIN SGD',
+        Status: 'Aktif (Live Sync)',
+      },
+      {
+        'Komponen Biaya': 'Flyer LPH - Jawa Barat (Mikro/Kecil 100-200 Produk)',
+        'Skala Usaha': 'Mikro / Kecil',
+        'Tarif BPJPH (Kas Negara)': 0,
+        'Tarif Pemeriksaan LPH': flyerRates.jabar.mikroKecil.p100_200,
+        'Total Biaya': flyerRates.jabar.mikroKecil.p100_200,
+        'Dasar Regulasi': 'Flyer Skema Reguler LPH UIN SGD',
+        Status: 'Aktif (Live Sync)',
+      },
+      {
+        'Komponen Biaya': 'Flyer LPH - Jawa Barat (Mikro/Kecil >200 Produk)',
+        'Skala Usaha': 'Mikro / Kecil',
+        'Tarif BPJPH (Kas Negara)': 0,
+        'Tarif Pemeriksaan LPH': flyerRates.jabar.mikroKecil.pOver200,
+        'Total Biaya': flyerRates.jabar.mikroKecil.pOver200,
+        'Dasar Regulasi': 'Flyer Skema Reguler LPH UIN SGD',
+        Status: 'Aktif (Live Sync)',
+      },
+      {
+        'Komponen Biaya': 'Flyer LPH - Jawa Barat (Menengah)',
+        'Skala Usaha': 'Menengah',
+        'Tarif BPJPH (Kas Negara)': 0,
+        'Tarif Pemeriksaan LPH': flyerRates.jabar.menengah,
+        'Total Biaya': flyerRates.jabar.menengah,
+        'Dasar Regulasi': 'Flyer Skema Reguler LPH UIN SGD',
+        Status: 'Aktif (Live Sync)',
+      },
+      {
+        'Komponen Biaya': 'Flyer LPH - Jawa Barat (Besar)',
+        'Skala Usaha': 'Besar',
+        'Tarif BPJPH (Kas Negara)': 0,
+        'Tarif Pemeriksaan LPH': flyerRates.jabar.besar,
+        'Total Biaya': flyerRates.jabar.besar,
+        'Dasar Regulasi': 'Flyer Skema Reguler LPH UIN SGD',
+        Status: 'Aktif (Live Sync)',
+      },
+      {
+        'Komponen Biaya': 'Flyer LPH - Luar Indonesia (Mulai Dari)',
+        'Skala Usaha': 'Internasional',
+        'Tarif BPJPH (Kas Negara)': 0,
+        'Tarif Pemeriksaan LPH': flyerRates.international.minPrice,
+        'Total Biaya': flyerRates.international.minPrice,
+        'Dasar Regulasi': 'Flyer Skema Reguler LPH UIN SGD',
+        Status: 'Aktif (Live Sync)',
+      },
+      // KMA 784 Base Scale Section
       ...Object.entries(rates.baseRates).map(([scaleKey, data]) => ({
         'Komponen Biaya': `Tarif Dasar - ${data.label}`,
         'Skala Usaha': scaleKey,
@@ -242,6 +369,160 @@ export const RatesEditorTab: React.FC<RatesEditorTabProps> = ({ onLogAudit }) =>
             <span>{saveSuccessMsg}</span>
           </div>
         )}
+      </Card>
+
+      {/* 0. Dedicated Flyer Rates Card (Live Sync with /layanan/kalkulator) */}
+      <Card className="bg-white rounded-3xl border-2 border-[#6B18A8]/30 shadow-md p-6 space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-neutral-100 pb-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2 flex-wrap">
+              <Sparkles className="w-4 h-4 text-amber-500" />
+              <h4 className="text-base font-extrabold text-[#292333]">
+                Tarif Skema Flyer Resmi LPH (Kalkulator Estimasi Publik)
+              </h4>
+              <Chip size="sm" className="bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] font-black text-[10px]">
+                Sinkron Otomatis
+              </Chip>
+            </div>
+            <p className="text-xs text-neutral-500">
+              Konfigurasi tarif resmi yang tampil di halaman{' '}
+              <a href="/layanan/kalkulator" target="_blank" rel="noopener noreferrer" className="font-bold text-[#6B18A8] underline inline-flex items-center gap-0.5">
+                /layanan/kalkulator <ExternalLink className="w-3 h-3" />
+              </a>
+              . Perubahan tarif di sini akan langsung mengubah nominal perhitungan bagi pelaku usaha.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2 shrink-0 flex-wrap">
+            <Button
+              variant="outline"
+              onPress={handleResetFlyer}
+              className="border-neutral-300 text-neutral-600 hover:bg-neutral-50 text-xs font-bold rounded-xl px-3 py-1.5 flex items-center gap-1.5 cursor-pointer"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>Reset Default Flyer</span>
+            </Button>
+            <Button
+              variant="primary"
+              onPress={handleOpenEditFlyer}
+              className="bg-[#6B18A8] hover:bg-[#58138c] text-white text-xs font-bold rounded-xl px-4 py-2 flex items-center gap-1.5 cursor-pointer shadow-md shadow-purple-950/20"
+            >
+              <Edit3 className="w-3.5 h-3.5 text-[#F5D32F]" />
+              <span>Edit Tarif Flyer</span>
+            </Button>
+          </div>
+        </div>
+
+        {/* 3 Columns Preview of Flyer Rates */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Kota Bandung */}
+          <div className="p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/40 space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5">
+                <MapPin className="w-4 h-4 text-[#6B18A8]" />
+                <span className="font-extrabold text-xs text-neutral-800">Kota Bandung</span>
+              </div>
+              <Chip size="sm" className="bg-purple-100 text-[#6B18A8] text-[9px] font-bold">
+                2 Skala
+              </Chip>
+            </div>
+            <div className="space-y-2 text-xs">
+              <div className="p-2.5 rounded-xl bg-white border border-[#C9A5E8]/30 flex items-center justify-between">
+                <div>
+                  <span className="font-bold text-neutral-700 block">Mikro / Kecil</span>
+                  <span className="text-[10px] text-neutral-400">Estimasi awal</span>
+                </div>
+                <span className="font-mono font-black text-[#6B18A8]">
+                  {formatRupiah(flyerRates.bandung.mikroKecil)}
+                </span>
+              </div>
+              <div className="p-2.5 rounded-xl bg-white border border-[#C9A5E8]/30 flex items-center justify-between">
+                <div>
+                  <span className="font-bold text-neutral-700 block">Menengah / Besar</span>
+                  <span className="text-[10px] text-neutral-400">Estimasi awal</span>
+                </div>
+                <span className="font-mono font-black text-[#6B18A8]">
+                  {formatRupiah(flyerRates.bandung.menengahBesar)}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Jawa Barat */}
+          <div className="p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/40 space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5">
+                <Layers className="w-4 h-4 text-[#6B18A8]" />
+                <span className="font-extrabold text-xs text-neutral-800">Jawa Barat (Mikro/Kecil)</span>
+              </div>
+              <Chip size="sm" className="bg-purple-100 text-[#6B18A8] text-[9px] font-bold">
+                4 Varian
+              </Chip>
+            </div>
+            <div className="space-y-1.5 text-xs">
+              <div className="p-2 rounded-xl bg-white border border-[#C9A5E8]/30 flex items-center justify-between">
+                <span className="font-bold text-neutral-700 text-[11px]">0 - 50 Produk</span>
+                <span className="font-mono font-black text-[#6B18A8] text-[11px]">
+                  {formatRupiah(flyerRates.jabar.mikroKecil.p0_50)}
+                </span>
+              </div>
+              <div className="p-2 rounded-xl bg-white border border-[#C9A5E8]/30 flex items-center justify-between">
+                <span className="font-bold text-neutral-700 text-[11px]">50 - 100 Produk</span>
+                <span className="font-mono font-black text-[#6B18A8] text-[11px]">
+                  {formatRupiah(flyerRates.jabar.mikroKecil.p50_100)}
+                </span>
+              </div>
+              <div className="p-2 rounded-xl bg-white border border-[#C9A5E8]/30 flex items-center justify-between">
+                <span className="font-bold text-neutral-700 text-[11px]">100 - 200 Produk</span>
+                <span className="font-mono font-black text-[#6B18A8] text-[11px]">
+                  {formatRupiah(flyerRates.jabar.mikroKecil.p100_200)}
+                </span>
+              </div>
+              <div className="p-2 rounded-xl bg-white border border-[#C9A5E8]/30 flex items-center justify-between">
+                <span className="font-bold text-neutral-700 text-[11px]">&gt; 200 Produk</span>
+                <span className="font-mono font-black text-[#6B18A8] text-[11px]">
+                  {formatRupiah(flyerRates.jabar.mikroKecil.pOver200)}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Menengah, Besar & Luar Indonesia */}
+          <div className="p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/40 space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5">
+                <Phone className="w-4 h-4 text-[#6B18A8]" />
+                <span className="font-extrabold text-xs text-neutral-800">Menengah, Besar &amp; Luar RI</span>
+              </div>
+              <Chip size="sm" className="bg-amber-100 text-amber-900 text-[9px] font-bold">
+                Khusus
+              </Chip>
+            </div>
+            <div className="space-y-2 text-xs">
+              <div className="p-2 rounded-xl bg-white border border-[#C9A5E8]/30 flex items-center justify-between">
+                <span className="font-bold text-neutral-700 text-[11px]">Jabar - Menengah</span>
+                <span className="font-mono font-black text-[#6B18A8] text-[11px]">
+                  {formatRupiah(flyerRates.jabar.menengah)}
+                </span>
+              </div>
+              <div className="p-2 rounded-xl bg-white border border-[#C9A5E8]/30 flex items-center justify-between">
+                <span className="font-bold text-neutral-700 text-[11px]">Jabar - Besar</span>
+                <span className="font-mono font-black text-[#6B18A8] text-[11px]">
+                  {formatRupiah(flyerRates.jabar.besar)}
+                </span>
+              </div>
+              <div className="p-2 rounded-xl bg-white border border-[#C9A5E8]/30 flex items-center justify-between">
+                <div>
+                  <span className="font-bold text-neutral-700 text-[11px] block">Luar Indonesia</span>
+                  <span className="text-[10px] text-neutral-400 font-mono">+{flyerRates.international.contactWa}</span>
+                </div>
+                <span className="font-mono font-black text-[#6B18A8] text-[11px]">
+                  {formatRupiah(flyerRates.international.minPrice)}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
       </Card>
 
       {/* 1. Base Rates Table with Direct Edit Buttons */}
@@ -578,6 +859,277 @@ export const RatesEditorTab: React.FC<RatesEditorTabProps> = ({ onLogAudit }) =>
                   </Button>
                   <Button type="submit" variant="primary" className="bg-[#6B18A8] text-white text-xs font-bold rounded-xl px-5 py-2">
                     Simpan Perubahan Tarif
+                  </Button>
+                </Modal.Footer>
+              </form>
+            )}
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
+
+      {/* MODAL: EDIT FLYER ESTIMATION RATES */}
+      <Modal.Backdrop isOpen={isEditingFlyer} onOpenChange={(open) => !open && setIsEditingFlyer(false)}>
+        <Modal.Container placement="center">
+          <Modal.Dialog className="w-[95vw] sm:max-w-2xl max-h-[90vh] flex flex-col p-0 overflow-hidden rounded-3xl bg-white border border-[#C9A5E8]/40 shadow-2xl">
+            <Modal.CloseTrigger />
+            {isEditingFlyer && (
+              <form onSubmit={handleSaveFlyerRates} className="flex flex-col max-h-[90vh]">
+                <Modal.Header className="p-4 sm:p-6 bg-gradient-to-r from-[#FAF7FD] to-white border-b border-[#C9A5E8]/30 shrink-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Chip size="sm" className="bg-[#FFF7D1] text-[#713f12] font-black text-[10px]">
+                      Flyer Resmi LPH
+                    </Chip>
+                  </div>
+                  <Modal.Heading className="text-base sm:text-lg font-black text-[#292333]">
+                    Edit Tarif Skema Flyer (Sinkronisasi Kalkulator Publik)
+                  </Modal.Heading>
+                  <p className="text-xs text-neutral-500 mt-0.5">
+                    Ubah nominal di bawah ini untuk memperbarui tarif estimasi pada halaman /layanan/kalkulator secara langsung.
+                  </p>
+                </Modal.Header>
+                <Modal.Body className="p-4 sm:p-6 space-y-5 overflow-y-auto">
+                  {/* Wilayah Kota Bandung */}
+                  <div className="p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/35 space-y-3">
+                    <h5 className="text-xs font-black text-[#6B18A8] uppercase tracking-wide flex items-center gap-1.5">
+                      <MapPin className="w-3.5 h-3.5" />
+                      <span>1. Wilayah Kota Bandung</span>
+                    </h5>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[11px] font-bold text-neutral-700 mb-1">
+                          Skala Usaha Mikro / Kecil (Rp)
+                        </label>
+                        <Input
+                          type="number"
+                          value={String(flyerForm.bandung.mikroKecil)}
+                          onChange={(e) =>
+                            setFlyerForm({
+                              ...flyerForm,
+                              bandung: { ...flyerForm.bandung, mikroKecil: Number(e.target.value) },
+                            })
+                          }
+                          required
+                          className="w-full text-xs font-mono font-bold"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold text-neutral-700 mb-1">
+                          Skala Usaha Menengah / Besar (Rp)
+                        </label>
+                        <Input
+                          type="number"
+                          value={String(flyerForm.bandung.menengahBesar)}
+                          onChange={(e) =>
+                            setFlyerForm({
+                              ...flyerForm,
+                              bandung: { ...flyerForm.bandung, menengahBesar: Number(e.target.value) },
+                            })
+                          }
+                          required
+                          className="w-full text-xs font-mono font-bold"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Wilayah Jawa Barat - Mikro/Kecil Per Varian Produk */}
+                  <div className="p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/35 space-y-3">
+                    <h5 className="text-xs font-black text-[#6B18A8] uppercase tracking-wide flex items-center gap-1.5">
+                      <Layers className="w-3.5 h-3.5" />
+                      <span>2. Wilayah Jawa Barat (Skala Mikro / Kecil per Varian Produk)</span>
+                    </h5>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[11px] font-bold text-neutral-700 mb-1">
+                          Jumlah Produk 0 - 50 (Rp)
+                        </label>
+                        <Input
+                          type="number"
+                          value={String(flyerForm.jabar.mikroKecil.p0_50)}
+                          onChange={(e) =>
+                            setFlyerForm({
+                              ...flyerForm,
+                              jabar: {
+                                ...flyerForm.jabar,
+                                mikroKecil: { ...flyerForm.jabar.mikroKecil, p0_50: Number(e.target.value) },
+                              },
+                            })
+                          }
+                          required
+                          className="w-full text-xs font-mono font-bold"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold text-neutral-700 mb-1">
+                          Jumlah Produk 50 - 100 (Rp)
+                        </label>
+                        <Input
+                          type="number"
+                          value={String(flyerForm.jabar.mikroKecil.p50_100)}
+                          onChange={(e) =>
+                            setFlyerForm({
+                              ...flyerForm,
+                              jabar: {
+                                ...flyerForm.jabar,
+                                mikroKecil: { ...flyerForm.jabar.mikroKecil, p50_100: Number(e.target.value) },
+                              },
+                            })
+                          }
+                          required
+                          className="w-full text-xs font-mono font-bold"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold text-neutral-700 mb-1">
+                          Jumlah Produk 100 - 200 (Rp)
+                        </label>
+                        <Input
+                          type="number"
+                          value={String(flyerForm.jabar.mikroKecil.p100_200)}
+                          onChange={(e) =>
+                            setFlyerForm({
+                              ...flyerForm,
+                              jabar: {
+                                ...flyerForm.jabar,
+                                mikroKecil: { ...flyerForm.jabar.mikroKecil, p100_200: Number(e.target.value) },
+                              },
+                            })
+                          }
+                          required
+                          className="w-full text-xs font-mono font-bold"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold text-neutral-700 mb-1">
+                          Jumlah Produk &gt; 200 (Rp)
+                        </label>
+                        <Input
+                          type="number"
+                          value={String(flyerForm.jabar.mikroKecil.pOver200)}
+                          onChange={(e) =>
+                            setFlyerForm({
+                              ...flyerForm,
+                              jabar: {
+                                ...flyerForm.jabar,
+                                mikroKecil: { ...flyerForm.jabar.mikroKecil, pOver200: Number(e.target.value) },
+                              },
+                            })
+                          }
+                          required
+                          className="w-full text-xs font-mono font-bold"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Wilayah Jawa Barat - Menengah & Besar */}
+                  <div className="p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/35 space-y-3">
+                    <h5 className="text-xs font-black text-[#6B18A8] uppercase tracking-wide flex items-center gap-1.5">
+                      <Scale className="w-3.5 h-3.5" />
+                      <span>3. Wilayah Jawa Barat (Skala Menengah &amp; Besar)</span>
+                    </h5>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[11px] font-bold text-neutral-700 mb-1">
+                          Skala Usaha Menengah (Rp)
+                        </label>
+                        <Input
+                          type="number"
+                          value={String(flyerForm.jabar.menengah)}
+                          onChange={(e) =>
+                            setFlyerForm({
+                              ...flyerForm,
+                              jabar: { ...flyerForm.jabar, menengah: Number(e.target.value) },
+                            })
+                          }
+                          required
+                          className="w-full text-xs font-mono font-bold"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold text-neutral-700 mb-1">
+                          Skala Usaha Besar (Rp)
+                        </label>
+                        <Input
+                          type="number"
+                          value={String(flyerForm.jabar.besar)}
+                          onChange={(e) =>
+                            setFlyerForm({
+                              ...flyerForm,
+                              jabar: { ...flyerForm.jabar, besar: Number(e.target.value) },
+                            })
+                          }
+                          required
+                          className="w-full text-xs font-mono font-bold"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Luar Indonesia & Kontak WhatsApp */}
+                  <div className="p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/35 space-y-3">
+                    <h5 className="text-xs font-black text-[#6B18A8] uppercase tracking-wide flex items-center gap-1.5">
+                      <Phone className="w-3.5 h-3.5" />
+                      <span>4. Luar Indonesia &amp; Kontak WhatsApp</span>
+                    </h5>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[11px] font-bold text-neutral-700 mb-1">
+                          Tarif Luar Indonesia - Mulai Dari (Rp)
+                        </label>
+                        <Input
+                          type="number"
+                          value={String(flyerForm.international.minPrice)}
+                          onChange={(e) =>
+                            setFlyerForm({
+                              ...flyerForm,
+                              international: {
+                                ...flyerForm.international,
+                                minPrice: Number(e.target.value),
+                              },
+                            })
+                          }
+                          required
+                          className="w-full text-xs font-mono font-bold"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold text-neutral-700 mb-1">
+                          Nomor WhatsApp Konsultasi (Contoh: 6282126493700)
+                        </label>
+                        <Input
+                          value={flyerForm.international.contactWa}
+                          onChange={(e) =>
+                            setFlyerForm({
+                              ...flyerForm,
+                              international: {
+                                ...flyerForm.international,
+                                contactWa: e.target.value.replace(/[^0-9]/g, ''),
+                              },
+                            })
+                          }
+                          required
+                          placeholder="6282126493700"
+                          className="w-full text-xs font-mono"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </Modal.Body>
+                <Modal.Footer className="p-4 sm:p-6 bg-[#FAF7FD] border-t border-[#C9A5E8]/30 flex justify-end gap-2">
+                  <Button
+                    variant="secondary"
+                    slot="close"
+                    className="text-xs font-bold rounded-xl px-4 py-2 cursor-pointer"
+                  >
+                    Batal
+                  </Button>
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    className="bg-[#6B18A8] hover:bg-[#58138c] text-white text-xs font-bold rounded-xl px-5 py-2 cursor-pointer shadow-md shadow-purple-950/20"
+                  >
+                    Simpan &amp; Sinkronkan ke Publik
                   </Button>
                 </Modal.Footer>
               </form>

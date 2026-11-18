@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Card, Input } from '@heroui/react';
 import {
   Calculator,
@@ -19,10 +19,26 @@ import {
 } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { SparklesCore } from '@/components/ui/sparkles';
+import { getFlyerRates, type FlyerRatesConfig } from '@/services/ratesService';
 
 export const PriceCalculatorPage: React.FC = () => {
   const { language } = useLanguage();
   const isEn = language === 'en';
+
+  // Dynamic flyer rates synchronized with Admin Panel
+  const [flyerRates, setFlyerRates] = useState<FlyerRatesConfig>(getFlyerRates());
+
+  useEffect(() => {
+    const handleUpdate = () => {
+      setFlyerRates(getFlyerRates());
+    };
+    window.addEventListener('lph-rates-updated', handleUpdate);
+    window.addEventListener('storage', handleUpdate);
+    return () => {
+      window.removeEventListener('lph-rates-updated', handleUpdate);
+      window.removeEventListener('storage', handleUpdate);
+    };
+  }, []);
 
   // State for interactive simulator
   const [selectedRegion, setSelectedRegion] = useState<'BANDUNG' | 'JABAR' | 'INTERNATIONAL'>('JABAR');
@@ -30,12 +46,26 @@ export const PriceCalculatorPage: React.FC = () => {
   const [productTier, setProductTier] = useState<number>(50); // 50, 100, 200, 201
   const [isFlyerZoomed, setIsFlyerZoomed] = useState<boolean>(false);
 
-  // Calculation logic based on official flyer
+  const formatRupiah = (val: number) => {
+    return new Intl.NumberFormat(isEn ? 'en-US' : 'id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      maximumFractionDigits: 0,
+    }).format(val);
+  };
+
+  const formatShortMillions = (val: number) => {
+    const millions = val / 1000000;
+    return `Mulai Rp${millions % 1 === 0 ? millions : millions.toFixed(2).replace('.', ',')} Jt`;
+  };
+
+  // Calculation logic based on official flyer (dynamic from Admin)
   const getEstimatedFee = () => {
     if (selectedRegion === 'INTERNATIONAL') {
+      const minPrice = flyerRates.international?.minPrice || 60000000;
       return {
-        amount: 60000000,
-        label: isEn ? 'Starting from Rp 60,000,000' : 'Mulai dari Rp60.000.000,-',
+        amount: minPrice,
+        label: isEn ? `Starting from ${formatRupiah(minPrice)}` : `Mulai dari ${formatRupiah(minPrice)},-`,
         notes: isEn
           ? 'International inspection outside Indonesia. Please consult official LPH WhatsApp for custom quotation and logistics.'
           : 'Pemeriksaan internasional luar negeri. Hubungi WhatsApp resmi LPH untuk estimasi detail akomodasi dan logistik auditor.',
@@ -45,21 +75,23 @@ export const PriceCalculatorPage: React.FC = () => {
 
     if (selectedRegion === 'BANDUNG') {
       if (businessScale === 'MIKRO_KECIL') {
+        const amt = flyerRates.bandung?.mikroKecil || 1820000;
         return {
-          amount: 1820000,
-          label: 'Rp1.820.000,-',
+          amount: amt,
+          label: `${formatRupiah(amt)},-`,
           notes: isEn
             ? 'Estimated starting fee for Micro / Small scale within Bandung City area.'
-            : 'Mulai dari Rp1.820.000,- untuk Usaha Mikro / Kecil wilayah Kota Bandung.',
+            : `Mulai dari ${formatRupiah(amt)},- untuk Usaha Mikro / Kecil wilayah Kota Bandung.`,
           isCustom: false,
         };
       } else {
+        const amt = flyerRates.bandung?.menengahBesar || 17000000;
         return {
-          amount: 17000000,
-          label: 'Rp17.000.000,-',
+          amount: amt,
+          label: `${formatRupiah(amt)},-`,
           notes: isEn
             ? 'Estimated starting fee for Medium / Large scale within Bandung City area.'
-            : 'Mulai dari Rp17.000.000,- untuk Usaha Menengah / Besar wilayah Kota Bandung.',
+            : `Mulai dari ${formatRupiah(amt)},- untuk Usaha Menengah / Besar wilayah Kota Bandung.`,
           isCustom: false,
         };
       }
@@ -68,64 +100,62 @@ export const PriceCalculatorPage: React.FC = () => {
     // Jawa Barat Region
     if (businessScale === 'MIKRO_KECIL') {
       if (productTier <= 50) {
+        const amt = flyerRates.jabar?.mikroKecil?.p0_50 || 3300000;
         return {
-          amount: 3300000,
-          label: 'Rp3.300.000,-',
+          amount: amt,
+          label: `${formatRupiah(amt)},-`,
           notes: isEn ? '0 - 50 Product Variants (Jawa Barat)' : 'Jumlah Produk 0 - 50 (Wilayah Jawa Barat)',
           isCustom: false,
         };
       } else if (productTier <= 100) {
+        const amt = flyerRates.jabar?.mikroKecil?.p50_100 || 3900000;
         return {
-          amount: 3900000,
-          label: 'Rp3.900.000,-',
+          amount: amt,
+          label: `${formatRupiah(amt)},-`,
           notes: isEn ? '50 - 100 Product Variants (Jawa Barat)' : 'Jumlah Produk 50 - 100 (Wilayah Jawa Barat)',
           isCustom: false,
         };
       } else if (productTier <= 200) {
+        const amt = flyerRates.jabar?.mikroKecil?.p100_200 || 4400000;
         return {
-          amount: 4400000,
-          label: 'Rp4.400.000,-',
+          amount: amt,
+          label: `${formatRupiah(amt)},-`,
           notes: isEn ? '100 - 200 Product Variants (Jawa Barat)' : 'Jumlah Produk 100 - 200 (Wilayah Jawa Barat)',
           isCustom: false,
         };
       } else {
+        const amt = flyerRates.jabar?.mikroKecil?.pOver200 || 4900000;
         return {
-          amount: 4900000,
-          label: 'Rp4.900.000,-',
+          amount: amt,
+          label: `${formatRupiah(amt)},-`,
           notes: isEn ? '> 200 Product Variants (Jawa Barat)' : 'Jumlah Produk > 200 (Wilayah Jawa Barat)',
           isCustom: false,
         };
       }
     } else if (businessScale === 'MENENGAH') {
+      const amt = flyerRates.jabar?.menengah || 21000000;
       return {
-        amount: 21000000,
-        label: 'Rp21.000.000,-',
+        amount: amt,
+        label: `${formatRupiah(amt)},-`,
         notes: isEn
           ? 'Medium Enterprise scale across West Java region.'
-          : 'Mulai dari Rp21.000.000,- untuk Usaha Menengah di Jawa Barat.',
+          : `Mulai dari ${formatRupiah(amt)},- untuk Usaha Menengah di Jawa Barat.`,
         isCustom: false,
       };
     } else {
+      const amt = flyerRates.jabar?.besar || 30000000;
       return {
-        amount: 30000000,
-        label: 'Rp30.000.000,-',
+        amount: amt,
+        label: `${formatRupiah(amt)},-`,
         notes: isEn
           ? 'Large Enterprise scale across West Java region.'
-          : 'Mulai dari Rp30.000.000,- untuk Usaha Besar di Jawa Barat.',
+          : `Mulai dari ${formatRupiah(amt)},- untuk Usaha Besar di Jawa Barat.`,
         isCustom: false,
       };
     }
   };
 
   const currentEstimate = getEstimatedFee();
-
-  const formatRupiah = (val: number) => {
-    return new Intl.NumberFormat(isEn ? 'en-US' : 'id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-      maximumFractionDigits: 0,
-    }).format(val);
-  };
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-gradient-to-b from-[#FAF7FD] via-white to-[#F7F2FB] pb-24">
@@ -272,9 +302,9 @@ export const PriceCalculatorPage: React.FC = () => {
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-2.5">
                   {[
-                    { id: 'BANDUNG', label: 'Kota Bandung', sub: 'Mulai Rp1,82 Jt' },
-                    { id: 'JABAR', label: 'Jawa Barat', sub: 'Mulai Rp3,3 Jt' },
-                    { id: 'INTERNATIONAL', label: 'Luar Indonesia', sub: 'Mulai Rp60 Jt' },
+                    { id: 'BANDUNG', label: 'Kota Bandung', sub: formatShortMillions(flyerRates.bandung?.mikroKecil || 1820000) },
+                    { id: 'JABAR', label: 'Jawa Barat', sub: formatShortMillions(flyerRates.jabar?.mikroKecil?.p0_50 || 3300000) },
+                    { id: 'INTERNATIONAL', label: 'Luar Indonesia', sub: formatShortMillions(flyerRates.international?.minPrice || 60000000) },
                   ].map((r) => (
                     <button
                       key={r.id}
@@ -336,10 +366,10 @@ export const PriceCalculatorPage: React.FC = () => {
                   </label>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5">
                     {[
-                      { tier: 50, label: '0 - 50 Produk', price: 'Rp3.300.000' },
-                      { tier: 100, label: '50 - 100 Produk', price: 'Rp3.900.000' },
-                      { tier: 200, label: '100 - 200 Produk', price: 'Rp4.400.000' },
-                      { tier: 201, label: '> 200 Produk', price: 'Rp4.900.000' },
+                      { tier: 50, label: '0 - 50 Produk', price: formatRupiah(flyerRates.jabar?.mikroKecil?.p0_50 || 3300000) },
+                      { tier: 100, label: '50 - 100 Produk', price: formatRupiah(flyerRates.jabar?.mikroKecil?.p50_100 || 3900000) },
+                      { tier: 200, label: '100 - 200 Produk', price: formatRupiah(flyerRates.jabar?.mikroKecil?.p100_200 || 4400000) },
+                      { tier: 201, label: '> 200 Produk', price: formatRupiah(flyerRates.jabar?.mikroKecil?.pOver200 || 4900000) },
                     ].map((p) => (
                       <button
                         key={p.tier}
@@ -397,7 +427,7 @@ export const PriceCalculatorPage: React.FC = () => {
               {/* Action Buttons */}
               <div className="pt-2 flex flex-col sm:flex-row gap-3">
                 <a
-                  href={`https://wa.me/6282126493700?text=${encodeURIComponent(
+                  href={`https://wa.me/${flyerRates.international?.contactWa || '6282126493700'}?text=${encodeURIComponent(
                     `Halo Admin LPH UIN SGD Bandung, saya ingin konsultasi pendaftaran sertifikasi halal skema reguler untuk wilayah ${selectedRegion} (${businessScale}). Mohon arahan alur dan persyaratannya.`
                   )}`}
                   target="_blank"

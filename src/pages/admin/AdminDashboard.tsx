@@ -23,6 +23,9 @@ import {
   Trash2,
   CheckCircle2,
   Users,
+  UserPlus,
+  KeyRound,
+  EyeOff,
   Search,
   ExternalLink,
   Edit,
@@ -353,6 +356,11 @@ export const AdminDashboard: React.FC = () => {
 
   const [surveys, setSurveys] = useState<SatisfactionSurvey[]>(() => {
     try {
+      const rawSat = localStorage.getItem('lph_satisfaction_list');
+      if (rawSat) {
+        const parsed = JSON.parse(rawSat);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
       const raw = localStorage.getItem('lph_surveys_list');
       if (raw) return JSON.parse(raw);
     } catch {}
@@ -459,12 +467,39 @@ export const AdminDashboard: React.FC = () => {
     ];
   });
 
-  const [usersList] = useState([
-    { id: 1, name: 'Prof. Dr. H. Rosihon Anwar, M.Ag', role: 'SUPER_ADMIN', email: 'rektor@uinsgd.ac.id', status: 'AKTIF', lastLogin: 'Hari ini, 09:20' },
-    { id: 2, name: 'Dr. Tri Cahyanto, M.Si', role: 'DIREKTUR_LPH', email: 'tri.cahyanto@uinsgd.ac.id', status: 'AKTIF', lastLogin: 'Kemarin, 14:15' },
-    { id: 3, name: 'Drs. H. Ahmad Fauzi, M.Si', role: 'AUDITOR_LEAD', email: 'ahmad.fauzi@uinsgd.ac.id', status: 'AKTIF', lastLogin: '09 Nov 2026' },
-    { id: 4, name: 'Administrator Portal LPH', role: 'OPERATOR_CMS', email: 'admin@lph-uinsgd.ac.id', status: 'AKTIF', lastLogin: 'Baru saja' },
-  ]);
+  interface AdminUserAccount {
+    id: number;
+    name: string;
+    role: string;
+    email: string;
+    phone?: string;
+    status: string;
+    lastLogin: string;
+  }
+
+  const DEFAULT_USERS_DATA: AdminUserAccount[] = [
+    { id: 1, name: 'Prof. Dr. H. Rosihon Anwar, M.Ag', role: 'SUPER_ADMIN', email: 'rektor@uinsgd.ac.id', phone: '+62 812-3456-7890', status: 'AKTIF', lastLogin: 'Hari ini, 09:20' },
+    { id: 2, name: 'Dr. Tri Cahyanto, M.Si', role: 'DIREKTUR_LPH', email: 'tri.cahyanto@uinsgd.ac.id', phone: '+62 813-9876-5432', status: 'AKTIF', lastLogin: 'Kemarin, 14:15' },
+    { id: 3, name: 'Drs. H. Ahmad Fauzi, M.Si', role: 'AUDITOR_LEAD', email: 'ahmad.fauzi@uinsgd.ac.id', phone: '+62 821-2649-3700', status: 'AKTIF', lastLogin: '09 Nov 2026' },
+    { id: 4, name: 'Administrator Portal LPH', role: 'OPERATOR_CMS', email: 'admin@lph-uinsgd.ac.id', phone: '+62 878-1122-3344', status: 'AKTIF', lastLogin: 'Baru saja' },
+  ];
+
+  const [usersList, setUsersList] = useState<AdminUserAccount[]>(() => {
+    try {
+      const raw = localStorage.getItem('lph_admin_users');
+      if (raw) return JSON.parse(raw);
+    } catch {}
+    return DEFAULT_USERS_DATA;
+  });
+
+  const saveUsersList = (updated: AdminUserAccount[]) => {
+    setUsersList(updated);
+    try {
+      localStorage.setItem('lph_admin_users', JSON.stringify(updated));
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   // Dynamic Categories with LocalStorage persistence
   const [newsCategories, setNewsCategories] = useState<string[]>(() => {
@@ -579,8 +614,27 @@ export const AdminDashboard: React.FC = () => {
     | 'EDIT_COMPLAINT'
     | 'ADD_KB'
     | 'MANAGE_CATEGORIES'
+    | 'ADD_USER'
+    | 'EDIT_USER'
+    | 'CHANGE_USER_PASSWORD'
     | null
   >(null);
+
+  const [selectedUser, setSelectedUser] = useState<AdminUserAccount | null>(null);
+  const [userForm, setUserForm] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    role: 'AUDITOR_LEAD',
+    status: 'AKTIF',
+    initialPassword: '',
+  });
+  const [userPasswordForm, setUserPasswordForm] = useState({
+    newPassword: '',
+    confirmPassword: '',
+    showPassword: false,
+    error: '',
+  });
 
   const [editingAnnouncementId, setEditingAnnouncementId] = useState<number | null>(null);
   const [announcementForm, setAnnouncementForm] = useState({
@@ -1275,6 +1329,140 @@ export const AdminDashboard: React.FC = () => {
   };
 
   // -------------------------------------------------------------
+  // USER / OFFICER MANAGEMENT ACTIONS
+  // -------------------------------------------------------------
+  const handleOpenAddUser = () => {
+    setSelectedUser(null);
+    setUserForm({
+      name: '',
+      email: '',
+      phone: '',
+      role: 'AUDITOR_LEAD',
+      status: 'AKTIF',
+      initialPassword: '',
+    });
+    setModalType('ADD_USER');
+  };
+
+  const handleOpenEditUser = (u: AdminUserAccount) => {
+    setSelectedUser(u);
+    setUserForm({
+      name: u.name,
+      email: u.email,
+      phone: u.phone || '',
+      role: u.role,
+      status: u.status,
+      initialPassword: '',
+    });
+    setModalType('EDIT_USER');
+  };
+
+  const handleOpenChangePassword = (u: AdminUserAccount) => {
+    setSelectedUser(u);
+    setUserPasswordForm({
+      newPassword: '',
+      confirmPassword: '',
+      showPassword: false,
+      error: '',
+    });
+    setModalType('CHANGE_USER_PASSWORD');
+  };
+
+  const handleToggleUserStatus = (u: AdminUserAccount) => {
+    const newStatus = u.status === 'AKTIF' ? 'NONAKTIF' : 'AKTIF';
+    const updated = usersList.map((item: AdminUserAccount) => (item.id === u.id ? { ...item, status: newStatus } : item));
+    saveUsersList(updated);
+    addAuditLog(`Mengubah status akun menjadi ${newStatus}`, u.email, 'UPDATE');
+  };
+
+  const handleDeleteUser = (u: AdminUserAccount) => {
+    if (u.role === 'SUPER_ADMIN' && usersList.filter((x: AdminUserAccount) => x.role === 'SUPER_ADMIN').length <= 1) {
+      alert('Tidak dapat menghapus Super Administrator utama sistem.');
+      return;
+    }
+    if (window.confirm(`Yakin ingin menghapus akun petugas "${u.name}" (${u.email})?`)) {
+      const updated = usersList.filter((item: AdminUserAccount) => item.id !== u.id);
+      saveUsersList(updated);
+      addAuditLog('Menghapus akun petugas', `${u.name} (${u.email})`, 'DELETE');
+    }
+  };
+
+  const handleSaveUserForm = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!userForm.name.trim() || !userForm.email.trim()) {
+      alert('Nama dan Email petugas wajib diisi.');
+      return;
+    }
+
+    if (modalType === 'ADD_USER') {
+      const newUser: AdminUserAccount = {
+        id: Date.now(),
+        name: userForm.name.trim(),
+        email: userForm.email.trim(),
+        phone: userForm.phone.trim() || '+62 821-2649-3700',
+        role: userForm.role,
+        status: userForm.status,
+        lastLogin: 'Belum pernah login',
+      };
+      const updated = [newUser, ...usersList];
+      saveUsersList(updated);
+      addAuditLog('Menambahkan akun petugas baru', `${newUser.name} (${newUser.email})`, 'CREATE');
+    } else if (modalType === 'EDIT_USER' && selectedUser) {
+      const updated = usersList.map((item: AdminUserAccount) =>
+        item.id === selectedUser.id
+          ? {
+              ...item,
+              name: userForm.name.trim(),
+              email: userForm.email.trim(),
+              phone: userForm.phone.trim(),
+              role: userForm.role,
+              status: userForm.status,
+            }
+          : item
+      );
+      saveUsersList(updated);
+      addAuditLog('Memperbarui profil akun petugas', `${userForm.name} (${userForm.email})`, 'UPDATE');
+    }
+
+    setModalType(null);
+  };
+
+  const handleSavePasswordForm = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (userPasswordForm.newPassword.length < 6) {
+      setUserPasswordForm((prev) => ({ ...prev, error: 'Password baru minimal 6 karakter.' }));
+      return;
+    }
+    if (userPasswordForm.newPassword !== userPasswordForm.confirmPassword) {
+      setUserPasswordForm((prev) => ({ ...prev, error: 'Konfirmasi password tidak cocok.' }));
+      return;
+    }
+
+    if (selectedUser) {
+      addAuditLog('Mengganti password akun petugas', selectedUser.email, 'UPDATE');
+      alert(`Password untuk akun ${selectedUser.email} berhasil diperbarui!`);
+    }
+
+    setModalType(null);
+  };
+
+  // Survey delete handler
+  const handleDeleteSurvey = (id: number) => {
+    if (window.confirm('Hapus respon survei kepuasan ini?')) {
+      const target = surveys.find((s) => s.id === id);
+      const updated = surveys.filter((s) => s.id !== id);
+      setSurveys(updated);
+      try {
+        localStorage.setItem('lph_surveys_list', JSON.stringify(updated));
+        localStorage.setItem('lph_satisfaction_list', JSON.stringify(updated));
+      } catch {}
+      if (target) {
+        addAuditLog('Menghapus ulasan survei IKM', target.name || 'Responden', 'DELETE');
+      }
+    }
+  };
+
+  // -------------------------------------------------------------
   // DYNAMIC CATEGORY ACTIONS (NEWS & GALLERY)
   // -------------------------------------------------------------
   const handleAddNewsCategory = (name: string): string | null => {
@@ -1539,7 +1727,7 @@ export const AdminDashboard: React.FC = () => {
 
   // Users Filter & Pagination
   const filteredUsers = useMemo(() => {
-    return usersList.filter((u) => {
+    return usersList.filter((u: AdminUserAccount) => {
       const matchSearch =
         !usersSearch ||
         u.name.toLowerCase().includes(usersSearch.toLowerCase()) ||
@@ -1654,7 +1842,7 @@ export const AdminDashboard: React.FC = () => {
   };
 
   const handleExportUsersExcel = () => {
-    const rows = filteredUsers.map((u) => ({
+    const rows = filteredUsers.map((u: AdminUserAccount) => ({
       ID: u.id,
       'Nama Lengkap': u.name,
       'Alamat Email': u.email,
@@ -3596,25 +3784,57 @@ export const AdminDashboard: React.FC = () => {
                   {paginatedSurveys.map((s) => (
                     <div
                       key={s.id}
-                      className="p-5 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 space-y-2"
+                      className="p-5 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 space-y-3 relative group"
                     >
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <span className="font-bold text-xs text-neutral-900 block">
-                            {s.name}
-                          </span>
-                          <span className="text-[11px] text-neutral-400">
-                            Layanan: {s.serviceUsed} • {s.submittedAt}
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className="font-bold text-xs text-neutral-900 block">
+                              {s.name || 'Anonim / Pelaku Usaha'}
+                            </span>
+                            {s.businessScale && (
+                              <Chip size="sm" className="bg-purple-100 text-[#6B18A8] text-[9px] font-bold">
+                                {s.businessScale}
+                              </Chip>
+                            )}
+                            {s.businessLocation && (
+                              <Chip size="sm" className="bg-blue-50 text-blue-700 text-[9px] font-bold">
+                                {s.businessLocation}
+                              </Chip>
+                            )}
+                            {s.productType && (
+                              <Chip size="sm" className="bg-emerald-50 text-emerald-700 text-[9px] font-bold">
+                                {s.productType}
+                              </Chip>
+                            )}
+                          </div>
+                          <span className="text-[11px] text-neutral-400 block">
+                            Layanan: {s.serviceUsed || 'Pemeriksaan Kehalalan Produk Reguler'} • {s.submittedAt?.substring(0, 10)}
                           </span>
                         </div>
-                        <div className="flex items-center gap-1 bg-[#FFF7D1] px-2.5 py-1 rounded-full border border-[#F5D32F] text-[11px] font-black text-[#713f12]">
-                          <span>★</span>
-                          <span>{s.rating}.0 / 5.0</span>
+
+                        <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-1 bg-[#FFF7D1] px-2.5 py-1 rounded-full border border-[#F5D32F] text-[11px] font-black text-[#713f12]">
+                            <span>★</span>
+                            <span>{s.rating || 4}.0 / 4.0</span>
+                          </div>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onPress={() => handleDeleteSurvey(s.id)}
+                            className="p-1.5 text-rose-500 hover:text-rose-700 hover:bg-rose-50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                            aria-label="Hapus Ulasan Ini"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </Button>
                         </div>
                       </div>
-                      <p className="text-xs text-neutral-700 italic font-medium">
-                        "{s.comment}"
-                      </p>
+
+                      {s.comment && (
+                        <p className="text-xs text-neutral-700 italic font-medium bg-white/70 p-3 rounded-xl border border-[#C9A5E8]/20">
+                          "{s.comment}"
+                        </p>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -3889,14 +4109,24 @@ export const AdminDashboard: React.FC = () => {
                     Daftar akun berwenang untuk melakukan verifikasi berkas, audit lapangan, dan manajemen CMS.
                   </p>
                 </div>
-                <Button
-                  variant="outline"
-                  onPress={handleExportUsersExcel}
-                  className="px-4 py-2 text-xs font-bold rounded-xl border-emerald-300 text-emerald-700 hover:bg-emerald-50 flex items-center gap-1.5 self-start sm:self-auto cursor-pointer"
-                >
-                  <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
-                  <span>Export Excel (.xlsx)</span>
-                </Button>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <Button
+                    variant="outline"
+                    onPress={handleExportUsersExcel}
+                    className="px-4 py-2 text-xs font-bold rounded-xl border-emerald-300 text-emerald-700 hover:bg-emerald-50 flex items-center gap-1.5 self-start sm:self-auto cursor-pointer"
+                  >
+                    <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
+                    <span>Export Excel (.xlsx)</span>
+                  </Button>
+                  <Button
+                    variant="primary"
+                    onPress={handleOpenAddUser}
+                    className="bg-[#6B18A8] hover:bg-[#58138c] text-white text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 cursor-pointer shadow-md shadow-purple-950/20"
+                  >
+                    <UserPlus className="w-4 h-4 text-[#F5D32F]" />
+                    <span>Tambah Petugas Baru</span>
+                  </Button>
+                </div>
               </div>
 
               {/* Filter & Search Bar */}
@@ -3949,10 +4179,11 @@ export const AdminDashboard: React.FC = () => {
                   <Table.Content aria-label="Daftar Petugas LPH">
                     <Table.Header>
                       <Table.Column isRowHeader>Nama Lengkap</Table.Column>
-                      <Table.Column>Alamat Email</Table.Column>
+                      <Table.Column>Alamat Email &amp; Kontak</Table.Column>
                       <Table.Column>Peran Sistem</Table.Column>
                       <Table.Column>Status</Table.Column>
                       <Table.Column>Aktivitas Terakhir</Table.Column>
+                      <Table.Column className="text-right">Aksi &amp; Keamanan</Table.Column>
                     </Table.Header>
                     <Table.Body>
                       {paginatedUsers.length === 0 ? (
@@ -3964,23 +4195,84 @@ export const AdminDashboard: React.FC = () => {
                           <Table.Cell>{''}</Table.Cell>
                           <Table.Cell>{''}</Table.Cell>
                           <Table.Cell>{''}</Table.Cell>
+                          <Table.Cell>{''}</Table.Cell>
                         </Table.Row>
                       ) : (
-                        paginatedUsers.map((u) => (
+                        paginatedUsers.map((u: AdminUserAccount) => (
                           <Table.Row key={u.id} className="border-b border-neutral-100 hover:bg-[#FAF7FD]/50">
-                            <Table.Cell className="font-bold text-xs text-neutral-800">{u.name}</Table.Cell>
-                            <Table.Cell className="text-xs font-mono text-neutral-600">{u.email}</Table.Cell>
+                            <Table.Cell>
+                              <div className="font-bold text-xs text-neutral-800 flex items-center gap-2">
+                                <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-[#6B18A8] to-purple-400 text-white flex items-center justify-center text-[10px] font-black shrink-0">
+                                  {u.name.substring(0, 2).toUpperCase()}
+                                </div>
+                                <span>{u.name}</span>
+                              </div>
+                            </Table.Cell>
+                            <Table.Cell>
+                              <div className="text-xs font-mono font-medium text-neutral-700">{u.email}</div>
+                              {u.phone && <div className="text-[10px] text-neutral-400 font-mono">{u.phone}</div>}
+                            </Table.Cell>
                             <Table.Cell>
                               <Chip size="sm" className="bg-[#FAF7FD] text-[#6B18A8] border border-[#C9A5E8]/60 font-bold text-[10px]">
                                 {u.role}
                               </Chip>
                             </Table.Cell>
                             <Table.Cell>
-                              <Chip size="sm" className="bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold text-[10px]">
-                                {u.status}
-                              </Chip>
+                              <button
+                                type="button"
+                                onClick={() => handleToggleUserStatus(u)}
+                                title="Klik untuk beralih status Aktif / Nonaktif"
+                                className="cursor-pointer"
+                              >
+                                <Chip
+                                  size="sm"
+                                  className={cn(
+                                    'font-bold text-[10px] transition-all hover:scale-105',
+                                    u.status === 'AKTIF'
+                                      ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                                      : 'bg-neutral-100 text-neutral-500 border border-neutral-200'
+                                  )}
+                                >
+                                  {u.status} ⟳
+                                </Chip>
+                              </button>
                             </Table.Cell>
                             <Table.Cell className="text-xs text-neutral-500 font-mono">{u.lastLogin}</Table.Cell>
+                            <Table.Cell className="text-right">
+                              <div className="flex items-center justify-end gap-1.5 flex-wrap">
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  onPress={() => handleOpenChangePassword(u)}
+                                  className="px-2.5 py-1 text-[11px] rounded-xl border-amber-300 text-amber-800 bg-amber-50/50 hover:bg-amber-100 font-bold flex items-center gap-1 cursor-pointer"
+                                  aria-label="Ganti Password Petugas"
+                                >
+                                  <KeyRound className="w-3 h-3 text-amber-600" />
+                                  <span>Ganti Password</span>
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  onPress={() => handleOpenEditUser(u)}
+                                  className="px-2.5 py-1 text-[11px] rounded-xl border-[#C9A5E8] text-[#6B18A8] hover:bg-[#FAF7FD] font-bold flex items-center gap-1 cursor-pointer"
+                                  aria-label="Edit Profil Petugas"
+                                >
+                                  <Edit3 className="w-3 h-3" />
+                                  <span>Edit</span>
+                                </Button>
+                                {!(u.role === 'SUPER_ADMIN' && usersList.filter((x: AdminUserAccount) => x.role === 'SUPER_ADMIN').length <= 1) && (
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    onPress={() => handleDeleteUser(u)}
+                                    className="p-1.5 text-rose-500 hover:text-rose-700 hover:bg-rose-50 rounded-lg cursor-pointer"
+                                    aria-label="Hapus Akun Petugas"
+                                  >
+                                    <Trash2 className="w-3.5 h-3.5" />
+                                  </Button>
+                                )}
+                              </div>
+                            </Table.Cell>
                           </Table.Row>
                         ))
                       )}
@@ -4687,6 +4979,246 @@ export const AdminDashboard: React.FC = () => {
                 Selesai
               </Button>
             </Modal.Footer>
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
+
+      {/* MODAL: TAMBAH / EDIT PETUGAS */}
+      <Modal.Backdrop
+        isOpen={modalType === 'ADD_USER' || modalType === 'EDIT_USER'}
+        onOpenChange={(open) => !open && setModalType(null)}
+      >
+        <Modal.Container placement="center">
+          <Modal.Dialog className="w-[95vw] sm:max-w-lg max-h-[90vh] flex flex-col p-0 overflow-hidden rounded-3xl bg-white border border-[#C9A5E8]/40 shadow-2xl">
+            <Modal.CloseTrigger />
+            <form onSubmit={handleSaveUserForm} className="flex flex-col max-h-[90vh]">
+              <Modal.Header className="p-4 sm:p-6 bg-gradient-to-r from-[#FAF7FD] to-white border-b border-[#C9A5E8]/30 shrink-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <Chip size="sm" className="bg-[#FAF7FD] text-[#6B18A8] font-bold text-[10px]">
+                    {modalType === 'ADD_USER' ? 'Akun Baru' : 'Perbarui Akun'}
+                  </Chip>
+                </div>
+                <Modal.Heading className="text-base sm:text-lg font-black text-[#292333]">
+                  {modalType === 'ADD_USER' ? 'Tambah Petugas / Auditor Baru' : `Edit Profil: ${selectedUser?.name}`}
+                </Modal.Heading>
+                <p className="text-xs text-neutral-500 mt-0.5">
+                  Kelola data identitas, email kedinasan, peran sistem, dan nomor kontak petugas.
+                </p>
+              </Modal.Header>
+
+              <Modal.Body className="p-4 sm:p-6 space-y-4 overflow-y-auto">
+                <div>
+                  <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
+                    Nama Lengkap &amp; Gelar
+                  </label>
+                  <Input
+                    value={userForm.name}
+                    onChange={(e) => setUserForm({ ...userForm, name: e.target.value })}
+                    required
+                    placeholder="Contoh: Dr. H. Ahmad Fauzi, M.Si"
+                    className="w-full text-xs"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
+                    Alamat Email Kedinasan
+                  </label>
+                  <Input
+                    type="email"
+                    value={userForm.email}
+                    onChange={(e) => setUserForm({ ...userForm, email: e.target.value })}
+                    required
+                    placeholder="contoh: nama.petugas@uinsgd.ac.id"
+                    className="w-full text-xs font-mono"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
+                    Nomor WhatsApp / Telepon
+                  </label>
+                  <Input
+                    value={userForm.phone}
+                    onChange={(e) => setUserForm({ ...userForm, phone: e.target.value })}
+                    placeholder="+62 821-2649-3700"
+                    className="w-full text-xs font-mono"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
+                      Peran Sistem (Role)
+                    </label>
+                    <select
+                      value={userForm.role}
+                      onChange={(e) => setUserForm({ ...userForm, role: e.target.value })}
+                      className="w-full h-10 px-3 text-xs bg-white border border-neutral-300 rounded-xl focus:outline-hidden focus:border-[#6B18A8] text-neutral-700 font-bold"
+                    >
+                      <option value="SUPER_ADMIN">SUPER_ADMIN (Penuh)</option>
+                      <option value="DIREKTUR_LPH">DIREKTUR_LPH (Pimpinan)</option>
+                      <option value="AUDITOR_LEAD">AUDITOR_LEAD (Auditor)</option>
+                      <option value="OPERATOR_CMS">OPERATOR_CMS (Konten)</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
+                      Status Akun
+                    </label>
+                    <select
+                      value={userForm.status}
+                      onChange={(e) => setUserForm({ ...userForm, status: e.target.value })}
+                      className="w-full h-10 px-3 text-xs bg-white border border-neutral-300 rounded-xl focus:outline-hidden focus:border-[#6B18A8] text-neutral-700 font-bold"
+                    >
+                      <option value="AKTIF">AKTIF (Dapat Login)</option>
+                      <option value="NONAKTIF">NONAKTIF (Ditangguhkan)</option>
+                    </select>
+                  </div>
+                </div>
+
+                {modalType === 'ADD_USER' && (
+                  <div>
+                    <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
+                      Password Awal Sementara
+                    </label>
+                    <Input
+                      type="password"
+                      value={userForm.initialPassword}
+                      onChange={(e) => setUserForm({ ...userForm, initialPassword: e.target.value })}
+                      required
+                      placeholder="Minimal 6 karakter..."
+                      className="w-full text-xs font-mono"
+                    />
+                    <span className="text-[11px] text-neutral-400 mt-1 block">
+                      Petugas dapat mengganti password ini setelah berhasil login pertama kali.
+                    </span>
+                  </div>
+                )}
+              </Modal.Body>
+
+              <Modal.Footer className="p-4 sm:p-6 bg-[#FAF7FD] border-t border-[#C9A5E8]/30 flex justify-end gap-2 shrink-0">
+                <Button variant="secondary" slot="close" className="text-xs font-bold rounded-xl px-4 py-2 cursor-pointer">
+                  Batal
+                </Button>
+                <Button
+                  type="submit"
+                  variant="primary"
+                  className="bg-[#6B18A8] hover:bg-[#58138c] text-white text-xs font-bold rounded-xl px-5 py-2 cursor-pointer shadow-md shadow-purple-950/20"
+                >
+                  {modalType === 'ADD_USER' ? 'Simpan Petugas Baru' : 'Simpan Perubahan Akun'}
+                </Button>
+              </Modal.Footer>
+            </form>
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
+
+      {/* MODAL: GANTI PASSWORD PETUGAS */}
+      <Modal.Backdrop
+        isOpen={modalType === 'CHANGE_USER_PASSWORD'}
+        onOpenChange={(open) => !open && setModalType(null)}
+      >
+        <Modal.Container placement="center">
+          <Modal.Dialog className="w-[95vw] sm:max-w-md max-h-[90vh] flex flex-col p-0 overflow-hidden rounded-3xl bg-white border border-[#C9A5E8]/40 shadow-2xl">
+            <Modal.CloseTrigger />
+            <form onSubmit={handleSavePasswordForm} className="flex flex-col max-h-[90vh]">
+              <Modal.Header className="p-4 sm:p-6 bg-gradient-to-r from-amber-50/50 via-white to-purple-50/30 border-b border-[#C9A5E8]/30 shrink-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="w-6 h-6 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center">
+                    <KeyRound className="w-3.5 h-3.5" />
+                  </div>
+                  <Chip size="sm" className="bg-amber-100 text-amber-800 font-bold text-[10px]">
+                    Keamanan Akun
+                  </Chip>
+                </div>
+                <Modal.Heading className="text-base sm:text-lg font-black text-[#292333]">
+                  Ganti Password Petugas
+                </Modal.Heading>
+                <div className="text-xs text-neutral-600 mt-1">
+                  Akun: <strong className="text-[#6B18A8]">{selectedUser?.name}</strong>
+                  <br />
+                  <span className="font-mono text-neutral-400 text-[11px]">{selectedUser?.email}</span>
+                </div>
+              </Modal.Header>
+
+              <Modal.Body className="p-4 sm:p-6 space-y-4 overflow-y-auto">
+                {userPasswordForm.error && (
+                  <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-bold flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                    <span>{userPasswordForm.error}</span>
+                  </div>
+                )}
+
+                <div>
+                  <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
+                    Password Baru
+                  </label>
+                  <div className="relative">
+                    <Input
+                      type={userPasswordForm.showPassword ? 'text' : 'password'}
+                      value={userPasswordForm.newPassword}
+                      onChange={(e) =>
+                        setUserPasswordForm({ ...userPasswordForm, newPassword: e.target.value, error: '' })
+                      }
+                      required
+                      placeholder="Minimal 6 karakter kombinasi..."
+                      className="w-full text-xs font-mono pr-10"
+                    />
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setUserPasswordForm({ ...userPasswordForm, showPassword: !userPasswordForm.showPassword })
+                      }
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-700 cursor-pointer"
+                    >
+                      {userPasswordForm.showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-neutral-700 uppercase mb-1">
+                    Konfirmasi Password Baru
+                  </label>
+                  <Input
+                    type={userPasswordForm.showPassword ? 'text' : 'password'}
+                    value={userPasswordForm.confirmPassword}
+                    onChange={(e) =>
+                      setUserPasswordForm({ ...userPasswordForm, confirmPassword: e.target.value, error: '' })
+                    }
+                    required
+                    placeholder="Ketik ulang password baru..."
+                    className="w-full text-xs font-mono"
+                  />
+                </div>
+
+                <div className="p-3 rounded-xl bg-[#FAF7FD] border border-[#C9A5E8]/30 text-[11px] text-neutral-600 space-y-1">
+                  <div className="font-bold text-[#6B18A8] flex items-center gap-1">
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                    <span>Ketentuan Keamanan Password:</span>
+                  </div>
+                  <ul className="list-disc pl-4 space-y-0.5 text-neutral-500">
+                    <li>Minimal 6 karakter (kombinasi huruf &amp; angka).</li>
+                    <li>Perubahan langsung aktif dan dicatat di log jejak audit.</li>
+                  </ul>
+                </div>
+              </Modal.Body>
+
+              <Modal.Footer className="p-4 sm:p-6 bg-[#FAF7FD] border-t border-[#C9A5E8]/30 flex justify-end gap-2 shrink-0">
+                <Button variant="secondary" slot="close" className="text-xs font-bold rounded-xl px-4 py-2 cursor-pointer">
+                  Batal
+                </Button>
+                <Button
+                  type="submit"
+                  variant="primary"
+                  className="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl px-5 py-2 cursor-pointer shadow-md shadow-amber-950/20"
+                >
+                  Perbarui Password
+                </Button>
+              </Modal.Footer>
+            </form>
           </Modal.Dialog>
         </Modal.Container>
       </Modal.Backdrop>
