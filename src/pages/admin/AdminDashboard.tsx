@@ -136,7 +136,7 @@ interface MediaItem {
 
 export const AdminDashboard: React.FC = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState<any>({ name: 'Administrator LPH UIN SGD', role: 'SUPER_ADMIN' });
+  const [user, setUser] = useState<any>({ name: 'Administrator Portal LPH', role: 'SUPER_ADMIN' });
   const [activeTab, setActiveTab] = useState<AdminTab>('OVERVIEW');
   const [copiedUrl, setCopiedUrl] = useState<string | null>(null);
 
@@ -478,16 +478,28 @@ export const AdminDashboard: React.FC = () => {
   }
 
   const DEFAULT_USERS_DATA: AdminUserAccount[] = [
-    { id: 1, name: 'Prof. Dr. H. Rosihon Anwar, M.Ag', role: 'SUPER_ADMIN', email: 'rektor@uinsgd.ac.id', phone: '+62 812-3456-7890', status: 'AKTIF', lastLogin: 'Hari ini, 09:20' },
-    { id: 2, name: 'Dr. Tri Cahyanto, M.Si', role: 'DIREKTUR_LPH', email: 'tri.cahyanto@uinsgd.ac.id', phone: '+62 813-9876-5432', status: 'AKTIF', lastLogin: 'Kemarin, 14:15' },
-    { id: 3, name: 'Drs. H. Ahmad Fauzi, M.Si', role: 'AUDITOR_LEAD', email: 'ahmad.fauzi@uinsgd.ac.id', phone: '+62 821-2649-3700', status: 'AKTIF', lastLogin: '09 Nov 2026' },
-    { id: 4, name: 'Administrator Portal LPH', role: 'OPERATOR_CMS', email: 'admin@lph-uinsgd.ac.id', phone: '+62 878-1122-3344', status: 'AKTIF', lastLogin: 'Baru saja' },
+    {
+      id: 1,
+      name: 'Administrator Portal LPH',
+      role: 'SUPER_ADMIN',
+      email: 'admin@lph-uinsgd.ac.id',
+      phone: '+62 821-2649-3700',
+      status: 'AKTIF',
+      lastLogin: 'Baru saja',
+    },
   ];
 
   const [usersList, setUsersList] = useState<AdminUserAccount[]>(() => {
     try {
       const raw = localStorage.getItem('lph_admin_users');
-      if (raw) return JSON.parse(raw);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.some((u) => u.name?.includes('Rosihon') || u.name?.includes('Cahyanto'))) {
+          localStorage.setItem('lph_admin_users', JSON.stringify(DEFAULT_USERS_DATA));
+          return DEFAULT_USERS_DATA;
+        }
+        return parsed;
+      }
     } catch {}
     return DEFAULT_USERS_DATA;
   });
