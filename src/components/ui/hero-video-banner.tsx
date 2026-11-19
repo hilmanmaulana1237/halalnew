@@ -157,94 +157,99 @@ export const HeroVideoBanner: React.FC = () => {
         </motion.div>
       </div>
 
-      {/* Floating Search Box (Pure White with Subtle Purple & Yellow Accents) - Full width to sides on desktop */}
+      {/* Desktop: Smooth organic wave transition into full-width search ribbon */}
+      <div className="hidden sm:block w-full -mb-[1px] relative z-20 pointer-events-none select-none">
+        <OrganicWave fillColor="#ffffff" position="bottom" />
+      </div>
+
+      {/* Search Box - Edge-to-edge full width on desktop, beautiful card on mobile */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-20 w-full px-3 sm:px-6 lg:px-8 xl:px-12 pb-6 sm:pb-8"
+        className="relative z-20 w-full px-3 sm:px-0 pb-6 sm:pb-0"
       >
-        <div className="relative rounded-3xl p-[1.5px] bg-gradient-to-r from-[#6B18A8]/40 via-[#F5D32F]/70 to-[#6B18A8]/40 shadow-2xl shadow-purple-950/25">
-          <div className="bg-white rounded-[22px] p-4 sm:p-7 shadow-lg border border-[#C9A5E8]/30">
-            <div className="flex items-center gap-3 min-w-0 mb-5">
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-[#F5EDFB] text-[#6B18A8] border border-[#C9A5E8]/60 flex items-center justify-center shadow-xs shrink-0">
-                <Search className="w-5 h-5 text-[#6B18A8]" />
-              </div>
-              <div className="min-w-0 flex-1">
-                <h3 className="text-base sm:text-lg lg:text-xl font-extrabold text-[#292333] leading-snug">
-                  {t('search_title')}
-                </h3>
-                <span className="text-xs sm:text-sm font-medium text-[#756D7C] block mt-0.5">
-                  {t('search_subtitle')}
-                </span>
-              </div>
+        <div className="w-full bg-white sm:rounded-none rounded-[22px] border sm:border-x-0 border-[#C9A5E8]/30 sm:shadow-lg shadow-xl p-4 sm:p-6 lg:py-7 lg:px-10 xl:px-16">
+          <div className="flex items-center gap-3 min-w-0 mb-4 sm:mb-5">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-[#F5EDFB] text-[#6B18A8] border border-[#C9A5E8]/60 flex items-center justify-center shadow-xs shrink-0">
+              <Search className="w-5 h-5 text-[#6B18A8]" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <h3 className="text-base sm:text-lg lg:text-xl font-extrabold text-[#292333] leading-snug">
+                {t('search_title')}
+              </h3>
+              <span className="text-xs sm:text-sm font-medium text-[#756D7C] block mt-0.5">
+                {t('search_subtitle')}
+              </span>
+            </div>
+          </div>
+
+          <form
+            onSubmit={handleSearch}
+            action="https://bpjph.halal.go.id/cari/sertifikat"
+            method="GET"
+            target="_blank"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_1fr_auto] gap-4 items-end"
+          >
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-bold text-neutral-700 uppercase tracking-wide flex items-center gap-1.5">
+                <Tag className="w-3.5 h-3.5 text-[#6B18A8]" />
+                <span>{t('search_label_product')}</span>
+              </label>
+              <Input
+                fullWidth
+                name="produk"
+                variant="primary"
+                placeholder={t('search_placeholder_product')}
+                value={productName}
+                onChange={(e) => setProductName(e.target.value)}
+                className="h-12 rounded-xl bg-neutral-50 border border-neutral-300 hover:border-purple-300 focus:border-[#6B18A8] text-xs sm:text-sm text-neutral-900 shadow-2xs transition-all"
+              />
             </div>
 
-            <form
-              onSubmit={handleSearch}
-              action="https://bpjph.halal.go.id/cari/sertifikat"
-              method="GET"
-              target="_blank"
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_1fr_auto] gap-4 items-end"
-            >
-              <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-neutral-700 uppercase tracking-wide flex items-center gap-1.5">
-                  <Tag className="w-3.5 h-3.5 text-[#6B18A8]" />
-                  <span>{t('search_label_product')}</span>
-                </label>
-                <Input
-                  fullWidth
-                  name="produk"
-                  variant="primary"
-                  placeholder={t('search_placeholder_product')}
-                  value={productName}
-                  onChange={(e) => setProductName(e.target.value)}
-                  className="h-12 rounded-xl bg-neutral-50 border border-neutral-300 hover:border-purple-300 focus:border-[#6B18A8] text-xs sm:text-sm text-neutral-900 shadow-2xs transition-all"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-neutral-700 uppercase tracking-wide flex items-center gap-1.5">
-                  <Building2 className="w-3.5 h-3.5 text-[#6B18A8]" />
-                  <span>{t('search_label_producer')}</span>
-                </label>
-                <Input
-                  fullWidth
-                  name="produsen"
-                  variant="primary"
-                  placeholder={t('search_placeholder_producer')}
-                  value={producerName}
-                  onChange={(e) => setProducerName(e.target.value)}
-                  className="h-12 rounded-xl bg-neutral-50 border border-neutral-300 hover:border-purple-300 focus:border-[#6B18A8] text-xs sm:text-sm text-neutral-900 shadow-2xs transition-all"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1.5">
-                <span className="hidden lg:block text-xs font-bold text-transparent select-none">
-                  &nbsp;
-                </span>
-                <Button
-                  type="submit"
-                  variant="primary"
-                  className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-extrabold h-12 min-w-40 px-8 rounded-xl shadow-md shadow-purple-950/20 transition-all flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99] text-xs sm:text-sm cursor-pointer"
-                >
-                  <Search className="w-4 h-4 text-[#F5D32F]" />
-                  <span>{t('search_button')}</span>
-                </Button>
-              </div>
-            </form>
-
-            {/* Informational Guidance Tip */}
-            <div className="mt-4 flex items-center gap-2 rounded-xl bg-[#FAF7FD] border border-[#C9A5E8]/30 px-4 py-2.5 text-xs text-[#756D7C]">
-              <ShieldCheck className="w-4 h-4 text-[#6B18A8] shrink-0" />
-              <span>{language === 'en' ? 'Direct search connected with official BPJPH database. Fill one or more fields for accurate results.' : 'Pencarian langsung terhubung dengan basis data resmi BPJPH. Isi satu atau beberapa kolom untuk hasil akurat.'}</span>
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-bold text-neutral-700 uppercase tracking-wide flex items-center gap-1.5">
+                <Building2 className="w-3.5 h-3.5 text-[#6B18A8]" />
+                <span>{t('search_label_producer')}</span>
+              </label>
+              <Input
+                fullWidth
+                name="produsen"
+                variant="primary"
+                placeholder={t('search_placeholder_producer')}
+                value={producerName}
+                onChange={(e) => setProducerName(e.target.value)}
+                className="h-12 rounded-xl bg-neutral-50 border border-neutral-300 hover:border-purple-300 focus:border-[#6B18A8] text-xs sm:text-sm text-neutral-900 shadow-2xs transition-all"
+              />
             </div>
+
+            <div className="flex flex-col gap-1.5">
+              <span className="hidden lg:block text-xs font-bold text-transparent select-none">
+                &nbsp;
+              </span>
+              <Button
+                type="submit"
+                variant="primary"
+                className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-extrabold h-12 min-w-40 px-8 rounded-xl shadow-md shadow-purple-950/20 transition-all flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99] text-xs sm:text-sm cursor-pointer"
+              >
+                <Search className="w-4 h-4 text-[#F5D32F]" />
+                <span>{t('search_button')}</span>
+              </Button>
+            </div>
+          </form>
+
+          {/* Informational Guidance Tip */}
+          <div className="mt-4 flex items-center gap-2 rounded-xl bg-[#FAF7FD] border border-[#C9A5E8]/30 px-4 py-2.5 text-xs text-[#756D7C]">
+            <ShieldCheck className="w-4 h-4 text-[#6B18A8] shrink-0" />
+            <span>{language === 'en' ? 'Direct search connected with official BPJPH database. Fill one or more fields for accurate results.' : 'Pencarian langsung terhubung dengan basis data resmi BPJPH. Isi satu atau beberapa kolom untuk hasil akurat.'}</span>
           </div>
         </div>
       </motion.div>
 
-      {/* Bottom Organic Wave Separator transitioning smoothly into white */}
-      <OrganicWave fillColor="#ffffff" position="bottom" />
+      {/* Mobile only: Bottom Organic Wave Separator */}
+      <div className="block sm:hidden">
+        <OrganicWave fillColor="#ffffff" position="bottom" />
+      </div>
     </section>
   );
 };
