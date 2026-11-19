@@ -126,8 +126,8 @@ export const DEFAULT_RATES: RatesMatrix = {
   productAddonPerItem: { bpjph: 25000, lph: 20000 },
   ingredientAddonPerItem: { bpjph: 15000, lph: 12000, threshold: 10 },
   labTesting: {
-    qpcrDna: { price: 1200000, name: 'Uji Laboratorium DNA Porcine qPCR (Per Sampel)' },
-    gcFidEtanol: { price: 650000, name: 'Uji Laboratorium Etanol GC-FID (Per Sampel)' },
+    qpcrDna: { price: 1200000, name: 'Uji Laboratorium Deteksi Kandungan Babi (Per Sampel)' },
+    gcFidEtanol: { price: 650000, name: 'Uji Laboratorium Kadar Alkohol / Etanol (Per Sampel)' },
   },
   customItems: [
     {

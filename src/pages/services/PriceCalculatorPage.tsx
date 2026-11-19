@@ -234,19 +234,23 @@ export const PriceCalculatorPage: React.FC = () => {
                 </span>
               </div>
 
-              {/* Flyer Image with Zoom Preview */}
+              {/* Flyer Image with Zoom Preview (Crystal Clear, No Dark Tint) */}
               <div
-                className="relative rounded-2xl overflow-hidden border border-neutral-200 bg-neutral-100 group cursor-pointer shadow-inner max-h-[380px] sm:max-h-[460px] lg:max-h-none"
+                className="relative rounded-2xl overflow-hidden border border-[#C9A5E8]/40 bg-white group cursor-pointer shadow-sm hover:shadow-md transition-all max-h-[380px] sm:max-h-[460px] lg:max-h-none flex items-center justify-center p-1"
                 onClick={() => setIsFlyerZoomed(true)}
               >
                 <img
                   src="/assets/images/flyer-skema-reguler.jpg"
                   alt="Flyer Sertifikasi Halal Skema Reguler LPH UIN SGD Bandung"
-                  className="w-full h-auto object-cover object-top group-hover:scale-102 transition-transform duration-300"
+                  className="w-full h-auto object-contain rounded-xl group-hover:scale-[1.01] transition-transform duration-300"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4 text-white font-bold text-xs gap-2">
-                  <ZoomIn className="w-4 h-4 text-[#F5D32F]" />
-                  <span>{isEn ? 'Tap to Enlarge Flyer' : 'Ketuk untuk Memperbesar Flyer'}</span>
+                
+                {/* Clean Floating Glass Badge (Tidak Menghitamkan Flyer) */}
+                <div className="absolute bottom-3 inset-x-0 flex justify-center pointer-events-none">
+                  <div className="bg-white/95 backdrop-blur-md text-[#6B18A8] border border-[#C9A5E8]/60 shadow-lg px-4 py-1.5 rounded-full text-xs font-bold inline-flex items-center gap-1.5 group-hover:bg-[#6B18A8] group-hover:text-white transition-all duration-200">
+                    <ZoomIn className="w-3.5 h-3.5 text-[#F5D32F]" />
+                    <span>{isEn ? 'Tap to Enlarge Flyer' : 'Ketuk untuk Memperbesar Flyer'}</span>
+                  </div>
                 </div>
               </div>
 

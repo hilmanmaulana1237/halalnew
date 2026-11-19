@@ -127,8 +127,8 @@ export const Navbar: React.FC = () => {
                           icon={<ShieldCheck className="w-4 h-4" />}
                           title={language === 'en' ? 'Accreditation & Legality' : 'Akreditasi & Legalitas Resmi'}
                           description={language === 'en'
-                            ? 'Official BPJPH decree No. LPH-018-ID and KAN ISO/IEC 17025 recognition.'
-                            : 'Regulasi resmi BPJPH No. LPH-018-ID dan pengakuan KAN ISO/IEC 17025.'}
+                            ? 'Official BPJPH decree No. LPH-018-ID and KAN accreditation recognition.'
+                            : 'Regulasi resmi BPJPH No. LPH-018-ID dan pengakuan akreditasi resmi KAN.'}
                           to="/tentang"
                           badge="LPH-018-ID"
                           badgeVariant="purple"
@@ -230,12 +230,12 @@ export const Navbar: React.FC = () => {
                         />
                         <MenuCardItem
                           icon={<FlaskConical className="w-4 h-4" />}
-                          title={language === 'en' ? 'Integrated Bio Lab' : 'Laboratorium Hayati Terpadu'}
+                          title={language === 'en' ? 'Integrated Halal Lab' : 'Laboratorium Halal Terpadu'}
                           description={language === 'en'
-                            ? 'High-precision qPCR porcine DNA and GC-FID ethanol testing with ISO 17025 standards.'
-                            : 'Uji saintifik qPCR DNA porcine, uji alkohol GC-FID, dan analisis gelatin terakreditasi KAN.'}
+                            ? 'Accredited testing for porcine DNA detection, ethanol residuals, and gelatin analysis.'
+                            : 'Uji saintifik deteksi kandungan babi, kadar alkohol, dan analisis gelatin terakreditasi KAN.'}
                           href="https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/"
-                          badge="ISO 17025"
+                          badge={language === 'en' ? 'Accredited' : 'Terakreditasi'}
                           badgeVariant="purple"
                           onClick={() => setActiveDropdown(null)}
                         />
@@ -303,8 +303,8 @@ export const Navbar: React.FC = () => {
                         icon={<ImageIcon className="w-4 h-4" />}
                         title={language === 'en' ? 'Activity & Documentation Gallery' : 'Galeri Kegiatan & Dokumentasi'}
                         description={language === 'en'
-                          ? 'Visual documentation of on-site audits, ISO 17025 lab testing, and JULEHA training.'
-                          : 'Dokumentasi visual audit lapangan industri, pengujian lab ISO 17025, dan bimbingan JULEHA.'}
+                          ? 'Visual documentation of on-site audits, accredited lab testing, and JULEHA training.'
+                          : 'Dokumentasi visual audit lapangan industri, pengujian laboratorium halal, dan bimbingan JULEHA.'}
                         to="/galeri"
                         badge={language === 'en' ? 'Gallery' : 'Galeri'}
                         badgeVariant="yellow"

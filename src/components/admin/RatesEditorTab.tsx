@@ -726,7 +726,7 @@ export const RatesEditorTab: React.FC<RatesEditorTabProps> = ({ onLogAudit }) =>
           <div className="flex items-center gap-2">
             <FlaskConical className="w-4 h-4 text-[#6B18A8]" />
             <h4 className="text-sm font-bold text-neutral-800">
-              Tarif Uji Laboratorium Terakreditasi KAN ISO 17025
+              Tarif Uji Laboratorium Halal Terakreditasi (KAN)
             </h4>
           </div>
 
@@ -734,7 +734,7 @@ export const RatesEditorTab: React.FC<RatesEditorTabProps> = ({ onLogAudit }) =>
             <div className="p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-neutral-700">
-                  Uji DNA Porcine Real-Time qPCR (Per Sampel)
+                  Uji Laboratorium Deteksi Kandungan Babi (Per Sampel)
                 </span>
                 <Chip size="sm" className="bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold text-[10px]">
                   LP-1542-IDN
@@ -759,7 +759,7 @@ export const RatesEditorTab: React.FC<RatesEditorTabProps> = ({ onLogAudit }) =>
             <div className="p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-neutral-700">
-                  Uji Etanol GC-FID Gas Chromatography (Per Sampel)
+                  Uji Laboratorium Kadar Alkohol / Etanol (Per Sampel)
                 </span>
                 <Chip size="sm" className="bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold text-[10px]">
                   LP-1542-IDN

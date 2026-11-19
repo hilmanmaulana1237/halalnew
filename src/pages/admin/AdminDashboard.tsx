@@ -22,6 +22,7 @@ import {
   Plus,
   Trash2,
   CheckCircle2,
+  Award,
   Users,
   UserPlus,
   KeyRound,
@@ -78,6 +79,7 @@ import { RatesEditorTab } from '@/components/admin/RatesEditorTab';
 import { BackupManagerTab } from '@/components/admin/BackupManagerTab';
 import { ImageCropperModal } from '@/components/admin/ImageCropperModal';
 import { getRatesMatrix } from '@/services/ratesService';
+import { getGalleryStats, saveGalleryStats, resetGalleryStats, type GalleryStatsConfig } from '@/services/galleryStatsService';
 import { translateNewsToEnglish } from '@/services/openRouterService';
 import {
   scanForThreats,
@@ -151,7 +153,7 @@ export const AdminDashboard: React.FC = () => {
     try {
       const raw = localStorage.getItem('lph_news_list');
       if (raw) return JSON.parse(raw);
-    } catch {}
+    } catch { }
     return [
       {
         id: 1,
@@ -211,7 +213,7 @@ export const AdminDashboard: React.FC = () => {
     try {
       const raw = localStorage.getItem('lph_announcements_cache');
       if (raw) return JSON.parse(raw);
-    } catch {}
+    } catch { }
     return [
       {
         id: 1,
@@ -256,7 +258,7 @@ export const AdminDashboard: React.FC = () => {
     try {
       const raw = localStorage.getItem('lph_gallery_list');
       if (raw) return JSON.parse(raw);
-    } catch {}
+    } catch { }
     return [
       {
         id: 1,
@@ -313,7 +315,7 @@ export const AdminDashboard: React.FC = () => {
     try {
       const raw = localStorage.getItem('lph_complaints_list');
       if (raw) return JSON.parse(raw);
-    } catch {}
+    } catch { }
     return [
       {
         id: 1,
@@ -363,7 +365,7 @@ export const AdminDashboard: React.FC = () => {
       }
       const raw = localStorage.getItem('lph_surveys_list');
       if (raw) return JSON.parse(raw);
-    } catch {}
+    } catch { }
     return [
       {
         id: 1,
@@ -411,7 +413,7 @@ export const AdminDashboard: React.FC = () => {
     try {
       const raw = localStorage.getItem('lph_kb_list');
       if (raw) return JSON.parse(raw);
-    } catch {}
+    } catch { }
     return [
       {
         id: 1,
@@ -441,7 +443,7 @@ export const AdminDashboard: React.FC = () => {
     try {
       const raw = localStorage.getItem('lph_audit_logs');
       if (raw) return JSON.parse(raw);
-    } catch {}
+    } catch { }
     return [
       { id: 'LOG-01', user: 'Administrator', action: 'Memperbarui respon tiket', target: 'TKT-829104', time: '10 menit yang lalu', type: 'UPDATE' },
       { id: 'LOG-02', user: 'Administrator', action: 'Menerbitkan berita baru dengan TinyMCE', target: 'Akselerasi Audit Sertifikasi Halal', time: '45 menit yang lalu', type: 'CREATE' },
@@ -454,7 +456,7 @@ export const AdminDashboard: React.FC = () => {
     try {
       const raw = localStorage.getItem('lph_media_list');
       if (raw) return JSON.parse(raw);
-    } catch {}
+    } catch { }
     return [
       { id: 1, name: 'pemeriksaaan-kehalalan-produk.jpg', src: '/assets/images/pemeriksaaan-kehalalan-produk.jpg', category: 'Audit', size: '185 KB' },
       { id: 2, name: 'lab-dna-testing.jpg', src: '/assets/images/lab-dna-testing.jpg', category: 'Laboratorium', size: '240 KB' },
@@ -466,6 +468,9 @@ export const AdminDashboard: React.FC = () => {
       { id: 8, name: 'beranda_004.jpg', src: '/assets/images/beranda_004.jpg', category: 'Pabrik Kemasan', size: '305 KB' },
     ];
   });
+
+  const [galleryStats, setGalleryStats] = useState<GalleryStatsConfig>(() => getGalleryStats());
+  const [statsSavedMessage, setStatsSavedMessage] = useState<string>('');
 
   interface AdminUserAccount {
     id: number;
@@ -500,7 +505,7 @@ export const AdminDashboard: React.FC = () => {
         }
         return parsed;
       }
-    } catch {}
+    } catch { }
     return DEFAULT_USERS_DATA;
   });
 
@@ -518,7 +523,7 @@ export const AdminDashboard: React.FC = () => {
     try {
       const raw = localStorage.getItem('lph_news_categories');
       if (raw) return JSON.parse(raw);
-    } catch {}
+    } catch { }
     return ['KEGIATAN', 'ACARA', 'AGENDA', 'EDUKASI', 'PUBLIKASI', 'KERJASAMA'];
   });
 
@@ -526,7 +531,7 @@ export const AdminDashboard: React.FC = () => {
     try {
       const raw = localStorage.getItem('lph_gallery_categories');
       if (raw) return JSON.parse(raw);
-    } catch {}
+    } catch { }
     return [
       'Audit Lapangan',
       'Laboratorium ISO 17025',
@@ -807,7 +812,7 @@ export const AdminDashboard: React.FC = () => {
       setMediaList(updated);
       try {
         localStorage.setItem('lph_media_list', JSON.stringify(updated));
-      } catch {}
+      } catch { }
       addAuditLog('Menambahkan media gambar baru dengan crop', newMedia.name, 'CREATE');
     }
     setCropperModalOpen(false);
@@ -829,7 +834,7 @@ export const AdminDashboard: React.FC = () => {
       const updated = [newLog, ...prev];
       try {
         localStorage.setItem('lph_audit_logs', JSON.stringify(updated.slice(0, 50)));
-      } catch {}
+      } catch { }
       return updated;
     });
   };
@@ -883,7 +888,7 @@ export const AdminDashboard: React.FC = () => {
       setNewsCategories(updated);
       try {
         localStorage.setItem('lph_news_categories', JSON.stringify(updated));
-      } catch {}
+      } catch { }
     }
     setPostForm({
       title: post.title,
@@ -988,25 +993,25 @@ export const AdminDashboard: React.FC = () => {
       const updated = newsList.map((p) =>
         p.id === editingPostId
           ? {
-              ...p,
-              title: postForm.title,
-              slug: postForm.slug || postForm.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-              category: postForm.category,
-              status: currentStatus,
-              publishedAt: postForm.publishedAt,
-              excerpt: postForm.excerpt,
-              content: cleanContent,
-              image: postForm.image,
-              titleEn: postForm.titleEn || undefined,
-              excerptEn: postForm.excerptEn || undefined,
-              contentEn: cleanContentEn,
-            }
+            ...p,
+            title: postForm.title,
+            slug: postForm.slug || postForm.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+            category: postForm.category,
+            status: currentStatus,
+            publishedAt: postForm.publishedAt,
+            excerpt: postForm.excerpt,
+            content: cleanContent,
+            image: postForm.image,
+            titleEn: postForm.titleEn || undefined,
+            excerptEn: postForm.excerptEn || undefined,
+            contentEn: cleanContentEn,
+          }
           : p
       );
       setNewsList(updated);
       try {
         localStorage.setItem('lph_news_list', JSON.stringify(updated));
-      } catch {}
+      } catch { }
       addAuditLog('Memperbarui artikel berita (TinyMCE - Sanitized)', postForm.title, 'UPDATE');
       addAuditLog('Memperbarui artikel berita (Bilingual TinyMCE - Sanitized)', postForm.title, 'UPDATE');
     } else {
@@ -1028,7 +1033,7 @@ export const AdminDashboard: React.FC = () => {
       setNewsList(updated);
       try {
         localStorage.setItem('lph_news_list', JSON.stringify(updated));
-      } catch {}
+      } catch { }
       addAuditLog('Menerbitkan berita baru (TinyMCE - Sanitized)', postForm.title, 'CREATE');
       addAuditLog('Menerbitkan berita baru (Bilingual TinyMCE - Sanitized)', postForm.title, 'CREATE');
     }
@@ -1042,7 +1047,7 @@ export const AdminDashboard: React.FC = () => {
       setNewsList(updated);
       try {
         localStorage.setItem('lph_news_list', JSON.stringify(updated));
-      } catch {}
+      } catch { }
       if (targetPost) {
         addAuditLog('Menghapus artikel berita', targetPost.title, 'DELETE');
       }
@@ -1120,20 +1125,20 @@ export const AdminDashboard: React.FC = () => {
       const updated = announcements.map((a) =>
         a.id === editingAnnouncementId
           ? {
-              ...a,
-              title: announcementForm.title,
-              fileName: announcementForm.fileName || 'Surat_Edaran_2026.pdf',
-              fileSize: announcementForm.fileSize || '1.2 MB',
-              fileUrl: announcementForm.fileUrl,
-              content: cleanContent,
-              isPinned: announcementForm.isPinned,
-            }
+            ...a,
+            title: announcementForm.title,
+            fileName: announcementForm.fileName || 'Surat_Edaran_2026.pdf',
+            fileSize: announcementForm.fileSize || '1.2 MB',
+            fileUrl: announcementForm.fileUrl,
+            content: cleanContent,
+            isPinned: announcementForm.isPinned,
+          }
           : a
       );
       setAnnouncements(updated);
       try {
         localStorage.setItem('lph_announcements_cache', JSON.stringify(updated));
-      } catch {}
+      } catch { }
       addAuditLog('Memperbarui surat edaran & dokumen PDF (Sanitized)', announcementForm.title, 'UPDATE');
     } else {
       const newAnn: AnnouncementItem = {
@@ -1152,7 +1157,7 @@ export const AdminDashboard: React.FC = () => {
       setAnnouncements(updated);
       try {
         localStorage.setItem('lph_announcements_cache', JSON.stringify(updated));
-      } catch {}
+      } catch { }
       addAuditLog('Menerbitkan pengumuman resmi baru dengan PDF (Sanitized)', announcementForm.title, 'CREATE');
     }
     setEditingAnnouncementId(null);
@@ -1166,7 +1171,7 @@ export const AdminDashboard: React.FC = () => {
       setAnnouncements(updated);
       try {
         localStorage.setItem('lph_announcements_cache', JSON.stringify(updated));
-      } catch {}
+      } catch { }
       if (target) {
         addAuditLog('Menghapus pengumuman resmi', target.title, 'DELETE');
       }
@@ -1198,7 +1203,7 @@ export const AdminDashboard: React.FC = () => {
       setGalleryCategories(updated);
       try {
         localStorage.setItem('lph_gallery_categories', JSON.stringify(updated));
-      } catch {}
+      } catch { }
     }
     setGalleryForm({
       title: item.title,
@@ -1219,22 +1224,22 @@ export const AdminDashboard: React.FC = () => {
       const updated = galleryList.map((g) =>
         g.id === editingGalleryId
           ? {
-              ...g,
-              title: galleryForm.title,
-              category: galleryForm.category,
-              location: galleryForm.location,
-              facility: galleryForm.facility,
-              auditorLead: galleryForm.auditorLead,
-              standard: galleryForm.standard,
-              fullStory: galleryForm.fullStory,
-              src: galleryForm.src,
-            }
+            ...g,
+            title: galleryForm.title,
+            category: galleryForm.category,
+            location: galleryForm.location,
+            facility: galleryForm.facility,
+            auditorLead: galleryForm.auditorLead,
+            standard: galleryForm.standard,
+            fullStory: galleryForm.fullStory,
+            src: galleryForm.src,
+          }
           : g
       );
       setGalleryList(updated);
       try {
         localStorage.setItem('lph_gallery_list', JSON.stringify(updated));
-      } catch {}
+      } catch { }
       addAuditLog('Memperbarui foto dokumentasi kegiatan galeri', galleryForm.title, 'UPDATE');
     } else {
       const newPhoto: AdminGalleryItem = {
@@ -1253,7 +1258,7 @@ export const AdminDashboard: React.FC = () => {
       setGalleryList(updated);
       try {
         localStorage.setItem('lph_gallery_list', JSON.stringify(updated));
-      } catch {}
+      } catch { }
       addAuditLog('Menambahkan foto galeri kegiatan baru', galleryForm.title, 'CREATE');
     }
     setEditingGalleryId(null);
@@ -1267,7 +1272,7 @@ export const AdminDashboard: React.FC = () => {
       setGalleryList(updated);
       try {
         localStorage.setItem('lph_gallery_list', JSON.stringify(updated));
-      } catch {}
+      } catch { }
       if (target) {
         addAuditLog('Menghapus foto galeri', target.title, 'DELETE');
       }
@@ -1295,7 +1300,7 @@ export const AdminDashboard: React.FC = () => {
     setComplaints(updated);
     try {
       localStorage.setItem('lph_complaints_list', JSON.stringify(updated));
-    } catch {}
+    } catch { }
     addAuditLog('Menjawab respon tiket pengaduan', selectedComplaint.ticketCode, 'UPDATE');
     setModalType(null);
     setSelectedComplaint(null);
@@ -1314,7 +1319,7 @@ export const AdminDashboard: React.FC = () => {
     setKnowledgeBase(updated);
     try {
       localStorage.setItem('lph_kb_list', JSON.stringify(updated));
-    } catch {}
+    } catch { }
     addAuditLog('Menambahkan entri FAQ chatbot baru', kbForm.question, 'CREATE');
     setKbForm({ question: '', answer: '', tags: '' });
     setModalType(null);
@@ -1327,7 +1332,7 @@ export const AdminDashboard: React.FC = () => {
       setKnowledgeBase(updated);
       try {
         localStorage.setItem('lph_kb_list', JSON.stringify(updated));
-      } catch {}
+      } catch { }
       if (target) {
         addAuditLog('Menghapus entri FAQ chatbot', target.question, 'DELETE');
       }
@@ -1423,13 +1428,13 @@ export const AdminDashboard: React.FC = () => {
       const updated = usersList.map((item: AdminUserAccount) =>
         item.id === selectedUser.id
           ? {
-              ...item,
-              name: userForm.name.trim(),
-              email: userForm.email.trim(),
-              phone: userForm.phone.trim(),
-              role: userForm.role,
-              status: userForm.status,
-            }
+            ...item,
+            name: userForm.name.trim(),
+            email: userForm.email.trim(),
+            phone: userForm.phone.trim(),
+            role: userForm.role,
+            status: userForm.status,
+          }
           : item
       );
       saveUsersList(updated);
@@ -1467,7 +1472,7 @@ export const AdminDashboard: React.FC = () => {
       try {
         localStorage.setItem('lph_surveys_list', JSON.stringify(updated));
         localStorage.setItem('lph_satisfaction_list', JSON.stringify(updated));
-      } catch {}
+      } catch { }
       if (target) {
         addAuditLog('Menghapus ulasan survei IKM', target.name || 'Responden', 'DELETE');
       }
@@ -1491,7 +1496,7 @@ export const AdminDashboard: React.FC = () => {
     setNewsCategories(updated);
     try {
       localStorage.setItem('lph_news_categories', JSON.stringify(updated));
-    } catch {}
+    } catch { }
     addAuditLog('Menambahkan kategori berita baru', trimmed, 'CREATE');
     return trimmed;
   };
@@ -1515,13 +1520,13 @@ export const AdminDashboard: React.FC = () => {
         setNewsList(updatedNews);
         try {
           localStorage.setItem('lph_news_list', JSON.stringify(updatedNews));
-        } catch {}
+        } catch { }
       }
       const updatedCats = newsCategories.filter((c) => c !== catToDelete);
       setNewsCategories(updatedCats);
       try {
         localStorage.setItem('lph_news_categories', JSON.stringify(updatedCats));
-      } catch {}
+      } catch { }
       if (newsCategory === catToDelete) {
         setNewsCategory('ALL');
       }
@@ -1546,7 +1551,7 @@ export const AdminDashboard: React.FC = () => {
     setGalleryCategories(updated);
     try {
       localStorage.setItem('lph_gallery_categories', JSON.stringify(updated));
-    } catch {}
+    } catch { }
     addAuditLog('Menambahkan kategori galeri baru', trimmed, 'CREATE');
     return trimmed;
   };
@@ -1570,13 +1575,13 @@ export const AdminDashboard: React.FC = () => {
         setGalleryList(updatedGallery);
         try {
           localStorage.setItem('lph_gallery_list', JSON.stringify(updatedGallery));
-        } catch {}
+        } catch { }
       }
       const updatedCats = galleryCategories.filter((c) => c !== catToDelete);
       setGalleryCategories(updatedCats);
       try {
         localStorage.setItem('lph_gallery_categories', JSON.stringify(updatedCats));
-      } catch {}
+      } catch { }
       if (galleryCategory === catToDelete) {
         setGalleryCategory('ALL');
       }
@@ -1898,11 +1903,10 @@ export const AdminDashboard: React.FC = () => {
                   <Pagination.Link
                     isActive={currentPage === pageNum}
                     onPress={() => onPageChange(pageNum)}
-                    className={`cursor-pointer w-8 h-8 flex items-center justify-center text-xs font-bold rounded-xl transition-all ${
-                      currentPage === pageNum
-                        ? 'bg-[#6B18A8] text-white font-black shadow-xs'
-                        : 'bg-white border border-neutral-200 text-neutral-700 hover:bg-[#FAF7FD]'
-                    }`}
+                    className={`cursor-pointer w-8 h-8 flex items-center justify-center text-xs font-bold rounded-xl transition-all ${currentPage === pageNum
+                      ? 'bg-[#6B18A8] text-white font-black shadow-xs'
+                      : 'bg-white border border-neutral-200 text-neutral-700 hover:bg-[#FAF7FD]'
+                      }`}
                   >
                     {pageNum}
                   </Pagination.Link>
@@ -2124,8 +2128,8 @@ export const AdminDashboard: React.FC = () => {
                         item.badgeDanger
                           ? 'bg-rose-500 text-white animate-pulse'
                           : isActive
-                          ? 'bg-[#F5D32F] text-[#4B0D78]'
-                          : 'bg-white/10 text-purple-200'
+                            ? 'bg-[#F5D32F] text-[#4B0D78]'
+                            : 'bg-white/10 text-purple-200'
                       )}
                     >
                       {item.count}
@@ -2665,11 +2669,10 @@ export const AdminDashboard: React.FC = () => {
                             <button
                               type="button"
                               onClick={() => setActiveEditorLang('ID')}
-                              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                                activeEditorLang === 'ID'
-                                  ? 'bg-[#6B18A8] text-white shadow-xs'
-                                  : 'text-neutral-600 hover:text-neutral-900'
-                              }`}
+                              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${activeEditorLang === 'ID'
+                                ? 'bg-[#6B18A8] text-white shadow-xs'
+                                : 'text-neutral-600 hover:text-neutral-900'
+                                }`}
                             >
                               <span>🇮🇩 Versi Indonesia</span>
                               <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-white/20 font-medium">
@@ -2680,11 +2683,10 @@ export const AdminDashboard: React.FC = () => {
                             <button
                               type="button"
                               onClick={() => setActiveEditorLang('EN')}
-                              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                                activeEditorLang === 'EN'
-                                  ? 'bg-[#6B18A8] text-white shadow-xs'
-                                  : 'text-neutral-600 hover:text-neutral-900'
-                              }`}
+                              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${activeEditorLang === 'EN'
+                                ? 'bg-[#6B18A8] text-white shadow-xs'
+                                : 'text-neutral-600 hover:text-neutral-900'
+                                }`}
                             >
                               <span>🇬🇧 Versi English</span>
                               {postForm.titleEn ? (
@@ -3244,17 +3246,114 @@ export const AdminDashboard: React.FC = () => {
               TAB 4: ACTIVITY GALLERY MANAGEMENT (WITH EDIT & FILTER)
           ------------------------------------------------------------- */}
           {activeTab === 'GALLERY' && (
-            <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 space-y-6">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div>
-                  <h3 className="text-base font-bold text-[#292333] flex items-center gap-2">
-                    <ImageIcon className="w-4 h-4 text-[#6B18A8]" />
-                    <span>Rekam Jejak Foto Dokumentasi Kegiatan LPH</span>
-                  </h3>
-                  <p className="text-xs text-neutral-500">
-                    Foto-foto audit lapangan, laboratorium ISO 17025, dan pelatihan JULEHA yang tampil di halaman /galeri.
-                  </p>
+            <div className="space-y-6">
+              {/* Dynamic Stats Editor Card for /galeri */}
+              <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 space-y-5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-neutral-100 pb-4">
+                  <div>
+                    <h3 className="text-base font-bold text-[#292333] flex items-center gap-2">
+                      <Award className="w-4 h-4 text-[#6B18A8]" />
+                      <span>Kelola 4 Statistik & Capaian Resmi (/galeri)</span>
+                    </h3>
+                    <p className="text-xs text-neutral-500 mt-0.5">
+                      Ubah data angka capaian riil dan label diksi yang tampil di kartu sorotan halaman Galeri Kegiatan.
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="outline"
+                      className="text-xs font-bold px-3 py-1.5 rounded-xl border-neutral-300 text-neutral-600 hover:bg-neutral-50"
+                      onPress={() => {
+                        const def = resetGalleryStats();
+                        setGalleryStats(def);
+                        setStatsSavedMessage('Statistik berhasil dikembalikan ke default data flyer resmi!');
+                        setTimeout(() => setStatsSavedMessage(''), 3000);
+                        addAuditLog('Mereset statistik galeri ke data flyer resmi', 'Statistik Galeri', 'UPDATE');
+                      }}
+                    >
+                      Reset Default Flyer
+                    </Button>
+                    <Button
+                      variant="primary"
+                      className="bg-[#6B18A8] text-white text-xs font-bold px-4 py-1.5 rounded-xl flex items-center gap-1.5 shadow-sm"
+                      onPress={() => {
+                        saveGalleryStats(galleryStats);
+                        setStatsSavedMessage('Data statistik galeri berhasil disimpan dan langsung sinkron ke halaman /galeri!');
+                        setTimeout(() => setStatsSavedMessage(''), 3000);
+                        addAuditLog('Menyimpan perubahan 4 statistik galeri', 'Statistik Galeri', 'UPDATE');
+                      }}
+                    >
+                      Simpan Statistik
+                    </Button>
+                  </div>
                 </div>
+
+                {statsSavedMessage && (
+                  <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold rounded-xl flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>{statsSavedMessage}</span>
+                  </div>
+                )}
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {galleryStats.items.map((stat, idx) => (
+                    <div key={stat.id || idx} className="p-4 rounded-2xl bg-[#FAF7FD] border border-[#C9A5E8]/30 space-y-3">
+                      <div>
+                        <label className="text-[11px] font-bold text-neutral-600 uppercase">Nilai / Angka Capaian</label>
+                        <Input
+                          fullWidth
+                          value={stat.value}
+                          onChange={(e) => {
+                            const newItems = [...galleryStats.items];
+                            newItems[idx] = { ...newItems[idx], value: e.target.value };
+                            setGalleryStats({ ...galleryStats, items: newItems, lastUpdated: new Date().toISOString() });
+                          }}
+                          className="mt-1 bg-white"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[11px] font-bold text-neutral-600 uppercase">Label (Bahasa Indonesia)</label>
+                        <Input
+                          fullWidth
+                          value={stat.labelId}
+                          onChange={(e) => {
+                            const newItems = [...galleryStats.items];
+                            newItems[idx] = { ...newItems[idx], labelId: e.target.value };
+                            setGalleryStats({ ...galleryStats, items: newItems, lastUpdated: new Date().toISOString() });
+                          }}
+                          className="mt-1 bg-white"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[11px] font-bold text-neutral-600 uppercase">Label (English)</label>
+                        <Input
+                          fullWidth
+                          value={stat.labelEn}
+                          onChange={(e) => {
+                            const newItems = [...galleryStats.items];
+                            newItems[idx] = { ...newItems[idx], labelEn: e.target.value };
+                            setGalleryStats({ ...galleryStats, items: newItems, lastUpdated: new Date().toISOString() });
+                          }}
+                          className="mt-1 bg-white"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+
+              {/* Gallery Photos Card */}
+              <Card className="bg-white rounded-3xl border border-[#C9A5E8]/30 shadow-xs p-6 space-y-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div>
+                    <h3 className="text-base font-bold text-[#292333] flex items-center gap-2">
+                      <ImageIcon className="w-4 h-4 text-[#6B18A8]" />
+                      <span>Rekam Jejak Foto Dokumentasi Kegiatan LPH</span>
+                    </h3>
+                    <p className="text-xs text-neutral-500">
+                      Foto-foto audit lapangan, laboratorium pengujian halal, dan pelatihan JULEHA yang tampil di halaman /galeri.
+                    </p>
+                  </div>
 
                 <div className="flex items-center gap-2 flex-wrap">
                   <Button
@@ -3412,7 +3511,8 @@ export const AdminDashboard: React.FC = () => {
                 setGalleryPage
               )}
             </Card>
-          )}
+          </div>
+        )}
 
           {/* -------------------------------------------------------------
               TAB 5: MEDIA ASSET LIBRARY (WITH CROP UPLOAD & DESIGN SPECS)
@@ -3533,47 +3633,47 @@ export const AdminDashboard: React.FC = () => {
                 )}
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {mediaList.map((m) => (
-                  <div
-                    key={m.id}
-                    className="group rounded-2xl overflow-hidden border border-[#C9A5E8]/30 bg-neutral-50 hover:shadow-md transition-all flex flex-col justify-between"
-                  >
-                    <div className="h-32 overflow-hidden bg-neutral-900 relative">
-                      <img
-                        src={m.src}
-                        alt={m.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <Chip
-                        size="sm"
-                        className="absolute bottom-2 left-2 bg-black/60 text-white font-bold text-[9px] backdrop-blur-xs"
-                      >
-                        {m.category}
-                      </Chip>
-                    </div>
-                    <div className="p-3 space-y-2">
-                      <div className="text-[11px] font-bold text-neutral-800 truncate" title={m.name}>
-                        {m.name}
-                      </div>
-                      <div className="flex items-center justify-between text-[10px] text-neutral-400">
-                        <span>{m.size}</span>
-                        <Button
+                  {mediaList.map((m) => (
+                    <div
+                      key={m.id}
+                      className="group rounded-2xl overflow-hidden border border-[#C9A5E8]/30 bg-neutral-50 hover:shadow-md transition-all flex flex-col justify-between"
+                    >
+                      <div className="h-32 overflow-hidden bg-neutral-900 relative">
+                        <img
+                          src={m.src}
+                          alt={m.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                        <Chip
                           size="sm"
-                          variant="outline"
-                          onPress={() => handleCopyMediaUrl(m.src)}
-                          className="px-2 py-0.5 text-[10px] rounded-lg border-[#C9A5E8] text-[#6B18A8] hover:bg-[#FAF7FD] font-bold flex items-center gap-1"
+                          className="absolute bottom-2 left-2 bg-black/60 text-white font-bold text-[9px] backdrop-blur-xs"
                         >
-                          <Copy className="w-3 h-3" />
-                          <span>Salin URL</span>
-                        </Button>
+                          {m.category}
+                        </Chip>
+                      </div>
+                      <div className="p-3 space-y-2">
+                        <div className="text-[11px] font-bold text-neutral-800 truncate" title={m.name}>
+                          {m.name}
+                        </div>
+                        <div className="flex items-center justify-between text-[10px] text-neutral-400">
+                          <span>{m.size}</span>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onPress={() => handleCopyMediaUrl(m.src)}
+                            className="px-2 py-0.5 text-[10px] rounded-lg border-[#C9A5E8] text-[#6B18A8] hover:bg-[#FAF7FD] font-bold flex items-center gap-1"
+                          >
+                            <Copy className="w-3 h-3" />
+                            <span>Salin URL</span>
+                          </Button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </Card>
-          </div>
-        )}
+                  ))}
+                </div>
+              </Card>
+            </div>
+          )}
 
           {/* -------------------------------------------------------------
               TAB 6: COMPLAINTS & WHISTLEBLOWING (WITH PAGINATION & EXCEL)
@@ -3678,8 +3778,8 @@ export const AdminDashboard: React.FC = () => {
                                 comp.status === 'RESOLVED'
                                   ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                                   : comp.status === 'IN_PROGRESS'
-                                  ? 'bg-amber-50 text-amber-700 border border-amber-200'
-                                  : 'bg-rose-50 text-rose-700 border border-rose-200'
+                                    ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                                    : 'bg-rose-50 text-rose-700 border border-rose-200'
                               )}
                             >
                               {comp.status}

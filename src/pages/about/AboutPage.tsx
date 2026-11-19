@@ -19,7 +19,7 @@ import { BackgroundGradient } from '@/components/ui/background-gradient';
 import { CardSpotlight } from '@/components/ui/card-spotlight';
 import { SparklesCore } from '@/components/ui/sparkles';
 import { YellowHighlight, YellowDotGrid } from '@/components/ui/decorative-shapes';
-import { getDirectors } from '../home/HomePage';
+import { getDirectors } from '@/data/directorsData';
 import { useLanguage } from '@/context/LanguageContext';
 
 export const AboutPage: React.FC = () => {

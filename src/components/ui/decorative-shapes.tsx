@@ -104,19 +104,25 @@ export const YellowDotGrid: React.FC<{
 };
 
 /**
- * Inline Yellow Keyword Highlight marker
+ * Inline Yellow Keyword Highlight marker (Mobile-Safe & Android-Optimized)
+ * Menggunakan decoration-clone agar stabilo membungkus teks multi-baris secara sempurna
  */
 export const YellowHighlight: React.FC<{
   children: React.ReactNode;
   className?: string;
 }> = ({ children, className }) => {
   return (
-    <span className={cn('relative inline-block font-extrabold text-[#6B18A8]', className)}>
-      <span className="relative z-10">{children}</span>
-      <span
-        className="absolute bottom-1.5 left-0 right-0 h-3 bg-[#F5D32F]/80 -rotate-1 rounded-sm -z-0"
-        aria-hidden="true"
-      />
+    <span
+      className={cn(
+        'font-extrabold inline px-1.5 py-0.5 rounded-sm',
+        'bg-gradient-to-r from-[#F5D32F]/85 via-[#F5D32F]/90 to-[#F5D32F]/85',
+        'bg-no-repeat [background-position:0_85%] [background-size:100%_40%]',
+        'decoration-clone [box-decoration-break:clone] [-webkit-box-decoration-break:clone]',
+        'transition-all duration-200',
+        className
+      )}
+    >
+      {children}
     </span>
   );
 };

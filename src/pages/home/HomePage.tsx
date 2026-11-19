@@ -185,7 +185,6 @@ export const HomePage: React.FC = () => {
     title: isEn
       ? 'Integrated Halal Testing Laboratory & Secretariat'
       : 'Gedung Laboratorium Pengujian Halal Terpadu & Sekretariat LPH',
-    badge: 'ISO/IEC 17025 Accredited',
     complex: isEn
       ? 'Integrated Campus Complex UIN Sunan Gunung Djati Bandung'
       : 'Kawasan Kampus Terpadu UIN Sunan Gunung Djati Bandung',
@@ -587,7 +586,7 @@ export const HomePage: React.FC = () => {
                   <CardItem translateZ="45" className="mt-6 space-y-2.5">
                     {[
                       isEn ? 'On-site Facility & RPH Audit Cost' : 'Audit Lapangan Fasilitas & RPH',
-                      isEn ? 'ISO 17025 qPCR Lab Testing Estimation' : 'Estimasi Pengujian Lab qPCR ISO 17025',
+                      isEn ? 'Laboratory Testing Estimation' : 'Estimasi Pengujian Lab',
                       isEn ? 'Download Formal Breakdown PDF' : 'Unduh Rincian Estimasi Dokumen PDF',
                     ].map((feat, fIdx) => (
                       <div key={fIdx} className="flex items-center gap-2 text-xs font-semibold text-neutral-700 bg-[#FAF7FD] px-3.5 py-2 rounded-xl border border-[#C9A5E8]/30">
@@ -1316,8 +1315,8 @@ export const HomePage: React.FC = () => {
             badgeColor="yellow"
             title={isEn ? "Central Office & Integrated Halal Testing Laboratory" : "Kantor Layanan & Laboratorium Pengujian Halal Terpadu"}
             subtitle={isEn
-              ? "Visit our central service office and ISO/IEC 17025 accredited testing laboratory located in the Integrated Campus Complex of UIN Sunan Gunung Djati Bandung."
-              : "Kunjungi kantor pelayanan utama dan laboratorium pengujian terakreditasi ISO/IEC 17025 LPH UIN Sunan Gunung Djati Bandung."}
+              ? "Visit our central service office and accredited testing laboratory located in the Integrated Campus Complex of UIN Sunan Gunung Djati Bandung."
+              : "Kunjungi kantor pelayanan utama dan laboratorium pengujian terakreditasi resmi LPH UIN Sunan Gunung Djati Bandung."}
           />
 
           <div className="relative rounded-3xl p-[2px] bg-gradient-to-r from-[#4B0D78] via-[#6B18A8] via-[#F5D32F] to-[#4B0D78] shadow-2xl shadow-purple-950/10">
@@ -1345,9 +1344,6 @@ export const HomePage: React.FC = () => {
                   <h4 className="font-bold text-sm sm:text-base text-neutral-900 truncate">
                     {officeLocation.title}
                   </h4>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] shrink-0 whitespace-nowrap">
-                    {officeLocation.badge}
-                  </span>
                 </div>
                 <p className="text-xs text-neutral-600 mt-1 max-w-3xl leading-relaxed">
                   {officeLocation.address}
@@ -1403,8 +1399,8 @@ export const HomePage: React.FC = () => {
 
           <p className="mt-4 text-base sm:text-lg text-[#756D7C] max-w-2xl mx-auto leading-relaxed">
             {isEn
-              ? 'Get swift regular halal inspection, ISO/IEC 17025 accredited laboratory testing, and professional advisory by certified lead auditors of LPH UIN SGD Bandung.'
-              : 'Dapatkan pendampingan audit halal reguler, pengujian laboratorium ISO/IEC 17025, dan sertifikasi resmi bersama tim auditor berlisensi LPH UIN Sunan Gunung Djati Bandung.'}
+              ? 'Get swift regular halal inspection, accredited laboratory testing, and professional advisory by certified lead auditors of LPH UIN SGD Bandung.'
+              : 'Dapatkan pendampingan audit halal reguler, pengujian laboratorium terakreditasi resmi, dan sertifikasi bersama tim auditor berlisensi LPH UIN Sunan Gunung Djati Bandung.'}
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">

@@ -23,6 +23,7 @@ import {
   Users,
   Sparkles,
   Share2,
+  Clock,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/context/LanguageContext';
@@ -30,6 +31,7 @@ import { Spotlight } from '@/components/ui/spotlight';
 import { FocusCards, type FocusCardItem } from '@/components/ui/focus-cards';
 import { YellowDotGrid, YellowHighlight } from '@/components/ui/decorative-shapes';
 import { cn } from '@/lib/utils';
+import { getGalleryStats, type GalleryStatsConfig } from '@/services/galleryStatsService';
 
 export interface GalleryItem extends FocusCardItem {
   auditorLead: string;
@@ -346,6 +348,21 @@ export const GalleryPage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
 
+  // Dynamic gallery statistics synchronized with Admin Panel
+  const [statsConfig, setStatsConfig] = useState<GalleryStatsConfig>(getGalleryStats());
+
+  React.useEffect(() => {
+    const handleStatsUpdate = () => {
+      setStatsConfig(getGalleryStats());
+    };
+    window.addEventListener('lph-gallery-stats-updated', handleStatsUpdate);
+    window.addEventListener('storage', handleStatsUpdate);
+    return () => {
+      window.removeEventListener('lph-gallery-stats-updated', handleStatsUpdate);
+      window.removeEventListener('storage', handleStatsUpdate);
+    };
+  }, []);
+
   // Filtered gallery items based on category tabs and search keyword
   const filteredItems = useMemo(() => {
     return galleryItems.filter((item) => {
@@ -428,57 +445,53 @@ export const GalleryPage: React.FC = () => {
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.15]">
               {isEn ? (
                 <>
-                  Inspection & Halal Laboratory <YellowHighlight>Photo Gallery</YellowHighlight>
+                  Inspection & Halal Laboratory <YellowHighlight className="text-white">Photo Gallery</YellowHighlight>
                 </>
               ) : (
                 <>
-                  Galeri Dokumentasi & Audit <YellowHighlight>LPH UIN SGD</YellowHighlight>
+                  Galeri Dokumentasi & Audit <YellowHighlight className="text-white">LPH UIN SGD</YellowHighlight>
                 </>
               )}
             </h1>
 
             <p className="mt-5 text-sm sm:text-base lg:text-lg text-purple-100/90 leading-relaxed font-normal">
               {isEn
-                ? 'Visual documentation of on-site industrial audits, accredited ISO/IEC 17025 scientific testing, halal slaughterer & supervisor training, and strategic institutional collaborations by LPH UIN Sunan Gunung Djati Bandung.'
-                : 'Dokumentasi visual rangkaian audit kehalalan fasilitas industri, pengujian saintifik di laboratorium berakreditasi ISO/IEC 17025, bimbingan teknis penyelia halal & JULEHA, serta kemitraan strategis LPH UIN Sunan Gunung Djati Bandung.'}
+                ? 'Visual documentation of on-site industrial audits, accredited laboratory scientific testing, halal slaughterer & supervisor training, and strategic institutional collaborations by LPH UIN Sunan Gunung Djati Bandung.'
+                : 'Dokumentasi visual rangkaian audit kehalalan fasilitas industri, pengujian saintifik di laboratorium terakreditasi resmi, bimbingan teknis penyelia halal & JULEHA, serta kemitraan strategis LPH UIN Sunan Gunung Djati Bandung.'}
             </p>
           </div>
 
-          {/* Key Metric Highlights using HeroUI Card */}
+          {/* Key Metric Highlights using HeroUI Card (Synchronized with Flyer & Admin Panel) */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
-            {[
-              {
-                icon: <Building2 className="w-5 h-5 text-[#F5D32F]" />,
-                num: '450+',
-                label: isEn ? 'Industrial Facilities Audited' : 'Fasilitas Pabrik Diaudit',
-              },
-              {
-                icon: <FlaskConical className="w-5 h-5 text-[#C9A5E8]" />,
-                num: '1.200+',
-                label: isEn ? 'qPCR & GC-FID Tests Completed' : 'Uji qPCR & GC-FID Selesai',
-              },
-              {
-                icon: <Users className="w-5 h-5 text-[#F5D32F]" />,
-                num: '3.500+',
-                label: isEn ? 'Supervisors & Butchers Trained' : 'Penyelia & JULEHA Terlatih',
-              },
-              {
-                icon: <Award className="w-5 h-5 text-[#C9A5E8]" />,
-                num: '100%',
-                label: isEn ? 'Official BPJPH & MUI Compliance' : 'Akreditasi BPJPH & MUI Sah',
-              },
-            ].map((stat, idx) => (
-              <Card
-                key={idx}
-                className="bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-5 text-white hover:bg-white/10 transition-colors"
-              >
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="p-2 rounded-xl bg-white/10 shrink-0">{stat.icon}</div>
-                  <span className="text-xl sm:text-2xl font-black text-white">{stat.num}</span>
-                </div>
-                <p className="text-xs text-purple-200/90 font-medium leading-snug">{stat.label}</p>
-              </Card>
-            ))}
+            {statsConfig.items.map((stat, idx) => {
+              const getIcon = (type: string) => {
+                switch (type) {
+                  case 'award':
+                    return <Award className="w-5 h-5 text-[#F5D32F]" />;
+                  case 'building':
+                    return <Building2 className="w-5 h-5 text-[#C9A5E8]" />;
+                  case 'clock':
+                    return <Clock className="w-5 h-5 text-[#F5D32F]" />;
+                  case 'users':
+                  default:
+                    return <Users className="w-5 h-5 text-[#C9A5E8]" />;
+                }
+              };
+              return (
+                <Card
+                  key={stat.id || idx}
+                  className="bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-5 text-white hover:bg-white/10 transition-colors"
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="p-2 rounded-xl bg-white/10 shrink-0">{getIcon(stat.icon)}</div>
+                    <span className="text-xl sm:text-2xl font-black text-white">{stat.value}</span>
+                  </div>
+                  <p className="text-xs text-purple-200/90 font-medium leading-snug">
+                    {isEn ? stat.labelEn : stat.labelId}
+                  </p>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </section>

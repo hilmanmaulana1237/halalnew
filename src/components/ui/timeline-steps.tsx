@@ -59,11 +59,11 @@ const STEPS_ID: StepItem[] = [
     id: 3,
     stepNumber: "03",
     title: "Audit Lapangan & Uji Laboratorium",
-    subtitle: "Pemeriksaan Fisik & Pengujian DNA qPCR",
+    subtitle: "Pemeriksaan Fisik & Uji Sampel Laboratorium",
     description:
-      "Auditor Halal berlisensi melakukan audit on-site ke fasilitas produksi. Jika terdapat bahan kritis, sampel diuji saintifik di Laboratorium Pengujian Halal Terpadu UIN Sunan Gunung Djati Bandung (Real-Time PCR DNA Porcine & GC-FID Alkohol).",
+      "Auditor Halal berlisensi melakukan audit on-site ke fasilitas produksi. Jika terdapat bahan kritis, sampel diuji secara mendalam di Laboratorium Pengujian Halal Terpadu UIN Sunan Gunung Djati Bandung untuk memastikan keamanan dan kepatuhan syariat.",
     icon: <FlaskConical className="w-6 h-6" />,
-    badge: "Saintifik ISO 17025",
+    badge: "Uji Laboratorium Terpercaya",
     points: [
       "Audit ketertelusuran (traceability) alur proses produksi",
       "Pengambilan sampel bahan kritis secara aseptik",
@@ -130,11 +130,11 @@ const STEPS_EN: StepItem[] = [
     id: 3,
     stepNumber: "03",
     title: "On-Site Facility Audit & Laboratory Testing",
-    subtitle: "Field Inspection & qPCR Porcine DNA Analysis",
+    subtitle: "Field Inspection & Halal Laboratory Testing",
     description:
-      "Licensed Lead Halal Auditors conduct on-site audits. If critical materials are detected, samples undergo ISO/IEC 17025 accredited laboratory testing at Campus 2 UIN SGD.",
+      "Licensed Lead Halal Auditors conduct on-site audits. If critical materials are detected, samples undergo accredited laboratory testing at UIN Sunan Gunung Djati Bandung.",
     icon: <FlaskConical className="w-6 h-6" />,
-    badge: "ISO 17025 Science",
+    badge: "Accredited Lab",
     points: [
       "End-to-end traceability audit of the manufacturing process",
       "Aseptic sampling of critical raw materials & flavorings",

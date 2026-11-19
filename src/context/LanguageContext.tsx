@@ -28,7 +28,7 @@ export const translations: Translations = {
   menu_structure_title: { id: 'Struktur Organisasi', en: 'Organizational Structure' },
   menu_structure_desc: { id: 'Dewan pimpinan, auditor ahli, penyelia halal, dan tenaga laboratorium.', en: 'Executive board, certified auditors, halal supervisors, and laboratory team.' },
   menu_legality_title: { id: 'Legalitas & Akreditasi', en: 'Legality & Accreditation' },
-  menu_legality_desc: { id: 'Regulasi resmi BPJPH No. LPH-018-ID dan pengakuan KAN ISO/IEC 17025.', en: 'Official BPJPH No. LPH-018-ID regulation and KAN ISO/IEC 17025 accreditation.' },
+  menu_legality_desc: { id: 'Regulasi resmi BPJPH No. LPH-018-ID dan pengakuan akreditasi resmi KAN.', en: 'Official BPJPH No. LPH-018-ID regulation and official KAN accreditation.' },
 
   // Mega Menu Services
   menu_audit_title: { id: 'Pemeriksaan Halal LPH', en: 'LPH Halal Inspection' },
@@ -36,7 +36,7 @@ export const translations: Translations = {
   menu_facility_title: { id: 'Pemeriksaan Fasilitas & RPH', en: 'Facility & Slaughterhouse Audit' },
   menu_facility_desc: { id: 'Pemeriksaan lapangan fasilitas manufaktur, bahan baku, dan rumah potong hewan.', en: 'On-site facility, raw materials, and slaughterhouse halal inspection.' },
   menu_lab_title: { id: 'Pengujian Laboratorium', en: 'Laboratory Testing' },
-  menu_lab_desc: { id: 'Uji qPCR DNA babi, cemaran alkohol GC-FID, dan profil asam lemak gelatin.', en: 'Porcine DNA qPCR, GC-FID alcohol residual, and gelatin fatty acid profile tests.' },
+  menu_lab_desc: { id: 'Uji deteksi kandungan babi, cemaran alkohol/etanol, dan profil asam lemak gelatin.', en: 'Porcine DNA detection, alcohol residual testing, and gelatin fatty acid profile tests.' },
   menu_training_title: { id: 'Pelatihan Auditor & Penyelia', en: 'Auditor & Supervisor Training' },
   menu_training_desc: { id: 'Bimbingan teknis kompetensi bersertifikat BNSP dan SKKNI Halal resmi.', en: 'Competency training certified by BNSP and official Halal SKKNI standards.' },
 
@@ -76,7 +76,7 @@ export const translations: Translations = {
 
   metric_lab_label: { id: 'STANDAR LABORATORIUM', en: 'LABORATORY STANDARD' },
   metric_lab_change: { id: 'Akreditasi KAN', en: 'KAN Accredited' },
-  metric_lab_desc: { id: 'Pengujian saintifik presisi tinggi: Deteksi qPCR DNA Babi, GC-FID Etanol, & Gelatin.', en: 'High-precision scientific testing: Porcine DNA qPCR, GC-FID Ethanol, & Gelatin.' },
+  metric_lab_desc: { id: 'Pengujian saintifik presisi tinggi: Deteksi kandungan babi, kadar alkohol, & gelatin.', en: 'High-precision scientific testing: Porcine DNA, alcohol residuals, & gelatin.' },
 
   // Chatbot
   chatbot_title: { id: 'Asisten AI LPH UIN SGD', en: 'LPH UIN SGD AI Assistant' },
