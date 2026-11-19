@@ -159,13 +159,13 @@ export const HeroVideoBanner: React.FC = () => {
         </div>
 
         {/* Smooth organic wave transition into full-width search ribbon (Desktop & Mobile) */}
-        <div className="w-full -mb-[1px] relative z-20 pointer-events-none select-none">
-          <OrganicWave fillColor="#ffffff" position="bottom" />
+        <div className="w-full relative z-20 pointer-events-none select-none -mb-1 translate-y-[2px]">
+          <OrganicWave fillColor="#ffffff" position="bottom" className="translate-y-[2px]" />
         </div>
       </section>
 
       {/* Cari Produk Halal - Full-width ribbon, edge-to-edge, seamlessly blended with white background */}
-      <section className="w-full bg-white relative z-20">
+      <section className="w-full bg-white relative z-20 -mt-1">
         <div className="max-w-[1440px] xl:max-w-[1536px] mx-auto p-4 sm:p-6 lg:py-7 lg:px-10 xl:px-16">
           <div className="flex items-center gap-3 min-w-0 mb-4 sm:mb-5">
             <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-[#F5EDFB] text-[#6B18A8] border border-[#C9A5E8]/60 flex items-center justify-center shadow-xs shrink-0">

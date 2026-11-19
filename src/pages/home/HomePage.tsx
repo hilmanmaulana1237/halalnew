@@ -162,7 +162,7 @@ export const HomePage: React.FC = () => {
 
               <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-[#292333] tracking-tight leading-snug">
                 {isEn ? 'LPH UIN SGD Through the ' : 'LPH UIN SGD Melalui Konsep '}
-                <YellowHighlight className="text-[#6B18A8]">
+                <YellowHighlight className="text-[#6B18A8] whitespace-nowrap">
                   “Halalsphere University”
                 </YellowHighlight>
               </h2>
@@ -1272,10 +1272,21 @@ export const HomePage: React.FC = () => {
           </div>
 
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-[#292333] tracking-tight leading-tight">
-            {isEn ? 'Ready to Get ' : 'Siap Mendapatkan '}
-            <YellowHighlight className="text-[#6B18A8]">
-              {isEn ? 'Official Halal Assistance?' : 'Pendampingan Sertifikasi Halal?'}
-            </YellowHighlight>
+            {isEn ? (
+              <>
+                Ready to Get Official{' '}
+                <YellowHighlight className="text-[#6B18A8]">
+                  Halal Assistance?
+                </YellowHighlight>
+              </>
+            ) : (
+              <>
+                Siap Mendapatkan Pendampingan{' '}
+                <YellowHighlight className="text-[#6B18A8]">
+                  Sertifikasi Halal?
+                </YellowHighlight>
+              </>
+            )}
           </h2>
 
           <p className="mt-4 text-base sm:text-lg text-[#756D7C] max-w-2xl mx-auto leading-relaxed">

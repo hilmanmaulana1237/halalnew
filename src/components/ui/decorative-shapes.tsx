@@ -114,7 +114,7 @@ export const YellowHighlight: React.FC<{
     <span className={cn('relative inline-block font-extrabold text-[#6B18A8]', className)}>
       <span className="relative z-10">{children}</span>
       <span
-        className="absolute bottom-1.5 left-0 right-0 h-3 bg-[#F5D32F]/80 -rotate-1 rounded-sm -z-0"
+        className="absolute bottom-1 left-0 right-0 h-3 bg-[#F5D32F]/80 -rotate-1 rounded-sm -z-0 pointer-events-none"
         aria-hidden="true"
       />
     </span>
