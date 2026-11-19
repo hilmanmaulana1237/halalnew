@@ -46,130 +46,127 @@ export const HeroVideoBanner: React.FC = () => {
   };
 
   return (
-    <section className="relative min-h-[94vh] flex flex-col justify-between overflow-hidden bg-[#1a0726]">
-      {/* Background Video Layer - Vibrant & Clearly Visible */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover scale-105 filter brightness-85 contrast-115"
-        >
-          <source src="/assets/videos/lab-lppom.mp4" type="video/mp4" />
-        </video>
+    <>
+      <section className="relative min-h-[76vh] sm:min-h-[82vh] lg:min-h-[86vh] flex flex-col justify-between overflow-hidden bg-[#1a0726]">
+        {/* Background Video Layer - Vibrant & Clearly Visible */}
+        <div className="absolute inset-0 w-full h-full overflow-hidden">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover scale-105 filter brightness-85 contrast-115"
+          >
+            <source src="/assets/videos/lab-lppom.mp4" type="video/mp4" />
+          </video>
 
-        {/* LPH Official Royal Purple & Amber Mesh Overlays that let video shine through clearly */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1a0726] via-[#3d0b4d]/75 to-[#1a0726]/85 backdrop-blur-[0.5px]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(107,24,168,0.45),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(245,211,47,0.18),transparent_50%)]" />
-      </div>
+          {/* LPH Official Royal Purple & Amber Mesh Overlays that let video shine through clearly */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1a0726] via-[#3d0b4d]/75 to-[#1a0726]/85 backdrop-blur-[0.5px]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(107,24,168,0.45),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(245,211,47,0.18),transparent_50%)]" />
+        </div>
 
-      {/* Decorative Yellow Dot Grids (Corner Accents) */}
-      <div className="absolute top-14 left-6 sm:left-12 opacity-50 pointer-events-none hidden sm:grid">
-        <YellowDotGrid rows={5} cols={5} dotColor="#F5D32F" />
-      </div>
-      <div className="absolute top-24 right-6 sm:right-16 opacity-50 pointer-events-none hidden sm:grid">
-        <YellowDotGrid rows={5} cols={5} dotColor="#F5D32F" />
-      </div>
+        {/* Decorative Yellow Dot Grids (Corner Accents) */}
+        <div className="absolute top-14 left-6 sm:left-12 opacity-50 pointer-events-none hidden sm:grid">
+          <YellowDotGrid rows={5} cols={5} dotColor="#F5D32F" />
+        </div>
+        <div className="absolute top-24 right-6 sm:right-16 opacity-50 pointer-events-none hidden sm:grid">
+          <YellowDotGrid rows={5} cols={5} dotColor="#F5D32F" />
+        </div>
 
-      {/* Hero Content */}
-      <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-32 pb-6 sm:pb-8 text-center flex flex-col items-center justify-center flex-1">
-        {/* Animated Eyebrow Badge (Glassmorphism with Yellow Pulsing Dot) */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs sm:text-sm font-bold mb-6 shadow-xl max-w-full"
-        >
-          <span className="flex h-2.5 w-2.5 relative shrink-0">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F5D32F] opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#F5D32F]"></span>
-          </span>
-          <span className="tracking-wide text-white font-bold">{t('hero_badge_lph')}</span>
-        </motion.div>
+        {/* Hero Content */}
+        <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-32 pb-8 sm:pb-12 text-center flex flex-col items-center justify-center flex-1">
+          {/* Animated Eyebrow Badge (Glassmorphism with Yellow Pulsing Dot) */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs sm:text-sm font-bold mb-6 shadow-xl max-w-full"
+          >
+            <span className="flex h-2.5 w-2.5 relative shrink-0">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F5D32F] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#F5D32F]"></span>
+            </span>
+            <span className="tracking-wide text-white font-bold">{t('hero_badge_lph')}</span>
+          </motion.div>
 
-        {/* Main Heading with Crisp White & Yellow Highlight */}
-        <motion.h1
-          initial={{ opacity: 0, scale: 0.96, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="text-3xl sm:text-5xl lg:text-7xl font-black text-white tracking-tight leading-[1.2] drop-shadow-2xl"
-        >
-          {language === 'en' ? (
-            <>
-              Leading in{' '}
-              <span className="text-[#F5D32F] inline-block">
-                <FlipWords words={words} className="text-[#F5D32F]" />
-              </span>
-              <br className="hidden sm:inline" />
-              for <YellowHighlight className="text-white">Global Industry</YellowHighlight>
-            </>
-          ) : (
-            <>
-              Pelayanan Terdepan{' '}
-              <span className="text-[#F5D32F] inline-block">
-                <FlipWords words={words} className="text-[#F5D32F]" />
-              </span>
-              <br className="hidden sm:inline" />
-              Industri <YellowHighlight className="text-white">Halal Nasional</YellowHighlight>
-            </>
-          )}
-        </motion.h1>
+          {/* Main Heading with Crisp White & Yellow Highlight */}
+          <motion.h1
+            initial={{ opacity: 0, scale: 0.96, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="text-3xl sm:text-5xl lg:text-7xl font-black text-white tracking-tight leading-[1.2] drop-shadow-2xl"
+          >
+            {language === 'en' ? (
+              <>
+                Leading in{' '}
+                <span className="text-[#F5D32F] inline-block">
+                  <FlipWords words={words} className="text-[#F5D32F]" />
+                </span>
+                <br className="hidden sm:inline" />
+                for <YellowHighlight className="text-white">Global Industry</YellowHighlight>
+              </>
+            ) : (
+              <>
+                Pelayanan Terdepan{' '}
+                <span className="text-[#F5D32F] inline-block">
+                  <FlipWords words={words} className="text-[#F5D32F]" />
+                </span>
+                <br className="hidden sm:inline" />
+                Industri <YellowHighlight className="text-white">Halal Nasional</YellowHighlight>
+              </>
+            )}
+          </motion.h1>
 
-        {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-6 text-base sm:text-lg lg:text-xl text-purple-100 max-w-3xl leading-relaxed font-normal drop-shadow-md"
-        >
-          {t('hero_subtitle')}
-        </motion.p>
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-6 text-base sm:text-lg lg:text-xl text-purple-100 max-w-3xl leading-relaxed font-normal drop-shadow-md"
+          >
+            {t('hero_subtitle')}
+          </motion.p>
 
-        {/* Dual CTA Buttons (Vibrant Yellow Primary + Purple Glass Secondary) */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4"
-        >
-          {/* Primary CTA (Vibrant Yellow) */}
-          <Link to="/layanan/kalkulator">
-            <Button
-              variant="primary"
-              className="h-11 sm:h-12 bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold text-xs sm:text-sm px-5 sm:px-7 rounded-2xl shadow-xl shadow-yellow-500/25 transition-all flex items-center gap-2 hover:scale-105 active:scale-98 cursor-pointer"
-            >
-              <span>{t('hero_cta_calc')}</span>
-              <ArrowRight className="w-4 h-4" />
-            </Button>
-          </Link>
+          {/* Dual CTA Buttons (Vibrant Yellow Primary + Purple Glass Secondary) */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4"
+          >
+            {/* Primary CTA (Vibrant Yellow) */}
+            <Link to="/layanan/kalkulator">
+              <Button
+                variant="primary"
+                className="h-11 sm:h-12 bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold text-xs sm:text-sm px-5 sm:px-7 rounded-2xl shadow-xl shadow-yellow-500/25 transition-all flex items-center gap-2 hover:scale-105 active:scale-98 cursor-pointer"
+              >
+                <span>{t('hero_cta_calc')}</span>
+                <ArrowRight className="w-4 h-4" />
+              </Button>
+            </Link>
 
-          {/* Secondary CTA (Purple Glass) */}
-          <Link to="/tentang">
-            <Button
-              variant="primary"
-              className="h-11 sm:h-12 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 font-bold text-xs sm:text-sm px-5 sm:px-7 rounded-2xl shadow-md transition-all flex items-center gap-2 hover:scale-105 active:scale-98 cursor-pointer"
-            >
-              <ShieldCheck className="w-4 h-4 text-[#F5D32F]" />
-              <span>{t('hero_cta_profile')}</span>
-            </Button>
-          </Link>
-        </motion.div>
-      </div>
+            {/* Secondary CTA (Purple Glass) */}
+            <Link to="/tentang">
+              <Button
+                variant="primary"
+                className="h-11 sm:h-12 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 font-bold text-xs sm:text-sm px-5 sm:px-7 rounded-2xl shadow-md transition-all flex items-center gap-2 hover:scale-105 active:scale-98 cursor-pointer"
+              >
+                <ShieldCheck className="w-4 h-4 text-[#F5D32F]" />
+                <span>{t('hero_cta_profile')}</span>
+              </Button>
+            </Link>
+          </motion.div>
+        </div>
 
-      {/* Desktop: Smooth organic wave transition into full-width search ribbon */}
-      <div className="hidden sm:block w-full -mb-[1px] relative z-20 pointer-events-none select-none">
-        <OrganicWave fillColor="#ffffff" position="bottom" />
-      </div>
+        {/* Smooth organic wave transition into full-width search ribbon (Desktop & Mobile) */}
+        <div className="w-full -mb-[1px] relative z-20 pointer-events-none select-none">
+          <OrganicWave fillColor="#ffffff" position="bottom" />
+        </div>
+      </section>
 
-      {/* Search Box - Edge-to-edge full width on desktop, beautiful card on mobile */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-20 w-full px-3 sm:px-0 pb-6 sm:pb-0"
-      >
-        <div className="w-full bg-white sm:rounded-none rounded-[22px] border sm:border-x-0 border-[#C9A5E8]/30 sm:shadow-lg shadow-xl p-4 sm:p-6 lg:py-7 lg:px-10 xl:px-16">
+      {/* Cari Produk Halal - Full-width ribbon, edge-to-edge, seamlessly blended with white background */}
+      <section className="w-full bg-white relative z-20">
+        <div className="max-w-[1440px] xl:max-w-[1536px] mx-auto p-4 sm:p-6 lg:py-7 lg:px-10 xl:px-16">
           <div className="flex items-center gap-3 min-w-0 mb-4 sm:mb-5">
             <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-[#F5EDFB] text-[#6B18A8] border border-[#C9A5E8]/60 flex items-center justify-center shadow-xs shrink-0">
               <Search className="w-5 h-5 text-[#6B18A8]" />
@@ -244,13 +241,8 @@ export const HeroVideoBanner: React.FC = () => {
             <span>{language === 'en' ? 'Direct search connected with official BPJPH database. Fill one or more fields for accurate results.' : 'Pencarian langsung terhubung dengan basis data resmi BPJPH. Isi satu atau beberapa kolom untuk hasil akurat.'}</span>
           </div>
         </div>
-      </motion.div>
-
-      {/* Mobile only: Bottom Organic Wave Separator */}
-      <div className="block sm:hidden">
-        <OrganicWave fillColor="#ffffff" position="bottom" />
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 
