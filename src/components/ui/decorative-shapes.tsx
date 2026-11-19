@@ -104,46 +104,17 @@ export const YellowDotGrid: React.FC<{
 };
 
 /**
- * Inline Yellow Keyword Highlight marker (Desain Asli dengan Dukungan Multi-Baris Responsif)
- * Mengembalikan desain asli stabilo kuning favorit user:
- * - Rotasi miring organik khas stabilo (-rotate-1)
- * - Warna kuning cerah (#F5D32F / 85% opacity)
- * - Overhang presisi (-left-1 -right-1)
- * - Otomatis membagi per-kata agar saat teks turun baris di Android,
- *   setiap kata/baris tetap ter-highlight dengan rapi dan tidak melenceng.
+ * Inline Yellow Keyword Highlight marker (Desain Asli Awal dari Commit 66c7b01)
  */
 export const YellowHighlight: React.FC<{
   children: React.ReactNode;
   className?: string;
 }> = ({ children, className }) => {
-  if (typeof children === 'string') {
-    const trimmed = children.trim();
-    if (trimmed.includes(' ')) {
-      const words = trimmed.split(/\s+/);
-      return (
-        <span className={cn('inline font-extrabold text-[#6B18A8]', className)}>
-          {words.map((word, idx) => (
-            <React.Fragment key={idx}>
-              <span className="relative inline-block whitespace-nowrap">
-                <span className="relative z-10">{word}</span>
-                <span
-                  className="absolute bottom-[10%] sm:bottom-[12%] -left-1 -right-1 h-[45%] bg-[#F5D32F]/85 -rotate-1 rounded-sm -z-0 pointer-events-none"
-                  aria-hidden="true"
-                />
-              </span>
-              {idx < words.length - 1 ? ' ' : ''}
-            </React.Fragment>
-          ))}
-        </span>
-      );
-    }
-  }
-
   return (
     <span className={cn('relative inline-block font-extrabold text-[#6B18A8]', className)}>
       <span className="relative z-10">{children}</span>
       <span
-        className="absolute bottom-[10%] sm:bottom-[12%] -left-1 -right-1 h-[45%] bg-[#F5D32F]/85 -rotate-1 rounded-sm -z-0 pointer-events-none"
+        className="absolute bottom-1.5 left-0 right-0 h-3 bg-[#F5D32F]/80 -rotate-1 rounded-sm -z-0"
         aria-hidden="true"
       />
     </span>
