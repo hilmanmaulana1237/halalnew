@@ -161,12 +161,14 @@ export const AdminDashboard: React.FC = () => {
         slug: 'akselerasi-audit-sertifikasi-halal-lph-uin-sgd',
         category: 'KEGIATAN',
         status: 'PUBLISHED',
+        author: 'Humas LPH UIN SGD',
+        createdAt: '2026-11-04T08:00:00Z',
         publishedAt: '2026-11-04',
         excerpt: 'LPH UIN Sunan Gunung Djati Bandung memperkuat kapasitas auditor halal dan laboratorium terpadu.',
         content: `<h2>Akselerasi Audit Sertifikasi Halal di Jawa Barat</h2>
 <p>Lembaga Pemeriksa Halal (LPH) UIN Sunan Gunung Djati Bandung terus memperluas kapasitas audit halal bagi pelaku industri menengah dan besar di kawasan industri Jawa Barat.</p>
 <blockquote>Komitmen kami adalah memastikan setiap produk yang diaudit memenuhi standar syar'i dan regulasi KMA 784 secara transparan dan akuntabel.</blockquote>
-<p>Dalam kurun waktu kuartal terakhir tahun 2026, lebih dari <strong>450 fasilitas manufaktur</strong> telah menyelesaikan audit lapangan dan uji laboratorium DNA qPCR dengan waktu rata-rata 12 hari kerja.</p>`,
+<p>Dalam kurun waktu kuartal terakhir tahun 2026, lebih dari <strong>450 fasilitas manufaktur</strong> telah menyelesaikan audit lapangan dan uji laboratorium terpadu dengan waktu rata-rata 12 hari kerja.</p>`,
         image: '/assets/images/beranda_004.jpg',
       },
       {
@@ -175,11 +177,13 @@ export const AdminDashboard: React.FC = () => {
         slug: 'kerjasama-internasional-ekosistem-halalsphere',
         category: 'ACARA',
         status: 'PUBLISHED',
+        author: 'Tim Humas LPH',
+        createdAt: '2026-11-03T10:00:00Z',
         publishedAt: '2026-11-03',
         excerpt: 'Penandatanganan kemitraan strategis dengan konsorsium riset halal global.',
         content: `<h2>Penguatan Ekosistem Halalsphere Global</h2>
 <p>UIN Sunan Gunung Djati Bandung resmi menandatangani nota kesepahaman (MoU) internasional untuk pengembangan riset halal biosains dan standarisasi pengujian laboratorium halal.</p>
-<p>Kerjasama ini mencakup pertukaran saintis, validasi metode ekstraksi DNA porcine, dan harmonisasi sertifikasi produk ekspor.</p>`,
+<p>Kerjasama ini mencakup pertukaran saintis, validasi metode saintifik, dan harmonisasi sertifikasi produk ekspor.</p>`,
         image: '/assets/images/uin_sgd/uin_14.webp',
       },
       {
@@ -188,6 +192,8 @@ export const AdminDashboard: React.FC = () => {
         slug: 'kewajiban-sertifikasi-halal-bertahap-makanan-minuman',
         category: 'AGENDA',
         status: 'PUBLISHED',
+        author: 'Badan Pengawas Halal',
+        createdAt: '2026-11-02T14:30:00Z',
         publishedAt: '2026-11-02',
         excerpt: 'Panduan teknis dan simulasi biaya KMA 784 bagi UMKM se-Jawa Barat.',
         content: `<h2>Panduan Wajib Halal Bertahap 2026</h2>
@@ -200,6 +206,8 @@ export const AdminDashboard: React.FC = () => {
         slug: 'pelatihan-juru-sembelih-halal-juleha-skkni',
         category: 'KEGIATAN',
         status: 'DRAFT',
+        author: 'Tim Auditor LPH',
+        createdAt: '2026-11-01T09:00:00Z',
         publishedAt: '2026-11-01',
         excerpt: 'Bimbingan teknis dan uji kompetensi resmi BNSP bagi 120 juru sembelih masjid dan RPH.',
         content: `<h2>Pelatihan & Sertifikasi Kompetensi JULEHA</h2>

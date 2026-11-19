@@ -160,7 +160,7 @@ export const HomePage: React.FC = () => {
                 {isEn ? 'About Us' : 'Tentang Kami'}
               </div>
 
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#292333] tracking-tight leading-snug">
+              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-[#292333] tracking-tight leading-snug">
                 {isEn ? 'LPH UIN SGD Through the ' : 'LPH UIN SGD Melalui Konsep '}
                 <YellowHighlight className="text-[#6B18A8]">
                   “Halalsphere University”
@@ -274,14 +274,15 @@ export const HomePage: React.FC = () => {
                   </p>
                 </div>
               </div>
-              <div className="p-7 pt-4 flex items-center justify-between border-t border-purple-50 mt-4">
-                <Link to="/layanan/kalkulator">
-                  <Button variant="primary" className="bg-[#6B18A8] hover:bg-[#58138a] text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-md cursor-pointer">
+              <div className="p-5 sm:p-7 pt-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-t border-purple-50 mt-4">
+                <Link to="/layanan/kalkulator" className="w-full sm:w-auto">
+                  <Button variant="primary" className="w-full sm:w-auto bg-[#6B18A8] hover:bg-[#58138a] text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-md cursor-pointer flex items-center justify-center whitespace-nowrap">
                     {isEn ? 'Calculate Estimated Cost' : 'Hitung Estimasi Biaya'}
                   </Button>
                 </Link>
-                <Link to="/tentang" className="text-xs font-bold text-[#6B18A8] hover:text-[#58138a] hover:underline flex items-center gap-1">
-                  {isEn ? 'View Details' : 'Lihat Detail'} <ArrowRight className="w-3.5 h-3.5" />
+                <Link to="/tentang" className="text-xs font-bold text-[#6B18A8] hover:text-[#58138a] hover:underline flex items-center justify-center sm:justify-start gap-1 py-1 whitespace-nowrap">
+                  <span>{isEn ? 'View Details' : 'Lihat Detail'}</span>
+                  <ArrowRight className="w-3.5 h-3.5 shrink-0" />
                 </Link>
               </div>
             </motion.div>
@@ -316,25 +317,25 @@ export const HomePage: React.FC = () => {
                   </p>
                 </div>
               </div>
-              <div className="p-4 sm:p-7 pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-purple-50 mt-4">
+              <div className="p-5 sm:p-7 pt-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-t border-purple-50 mt-4">
                 <a
                   href="https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full sm:w-auto"
                 >
-                  <Button variant="primary" className="w-full sm:w-auto bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md cursor-pointer flex items-center justify-center gap-1.5">
+                  <Button variant="primary" className="w-full sm:w-auto bg-[#F5D32F] hover:bg-[#eab308] text-[#3B074A] font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap">
                     <span>{isEn ? 'Halal Lab Testing' : 'Pengujian Laboratorium Halal'}</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
+                    <ExternalLink className="w-3.5 h-3.5 shrink-0" />
                   </Button>
                 </a>
                 <a
                   href="https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs font-bold text-[#6B18A8] hover:text-[#58138a] hover:underline flex items-center justify-center sm:justify-start gap-1 py-1"
+                  className="text-xs font-bold text-[#6B18A8] hover:text-[#58138a] hover:underline flex items-center justify-center sm:justify-start gap-1 py-1 whitespace-nowrap"
                 >
-                  <span>{isEn ? 'Facility Inspection & Lab' : 'Pemeriksaan Fasilitas & Lab'}</span>
+                  <span>{isEn ? 'Lab Profile & Facilities' : 'Fasilitas & Lab'}</span>
                   <ArrowRight className="w-3.5 h-3.5 shrink-0" />
                 </a>
               </div>
@@ -1270,7 +1271,7 @@ export const HomePage: React.FC = () => {
             {isEn ? 'OFFICIAL HALAL ASSISTANCE' : 'PENDAMPINGAN SERTIFIKASI HALAL'}
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#292333] tracking-tight leading-tight">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-[#292333] tracking-tight leading-tight">
             {isEn ? 'Ready to Get ' : 'Siap Mendapatkan '}
             <YellowHighlight className="text-[#6B18A8]">
               {isEn ? 'Official Halal Assistance?' : 'Pendampingan Sertifikasi Halal?'}

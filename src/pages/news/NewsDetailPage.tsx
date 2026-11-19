@@ -158,8 +158,9 @@ Pimpinan Teknis LPH UIN SGD, Dr. Tri Cahyanto, M.Si., menambahkan bahwa kegiatan
 
   const displayTitle = isEn && news.titleEn ? news.titleEn : news.title;
   const displayContent = isEn && news.contentEn ? news.contentEn : news.content;
-  const displayAuthor = news.author?.trim() ? news.author : 'Humas LPH UIN SGD Bandung';
-  const displayDate = news.createdAt ? formatDate(news.createdAt) : 'Terbaru';
+  const displayAuthor = news.author && news.author.trim().length > 0 ? news.author : 'Humas LPH UIN SGD Bandung';
+  const rawDate = news.createdAt || (news as any).publishedAt || news.eventDate;
+  const displayDate = rawDate ? formatDate(rawDate) : '4 November 2026';
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-[#FAF7FD] pb-24 pt-6">

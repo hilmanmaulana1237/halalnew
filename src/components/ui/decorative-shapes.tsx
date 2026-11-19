@@ -104,19 +104,28 @@ export const YellowDotGrid: React.FC<{
 };
 
 /**
- * Inline Yellow Keyword Highlight marker (Desain Asli dengan Skala Presisi Responsif)
+ * Inline Yellow Keyword Highlight marker (Ultra-Clean, Responsive & Wrap-Safe)
+ * Menggunakan linear-gradient solid 55% dengan box-decoration-break: clone
+ * Memastikan setiap baris kata yang terpecah di mobile/Android ter-highlight dengan presisi sempurna
+ * tanpa overflow, tanpa tilt miring berlebih, dan tanpa meninggalkan baris teks tanpa highlight.
  */
 export const YellowHighlight: React.FC<{
   children: React.ReactNode;
   className?: string;
 }> = ({ children, className }) => {
   return (
-    <span className={cn('relative inline-block font-extrabold text-[#6B18A8]', className)}>
-      <span className="relative z-10">{children}</span>
-      <span
-        className="absolute bottom-[10%] -left-1 -right-1 h-[45%] bg-[#F5D32F]/85 -rotate-1 rounded-sm -z-0 pointer-events-none"
-        aria-hidden="true"
-      />
+    <span
+      className={cn(
+        'font-extrabold inline relative px-1.5 py-0.5 rounded-xs text-[#6B18A8] transition-all',
+        className
+      )}
+      style={{
+        backgroundImage: 'linear-gradient(to top, rgba(245, 211, 47, 0.9) 55%, transparent 55%)',
+        WebkitBoxDecorationBreak: 'clone',
+        boxDecorationBreak: 'clone',
+      }}
+    >
+      {children}
     </span>
   );
 };
