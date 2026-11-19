@@ -114,8 +114,8 @@ export const getUinServices = (isEn: boolean) => [
   {
     title: isEn ? 'Integrated Halal Testing Laboratory' : 'Laboratorium Pengujian Halal Terpadu',
     description: isEn
-      ? 'High-precision scientific testing: Porcine DNA detection, ethanol residuals, and gelatin analysis.'
-      : 'Uji saintifik presisi tinggi: Deteksi kandungan babi, uji cemaran alkohol/etanol, serta analisa gelatin dan profil asam lemak.',
+      ? 'High-precision scientific testing: Pork derivative detection, alcohol content analysis, and gelatin verification.'
+      : 'Uji laboratorium presisi: Deteksi kandungan babi, uji batas alkohol/etanol, serta pemeriksaan kehalalan gelatin.',
     url: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/',
     icon: React.createElement(FlaskConical, { className: 'w-6 h-6 text-[#6B18A8]' }),
     badge: isEn ? 'Accredited Lab' : 'Lab Terakreditasi',

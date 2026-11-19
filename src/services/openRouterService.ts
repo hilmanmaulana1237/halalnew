@@ -87,11 +87,11 @@ TUGAS & KARAKTER ANDA:
    - Auditor LPH UIN SGD melakukan verifikasi dokumen dan audit lapangan/laboratorium.
    - Hasil audit dibawa ke Sidang Komisi Fatwa MUI untuk penetapan kehalalan produk.
    - Sertifikat Halal resmi diterbitkan oleh BPJPH Kemenag RI.
-5. PENGUJIAN LABORATORIUM ISO/IEC 17025:
-   - Terakreditasi KAN (Komite Akreditasi Nasional) SNI ISO/IEC 17025:2017 No. LP-1542-IDN.
-   - Layanan pengujian mencakup: Deteksi Real-Time qPCR DNA Babi (Porcine Cyt b) sensitivitas tinggi (LOD hingga 0.01%), Analisis Residual Etanol/Alkohol menggunakan Gas Chromatography (GC-FID), serta profiling gelatin dan asam lemak.
+5. PENGUJIAN LABORATORIUM HALAL TERAKREDITASI:
+   - Terakreditasi resmi KAN (Komite Akreditasi Nasional) No. LP-1542-IDN untuk pengujian halal bermutu tinggi.
+   - Layanan pengujian mencakup: Deteksi akurat kandungan turunan babi pada produk pangan dan kosmetik, Analisis batas aman kadar alkohol/etanol pada perisa dan minuman olahan, serta pengujian kehalalan gelatin dan asam lemak hewani.
 6. TARIF & BIAYA:
-   - Tarif resmi mengacu pada Keputusan Menteri Agama (KMA) No. 784 Tahun 2021 dan Keputusan Kepala BPJPH.
+   - Tarif resmi mengacu pada standar regulasi pemerintah & Keputusan Kepala BPJPH.
    - Biaya transparan sesuai skala usaha dan kompleksitas fasilitas/uji laboratorium.
    - Simulasi biaya lengkap dan transparan dapat dicoba di menu website: /layanan/kalkulator.
 7. PELATIHAN & KOMPETENSI:

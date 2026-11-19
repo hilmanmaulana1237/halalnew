@@ -74,12 +74,12 @@ const INITIAL_NEWS: NewsItem[] = [
   },
   {
     id: 5,
-    title: 'Workshop Standarisasi Laboratorium Pengujian Halal Terpadu ISO/IEC 17025',
-    slug: 'workshop-standarisasi-laboratorium-iso-17025',
+    title: 'Workshop Standarisasi Laboratorium Pengujian Halal Terpadu',
+    slug: 'workshop-standarisasi-laboratorium-halal',
     excerpt:
       'Pelatihan mendalam metode pengujian laboratorium presisi deteksi cemaran alkohol dan profil asam lemak bersama praktisi ahli.',
     content:
-      'Laboratorium Uji Halal UIN SGD menyelenggarakan workshop penguatan kalibrasi dan validasi instrumen GC-FID serta qPCR...',
+      'Laboratorium Uji Halal UIN SGD menyelenggarakan workshop penguatan kalibrasi dan validasi instrumen pengujian kehalalan bahan pangan...',
     category: 'KEGIATAN',
     status: 'PUBLISHED',
     author: 'Laboratorium Halal SGD',
@@ -119,12 +119,12 @@ const INITIAL_NEWS: NewsItem[] = [
   },
   {
     id: 8,
-    title: 'Uji Presisi Deteksi Residu DNA Babi Berbasis Real-Time qPCR pada Olahan Daging',
-    slug: 'uji-presisi-deteksi-dna-babi-qpcr',
+    title: 'Pengujian Akurat Deteksi Kandungan Babi pada Produk Olahan Daging',
+    slug: 'pengujian-akurat-deteksi-kandungan-babi',
     excerpt:
-      'Penelitian saintifik pembuktian batas deteksi kehalalan produk pangan beku olahan komersial di laboratorium riset terakreditasi.',
+      'Pemeriksaan ilmiah pembuktian batas deteksi kehalalan produk pangan beku olahan komersial di laboratorium riset terakreditasi.',
     content:
-      'Tim saintis laboratorium LPH UIN SGD berhasil mempublikasikan temuan metode ekstraksi cepat DNA spesifik babi pada produk pangan olahan...',
+      'Tim penguji laboratorium LPH UIN SGD berhasil menerapkan metode deteksi cepat kandungan babi pada produk pangan olahan...',
     category: 'KEGIATAN',
     status: 'PUBLISHED',
     author: 'Tim Peneliti Hayati',

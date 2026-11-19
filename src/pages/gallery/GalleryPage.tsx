@@ -53,24 +53,24 @@ const GALLERY_DATA: GalleryItem[] = [
     description: 'Pemeriksaan langsung terhadap lini produksi pemrosesan makanan kemasan berkecepatan tinggi, titik kritis bahan pengental nabati, dan prosedur sanitasi mesin pencucian.',
     auditorLead: 'Drs. H. Ahmad Fauzi, M.Si (Auditor Halal Madya BPJPH)',
     facility: 'PT Indofood CBP Sukses Makmur Tbk - Divisi Nutrition & Special Food',
-    standard: 'SJPH KMA 784 Tahun 2021 & SNI 99001:2016',
+    standard: 'Standar SJPH BPJPH & SNI 99001:2016',
     fullStory: 'Tim auditor halal LPH UIN Sunan Gunung Djati Bandung melakukan verifikasi menyeluruh di lokasi manufaktur. Pemeriksaan berfokus pada pemastian pemisahan fasilitas produksi dari kontaminan non-halal, matriks asal bahan baku perisa, emulsifier, serta kepatuhan prosedur operasional standar (SOP) pencucian higienis.',
-    tags: ['Pangan Olahan', 'Audit Pabrik', 'KMA 784', 'SJPH'],
+    tags: ['Pangan Olahan', 'Audit Pabrik', 'Sertifikasi Halal', 'SJPH'],
   },
   {
     id: 2,
-    title: 'Deteksi Saintifik Real-Time PCR DNA Porcine Sensitivitas Tinggi',
-    category: 'Laboratorium ISO 17025',
+    title: 'Pengujian Laboratorium Deteksi Kandungan Babi Sensitivitas Tinggi',
+    category: 'Laboratorium Uji Halal',
     categoryKey: 'lab',
     src: '/assets/images/lab-dna-testing.jpg',
     date: '22 Oktober 2026',
     location: 'Laboratorium Terpadu Pengujian Halal, Kawasan Kampus Terpadu UIN Sunan Gunung Djati Bandung',
-    description: 'Pengujian molekuler presisi tinggi menggunakan primer qPCR spesifik gen sitokrom b (Cyt b) untuk mendeteksi residu turunan babi pada produk olahan daging dan kapsul.',
+    description: 'Pengujian laboratorium presisi tinggi menggunakan analisis DNA untuk mendeteksi kandungan babi pada produk olahan daging, bumbu, dan cangkang kapsul.',
     auditorLead: 'Dr. Tri Cahyanto, M.Si & Tim Analis Biologi Molekuler Terakreditasi KAN',
     facility: 'Gedung Laboratorium Terpadu Pengujian Halal UIN Sunan Gunung Djati Bandung',
-    standard: 'Akreditasi KAN SNI ISO/IEC 17025:2017 No. LP-1542-IDN',
+    standard: 'Akreditasi KAN Laboratorium Pengujian Resmi No. LP-1542-IDN',
     fullStory: 'Sebagai bagian dari tahapan saintifik penentuan kehalalan, sampel produk pangan dan farmasi yang memiliki risiko kritis diuji di fasilitas laboratorium biosains. Ekstraksi DNA dilakukan secara duplikat dengan limit of detection mencapai 0.01% DNA babi, menjamin hasil akuntabel sebelum dibawa ke Sidang Fatwa MUI.',
-    tags: ['qPCR', 'DNA Porcine', 'ISO 17025', 'KAN Akreditasi'],
+    tags: ['Uji Kandungan Babi', 'Deteksi DNA', 'Laboratorium Halal', 'Akreditasi KAN'],
   },
   {
     id: 3,
@@ -104,18 +104,18 @@ const GALLERY_DATA: GalleryItem[] = [
   },
   {
     id: 5,
-    title: 'Analisis Cemaran Etanol & Pelarut Organik Metode Kromatografi Gas GC-FID',
-    category: 'Laboratorium ISO 17025',
+    title: 'Pemeriksaan Kadar Alkohol & Pelarut pada Produk Pangan dan Minuman',
+    category: 'Laboratorium Uji Halal',
     categoryKey: 'lab',
     src: '/assets/images/lab-landscape-1.jpg',
     date: '05 November 2026',
     location: 'Ruang Instrumentasi Kimia Analitik Gedung Terpadu UIN SGD',
     description: 'Pengukuran kuantitatif kandungan alkohol residu fermentasi dan sisa pelarut ekstraksi pada produk perisa konsentrat, kombucha, dan kecap kedelai.',
-    auditorLead: 'Siti Rahmawati, M.Si (Kepala Unit Analisis Kromatografi LPH UIN SGD)',
-    facility: 'Instrument Center Agilent 8890 GC-FID System',
+    auditorLead: 'Siti Rahmawati, M.Si (Kepala Unit Analisis Laboratorium LPH UIN SGD)',
+    facility: 'Laboratorium Kimia Analitik Terpadu UIN Sunan Gunung Djati Bandung',
     standard: 'Fatwa MUI No. 10 Tahun 2018 (Batas Maksimal Etanol Khusus)',
-    fullStory: 'Pengujian GC-FID dengan kolom kapiler polar memungkinkan pendeteksian senyawa volatil etanol hingga kadar 0.005%. Data kromatogram ini menjadi dasar ilmiah apakah produk hasil fermentasi memenuhi ambang batas kehalalan fatwa nasional.',
-    tags: ['GC-FID', 'Uji Etanol', 'Kromatografi', 'Kimia Pangan'],
+    fullStory: 'Pengujian laboratorium menggunakan instrumen analitik modern memungkinkan pendeteksian senyawa volatil etanol hingga kadar 0.005%. Data analisis ini menjadi dasar ilmiah apakah produk hasil fermentasi memenuhi ambang batas kehalalan fatwa nasional.',
+    tags: ['Uji Kadar Alkohol', 'Uji Etanol', 'Analisis Pangan', 'Laboratorium Halal'],
   },
   {
     id: 6,
@@ -149,18 +149,18 @@ const GALLERY_DATA: GalleryItem[] = [
   },
   {
     id: 8,
-    title: 'Surveillance Audit Akreditasi KAN & Uji Kalibrasi Spektrofotometri',
-    category: 'Laboratorium ISO 17025',
+    title: 'Audit Akreditasi Laboratorium & Pemeliharaan Standar Mutu Pengujian',
+    category: 'Laboratorium Uji Halal',
     categoryKey: 'lab',
     src: '/assets/images/lab-landscape-2.jpg',
     date: '14 November 2026',
     location: 'Laboratorium Kalibrasi dan Penjaminan Mutu UIN SGD',
-    description: 'Asesmen berkala surveillance sistem mutu laboratorium uji halal, kalibrasi timbangan analitik micro-balance, dan pembacaan mikroplate reader ELISA.',
+    description: 'Pemeriksaan berkala penjaminan mutu laboratorium uji halal dan kalibrasi peralatan presisi tinggi untuk menjamin akurasi hasil pengujian.',
     auditorLead: 'Asesor Utama Komite Akreditasi Nasional (KAN)',
     facility: 'Unit Penjaminan Mutu Laboratorium Terpadu UIN SGD',
-    standard: 'SNI ISO/IEC 17025:2017 Klausul 6 (Persyaratan Sumber Daya)',
-    fullStory: 'Asesmen surveillance ini mengonfirmasi bahwa seluruh peralatan instrumentasi di LPH UIN SGD tertelusur (traceable) ke Standar Nasional Satuan Ukuran (SNSU) dan memenuhi standar ketidakpastian pengukuran yang sangat ketat.',
-    tags: ['Surveillance KAN', 'Kalibrasi', 'ISO 17025', 'Penjaminan Mutu'],
+    standard: 'Standar Akreditasi Laboratorium Pengujian Mutu KAN',
+    fullStory: 'Pemeriksaan berkala ini memastikan bahwa seluruh peralatan instrumentasi di LPH UIN SGD terkalibrasi dengan baik dan memenuhi standar akurasi pengujian yang ketat.',
+    tags: ['Akreditasi KAN', 'Standar Mutu', 'Uji Laboratorium', 'Laboratorium Halal'],
   },
   {
     id: 9,
@@ -194,18 +194,18 @@ const GALLERY_DATA: GalleryItem[] = [
   },
   {
     id: 11,
-    title: 'Pengujian Sidik Jari Spektroskopi FTIR Perbedaan Gelatin Sapi vs Babi',
-    category: 'Laboratorium ISO 17025',
+    title: 'Pengujian Asal Bahan Gelatin: Memastikan Kehalalan Kapsul & Olahan Pangan',
+    category: 'Laboratorium Uji Halal',
     categoryKey: 'lab',
     src: '/assets/images/uji-laboratorium.jpg',
     date: '23 November 2026',
-    location: 'Laboratorium Spektroskopi Molekuler UIN SGD',
-    description: 'Diferensiasi spektra inframerah Fourier-Transform (FTIR-ATR) pada pita serapan Amida I dan Amida II untuk memverifikasi asal cangkang kapsul obat keras.',
+    location: 'Laboratorium Pengujian Bahan Terpadu UIN SGD',
+    description: 'Pemeriksaan ilmiah untuk membedakan gelatin sapi halal dan gelatin babi pada produk suplemen, permen lunak, dan cangkang kapsul obat.',
     auditorLead: 'Tim Peneliti Biosains Farmasi Halal LPH UIN SGD',
-    facility: 'PerkinElmer Spectrum Two FTIR Spectrometer',
-    standard: 'Metode Kemometrik Multivariate Principal Component Analysis (PCA)',
-    fullStory: 'Pengujian FTIR dikombinasikan dengan analisis statistik multivariat PCA untuk mengidentifikasi pola spektral spesifik dari gelatin sapi murni, ikan, dan gelatin babi dengan akurasi klasifikasi mencapai 99.4%.',
-    tags: ['FTIR-ATR', 'Gelatin Halal', 'Kemometrik', 'Kapsul Obat'],
+    facility: 'Laboratorium Pengujian Bahan Terpadu UIN Sunan Gunung Djati Bandung',
+    standard: 'Metode Pengujian Analisis Spektroskopi Kehalalan Bahan',
+    fullStory: 'Pengujian laboratorium modern mampu mengidentifikasi karakteristik bahan baku gelatin sapi murni, ikan, maupun gelatin babi dengan tingkat ketelitian mencapai 99.4%, memastikan kapsul dan produk olahan aman dan halal dikonsumsi.',
+    tags: ['Uji Gelatin', 'Gelatin Halal', 'Kapsul Halal', 'Laboratorium Halal'],
   },
   {
     id: 12,
@@ -234,7 +234,7 @@ const GALLERY_DATA: GalleryItem[] = [
     auditorLead: 'Forum Kerjasama LPH Perguruan Tinggi Negeri Kemenag RI',
     facility: 'Pusat Keunggulan Riset Halal UIN SGD',
     standard: 'Konsorsium Lembaga Pemeriksa Halal Perguruan Tinggi Islam',
-    fullStory: 'Workshop dua hari ini menyepakati manual acuan standar penanganan sampel kritis, validasi metode pengujian DNA qPCR antar-laboratorium, dan digitalisasi pelaporan LPH menuju ekosistem halal cerdas.',
+    fullStory: 'Workshop dua hari ini menyepakati panduan acuan standar penanganan sampel kritis, validasi metode pengujian laboratorium antar-lembaga, dan digitalisasi pelaporan pemeriksaan halal menuju layanan yang lebih cepat dan transparan.',
     tags: ['PTKIN Halal', 'Workshop Nasional', 'Harmonisasi SOP', 'Riset Halal'],
   },
   {
@@ -255,14 +255,14 @@ const GALLERY_DATA: GalleryItem[] = [
   {
     id: 15,
     title: 'Pengujian Laboratorium Mikrobiologi & Deteksi Sanitasi Kontaminan Swab',
-    category: 'Laboratorium ISO 17025',
+    category: 'Laboratorium Uji Halal',
     categoryKey: 'lab',
     src: '/assets/images/beranda_006.jpg',
     date: '04 Desember 2026',
     location: 'Laboratorium Mikrobiologi Pangan, Gedung Laboratorium Pengujian Halal Terpadu UIN SGD',
     description: 'Analisis mikrobiologis angka lempeng total (ALT), coliform, serta swab permukaan meja potong dan pipa saluran pengalir susu cair.',
     auditorLead: 'Dra. Hj. Neneng Windayani, M.Pd (Spesialis Mikrobiologi Mutu Halal)',
-    facility: 'Clean Bench & Inkubator Mikrobiologi Terstandar ISO',
+    facility: 'Inkubator & Ruang Uji Mikrobiologi Terstandar',
     standard: 'SNI 01-2897-1992 Uji Mikrobiologi Daging, Telur, dan Susu',
     fullStory: 'Selain pemenuhan aspek halal syariah, prinsip thoyyiban (kebersihan, keamanan konsumsi, dan mutu kesehatan) diuji secara objektif di laboratorium untuk memastikan produk yang dikonsumsi masyarakat aman.',
     tags: ['Halal Thayyib', 'Mikrobiologi', 'Swab Test', 'Higienitas'],
@@ -308,7 +308,7 @@ export const GalleryPage: React.FC = () => {
             description: item.description || item.fullStory || item.title,
             auditorLead: item.auditorLead || 'Tim Auditor Halal LPH UIN SGD',
             facility: item.facility || 'Fasilitas Terverifikasi Halal',
-            standard: item.standard || 'KMA 784 / ISO 17025',
+            standard: item.standard || 'Standar SJPH / Laboratorium Resmi',
             fullStory: item.fullStory || item.description || item.title,
             tags: item.tags || [item.category, 'LPH UIN SGD'],
           }));
@@ -322,7 +322,7 @@ export const GalleryPage: React.FC = () => {
   const dynamicCategories = useMemo(() => {
     let cats: string[] = [
       'Audit Lapangan',
-      'Laboratorium ISO 17025',
+      'Laboratorium Uji Halal',
       'Pelatihan & JULEHA',
       'Kunjungan & MoA',
     ];
@@ -697,8 +697,8 @@ export const GalleryPage: React.FC = () => {
 
               <p className="text-xs sm:text-sm text-purple-100/90 mt-3 leading-relaxed">
                 {isEn
-                  ? 'Simulate your official regular certification fees according to KMA 784, schedule on-site facility audits, or request ISO 17025 accredited laboratory testing.'
-                  : 'Hitung simulasi tarif resmi sesuai regulasi KMA 784, jadwalkan pemeriksaan fasilitas industri, atau konsultasikan kebutuhan uji qPCR & GC-FID bersama tim ahli kami.'}
+                  ? 'Simulate official regular certification fees, schedule on-site production audits, or consult laboratory testing needs with our expert team.'
+                  : 'Hitung simulasi tarif resmi sertifikasi halal, jadwalkan pemeriksaan fasilitas produksi, atau konsultasikan kebutuhan uji laboratorium bersama tim ahli kami.'}
               </p>
 
               <div className="flex flex-wrap items-center gap-3 mt-8">

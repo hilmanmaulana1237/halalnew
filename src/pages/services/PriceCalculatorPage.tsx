@@ -191,7 +191,7 @@ export const PriceCalculatorPage: React.FC = () => {
 
       {/* Main Container - Extended Proportions & Responsive Spacing */}
       <div className="w-full max-w-[1440px] xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-12 -mt-6 sm:-mt-10 relative z-30 space-y-6 sm:space-y-8">
-        
+
         {/* Prominent Estimation Warning Banner */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3.5 p-4 sm:p-5 rounded-2xl bg-white border-2 border-[#F5D32F] shadow-lg shadow-yellow-950/5">
           <div className="flex items-start gap-3">
@@ -244,13 +244,9 @@ export const PriceCalculatorPage: React.FC = () => {
                   alt="Flyer Sertifikasi Halal Skema Reguler LPH UIN SGD Bandung"
                   className="w-full h-auto object-contain rounded-xl group-hover:scale-[1.01] transition-transform duration-300"
                 />
-                
+
                 {/* Clean Floating Glass Badge (Tidak Menghitamkan Flyer) */}
                 <div className="absolute bottom-3 inset-x-0 flex justify-center pointer-events-none">
-                  <div className="bg-white/95 backdrop-blur-md text-[#6B18A8] border border-[#C9A5E8]/60 shadow-lg px-4 py-1.5 rounded-full text-xs font-bold inline-flex items-center gap-1.5 group-hover:bg-[#6B18A8] group-hover:text-white transition-all duration-200">
-                    <ZoomIn className="w-3.5 h-3.5 text-[#F5D32F]" />
-                    <span>{isEn ? 'Tap to Enlarge Flyer' : 'Ketuk untuk Memperbesar Flyer'}</span>
-                  </div>
                 </div>
               </div>
 
@@ -314,11 +310,10 @@ export const PriceCalculatorPage: React.FC = () => {
                       key={r.id}
                       type="button"
                       onClick={() => setSelectedRegion(r.id as any)}
-                      className={`p-3 sm:p-3.5 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between min-h-[56px] sm:min-h-[64px] ${
-                        selectedRegion === r.id
+                      className={`p-3 sm:p-3.5 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between min-h-[56px] sm:min-h-[64px] ${selectedRegion === r.id
                           ? 'bg-[#6B18A8] text-white border-[#6B18A8] shadow-md shadow-purple-950/20'
                           : 'bg-[#FAF7FD] text-neutral-700 border-[#C9A5E8]/40 hover:bg-white hover:border-[#6B18A8]'
-                      }`}
+                        }`}
                     >
                       <span className="font-bold text-xs sm:text-sm">{r.label}</span>
                       <span className={`text-[11px] font-bold mt-1 ${selectedRegion === r.id ? 'text-[#F5D32F]' : 'text-[#6B18A8]'}`}>
@@ -346,11 +341,10 @@ export const PriceCalculatorPage: React.FC = () => {
                         key={s.id}
                         type="button"
                         onClick={() => setBusinessScale(s.id as any)}
-                        className={`p-3 sm:p-3.5 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between min-h-[56px] sm:min-h-[64px] ${
-                          businessScale === s.id
+                        className={`p-3 sm:p-3.5 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between min-h-[56px] sm:min-h-[64px] ${businessScale === s.id
                             ? 'bg-[#6B18A8] text-white border-[#6B18A8] shadow-md shadow-purple-950/20'
                             : 'bg-[#FAF7FD] text-neutral-700 border-[#C9A5E8]/40 hover:bg-white hover:border-[#6B18A8]'
-                        }`}
+                          }`}
                       >
                         <span className="font-bold text-xs sm:text-sm">{s.label}</span>
                         <span className={`text-[10px] font-medium mt-1 ${businessScale === s.id ? 'text-purple-200' : 'text-neutral-500'}`}>
@@ -379,11 +373,10 @@ export const PriceCalculatorPage: React.FC = () => {
                         key={p.tier}
                         type="button"
                         onClick={() => setProductTier(p.tier)}
-                        className={`p-2.5 sm:p-3 rounded-2xl border text-center transition-all cursor-pointer flex flex-col items-center justify-center min-h-[56px] sm:min-h-[64px] ${
-                          productTier === p.tier
+                        className={`p-2.5 sm:p-3 rounded-2xl border text-center transition-all cursor-pointer flex flex-col items-center justify-center min-h-[56px] sm:min-h-[64px] ${productTier === p.tier
                             ? 'bg-[#6B18A8] text-white border-[#6B18A8] shadow-xs'
                             : 'bg-neutral-50 text-neutral-700 border-neutral-200 hover:bg-white'
-                        }`}
+                          }`}
                       >
                         <span className="font-bold text-[11px] sm:text-xs">{p.label}</span>
                         <span className={`text-[10px] sm:text-[11px] font-extrabold mt-1 ${productTier === p.tier ? 'text-[#F5D32F]' : 'text-[#6B18A8]'}`}>

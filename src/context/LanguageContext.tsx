@@ -36,7 +36,7 @@ export const translations: Translations = {
   menu_facility_title: { id: 'Pemeriksaan Fasilitas & RPH', en: 'Facility & Slaughterhouse Audit' },
   menu_facility_desc: { id: 'Pemeriksaan lapangan fasilitas manufaktur, bahan baku, dan rumah potong hewan.', en: 'On-site facility, raw materials, and slaughterhouse halal inspection.' },
   menu_lab_title: { id: 'Pengujian Laboratorium', en: 'Laboratory Testing' },
-  menu_lab_desc: { id: 'Uji deteksi kandungan babi, cemaran alkohol/etanol, dan profil asam lemak gelatin.', en: 'Porcine DNA detection, alcohol residual testing, and gelatin fatty acid profile tests.' },
+  menu_lab_desc: { id: 'Uji deteksi kandungan babi, kadar alkohol/etanol, dan kehalalan gelatin.', en: 'Testing for pork derivatives, alcohol content, and gelatin verification.' },
   menu_training_title: { id: 'Pelatihan Auditor & Penyelia', en: 'Auditor & Supervisor Training' },
   menu_training_desc: { id: 'Bimbingan teknis kompetensi bersertifikat BNSP dan SKKNI Halal resmi.', en: 'Competency training certified by BNSP and official Halal SKKNI standards.' },
 
@@ -76,7 +76,7 @@ export const translations: Translations = {
 
   metric_lab_label: { id: 'STANDAR LABORATORIUM', en: 'LABORATORY STANDARD' },
   metric_lab_change: { id: 'Akreditasi KAN', en: 'KAN Accredited' },
-  metric_lab_desc: { id: 'Pengujian saintifik presisi tinggi: Deteksi kandungan babi, kadar alkohol, & gelatin.', en: 'High-precision scientific testing: Porcine DNA, alcohol residuals, & gelatin.' },
+  metric_lab_desc: { id: 'Pengujian laboratorium presisi: Deteksi kandungan babi, kadar alkohol, & kehalalan gelatin.', en: 'High-precision testing: Pork derivative detection, alcohol content, & gelatin.' },
 
   // Chatbot
   chatbot_title: { id: 'Asisten AI LPH UIN SGD', en: 'LPH UIN SGD AI Assistant' },
@@ -94,7 +94,7 @@ export const translations: Translations = {
   chatbot_wa_button: { id: 'Chat Tim via WhatsApp', en: 'Chat Support via WhatsApp' },
   chatbot_chip_fee: { id: '💰 Biaya Sertifikasi Halal', en: '💰 Halal Certification Fee' },
   chatbot_chip_regular: { id: '📋 Syarat Audit Reguler', en: '📋 Regular Audit Requirements' },
-  chatbot_chip_lab: { id: '🔬 Uji Lab DNA Babi ISO 17025', en: '🔬 Porcine DNA Lab Test' },
+  chatbot_chip_lab: { id: '🔬 Uji Lab Bebas Babi & Alkohol', en: '🔬 Pork & Alcohol Lab Test' },
   chatbot_chip_sihalal: { id: '📜 Alur Pendaftaran SIHALAL', en: '📜 SIHALAL Registration Flow' },
 
   // Calculator Page

@@ -442,7 +442,7 @@ export const HomePage: React.FC = () => {
                       translateZ="30"
                       className="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-[#FFF7D1] text-[#713f12] border border-[#F5D32F] shadow-2xs"
                     >
-                      {isEn ? 'KMA 784 Standard' : 'Simulasi KMA 784'}
+                      {isEn ? 'Official Fee Standard' : 'Standar Tarif Resmi'}
                     </CardItem>
                   </div>
 
@@ -1013,8 +1013,8 @@ export const HomePage: React.FC = () => {
                         ? 'Alcohol Residual Testing & Critical Point Detection in Ingredients'
                         : 'Pengujian Cemaran Alkohol & Deteksi Titik Kritis Bahan',
                       desc: isEn
-                        ? 'Gas chromatography (GC-FID) test methodology determining ethanol limits in flavorings, solvents, and fermented goods.'
-                        : 'Metodologi uji gas chromatography (GC-FID) untuk penetapan ambang batas etanol pada perisa, pelarut, dan produk fermentasi.',
+                        ? 'Modern laboratory testing to verify safe alcohol and ethanol limits in flavorings, solvents, and fermented products.'
+                        : 'Pengujian laboratorium modern untuk memastikan batas aman alkohol/etanol pada perisa, pelarut, dan produk olahan fermentasi.',
                       url: 'https://halal.uinsgd.ac.id/laboratorium-pengujian-halal/',
                     },
                   ].map((article, i) => (

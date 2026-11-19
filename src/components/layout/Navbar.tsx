@@ -199,8 +199,8 @@ export const Navbar: React.FC = () => {
                           icon={<Calculator className="w-4 h-4" />}
                           title={language === 'en' ? 'Tariff Calculator' : 'Kalkulator Tarif Halal'}
                           description={language === 'en'
-                            ? 'Simulate estimated regular halal audit fees in accordance with official KMA 784.'
-                            : 'Simulasi perhitungan estimasi tarif audit halal reguler sesuai regulasi resmi KMA 784.'}
+                            ? 'Simulate estimated regular halal audit fees based on official government standards.'
+                            : 'Simulasi perhitungan estimasi biaya audit halal reguler sesuai standar tarif resmi pemerintah.'}
                           to="/layanan/kalkulator"
                           badge={language === 'en' ? 'Popular' : 'Populer'}
                           badgeVariant="yellow"

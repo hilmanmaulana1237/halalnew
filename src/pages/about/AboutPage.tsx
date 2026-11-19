@@ -38,7 +38,7 @@ export const AboutPage: React.FC = () => {
       },
       {
         title: 'Scientific Excellence',
-        desc: 'Supported by modern testing laboratories (qPCR, GC-FID) accredited to ISO/IEC 17025 for molecular validation of critical ingredients.',
+        desc: 'Supported by modern accredited testing laboratories for high-accuracy scientific validation of critical ingredients.',
         icon: <Sparkles className="w-6 h-6 text-[#6b1282]" />,
         accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
         spotlight: '#6b1282',
@@ -68,7 +68,7 @@ export const AboutPage: React.FC = () => {
       },
       {
         title: 'Keunggulan Saintifik',
-        desc: 'Didukung laboratorium pengujian modern (qPCR, GC-FID) berstandar ISO/IEC 17025 untuk validasi molekuler bahan kritis.',
+        desc: 'Didukung laboratorium pengujian modern terakreditasi resmi untuk pemeriksaan kandungan bahan baku secara akurat.',
         icon: <Sparkles className="w-6 h-6 text-[#6b1282]" />,
         accent: 'border-purple-100 bg-white hover:bg-purple-50/20 text-[#6b1282]',
         spotlight: '#6b1282',
@@ -139,7 +139,6 @@ export const AboutPage: React.FC = () => {
                       <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                       {isEn ? 'Official BPJPH Accredited' : 'Akreditasi Resmi BPJPH'}
                     </span>
-                    <span className="text-[#6b1282] font-mono">No. Reg: LPH-018-ID</span>
                   </div>
                 </div>
               </BackgroundGradient>
@@ -156,12 +155,12 @@ export const AboutPage: React.FC = () => {
               </h2>
               <p className="text-neutral-600 text-base leading-relaxed">
                 {isEn
-                ? 'The Halal Inspection Agency (LPH) of State Islamic University Sunan Gunung Djati Bandung was founded as a concrete manifestation of higher education service to fulfill the mandate of Law No. 33 of 2014 concerning Halal Product Assurance.'
+                  ? 'The Halal Inspection Agency (LPH) of State Islamic University Sunan Gunung Djati Bandung was founded as a concrete manifestation of higher education service to fulfill the mandate of Law No. 33 of 2014 concerning Halal Product Assurance.'
                   : 'Lembaga Pemeriksa Halal (LPH) Universitas Islam Negeri Sunan Gunung Djati Bandung didirikan sebagai wujud nyata pengabdian perguruan tinggi keagamaan Islam negeri dalam menjawab amanat Undang-Undang No. 33 Tahun 2014 tentang Jaminan Produk Halal.'}
               </p>
               <p className="text-neutral-600 text-base leading-relaxed">
                 {isEn
-                ? 'Embodying the "Halalsphere University" paradigm, LPH UIN SGD is more than an administrative entity; it is a scientific inspection hub uniting molecular biology research, food technology, contemporary Islamic jurisprudence, and grassroots economic empowerment.'
+                  ? 'Embodying the "Halalsphere University" paradigm, LPH UIN SGD is more than an administrative entity; it is a scientific inspection hub uniting molecular biology research, food technology, contemporary Islamic jurisprudence, and grassroots economic empowerment.'
                   : 'Dengan mengusung paradigma “Halalsphere University”, LPH UIN SGD tidak sekadar menjadi lembaga administratif, melainkan episentrum pemeriksaan dan keilmuan halal yang memadukan riset biologi molekuler, teknologi pangan, kajian fikih kontemporer, dan penguatan ekonomi kerakyatan.'}
               </p>
               <div className="pt-2 flex flex-wrap items-center gap-4">
@@ -202,7 +201,7 @@ export const AboutPage: React.FC = () => {
                 </h3>
                 <p className="text-neutral-600 leading-relaxed text-base font-normal">
                   {isEn
-                  ? '"To become an internationally reputable Halal Inspection Agency (LPH), leading in halal authentication science, sharia integrity, and MSE empowerment towards Indonesia as the Global Halal Hub."'
+                    ? '"To become an internationally reputable Halal Inspection Agency (LPH), leading in halal authentication science, sharia integrity, and MSE empowerment towards Indonesia as the Global Halal Hub."'
                     : '"Menjadi Lembaga Pemeriksa Halal (LPH) bereputasi internasional, unggul dalam sains autentikasi halal, berintegritas syar\'i, dan terdepan dalam pemberdayaan UMK menuju Indonesia Pusat Halal Dunia."'}
                 </p>
               </div>
@@ -226,8 +225,8 @@ export const AboutPage: React.FC = () => {
                   <li className="flex items-start gap-2.5">
                     <span className="w-2 h-2 rounded-full bg-[#6b1282] mt-2 shrink-0" />
                     {isEn
-                      ? 'Developing state-of-the-art halal testing laboratories under ISO/IEC 17025 standards.'
-                      : 'Mengembangkan laboratorium uji kehalalan berbasis teknologi mutakhir dan standar ISO 17025.'}
+                      ? 'Developing modern, accredited halal testing laboratories recognized nationally and internationally.'
+                      : 'Mengembangkan laboratorium uji kehalalan modern yang terakreditasi resmi berstandar nasional dan internasional.'}
                   </li>
                   <li className="flex items-start gap-2.5">
                     <span className="w-2 h-2 rounded-full bg-[#6b1282] mt-2 shrink-0" />
@@ -293,8 +292,8 @@ export const AboutPage: React.FC = () => {
             badgeColor="yellow"
             title={isEn ? "Leadership with Sharia Integrity & Halal Research Excellence" : "Kepemimpinan Berintegritas Syar’i & Keunggulan Riset Halal"}
             subtitle={isEn
-              ? "Synergy between university strategic vision and bio-science research expertise to safeguard halal audit quality, ISO 17025 laboratory accountability, and public welfare."
-              : "Sinergi visi strategis universitas dan keahlian riset sains hayati untuk mengawal mutu pemeriksaan halal, akuntabilitas laboratorium ISO 17025, dan kemaslahatan industri bagi umat."}
+              ? "Synergy between university strategic vision and scientific research expertise to safeguard halal audit quality, accredited laboratory accountability, and public welfare."
+              : "Sinergi visi strategis universitas dan keahlian riset ilmiah untuk mengawal mutu pemeriksaan halal, akuntabilitas laboratorium terakreditasi, dan kemaslahatan industri bagi masyarakat."}
           />
 
           <div className="mt-24 lg:mt-36 space-y-28 lg:space-y-48">

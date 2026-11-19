@@ -49,8 +49,8 @@ interface SmartAnswer {
 const KNOWLEDGE_BASE: SmartAnswer[] = [
   {
     keywords: ['biaya', 'tarif', 'harga', 'bayar', 'kalkulator', 'cost', 'fee', 'price', 'rate'],
-    answerId: `💰 **Rincian Tarif & Biaya Sertifikasi Halal LPH UIN SGD:**\n\nBiaya sertifikasi halal jalur reguler mengacu pada Keputusan Menteri Agama (KMA) No. 784/2021 & Keputusan Kepala BPJPH. Biaya tergantung pada:\n• Skala usaha (Mikro, Kecil, Menengah, Besar)\n• Kompleksitas proses dan fasilitas produksi\n• Kebutuhan uji laboratorium saintifik terakreditasi ISO 17025\n\nAnda dapat mensimulasikan estimasi biaya secara akurat di fitur Kalkulator Tarif kami.`,
-    answerEn: `💰 **Halal Certification Fees & Rates (LPH UIN SGD):**\n\nRegular halal audit fees are governed by Ministry of Religious Affairs (KMA) No. 784/2021 and BPJPH regulations. Costs depend on:\n• Company scale (Micro, Small, Medium, Large)\n• Facility and production process complexity\n• ISO/IEC 17025 accredited laboratory testing needs\n\nYou can simulate your estimated cost using our Halal Fee Calculator.`,
+    answerId: `💰 **Rincian Tarif & Biaya Sertifikasi Halal LPH UIN SGD:**\n\nBiaya sertifikasi halal jalur reguler mengacu pada ketentuan standar tarif resmi pemerintah & Keputusan Kepala BPJPH. Biaya tergantung pada:\n• Skala usaha (Mikro, Kecil, Menengah, Besar)\n• Kompleksitas proses dan fasilitas produksi\n• Kebutuhan uji laboratorium terakreditasi resmi\n\nAnda dapat mensimulasikan estimasi biaya secara akurat di fitur Kalkulator Tarif kami.`,
+    answerEn: `💰 **Halal Certification Fees & Rates (LPH UIN SGD):**\n\nRegular halal audit fees are governed by official government tariff standards and BPJPH regulations. Costs depend on:\n• Company scale (Micro, Small, Medium, Large)\n• Facility and production process complexity\n• Laboratory testing requirements for critical ingredients\n\nYou can simulate your estimated cost using our Halal Fee Calculator.`,
     suggestedAction: {
       labelId: 'Buka Kalkulator Tarif Halal',
       labelEn: 'Open Halal Fee Calculator',
@@ -69,8 +69,8 @@ const KNOWLEDGE_BASE: SmartAnswer[] = [
   },
   {
     keywords: ['lab', 'laboratorium', 'dna', 'babi', 'porcine', 'alkohol', 'etanol', 'gelatin', 'iso 17025', 'uji', 'test'],
-    answerId: `🔬 **Layanan Pengujian Laboratorium Halal Terakreditasi:**\n\nLaboratorium Pengujian Halal Terpadu UIN Sunan Gunung Djati Bandung melayani pengujian saintifik akurasi tinggi:\n\n• **Deteksi Kandungan Babi:** Deteksi spesifik DNA babi pada daging olahan, bumbu, & kosmetik.\n• **Analisis Kadar Alkohol / Etanol:** Pengujian presisi tinggi untuk batas aman kehalalan.\n• **Identifikasi Asal Bahan Baku Hewani:** Analisa gelatin dan profil lemak.\n\nSeluruh proses uji tervalidasi standar resmi dan diakui KAN & BPJPH.`,
-    answerEn: `🔬 **Accredited Halal Laboratory Testing:**\n\nIntegrated Halal Testing Laboratory at UIN Sunan Gunung Djati Bandung provides high-precision testing:\n\n• **Porcine Detection:** Specific detection of pork DNA in processed food, seasonings & cosmetics.\n• **Residual Ethanol / Alcohol Analysis:** High-accuracy testing for halal compliance.\n• **Animal Derivative Identification:** Gelatin and fatty acid profiling.\n\nAll tests are validated under accredited standards recognized by KAN and BPJPH.`,
+    answerId: `🔬 **Layanan Pengujian Laboratorium Halal Terakreditasi:**\n\nLaboratorium Pengujian Halal Terpadu UIN Sunan Gunung Djati Bandung melayani pengujian laboratorium akurasi tinggi:\n\n• **Deteksi Kandungan Babi:** Deteksi akurat turunan babi pada produk pangan olahan, bumbu, & kosmetik.\n• **Pemeriksaan Kadar Alkohol / Etanol:** Pengujian presisi untuk batas aman kehalalan produk olahan dan fermentasi.\n• **Pemeriksaan Asal Bahan Hewani:** Uji kehalalan gelatin dan profil lemak.\n\nSeluruh proses uji terakreditasi resmi dan diakui secara nasional.`,
+    answerEn: `🔬 **Accredited Halal Laboratory Testing:**\n\nIntegrated Halal Testing Laboratory at UIN Sunan Gunung Djati Bandung provides high-precision testing:\n\n• **Pork Content Detection:** High-accuracy testing for pork derivatives in processed food, seasonings, and cosmetics.\n• **Alcohol / Ethanol Content Testing:** Accurate testing for safe alcohol limits in food and fermented goods.\n• **Animal Derivative Identification:** Gelatin origin verification and fatty acid profiling.\n\nAll tests are validated under officially accredited standards.`,
     suggestedAction: {
       labelId: 'Pelajari Laboratorium Halal',
       labelEn: 'Explore Halal Laboratory',
@@ -319,7 +319,7 @@ const resetChat = () => {
 const quickPromptChips = [
   { label: t('chatbot_chip_fee'), query: language === 'en' ? 'Halal certification fee and cost' : 'Berapa biaya tarif sertifikasi halal?' },
   { label: t('chatbot_chip_regular'), query: language === 'en' ? 'Regular halal audit requirements and documents' : 'Syarat dan dokumen audit halal reguler LPH' },
-  { label: t('chatbot_chip_lab'), query: language === 'en' ? 'Porcine DNA and alcohol lab test ISO 17025' : 'Uji laboratorium DNA babi dan alkohol ISO 17025' },
+  { label: t('chatbot_chip_lab'), query: language === 'en' ? 'Pork derivative and alcohol laboratory testing' : 'Uji laboratorium bebas babi dan alkohol' },
   { label: t('chatbot_chip_sihalal'), query: language === 'en' ? 'How to register on SIHALAL BPJPH' : 'Alur dan cara daftar di SIHALAL BPJPH' },
 ];
 

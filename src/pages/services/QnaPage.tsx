@@ -11,7 +11,7 @@ const INITIAL_FAQS_ID: KnowledgeBaseItem[] = [
     id: 1,
     question: 'Bagaimana tahapan pemeriksaan sertifikasi halal jalur reguler di LPH UIN SGD Bandung?',
     answer:
-      'Pemeriksaan halal jalur reguler di LPH UIN SGD mencakup 5 tahapan utama: (1) Pendaftaran permohonan di SIHALAL BPJPH dan memilih LPH UIN Sunan Gunung Djati (Kode: LPH-018-ID), (2) Verifikasi kelengkapan berkas dan dokumen Sistem Jaminan Produk Halal (SJPH), (3) Penjadwalan dan pelaksanaan audit lapangan fasilitas produksi oleh Tim Auditor Halal terlisensi, (4) Pengujian laboratorium terakreditasi ISO 17025 apabila terdapat bahan kritis yang membutuhkan uji qPCR DNA/alkohol, dan (5) Sidang Fatwa Halal MUI hingga penerbitan Sertifikat Halal resmi oleh BPJPH.',
+      'Pemeriksaan halal jalur reguler di LPH UIN SGD mencakup 5 tahapan utama: (1) Pendaftaran permohonan di SIHALAL BPJPH dan memilih LPH UIN Sunan Gunung Djati (Kode: LPH-018-ID), (2) Verifikasi kelengkapan berkas dan dokumen Sistem Jaminan Produk Halal (SJPH), (3) Penjadwalan dan pelaksanaan audit lapangan fasilitas produksi oleh Tim Auditor Halal berlisensi, (4) Pengujian laboratorium terakreditasi apabila terdapat bahan kritis yang memerlukan uji deteksi kandungan babi atau kadar alkohol, dan (5) Sidang Fatwa Halal MUI hingga penerbitan Sertifikat Halal resmi oleh BPJPH.',
     tags: 'PROSEDUR',
     isActive: true,
     createdAt: new Date().toISOString(),
@@ -49,9 +49,9 @@ const INITIAL_FAQS_ID: KnowledgeBaseItem[] = [
   },
   {
     id: 5,
-    question: 'Apakah laboratorium UIN SGD melayani pengujian DNA babi dan alkohol untuk umum?',
+    question: 'Apakah laboratorium UIN SGD melayani pengujian kandungan babi dan alkohol untuk umum?',
     answer:
-      'Ya, Laboratorium Pengujian Halal Terpadu UIN Sunan Gunung Djati Bandung melayani pengujian deteksi cemaran DNA Porcine (babi) menggunakan Real-Time qPCR, pengujian kadar etanol (alkohol) dengan GC-MS, dan autentikasi kehalalan gelatin baik bagi mitra audit LPH maupun permohonan pengujian mandiri dari industri.',
+      'Ya, Laboratorium Pengujian Halal Terpadu UIN Sunan Gunung Djati Bandung melayani pengujian deteksi kandungan babi secara akurat, pemeriksaan kadar alkohol/etanol pada produk olahan, serta pengujian kehalalan gelatin, baik untuk pelaku usaha yang sedang diaudit maupun permohonan pengujian mandiri dari industri.',
     tags: 'LABORATORIUM',
     isActive: true,
     createdAt: new Date().toISOString(),
@@ -64,7 +64,7 @@ const INITIAL_FAQS_EN: KnowledgeBaseItem[] = [
     id: 1,
     question: 'What are the key stages of regular halal inspection at LPH UIN SGD Bandung?',
     answer:
-      'Regular halal inspection at LPH UIN SGD encompasses 5 essential stages: (1) Submission on BPJPH SIHALAL selecting LPH UIN Sunan Gunung Djati (Code: LPH-018-ID), (2) Verification of Halal Assurance System (SJPH) and ingredient documents, (3) On-site production facility audit by licensed lead auditors, (4) Accredited ISO 17025 laboratory analysis when critical raw materials require qPCR/GC-FID testing, and (5) MUI Fatwa Council decree leading to official BPJPH Halal Certificate issuance.',
+      'Regular halal inspection at LPH UIN SGD encompasses 5 essential stages: (1) Submission on BPJPH SIHALAL selecting LPH UIN Sunan Gunung Djati (Code: LPH-018-ID), (2) Verification of Halal Assurance System (SJPH) and ingredient documents, (3) On-site production facility audit by licensed lead auditors, (4) Accredited laboratory analysis whenever critical ingredients require testing for pork derivatives or alcohol content, and (5) MUI Fatwa Council decree leading to official BPJPH Halal Certificate issuance.',
     tags: 'PROCEDURE',
     isActive: true,
     createdAt: new Date().toISOString(),
@@ -102,9 +102,9 @@ const INITIAL_FAQS_EN: KnowledgeBaseItem[] = [
   },
   {
     id: 5,
-    question: 'Does the UIN SGD laboratory offer porcine DNA and alcohol testing for public enterprises?',
+    question: 'Does the UIN SGD laboratory offer pork detection and alcohol testing for public enterprises?',
     answer:
-      'Yes, our Integrated Halal Testing Laboratory at Campus 2 provides Porcine DNA qPCR detection, GC-MS ethanol analysis, and gelatin profiling for both LPH audit clients and independent corporate testing requests.',
+      'Yes, our Integrated Halal Testing Laboratory provides high-accuracy pork derivative detection, alcohol content analysis, and gelatin verification for both audit clients and independent corporate testing requests.',
     tags: 'LABORATORY',
     isActive: true,
     createdAt: new Date().toISOString(),

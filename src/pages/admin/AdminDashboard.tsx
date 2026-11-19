@@ -167,7 +167,7 @@ export const AdminDashboard: React.FC = () => {
         excerpt: 'LPH UIN Sunan Gunung Djati Bandung memperkuat kapasitas auditor halal dan laboratorium terpadu.',
         content: `<h2>Akselerasi Audit Sertifikasi Halal di Jawa Barat</h2>
 <p>Lembaga Pemeriksa Halal (LPH) UIN Sunan Gunung Djati Bandung terus memperluas kapasitas audit halal bagi pelaku industri menengah dan besar di kawasan industri Jawa Barat.</p>
-<blockquote>Komitmen kami adalah memastikan setiap produk yang diaudit memenuhi standar syar'i dan regulasi KMA 784 secara transparan dan akuntabel.</blockquote>
+<blockquote>Komitmen kami adalah memastikan setiap produk yang diaudit memenuhi standar syar'i dan regulasi tarif resmi pemerintah secara transparan dan akuntabel.</blockquote>
 <p>Dalam kurun waktu kuartal terakhir tahun 2026, lebih dari <strong>450 fasilitas manufaktur</strong> telah menyelesaikan audit lapangan dan uji laboratorium terpadu dengan waktu rata-rata 12 hari kerja.</p>`,
         image: '/assets/images/beranda_004.jpg',
       },
@@ -195,7 +195,7 @@ export const AdminDashboard: React.FC = () => {
         author: 'Badan Pengawas Halal',
         createdAt: '2026-11-02T14:30:00Z',
         publishedAt: '2026-11-02',
-        excerpt: 'Panduan teknis dan simulasi biaya KMA 784 bagi UMKM se-Jawa Barat.',
+        excerpt: 'Panduan teknis dan simulasi biaya sertifikasi halal resmi bagi UMKM se-Jawa Barat.',
         content: `<h2>Panduan Wajib Halal Bertahap 2026</h2>
 <p>Menjelang tenggat implementasi regulasi wajib halal, LPH UIN SGD menyelenggarakan rangkaian sosialisasi daring dan luring bagi asosiasi kuliner dan pelaku usaha pangan kemasan.</p>`,
         image: '/assets/images/pemeriksaaan-kehalalan-produk.jpg',
@@ -249,15 +249,15 @@ export const AdminDashboard: React.FC = () => {
       },
       {
         id: 3,
-        title: 'Surat Edaran BPJPH No. 2 Tahun 2026 tentang Integrasi Layanan SIHALAL dan Uji qPCR',
-        slug: 'edaran-bpjph-integrasi-sihalal-qpcr',
-        fileName: 'SE_BPJPH_Integrasi_qPCR_2026.pdf',
+        title: 'Surat Edaran BPJPH: Kewajiban Uji Laboratorium Bahan Kritis Hewani',
+        slug: 'edaran-bpjph-uji-lab-bahan-kritis',
+        fileName: 'SE_BPJPH_Uji_Lab_2026.pdf',
         fileUrl: '/assets/docs/edaran_bpjph_qpcr_2026.pdf',
         fileSize: '2.1 MB',
         isPinned: false,
         status: 'PUBLISHED',
         publishedAt: '2026-10-20',
-        content: 'Instruksi wajib lampiran hasil uji laboratorium terakreditasi KAN untuk matriks bahan kritis hewani.',
+        content: 'Instruksi wajib lampiran hasil uji laboratorium terakreditasi resmi untuk matriks bahan kritis hewani.',
       },
     ];
   });
@@ -277,20 +277,20 @@ export const AdminDashboard: React.FC = () => {
         location: 'Kawasan Industri MM2100, Cikarang',
         auditorLead: 'Drs. H. Ahmad Fauzi, M.Si',
         facility: 'PT Indofood CBP Sukses Makmur Tbk',
-        standard: 'KMA 784 / SNI 99001:2016',
+        standard: 'Standar SJPH BPJPH & SNI 99001:2016',
         fullStory: 'Pemeriksaan langsung terhadap lini produksi pemrosesan makanan kemasan berkecepatan tinggi.',
       },
       {
         id: 2,
-        title: 'Deteksi Saintifik Real-Time PCR DNA Porcine Sensitivitas Tinggi',
-        category: 'Laboratorium ISO 17025',
+        title: 'Pengujian Laboratorium Deteksi Kandungan Babi Sensitivitas Tinggi',
+        category: 'Laboratorium Uji Halal',
         src: '/assets/images/lab-dna-testing.jpg',
         date: '22 Oktober 2026',
         location: 'Gedung Laboratorium Pengujian Halal Terpadu UIN SGD',
         auditorLead: 'Dr. Tri Cahyanto, M.Si',
         facility: 'Laboratorium Pengujian Halal Terpadu',
-        standard: 'ISO/IEC 17025:2017 LP-1542-IDN',
-        fullStory: 'Pengujian molekuler presisi tinggi menggunakan primer qPCR spesifik gen sitokrom b.',
+        standard: 'Akreditasi KAN LP-1542-IDN',
+        fullStory: 'Pengujian molekuler presisi tinggi menggunakan analisis DNA spesifik untuk mendeteksi kandungan babi pada produk pangan.',
       },
       {
         id: 3,
@@ -356,7 +356,7 @@ export const AdminDashboard: React.FC = () => {
         contact: 'quality@cahayarasa.co.id',
         contactType: 'EMAIL',
         category: 'TARIF_KMA',
-        description: 'Pertanyaan rincian biaya penambahan 3 sampel uji laboratorium GC-FID untuk produk minuman fermentasi.',
+        description: 'Pertanyaan rincian biaya penambahan 3 sampel uji laboratorium kadar alkohol untuk produk minuman fermentasi.',
         status: 'RECEIVED',
         adminReply: '',
         submittedAt: '2026-11-10T10:00:00Z',
@@ -405,13 +405,13 @@ export const AdminDashboard: React.FC = () => {
         id: 3,
         name: 'Laboratorium Farmasi Al-Shifa',
         contact: '085721099xxx',
-        serviceUsed: 'Uji Laboratorium DNA qPCR & Spektro',
+        serviceUsed: 'Uji Laboratorium Bebas Babi & Alkohol',
         rating: 5,
         speedRating: 5,
         friendlinessRating: 5,
         clarityRating: 5,
         facilityRating: 5,
-        comment: 'Hasil uji lab qPCR keluar cepat dengan sertifikat hasil uji berstandar akreditasi KAN ISO 17025.',
+        comment: 'Hasil uji lab keluar cepat dengan sertifikat hasil uji berstandar akreditasi resmi KAN.',
         submittedAt: '2026-11-05',
       },
     ];
@@ -439,9 +439,9 @@ export const AdminDashboard: React.FC = () => {
       },
       {
         id: 3,
-        question: 'Apakah pengujian laboratorium DNA babi (qPCR) wajib untuk seluruh produk?',
-        answer: 'Tidak semua produk wajib uji lab. Pengujian saintifik qPCR dan GC-FID hanya dipersyaratkan untuk bahan baku yang berisiko tinggi (kritis) seperti olahan daging, gelatin, kolagen, dan perisa fermentasi.',
-        tags: 'laboratorium, qpcr, dna',
+        question: 'Apakah pengujian laboratorium kandungan babi wajib untuk seluruh produk?',
+        answer: 'Tidak semua produk wajib uji lab. Pengujian laboratorium hanya dipersyaratkan untuk bahan baku yang berisiko tinggi (kritis) seperti olahan daging, gelatin, kolagen, dan perisa fermentasi.',
+        tags: 'laboratorium, uji halal, bahan kritis',
         isActive: true,
       },
     ];
@@ -455,7 +455,7 @@ export const AdminDashboard: React.FC = () => {
     return [
       { id: 'LOG-01', user: 'Administrator', action: 'Memperbarui respon tiket', target: 'TKT-829104', time: '10 menit yang lalu', type: 'UPDATE' },
       { id: 'LOG-02', user: 'Administrator', action: 'Menerbitkan berita baru dengan TinyMCE', target: 'Akselerasi Audit Sertifikasi Halal', time: '45 menit yang lalu', type: 'CREATE' },
-      { id: 'LOG-03', user: 'Admin Layanan', action: 'Mengunggah dokumentasi galeri baru', target: 'Pengujian Saintifik qPCR DNA', time: '2 jam yang lalu', type: 'CREATE' },
+      { id: 'LOG-03', user: 'Admin Layanan', action: 'Mengunggah dokumentasi galeri baru', target: 'Pengujian Laboratorium Deteksi Babi', time: '2 jam yang lalu', type: 'CREATE' },
       { id: 'LOG-04', user: 'Administrator', action: 'Login berhasil ke Admin Console', target: 'Sesi Web IP 10.12.4.1', time: '3 jam yang lalu', type: 'LOGIN' },
     ];
   });
@@ -470,7 +470,7 @@ export const AdminDashboard: React.FC = () => {
       { id: 2, name: 'lab-dna-testing.jpg', src: '/assets/images/lab-dna-testing.jpg', category: 'Laboratorium', size: '240 KB' },
       { id: 3, name: 'img_011.jpg', src: '/assets/images/img_011.jpg', category: 'Sembelihan RPH', size: '190 KB' },
       { id: 4, name: 'img_013.jpg', src: '/assets/images/img_013.jpg', category: 'Pelatihan JULEHA', size: '310 KB' },
-      { id: 5, name: 'lab-landscape-1.jpg', src: '/assets/images/lab-landscape-1.jpg', category: 'GC-FID Lab', size: '220 KB' },
+      { id: 5, name: 'lab-landscape-1.jpg', src: '/assets/images/lab-landscape-1.jpg', category: 'Lab Uji Etanol', size: '220 KB' },
       { id: 6, name: 'director_rosihon.webp', src: '/assets/images/uin_sgd/director_rosihon.webp', category: 'Pimpinan', size: '63 KB' },
       { id: 7, name: 'director_tri.webp', src: '/assets/images/uin_sgd/director_tri.webp', category: 'Pimpinan', size: '145 KB' },
       { id: 8, name: 'beranda_004.jpg', src: '/assets/images/beranda_004.jpg', category: 'Pabrik Kemasan', size: '305 KB' },
@@ -542,7 +542,7 @@ export const AdminDashboard: React.FC = () => {
     } catch { }
     return [
       'Audit Lapangan',
-      'Laboratorium ISO 17025',
+      'Laboratorium Uji Halal',
       'Pelatihan & JULEHA',
       'Kunjungan & MoA',
       'Sosialisasi & Edukasi',
@@ -3042,7 +3042,7 @@ export const AdminDashboard: React.FC = () => {
                           >
                             <option value="/assets/images/pemeriksaaan-kehalalan-produk.jpg">Audit Pabrik Industri</option>
                             <option value="/assets/images/beranda_004.jpg">Kemasan Pangan Berkecepatan Tinggi</option>
-                            <option value="/assets/images/lab-dna-testing.jpg">Uji qPCR DNA Babi</option>
+                            <option value="/assets/images/lab-dna-testing.jpg">Uji Lab Deteksi Kandungan Babi</option>
                             <option value="/assets/images/img_011.jpg">RPH Sembelihan Unggas</option>
                             <option value="/assets/images/img_013.jpg">Pelatihan Jagal JULEHA</option>
                             <option value="/assets/images/uin_sgd/uin_14.webp">Kunjungan BPJPH</option>
@@ -4631,10 +4631,10 @@ export const AdminDashboard: React.FC = () => {
                       className="w-full p-2.5 rounded-xl border border-neutral-300 text-xs bg-white font-medium"
                     >
                       <option value="/assets/images/pemeriksaaan-kehalalan-produk.jpg">Audit Fasilitas Industri Pangan</option>
-                      <option value="/assets/images/lab-dna-testing.jpg">Uji qPCR DNA Porcine Lab</option>
+                      <option value="/assets/images/lab-dna-testing.jpg">Uji Lab Deteksi Kandungan Babi</option>
                       <option value="/assets/images/img_011.jpg">Pemeriksaan Sembelihan Unggas / RPH</option>
                       <option value="/assets/images/img_013.jpg">Pelatihan Jagal JULEHA</option>
-                      <option value="/assets/images/lab-landscape-1.jpg">Uji GC-FID Etanol</option>
+                      <option value="/assets/images/lab-landscape-1.jpg">Uji Lab Kadar Alkohol / Etanol</option>
                       <option value="/assets/images/uin_sgd/uin_14.webp">Kunjungan Monev BPJPH</option>
                       <option value="/assets/images/beranda_004.jpg">Inspeksi Cleanroom Farmasi</option>
                     </select>

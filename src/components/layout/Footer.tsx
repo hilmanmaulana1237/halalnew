@@ -199,7 +199,7 @@ export const Footer: React.FC = () => {
             <span className="text-[#C9A5E8]">•</span>
             <span className="text-white font-bold">No. Reg: LPH-018-ID</span>
             <span className="text-[#C9A5E8]">•</span>
-            <span className="text-[#F5D32F] font-bold">ISO/IEC 17025 Accredited</span>
+            <span className="text-[#F5D32F] font-bold">{isEn ? 'Accredited Testing Laboratory' : 'Laboratorium Terakreditasi KAN'}</span>
           </div>
         </div>
       </div>
